@@ -57,3 +57,10 @@ The following bits and bit combinations can be used for activating or deactivati
     * pckSTRING = 16; Installs functions for string manipulation and the binary string concetanation operator.
     * pckALL_COMPLEX = pckCOMMON | pckCOMPLEX | pckSTRING | pckUNIT
     * pckALL_NON_COMPLEX = pckCOMMON | pckNON_COMPLEX | pckSTRING | pckUNIT
+
+== Representing parser values ==
+muParserX defines a common interface for classes representing Values. This interface is implemented by the classes mup::Value and mup::Variable. 
+
+<img src="http://beltoforion.de/muparserx/mup_values.png"/>
+
+mup::Value is a variant type class able to store different data types in a single object. If you want to set up a value for use with muParserX you first have to wrap it into an object of this type. Then you need to bind the value to a mup::Variable object which essentially serves as a proxy for value objects. 
