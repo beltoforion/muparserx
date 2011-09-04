@@ -3,9 +3,7 @@
 
 = V1.10 (20111003) =
 ----------------
-Warning:
-The API of this version is not backwards compatible and requires minor 
-changes to client code!
+* Warning: The API of this version is not backwards compatible and requires minor changes to client code! *
 
 == Changes: ==
  * Static type checking removed entirely (All type checking must be made at runtime by the callbacks themself)
