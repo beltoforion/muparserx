@@ -99,7 +99,6 @@ By default the parser supports the following mathematical constants:
     * The imaginary unit with: *i = sqrt(-1)*
 
 == Binary and ternary operators: ==
-
     * Standard operators: *+, -, *, /, ^*
     * Assignment operators: *=*, *+=*, *-=*, **=*, */=*
     * Logical operators: *and*, *or*, *xor*,*==*, *!=*, *>*, *<*, *<=*, *>=*
@@ -108,17 +107,30 @@ By default the parser supports the following mathematical constants:
     * if then else conditionals with lazy evaluation: *?:*
 
 == Postfix operators: ==
-
     * Unit postfixes (nano, micro, milli, kilo, giga, mega): *{n}*, *{mu}*, *{m}*, *{k}*, *{G}*, *{M}*
 
 == Infix operators: ==
-
     * Sign operator and type conversions: *-*, *(float)*, *(int)*
 
 == Predefined Functions ==
-
     * Standard functions *abs*, *sin*, *cos*, *tan*, *sinh*, *cosh*, *tanh*, *ln*, *log*, *log10*, *exp*, *sqrt*
     * Unlimited number of arguments: *min*, *max*, *sum*
     * String functions: *str2dbl*, *strlen*, *toupper*
     * Complex functions: *real*, *imag*, *conj*, *arg*, *norm*
     * Array functions: *sizeof*
+
+= Sample expressions =
+The next table shows samples of expressions that can be evaluated using <b>muParserX</b>:
+
+||*Expression*     ||*Result*     ||*Explanation*||
+||"hello"=="world" ||false        ||Comparing strings||
+||"hello "//"world"||"hello world"||String concatanation operator||
+||sin(a+8i)        ||...          ||Support for a variety of predefined functions working with complex numbers.||
+||va[3]+vb[5]||...||Support for array variables||
+||va[3]=9||...||Assignment operator in combination with indexed access to a vector||
+||toupper("hello"//"world")||"HELLOWORLD"||Transforming a concatenated string to uppercase.||
+||#010010||18||Interpreting binary values||
+||0x1eff||7935||Interpreting hex values||
+||#10>0x1eff||false||Comparing binary and hex values||
+||1+2-3*4/5^6||2.99923||The standard operators||
+||a = ((a<b) ? 10 : -10)||10 or -10 depending on a and b||Ternary operator for if-then-else conditionals||
