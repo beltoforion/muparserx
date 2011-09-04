@@ -1,0 +1,15 @@
+#summary muParserX benchmarks
+#sidebar TableOfContents
+
+Due to it's multiple data types and using complex numbers as it's base type muParserX has to make compromises with regard to absolute parsing performance. However i have been quite successfull in minimizing this effect and consequently the latest Version is now approximately 2000 times faster than the initial release. In other words on a modern computer you should be able to compute well above 1.000.000 expressions per second with muParserX. This should be sufficient for most applications and its not too bad either when compared to other expression parsers. First lets have a look at how the performance of muParserX has increased since its initial release: 
+
+<img src="http://beltoforion.de/muparserx/bench.svg" width="700"/>
+
+*Image 1:* By comparing benchmark results of different muParserX versions a significant improvement of parsing performance from one version to the next can be shown. This is due to introducing parsing from cached tokens instead of the expression string (V1.05), parsing from the reverse polish notation of the expression (V1.07) and from introducing references for returning results from callback objects rather than using dynamically created value objects (V1.08) and from reducing the number of new/delete calls by introducing a simple memory pool for value items (V1.09). 
+
+The next image shows a comparison with other free math parsers. The top performer in this test are muParserSSE and MathPresso which are both using asmjit for just in time compilation of the expression. 
+
+<img src="http://beltoforion.de/muparserx/bench_all.svg" width="700"/>
+
+
+*Image 2:* Even when compared to other parsers with fewer functionality muParserX performs suprisingly well although it does not reach their performance fully due to the overhead imposed by it's additional features. 
