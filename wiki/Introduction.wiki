@@ -79,7 +79,7 @@ The evaluation of a mathematical expression is a standard task required in many 
     <td align="center">~ 1.600.000</td>
   </tr>
 </table>
-
+*Table 1:* Feature comparison with other derivatives of muParser. (* Average performance calculated using this set of expressions; (1) muParser comes with an implementation for complex numbers but this is rather limited and more of a hack; (2) muParser can define strings but only as constants.) 
 
 = Features =
  * Supported data types: double, integer, complex, boolean, string, array
