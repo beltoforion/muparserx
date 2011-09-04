@@ -5,9 +5,48 @@
 The evaluation of a mathematical expression is a standard task required in many applications. It can be solved by either using a standard math expression parser such as muParser or by embedding a scripting language such as Lua. There are however some limitations: Although muParser is pretty fast it will only work with scalar values and although Lua is very flexible it does neither support binary operators for arrays nor complex numbers. So if you need a math expression parser with support for arrays, matrices and strings muParserX may be able to help you. It is based on the original muParser engine but has evolved into a standalone project ever since. 
 
 
-= Details =
+= Features =
 
-Add your content here.  Format your content with:
-  * Text in *bold* or _italic_
-  * Headings, paragraphs, and lists
-  * Automatic links to other wiki pages
+ * Supported data types: double, integer, complex, boolean, string, array
+ * Extensible with custom operators (binary, infix or postfix)
+ * Extensible with custom functions with an arbitrary number of function arguments
+ * Support for an unlimited number of variables and constants
+ * No limit on expression complexity
+ * Reads binary, hexadecimal, complex, integer and string values from expressions and can be extended to read user defined values as well.
+ * Supports a large variety of predefined operators, functions and constants.
+ * Written in standard compliant C++ code with no external dependencies.
+
+== Predefined Constants ==
+By default the parser supports the following mathematical constants:
+
+    * The eulerian number with:
+    e = 2.718281828459045235360287
+    * Pi, the mathematical constant equal to a circle's circumference divided by its diameter.
+    pi = 3.141592653589793238462643
+    * The imaginary unit with:
+    i = sqrt(-1)
+
+== Binary and ternary operators: ==
+
+    * Standard operators: *+, -, *, /, ^*
+    * Assignment operators: *=*, *+=*, *-=*, **=*, */=*
+    * Logical operators: *and*, *or*, *xor*,*==*, *!=*, *>*, *<*, *<=*, *>=*
+    * Bit manipulation: *&*, *|*, *<<*, *>>*
+    * String concatenation: *//*
+    * if then else conditionals with lazy evaluation: *?:*
+
+== Postfix operators: ==
+
+    * Unit postfixes (nano, micro, milli, kilo, giga, mega): *{n}*, *{mu}*, *{m}*, *{k}*, *{G}*, *{M}*
+
+== Infix operators: ==
+
+    * Sign operator and type conversions: *-*, *(float)*, *(int)*
+
+== Predefined Functions ==
+
+    * Standard functions *abs*, *sin*, *cos*, *tan*, *sinh*, *cosh*, *tanh*, *ln*, *log*, *log10*, *exp*, *sqrt*
+    * Unlimited number of arguments: *min*, *max*, *sum*
+    * String functions: *str2dbl*, *strlen*, *toupper*
+    * Complex functions: *real*, *imag*, *conj*, *arg*, *norm*
+    * Array functions: *sizeof*
