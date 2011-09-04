@@ -43,6 +43,40 @@ The evaluation of a mathematical expression is a standard task required in many 
     <td align="center"><a href="http://www.opensource.org/licenses/mit-license.php">MIT</a></td>
     <td align="center">~ 10.000.000</td>
   </tr>
+  <tr>
+    <td><a href="http://beltoforion.de/muparsersse/math_expression_compiler_en.html">muParserSSE</a></td>
+    <td align="center" ><img src="http://beltoforion.de/muparserx/fail.png"/></td> 
+    <td align="center" ><img src="http://beltoforion.de/muparserx/ok.png"/></td> 
+    <td align="center" ><img src="http://beltoforion.de/muparserx/fail.png"/></td> 
+    <td align="center" ><img src="http://beltoforion.de/muparserx/fail.png"/></td>
+
+    <td align="center" ><b>float</b></td>
+    <td align="center" ><img src="http://beltoforion.de/muparserx/ok.png" alt="ok"/></td>   
+    <td align="center" ><img src="http://beltoforion.de/muparserx/ok.png" alt="ok"/></td> 
+    <td align="center" ><img src="ok.png" alt="ok"/></td>   
+    <td align="center" ><img src="http://beltoforion.de/muparserx/fail.png" alt="fail"/></td>
+    <td align="center" >max. 10</td>
+    <td align="center" ><img src="ok.png" alt="ok"/></td>
+    <td align="center"><a href="http://www.opensource.org/licenses/mit-license.php">MIT</a></td>
+    <td align="center">~ 20.000.000</td>
+  </tr>
+  <tr>
+    <td><a href="http://beltoforion.de/muparserx/math_expression_parser_en.html">muParserX</a></td>
+    <td align="center" ><img src="http://beltoforion.de/muparserx/ok.png" alt="ok"/></td>    
+    <td align="center" ><img src="http://beltoforion.de/muparserx/ok.png" alt="ok"/></td>    
+    <td align="center" ><img src="http://beltoforion.de/muparserx/ok.png" alt="ok"/></td> 
+    <td align="center" ><img src="http://beltoforion.de/muparserx/ok.png" alt="ok"/></td>    
+    <td align="center" ><b>double</b></td>
+    <td align="center" ><img src="http://beltoforion.de/muparserx/ok.png" alt="ok"/></td>    
+    <td align="center" ><img src="http://beltoforion.de/muparserx/ok.png" alt="ok"/></td> 
+    <td align="center" ><img src="http://beltoforion.de/muparserx/ok.png" alt="ok"/></td>
+
+    <td align="center" ><img src="http://beltoforion.de/muparserx/ok.png" alt="ok"/></td>   
+    <td align="center" ><img src="http://beltoforion.de/muparserx/ok.png" alt="ok"/></td>   
+    <td align="center" ><img src="http://beltoforion.de/muparserx/fail.png"  alt="fail"/></td>
+    <td align="center"><a href="http://www.opensource.org/licenses/lgpl-3.0.html">LGPL V3</a></td>
+    <td align="center">~ 1.600.000</td>
+  </tr>
 </table>
 
 
