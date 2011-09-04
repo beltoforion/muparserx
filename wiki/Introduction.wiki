@@ -80,8 +80,6 @@ The evaluation of a mathematical expression is a standard task required in many 
 </table>
 
 
-
-
 = Features =
  * Supported data types: double, integer, complex, boolean, string, array
  * Extensible with custom operators (binary, infix or postfix)
@@ -106,10 +104,10 @@ By default the parser supports the following mathematical constants:
     * String concatenation: *//*
     * if then else conditionals with lazy evaluation: *?:*
 
-== Postfix operators: ==
+== Postfix operators ==
     * Unit postfixes (nano, micro, milli, kilo, giga, mega): *{n}*, *{mu}*, *{m}*, *{k}*, *{G}*, *{M}*
 
-== Infix operators: ==
+== Infix operators ==
     * Sign operator and type conversions: *-*, *(float)*, *(int)*
 
 == Predefined Functions ==
