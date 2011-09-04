@@ -64,3 +64,143 @@ muParserX defines a common interface for classes representing Values. This inter
 <img src="http://beltoforion.de/muparserx/mup_values.png"/>
 
 mup::Value is a variant type class able to store different data types in a single object. If you want to set up a value for use with muParserX you first have to wrap it into an object of this type. Then you need to bind the value to a mup::Variable object which essentially serves as a proxy for value objects. 
+
+== Defining variables and constants ==
+Variables can be defined either explicitely in your C++ code or implicitely at parser runtime. Implicit creation of variables is usefull when writing console applications that require dynamic creation of variables (i.e. by using the assignment operator).
+
+=== Explicit declaration of variables ===
+
+In order to create a value for use with muParserX you have to create a value object first. The value class provides overloaded constructors for all relevant types: 
+
+{{{
+ using namespace mup;
+
+  // ...
+
+  // Create a complex variable
+  Value cVal(cmplx_type(1, 1));
+  
+  // Create a string variable
+  Value sVal(_T("Hello World"));
+
+  // Creating a floating point variable
+  Value fVal(1.1);
+
+  // Creating an integer variable
+  Value fVal(1);
+
+  // Creating an boolean variable
+  Value bVal(true);
+
+  // Create a 3x3 identity matrix
+  Value m1(3, 3, 0);
+  m1[0][0] = 1;
+  m1[1][1] = 1;
+  m1[2][2] = 1;
+
+  // Create an array
+  Value arr(2, 0);      // Arguments: number of elements, default value
+  arr[0] = 2.0;
+  arr[1] = _T("hallo"); // note that arrays can consits of mixed type elements
+}}}
+
+Once you have a parser value you can bind it to a variable object. A variable serves as a proxy class for value objects. It merely holds a pointer to the original value and refers all queries to it thus allowing the parser to change it. After creating the variable object use the DefineVar function in order to add it to the parser. In a similar procedure constants can be defined by using the DefineConst member function but they can be submitted directly. 
+
+{{{
+  ParserX   p;
+  Value  val( 1.1);
+  Variable var(&val);
+  
+  p.DefineVar("a", var);
+
+  // Now lets define some constants
+  p.DefineConst("b", val);
+  // Alternatively you could simply use:
+  p.DefineConst("b", 1.1);
+}}}
+
+Once a variable is defined there is no need to call DefineVar again just to change it's value! If you want to change the value change the submitted value object directly. Remember: The parser has a pointer to this value object and it gets the value directly from there! Consequently you have to make sure the value object exists throughout the lifetime of the parser instance that is using it!
+
+=== Implicit declaration of variables ===
+
+Implicit creation of variables refers to the creation of parser variables at parser runtime. With this feature you can create variables on the fly without any additional client code. Since this is usefull only for applications requiring direct user interaction it is turned off by default. In order to use it you have to activate it first by calling the EnableAutoCreateVar member function: 
+
+{{{
+ParserX p;
+  p.EnableAutoCreateVar(true);
+
+  // Lets set up an expression for defining a new variable named "a" with the value 123
+  p.SetExpr("a=123");
+
+  // The call to Eval() will create the variable internally
+  p.Eval();
+}}}
+
+Once you have activated the automatic creation of variables the parser will add a variable every time it finds unknown input that could represent a variable name without actually having a definition for such a variable. For instance an expression like a=10 would automatically create a new variable named a provided the variable isn't defined already. It's recommended to always use this feature together with the assignment operator in order to initialize the variable with a proper value. If no assignment operator is found the variable is initialized to zero. The downside is that a statement like abc would also create a variable if there is not already one with that name defined. 
+
+== Evaluating an expression ==
+After setting up your variables properly you can use the SetExpr member function of muParser in order to define the expression. The next thing you have to do is call Eval to evaluate the expression. The return value is again stored in an object of type mup::Value. The complete code for creating variables, setting up the expression and evaluating the result is shown here: 
+
+{{{
+ // Create the parser instance
+  ParserX  p;
+
+  // Create an array of mixed type
+  Value arr(3, 0);
+  arr[0] = 2.0;
+  arr[1] = "this is a string";
+
+  // Create some basic values
+  Value cVal(cmplx_type(1, 1));
+  Value sVal("Hello World");
+  Value fVal(1.1);
+
+  // Now add the variable to muParser
+  p.DefineVar("va", Variable(&arr));
+  p.DefineVar("a",  Variable(&cVal));
+  p.DefineVar("b",  Variable(&sVal));
+  p.DefineVar("c",  Variable(&fVal));
+
+  p.SetExpr("va[0]+a*strlen(b)-c");
+  for (int i=0; i<10; ++i)
+  {
+    // evaluate the expression and change the value of
+    // the variable c in each turn
+    cVal = 1.1 * i;
+    Value result = p.Eval();
+
+    // print the result
+    console() << result << "\n";
+  }
+}}}
+
+== Querying Variables or constants ==
+Sometimes its necessary to get a list of all variables or constants currently defined be muParserX. You may either want to query all variables or just the variables used in an expression. The latter may be usefull when you are dealing with a large number of variables and it's not possible to define all of them before evaluating an expression. In order to get the list of all variables currently defined by an instance of muParserX simply use the ParserX::GetVar() member function. It returns a map containing the variable names as the keys and pointers to the variable tokens as the values. In order to further process the variable you should cast the token into its proper type (mup::Variable) as shown in the following sample:
+
+{{{
+// Get a map of all variables used by muParserX
+  var_maptype vmap = parser.GetVar();
+  for (var_maptype::iterator item = vmap.begin(); item!=vmap.end(); ++item)
+    cout << item->first << "=" << (Variable&)(*(item->second)) << "\n";
+}}} 
+
+Getting the expressions used in an expression does work the same way except that you have to use the ParserX::GetExprVar() member function instead of ParserX::GeVar(). Querying the expression variables does only make sense after having set up an expression using ParserX::SetExpr(...). 
+
+{{{
+// Set the expression
+  parser.SetExpr("a*sin(b)");
+
+  // Query the expression variables 
+  var_maptype vmap = parser.GetExprVar();
+  for (var_maptype::iterator item = vmap.begin(); item!=vmap.end(); ++item)
+    cout << "  " << item->first << " =  " << (Variable&)(*(item->second)) << "\n";
+}}}
+
+Querying all parser constants works the same way by using ParserX::GetConst() member function: 
+
+{{{
+// Get a map containing all constants
+  val_maptype cmap = parser.GetConst();
+  for (val_maptype::iterator item = cmap.begin(); item!=cmap.end(); ++item)
+    cout << "  " << item->first << " =  " << (Value&)(*(item->second)) << "\n";
+}}}
