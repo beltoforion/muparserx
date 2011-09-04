@@ -1,4 +1,4 @@
-#muParserX a mathematical expression parser with support for multiple data types
+#summary muParserX a mathematical expression parser with support for multiple data types
 
 = Introduction =
 
