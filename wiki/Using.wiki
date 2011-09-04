@@ -5,7 +5,7 @@
 
 A stable version of muParserX is available for download at the muParser site on google code. The latest source code can be checked out from the muParser SVN repository using the following command:
 
-svn checkout http://muparserx.googlecode.com/svn/trunk/ muparserx-read-only
+*svn checkout http://muparserx.googlecode.com/svn/trunk/ muparserx-read-only*
 
 Although i never deliberately check in broken versions this is a development snapshots which may not always compile on all systems and may not pass its UNIT test without errors. Most time this does'nt mean it contains more bugs than the official release it just means i added new tests for previousely unknown bugs to the unit test.
 Adding the library to your projects
