@@ -1,4 +1,4 @@
-#summary One-sentence summary of this page.
+#muParserX a mathematical expression parser with support for multiple data types
 
 = Introduction =
 
