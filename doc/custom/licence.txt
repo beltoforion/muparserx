@@ -1,0 +1,39 @@
+/*! \page page_licence Licence
+    \section lic_overview Licence
+
+<b>muParserX</b> is published under the <b>GPL3 Licence</b>. I'm aware that this
+will limit it's usefullness for commercial projects. But find this justifiable 
+for one simple reason: The original <a href="http://muparser.sourceforge.net">muParser</a> was released under the 
+MIT-Licence which is very liberal with regard to using it in commercial products. 
+Although muParser is widely used by now the stream of donations coming back 
+in support of its development is low to nonexistant (apart from a few
+notable exceptions; Thanks to those who donated in the past!). Since my 
+time is limited I'm interested in receiving modification, bugfixes 
+and additions from peoples actually using the parser. The best way to get 
+those modifications is by forcing people to make them publicly available. 
+(For instance if someone implements a callback function doing a Fast 
+Fourier Transform i would like to be able to use it.)
+
+<pre>
+    muParserX - Multitype math parser library
+    Copyright (C) 2010  Ingo Berg
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+
+    You should have received a copy of the GNU General Public License
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
+</pre>
+
+I have no principal objections regarding the use in commercial projects so
+if you feel the need for using muParserX in such a project contact me and i will 
+likely grant you the permission. 
+
+*/
