@@ -43,7 +43,7 @@ In order to use muParserX you have to include the file mpParser.h into your proj
 using namespace mup;
 }}}
 
-The parser functionality is organized in so called packages. A package consits of a set of predefined mathematical functions, operators and constants as well as value detection callbacks. Creating a parser instance is simple: The constructor takes an optional variable made up of several flags for activating certain parser packages. For convenience the parser already defines the enumeration values pckALL_COMPLEX and pckALL_NON_COMPLEX which can be used to configure the parser for either complex valued calculation or noncomplex calculations. If this parameter is omitted the parser will be run in its default mode which means it is using complex numbers and all available operators and functions will be installed (pckALL_COMPLEX).
+The parser functionality is organized in so called packages. A package consist of a set of predefined mathematical functions, operators and constants as well as value detection callbacks. Creating a parser instance is simple: The constructor takes an optional variable made up of several flags for activating certain parser packages. For convenience the parser already defines the enumeration values pckALL_COMPLEX and pckALL_NON_COMPLEX which can be used to configure the parser for either complex valued calculation or noncomplex calculations. If this parameter is omitted the parser will be run in its default mode which means it is using complex numbers and all available operators and functions will be installed (pckALL_COMPLEX).
 
 {{{
 ParserX  p(pckALL_NON_COMPLEX);
