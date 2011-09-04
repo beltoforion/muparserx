@@ -3,9 +3,52 @@
 = Introduction =
 The evaluation of a mathematical expression is a standard task required in many applications. It can be solved by either using a standard math expression parser such as muParser or by embedding a scripting language such as Lua. There are however some limitations: Although muParser is pretty fast it will only work with scalar values and although Lua is very flexible it does neither support binary operators for arrays nor complex numbers. So if you need a math expression parser with support for arrays, matrices and strings muParserX may be able to help you. It is based on the original muParser engine but has evolved into a standalone project ever since. 
 
+<table border="1">
+  <tr>
+    <th rowspan="2" >Parser</th>
+    <th colspan="4" align="center">Data types</th>
+    <th rowspan="2">Precision</th>
+    <th colspan="3" align="center">User defined operators</th>
+    <th colspan="2" align="center">User defined functions</th>
+    <th rowspan="2" align="center">Localization</th>
+    <th rowspan="2">Licence</th>
+    <th rowspan="2" align="center">Performance (Expr. per second)</th>
+  </tr> 
+  <tr>
+    <th>complex</th>   
+    <th>scalar</th>
+    <th>string</th>       
+    <th>vector</th>
+    <th>Binary</th> 
+    <th>Postfix</th>  
+    <th>Infix</th>
+    <th>Strings as parameters</th> 
+    <th align="center">Arbitrary number of parameters</th>
+  </tr>
+
+  <tr>
+    <td><a href="http://muparser.sourceforge.net/">muParser</a></td>
+    <td align="center"><img src="http://beltoforion.de/muparserx/fail_ok.png"/>(1)</td> 
+    <td align="center"><img src="http://beltoforion.de/muparserx/ok.png"/></td> 
+    <td align="center" ><img src="http://beltoforion.de/muparserx/fail_ok.png"/>(2)</td> 
+    <td align="center" ><img src="http://beltoforion.de/muparserx/fail.png"/></td>
+    <td align="center" ><b>double</b></td>
+    <td align="center" ><img src="http://beltoforion.de/muparserx/ok.png"/></td>   
+    <td align="center" ><img src="http://beltoforion.de/muparserx/ok.png"/></td>   
+    <td align="center" ><img src="http://beltoforion.de/muparserx/ok.png"/></td> 
+    <td align="center" ><img src="http://beltoforion.de/muparserx/ok.png"/></td>   
+    <td align="center" ><img src="http://beltoforion.de/muparserx/ok.png"/></td>
+
+    <td align="center" ><img src="http://beltoforion.de/muparserx/ok.png"/></td>
+    <td align="center"><a href="http://www.opensource.org/licenses/mit-license.php">MIT</a></td>
+    <td align="center">~ 10.000.000</td>
+  </tr>
+</table>
+
+
+
 
 = Features =
-
  * Supported data types: double, integer, complex, boolean, string, array
  * Extensible with custom operators (binary, infix or postfix)
  * Extensible with custom functions with an arbitrary number of function arguments
