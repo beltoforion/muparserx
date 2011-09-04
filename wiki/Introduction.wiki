@@ -53,10 +53,10 @@ The evaluation of a mathematical expression is a standard task required in many 
     <td align="center" ><b>float</b></td>
     <td align="center" ><img src="http://beltoforion.de/muparserx/ok.png" alt="ok"/></td>   
     <td align="center" ><img src="http://beltoforion.de/muparserx/ok.png" alt="ok"/></td> 
-    <td align="center" ><img src="ok.png" alt="ok"/></td>   
+    <td align="center" ><img src="http://beltoforion.de/muparserx/ok.png" alt="ok"/></td>   
     <td align="center" ><img src="http://beltoforion.de/muparserx/fail.png" alt="fail"/></td>
     <td align="center" >max. 10</td>
-    <td align="center" ><img src="ok.png" alt="ok"/></td>
+    <td align="center" ><img src="http://beltoforion.de/muparserx/ok.png" alt="ok"/></td>
     <td align="center"><a href="http://www.opensource.org/licenses/mit-license.php">MIT</a></td>
     <td align="center">~ 20.000.000</td>
   </tr>
