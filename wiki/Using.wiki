@@ -10,3 +10,25 @@ Although i never deliberately check in broken versions this is a development sna
 
 == Adding the library to your projects ==
 This library depends on the Standard template library (STL). The problem with the STL is that every C++ compiler has its own implementation of the STL and different STL implementations are not compatible in terms of their memory layout. Since STL template classes are used in the API of muParserX I do not see a maintainable way to provide a prebuild library. Your only choice of using the library is adding its source code directly to your project. So In order to use the library you should add all files located in the "muparserx/parser" subdiretory into your own project. The library currently comes with project files for VisualStudio 2008 and a Makefile for the GNU C++ compiler but It should compile on every standard compliant C++ compiler. 
+
+== Basic design concept ==
+Before starting I should give you an overview over the classes related to muParserX. Parsing works by splitting the mathematical expression into so called tokens. A token can be either a value, a variable, a function call, an operator or a special character such as brackets or commas. The tokens will be stored internally for processing during the evaluation process. When using the parser you will deal with tokens directly only when setting variables, constants functions or operators.
+
+<img src="http://beltoforion.de/muparserx/mup_tokens.png"/>
+
+The parser defines an abstract base class named mup::IToken from which all of its tokens are derived. There are three major kinds of token: Value tokens, Callback tokens and generic tokens. Values represent either constants or variables, callbacks represent functions and operators, generic tokens are used for brackets, commas and special characters.
+It's important to know that muParserX handles its tokens via reference counted smartpointers using the mup::TokenPtr<...> template class. There is no need to release their pointers explicitely with the delete operator. The following typedefs represent smartpointer names: 
+
+{{{
+namespace mup
+{
+  // Type of a managed pointer storing parser tokens via their base type.
+  typedef TokenPtr<IToken>   ptr_tok_type;
+
+  // Type of a managed pointer storing value tokens via their base type. 
+  typedef TokenPtr<IValue>   ptr_val_type;
+
+  // Type of a managed pointer storing binary operator tokens. 
+  typedef TokenPtr<IOprtBin> ptr_binop_type;
+}
+}}}
