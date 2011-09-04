@@ -1,7 +1,6 @@
 #summary muParserX a mathematical expression parser with support for multiple data types
 
 = Introduction =
-
 The evaluation of a mathematical expression is a standard task required in many applications. It can be solved by either using a standard math expression parser such as muParser or by embedding a scripting language such as Lua. There are however some limitations: Although muParser is pretty fast it will only work with scalar values and although Lua is very flexible it does neither support binary operators for arrays nor complex numbers. So if you need a math expression parser with support for arrays, matrices and strings muParserX may be able to help you. It is based on the original muParser engine but has evolved into a standalone project ever since. 
 
 
@@ -18,13 +17,9 @@ The evaluation of a mathematical expression is a standard task required in many 
 
 == Predefined Constants ==
 By default the parser supports the following mathematical constants:
-
-    * The eulerian number with:
-    e = 2.718281828459045235360287
-    * Pi, the mathematical constant equal to a circle's circumference divided by its diameter.
-    pi = 3.141592653589793238462643
-    * The imaginary unit with:
-    i = sqrt(-1)
+    * The eulerian number with: *e = 2.718281828459045235360287*
+    * Pi with *pi = 3.141592653589793238462643*
+    * The imaginary unit with: *i = sqrt(-1)*
 
 == Binary and ternary operators: ==
 
