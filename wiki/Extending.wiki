@@ -1,0 +1,55 @@
+#summary Extending muParserX with custom functions and operators
+
+Like the original muParser this library is designed to allow users to extend it with custom functions or and operators. There is however one fundamental difference: muParserX is using objects as callbacks and not static functions. The following sections will show you how to extend the library with custom callbacks. 
+
+== Defining custom functions ==
+
+All custom functions must implement the ICallback interface. This interface provides the ICallback::Clone(), ICallback::Eval(...) and ICallback::GetDesc() member functions. An implementation of a user defined class may look like this: 
+
+{{{
+class MySine : public mup::ICallback
+  {
+    MySine()
+      :ICallback(cmFUNC, "mysin", 1)
+    {}
+
+    virtual void Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int a_iArgc)
+    {
+      // Get the argument from the argument input vector
+      float_type a = argv[0]->GetFloat();
+
+      // The return value is passed by writing it to the reference ret
+      *ret = sin(a);
+    }
+
+    const char_type* GetDesc() const
+    {
+      return "mysin(x) - A custom sine function";
+    }
+
+    IToken* Clone() const
+    {
+      return new MySine(*this);
+    }
+  };
+}}}
+
+The mup::ICallback constructor takes three argument. The first determines the type of the callback. If you want to add a parser function use cmFUNC. The second is the function name and the last parameter is the number of arguments. Please note that the parser leaves the type checking of the function arguments entirely to your implementation of ICallback::Eval.
+
+Binary operators are treated like functions taking two arguments, unary operators like functions with a single argument. Once you have a class which you would like to add as a function to muParserX you have to bind it to your parser instance using the DefineFun member function: 
+
+{{{
+ParserX p;
+p.DefineFun(new MySine);
+}}}
+
+Once submitted to DefineFun the parser takes ownership of the newly created pointer. You may not release it on your own! 
+
+== Defining custom operators ==
+Defining your own operators is very similar to defining new functions. You have to create a callback object and register it at the parser instance. The parser lets you add unary operators (both infix and prefix) as well as binary operators using the following member functions:
+
+{{{
+ void DefineOprt(IOprtBin *a_pCallback)
+ void DefinePostfixOprt(IOprtPostfix *a_pCallback)
+ void DefineInfixOprt(IOprtInfix *a_pCallback)
+}}}
