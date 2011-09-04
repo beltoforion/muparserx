@@ -126,8 +126,8 @@ The next table shows samples of expressions that can be evaluated using <b>muPar
 ||"hello"=="world" ||false        ||Comparing strings||
 ||"hello "//"world"||"hello world"||String concatanation operator||
 ||sin(a+8i)        ||...          ||Support for a variety of predefined functions working with complex numbers.||
-||va[3]+vb[5]||...||Support for array variables||
-||va[3]=9||...||Assignment operator in combination with indexed access to a vector||
+||va{{{[}}}3{{{]}}}+vb{{{[}}}5{{{]}}}||...||Support for array variables||
+||va{{{[}}}3{{{]}}}=9||...||Assignment operator in combination with indexed access to a vector||
 ||toupper("hello"//"world")||"HELLOWORLD"||Transforming a concatenated string to uppercase.||
 ||#010010||18||Interpreting binary values||
 ||0x1eff||7935||Interpreting hex values||
