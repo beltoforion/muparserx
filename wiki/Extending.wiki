@@ -1,4 +1,5 @@
 #summary Extending muParserX with custom functions and operators
+#sidebar TableOfContents
 
 Like the original muParser this library is designed to allow users to extend it with custom functions or and operators. There is however one fundamental difference: muParserX is using objects as callbacks and not static functions. The following sections will show you how to extend the library with custom callbacks. 
 
