@@ -1,0 +1,13 @@
+#summary One-sentence summary of this page.
+
+= Introduction =
+
+The evaluation of a mathematical expression is a standard task required in many applications. It can be solved by either using a standard math expression parser such as muParser or by embedding a scripting language such as Lua. There are however some limitations: Although muParser is pretty fast it will only work with scalar values and although Lua is very flexible it does neither support binary operators for arrays nor complex numbers. So if you need a math expression parser with support for arrays, matrices and strings muParserX may be able to help you. It is based on the original muParser engine but has evolved into a standalone project ever since. 
+
+
+= Details =
+
+Add your content here.  Format your content with:
+  * Text in *bold* or _italic_
+  * Headings, paragraphs, and lists
+  * Automatic links to other wiki pages
