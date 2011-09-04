@@ -22,6 +22,4 @@
  * [http://code.google.com/p/muparserx/wiki/Extending Extending muParserX]
    * [http://code.google.com/p/muparserx/wiki/Extending#Defining_custom_functions Defining custom functions]
    * [http://code.google.com/p/muparserx/wiki/Extending#Defining_custom_operators Defining custom operators]
-
-
-
+ * [http://code.google.com/p/muparserx/wiki/Benchmarks Benchmarks]
