@@ -1,2 +1,5 @@
 #summary muParserX class overview
 
+Before starting I should give you an overview over the classes related to muParserX. Parsing works by splitting the mathematical expression into so called tokens. A token can be either a value, a variable, a function call, an operator or a special character such as brackets or commas. The tokens will be stored internally for processing during the evaluation process. When using the parser you will deal with tokens directly only when setting variables, constants functions or operators.
+
+<img src="http://beltoforion.de/muparserx/mup_tokens.png"/>
