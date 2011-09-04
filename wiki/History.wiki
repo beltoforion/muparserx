@@ -1,5 +1,5 @@
 #summary Version history
-#sidebar TableOfContest
+#sidebar TableOfContents
 
 = V1.10 (20111003) =
 ----------------
