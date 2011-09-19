@@ -32,6 +32,7 @@ namespace mu
       std::ostream *m_stream;
 #endif
 
+      int TestInitialization();
       int TestAddSub();
       int TestMul();
       

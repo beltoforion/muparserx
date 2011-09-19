@@ -17,6 +17,7 @@ namespace mu
     m_stream = &std::cout;
 #endif
 
+    AddTest(&MatrixTest::TestInitialization);
     AddTest(&MatrixTest::TestAddSub);
     AddTest(&MatrixTest::TestMul);
   }
@@ -25,6 +26,45 @@ namespace mu
   void MatrixTest::AddTest(MatrixTest::testfun_type a_pFun)
   {
     m_vTests.push_back(a_pFun);
+  }
+  
+  //-----------------------------------------------------------------------------------------------
+  int MatrixTest::TestInitialization()
+  {
+    int nFail = 0;
+
+    *m_stream << "testing matrix initialization...";
+
+    // Array initialization
+    double ref_v3[] = { 1.0, 2.0, 3.0};
+    
+    // 1.1) Create empty array,initialize cell by cell afterwards
+    Matrix<double> v1(3);
+    v1.At(0) = ref_v3[0];
+    v1.At(1) = ref_v3[1];
+    v1.At(2) = ref_v3[2];
+
+    // Create a reference matrix
+    double ref[3][3] = { {1,2,3}, 
+                         {4,5,6}, 
+                         {7,8,9} };
+
+    // 1.) Construct empty matrix, fill afterwards cell by cell
+    Matrix<double> m1(3,3);
+    m1.At(0,0) = ref[0][0]; m1.At(0,1) = ref[0][1]; m1.At(0,2) = ref[0][2];
+    m1.At(1,0) = ref[1][0]; m1.At(1,1) = ref[1][1]; m1.At(1,2) = ref[1][2];
+    m1.At(2,0) = ref[2][0]; m1.At(2,1) = ref[2][1]; m1.At(2,2) = ref[2][2];
+
+    // 2.) Construct matrix from multidimensional array
+    Matrix<double> m2(ref);
+
+
+    if (nFail==0) 
+      *m_stream << "passed" << endl;
+    else 
+      *m_stream << "\n  failed with " << nFail << " errors" << endl;
+
+    return nFail;  
   }
 
   //-----------------------------------------------------------------------------------------------

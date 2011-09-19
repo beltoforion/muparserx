@@ -59,10 +59,10 @@ MUP_NAMESPACE_START
     }
     else if (a_pArg[0]->GetType()=='a')
     {
-      Value v(a_pArg[0]->GetDim(), 0);
-      for (std::size_t i=0; i<a_pArg[0]->GetDim(); ++i)
+      Value v(a_pArg[0]->GetRows(), 0);
+      for (int i=0; i<a_pArg[0]->GetRows(); ++i)
       {
-        v[i] = (*(a_pArg[0]))[i].GetComplex() * -1.0;
+        v.At(i) = a_pArg[0]->At(i).GetComplex() * -1.0;
       }
       *ret = v;
     }
@@ -105,32 +105,15 @@ MUP_NAMESPACE_START
 
     const IValue *arg1 = a_pArg[0].Get();
     const IValue *arg2 = a_pArg[1].Get();
+
     if (arg1->IsNonComplexScalar() && arg2->IsNonComplexScalar())
     {
       *ret = arg1->GetFloat() + arg2->GetFloat(); 
     }
     else if (arg1->GetType()=='a' && arg2->GetType()=='a')
     {
-      // Vector + Vector
-      const array_type &a1 = arg1->GetArray(),
-                       &a2 = arg2->GetArray();
-      if (a1.size()!=a2.size())
-        throw ParserError(ErrorContext(ecARRAY_SIZE_MISMATCH, GetExprPos(), GetIdent(), 'a', 'a', 2));
-      
-      array_type rv(a1.size());
-      for (std::size_t i=0; i<a1.size(); ++i)
-      {
-        if (!a1[i].IsScalar())
-          throw ParserError( ErrorContext(ecTYPE_CONFLICT_FUN, GetExprPos(), GetIdent(), a1[i].GetType(), 'c', 1)); 
-
-        if (!a2[i].IsScalar())
-          throw ParserError( ErrorContext(ecTYPE_CONFLICT_FUN, GetExprPos(), GetIdent(), a2[i].GetType(), 'c', 1)); 
-
-        rv[i] = cmplx_type(a1[i].GetFloat() + a2[i].GetFloat(),
-                           a1[i].GetImag()  + a2[i].GetImag());
-      }
-
-      *ret = rv; 
+      // Matrix + Matrix
+      *ret = arg1->GetArray() + arg2->GetArray();
     }
     else
     {
@@ -171,32 +154,17 @@ MUP_NAMESPACE_START
   void OprtSubCmplx::Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int num)
   { 
     assert(num==2);
-
+    
+    const IValue *arg1 = a_pArg[0].Get();
+    const IValue *arg2 = a_pArg[1].Get();
     if ( a_pArg[0]->IsNonComplexScalar() && a_pArg[1]->IsNonComplexScalar())
     {
-      *ret = a_pArg[0]->GetFloat() - a_pArg[1]->GetFloat(); 
+      *ret = arg1->GetFloat() - arg2->GetFloat(); 
     }
     else if (a_pArg[0]->GetType()=='a' && a_pArg[1]->GetType()=='a')
     {
-      const array_type &a1 = a_pArg[0]->GetArray(),
-                       &a2 = a_pArg[1]->GetArray();
-      if (a1.size()!=a2.size())
-        throw ParserError(ErrorContext(ecARRAY_SIZE_MISMATCH,  GetExprPos(), GetIdent(), 'a', 'a', 2));
-      
-      array_type rv(a1.size());
-      for (std::size_t i=0; i<a1.size(); ++i)
-      {
-        if (!a1[i].IsScalar())
-          throw ParserError( ErrorContext(ecTYPE_CONFLICT_FUN, GetExprPos(), GetIdent(), a1[i].GetType(), 'c', 1)); 
-
-        if (!a2[i].IsScalar())
-          throw ParserError( ErrorContext(ecTYPE_CONFLICT_FUN, GetExprPos(), GetIdent(), a2[i].GetType(), 'c', 1)); 
-
-        rv[i] = cmplx_type(a1[i].GetFloat() - a2[i].GetFloat(),
-                           a1[i].GetImag()  - a2[i].GetImag());
-      }
-
-      *ret = rv;
+      // Matrix + Matrix
+      *ret = arg1->GetArray() - arg2->GetArray();
     }
     else
     {
@@ -245,32 +213,15 @@ MUP_NAMESPACE_START
     }
     else if (arg1->GetType()=='a' && arg2->GetType()=='a')
     {
-      // Scalar multiplication
-      array_type a1 = arg1->GetArray();
-      array_type a2 = arg2->GetArray();
-
-      if (a1.size()!=a2.size())
-        throw ParserError(ErrorContext(ecARRAY_SIZE_MISMATCH, GetExprPos(), GetIdent(), 'a', 'a', 2));
-
-      float_type val(0);
-      for (std::size_t i=0; i<a1.size(); ++i)
-      {
-        if (a1[i].IsScalar() && a1[i].IsScalar())
-        {
-          val += a1[i].GetFloat()*a2[i].GetFloat();
-        }
-        //else
-        //  throw ParserError(ErrorContext(ecARRAY_SIZE_MISMATCH, GetExprPos(), GetIdent(), 'a', 'a', 2));
-      }
-
-      *ret = val;
+      // Matrix * Matrix; includes scalar multiplication
+      *ret = arg1->GetArray() - arg2->GetArray();
     }
     else if (a_pArg[0]->GetType()=='a' && a_pArg[1]->IsScalar())
     {
       // Skalar * Vector
       array_type out(a_pArg[0]->GetArray());
-      for (std::size_t i=0; i<out.size(); ++i)
-        out[i] = out[i].GetFloat() * a_pArg[1]->GetFloat();
+      for (int i=0; i<out.GetRows(); ++i)
+        out.At(i) = out.At(i).GetFloat() * a_pArg[1]->GetFloat();
 
       *ret = out; 
     }
@@ -278,8 +229,8 @@ MUP_NAMESPACE_START
     {
       // Vector * Skalar
       array_type out(a_pArg[1]->GetArray());
-      for (std::size_t i=0; i<out.size(); ++i)
-        out[i] = out[i].GetFloat() * a_pArg[0]->GetFloat();
+      for (int i=0; i<out.GetRows(); ++i)
+        out.At(i) = out.At(i).GetFloat() * a_pArg[0]->GetFloat();
 
       *ret = out; 
     }

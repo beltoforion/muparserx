@@ -14,7 +14,7 @@ namespace mu
 {
   //-----------------------------------------------------------------------------------------------
   template<typename T>
-  class Matrix
+  class Matrix  
   {
   template<typename T>
   friend Matrix<T> operator+(const Matrix<T>& lhs, const Matrix<T>& rhs);
@@ -58,7 +58,7 @@ namespace mu
     {}
 
     //---------------------------------------------------------------------------------------------
-    /* Constructs a Matrix object representing a vector
+    /* \brief Constructs a Matrix object representing a vector
     */
     Matrix(const std::vector<T> &v)
       :m_nRows(v.size())
@@ -103,22 +103,6 @@ namespace mu
       ,m_vData(m_nRows*m_nCols)
     {}
 
-    ////---------------------------------------------------------------------------------------------
-    Matrix(std::initializer_list<int> m)
-      :m_nRows(3)
-      ,m_nCols(3)
-      ,m_eStorageScheme(mssROWS_FIRST)
-      ,m_vData(9, 0)
-    {
-      //for (int m=0; m<TRows; ++m)
-      //{
-      //  for (int n=0; n<TCols; ++n)
-      //  {
-      //    At(m,n) = v[m][n];
-      //  }
-      //}
-    }
-
     //---------------------------------------------------------------------------------------------
     Matrix(const Matrix &ref)
     {
@@ -143,6 +127,7 @@ namespace mu
       m_vData.assign(1, v);
       return *this;
     }
+
     //---------------------------------------------------------------------------------------------
     Matrix& operator+=(const Matrix &lhs)
     {
@@ -270,7 +255,7 @@ namespace mu
     }
 
     //---------------------------------------------------------------------------------------------
-    virtual ~Matrix()
+   ~Matrix()
     {
       m_vData.clear();
     }

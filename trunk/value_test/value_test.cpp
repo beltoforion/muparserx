@@ -45,7 +45,7 @@ MUP_NAMESPACE_END
 using namespace mup;
 using namespace mu;
 
-int main(int argc, char **argv)
+int main(int /* argc */, char ** /*argv*/)
 {
   MatrixTest mt;
   mt.Run();

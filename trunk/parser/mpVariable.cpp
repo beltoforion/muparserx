@@ -117,9 +117,30 @@ MUP_NAMESPACE_START
   }
 
   //---------------------------------------------------------------------------
-  IValue& Variable::operator[](std::size_t i)
+  IValue& Variable::operator+=(const IValue &val)
   {
-    return m_pVal->operator[](i);
+    assert(m_pVal);
+    return m_pVal->operator+=(val);
+  }
+
+  //---------------------------------------------------------------------------
+  IValue& Variable::operator-=(const IValue &val)
+  {
+    assert(m_pVal);
+    return m_pVal->operator-=(val);
+  }
+
+  //---------------------------------------------------------------------------
+  IValue& Variable::operator*=(const IValue &val)
+  {
+    assert(m_pVal);
+    return m_pVal->operator*=(val);
+  }
+
+  //---------------------------------------------------------------------------
+  IValue& Variable::At(int nRow, int nCol)
+  {
+    return m_pVal->At(nRow, nCol);
   }
 
   //---------------------------------------------------------------------------

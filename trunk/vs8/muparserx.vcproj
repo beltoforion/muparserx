@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="Windows-1252"?>
 <VisualStudioProject
 	ProjectType="Visual C++"
-	Version="9,00"
+	Version="9.00"
 	Name="muparserx"
 	ProjectGUID="{E202E8A6-284D-4AD9-A465-B11267571619}"
 	RootNamespace="muparser2"
@@ -361,6 +361,14 @@
 					</File>
 					<File
 						RelativePath="..\parser\mpIValue.h"
+						>
+					</File>
+					<File
+						RelativePath="..\parser\mpMatrix.h"
+						>
+					</File>
+					<File
+						RelativePath="..\parser\mpMatrixError.h"
 						>
 					</File>
 					<File

@@ -40,6 +40,7 @@
 //--- muParserX framework ---------------------------------------------------
 #include "suSortPred.h"  // We need the string utils sorting predicates
 #include "mpDefines.h"
+#include "mpMatrix.h"
 
 
 MUP_NAMESPACE_START
@@ -95,7 +96,9 @@ MUP_NAMESPACE_START
   typedef bool bool_type;   
 
   /** \brief The parsers array type. */
-  typedef std::vector<Value> array_type;
+  //typedef std::vector<Value> array_type;
+
+  typedef Matrix<Value> array_type;
 
   /** \brief Parser datatype for strings. */
   typedef MUP_STRING_TYPE string_type;

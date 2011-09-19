@@ -47,10 +47,10 @@ MUP_NAMESPACE_START
     }
     else if (a_pArg[0]->GetType()=='a')
     {
-      Value v(a_pArg[0]->GetDim(), 0);
-      for (std::size_t i=0; i<a_pArg[0]->GetDim(); ++i)
+      Value v(a_pArg[0]->GetRows(), 0);
+      for (int i=0; i<a_pArg[0]->GetRows(); ++i)
       {
-        v[i] = -(*(a_pArg[0]))[i].GetFloat();
+        v.At(i) = -a_pArg[0]->At(i).GetFloat();
       }
       *ret = v;
     }
@@ -98,19 +98,19 @@ MUP_NAMESPACE_START
       // Vector + Vector
       const array_type &a1 = arg1->GetArray(),
                        &a2 = arg2->GetArray();
-      if (a1.size()!=a2.size())
+      if (a1.GetRows()!=a2.GetRows())
         throw ParserError(ErrorContext(ecARRAY_SIZE_MISMATCH, -1, GetIdent(), 'a', 'a', 2));
       
-      array_type rv(a1.size());
-      for (std::size_t i=0; i<a1.size(); ++i)
+      array_type rv(a1.GetRows());
+      for (int i=0; i<a1.GetRows(); ++i)
       {
-        if (!a1[i].IsNonComplexScalar())
-          throw ParserError( ErrorContext(ecTYPE_CONFLICT_FUN, -1, GetIdent(), a1[i].GetType(), 'f', 1)); 
+        if (!a1.At(i).IsNonComplexScalar())
+          throw ParserError( ErrorContext(ecTYPE_CONFLICT_FUN, -1, GetIdent(), a1.At(i).GetType(), 'f', 1)); 
 
-        if (!a2[i].IsNonComplexScalar())
-          throw ParserError( ErrorContext(ecTYPE_CONFLICT_FUN, -1, GetIdent(), a2[i].GetType(), 'f', 1)); 
+        if (!a2.At(i).IsNonComplexScalar())
+          throw ParserError( ErrorContext(ecTYPE_CONFLICT_FUN, -1, GetIdent(), a2.At(i).GetType(), 'f', 1)); 
 
-        rv[i] = a1[i].GetFloat() + a2[i].GetFloat();
+        rv.At(i) = a1.At(i).GetFloat() + a2.At(i).GetFloat();
       }
 
       *ret = rv; 
@@ -158,20 +158,20 @@ MUP_NAMESPACE_START
     {
       const array_type &a1 = a_pArg[0]->GetArray(),
                        &a2 = a_pArg[1]->GetArray();
-      if (a1.size()!=a2.size())
+      if (a1.GetRows()!=a2.GetRows())
         throw ParserError(ErrorContext(ecARRAY_SIZE_MISMATCH, -1, GetIdent(), 'a', 'a', 2));
       
-      array_type rv(a1.size());
-      for (std::size_t i=0; i<a1.size(); ++i)
+      array_type rv(a1.GetRows());
+      for (int i=0; i<a1.GetRows(); ++i)
       {
-        if (!a1[i].IsNonComplexScalar())
-          throw ParserError( ErrorContext(ecTYPE_CONFLICT_FUN, -1, GetIdent(), a1[i].GetType(), 'f', 1)); 
+        if (!a1.At(i).IsNonComplexScalar())
+          throw ParserError( ErrorContext(ecTYPE_CONFLICT_FUN, -1, GetIdent(), a1.At(i).GetType(), 'f', 1)); 
 
-        if (!a2[i].IsNonComplexScalar())
-          throw ParserError( ErrorContext(ecTYPE_CONFLICT_FUN, -1, GetIdent(), a2[i].GetType(), 'f', 1)); 
+        if (!a2.At(i).IsNonComplexScalar())
+          throw ParserError( ErrorContext(ecTYPE_CONFLICT_FUN, -1, GetIdent(), a2.At(i).GetType(), 'f', 1)); 
 
-        rv[i] = cmplx_type(a1[i].GetFloat() - a2[i].GetFloat(),
-                           a1[i].GetImag()  - a2[i].GetImag());
+        rv.At(i) = cmplx_type(a1.At(i).GetFloat() - a2.At(i).GetFloat(),
+                              a1.At(i).GetImag()  - a2.At(i).GetImag());
       }
 
       *ret = rv;
@@ -222,12 +222,12 @@ MUP_NAMESPACE_START
       array_type a1 = arg1->GetArray();
       array_type a2 = arg2->GetArray();
 
-      if (a1.size()!=a2.size())
+      if (a1.GetRows()!=a2.GetRows())
         throw ParserError(ErrorContext(ecARRAY_SIZE_MISMATCH, -1, GetIdent(), 'a', 'a', 2));
 
       float_type val(0);
-      for (std::size_t i=0; i<a1.size(); ++i)
-        val += a1[i].GetFloat()*a2[i].GetFloat();
+      for (int i=0; i<a1.GetRows(); ++i)
+        val += a1.At(i).GetFloat()*a2.At(i).GetFloat();
 
       *ret = val;
     }
@@ -235,8 +235,8 @@ MUP_NAMESPACE_START
     {
       // Skalar * Vector
       array_type out(a_pArg[0]->GetArray());
-      for (std::size_t i=0; i<out.size(); ++i)
-        out[i] = out[i].GetFloat() * arg2->GetFloat();
+      for (int i=0; i<out.GetRows(); ++i)
+        out.At(i) = out.At(i).GetFloat() * arg2->GetFloat();
 
       *ret = out; 
     }
@@ -244,8 +244,8 @@ MUP_NAMESPACE_START
     {
       // Vector * Skalar
       array_type out(arg2->GetArray());
-      for (std::size_t i=0; i<out.size(); ++i)
-        out[i] = out[i].GetFloat() * arg1->GetFloat();
+      for (int i=0; i<out.GetRows(); ++i)
+        out.At(i) = out.At(i).GetFloat() * arg1->GetFloat();
 
       *ret = out; 
     }

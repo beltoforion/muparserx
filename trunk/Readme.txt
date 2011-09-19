@@ -20,6 +20,18 @@
 #                                                                       #
 #########################################################################
 
+V1.10.3 (20111109; SVN only; Work in Progress!)
+-----------------------------------------------
+Changes:
+- Fundamental datatype changed to a matrix type instead of a vector type
+
+V1.10.2 (20111109; SVN only)
+----------------------------
+Bugfixes:
+- Fix for changed behaviour of tellg in GCC 4.6.1. A Space is now appended 
+  to every expression in order to avoid problems.
+
+
 V1.10 (20111003)
 ----------------
 Warning:
