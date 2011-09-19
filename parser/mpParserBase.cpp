@@ -747,20 +747,20 @@ MUP_NAMESPACE_START
                 if (!val->IsArray())
                   Error(ecNOT_AN_ARRAY, pTok->GetExprPos(), val.Get()); 
 
-                if (idx->GetFloat() >= val->GetArray().size() || idx->GetFloat() < 0 )
+                if (idx->GetFloat() >= val->GetArray().GetRows() || idx->GetFloat() < 0 )
                   Error(ecINDEX_OUT_OF_BOUNDS, pTok->GetExprPos(), val.Get()); 
 
                 if (val->AsValue()!=NULL)
                 {
                   // Index of a value item
-                  ptr_val_type pValue( new Value( (*val)[(int_type)idx->GetFloat()]) );
+                  ptr_val_type pValue( new Value( val->At((int_type)idx->GetFloat()) ) );
                   pValue->AddFlags(IToken::flVOLATILE);
                   stVal.push(pValue);
                 }
                 else
                 {
                   // index of a variable item
-                  IValue &v = (*val)[(int_type)idx->GetFloat()];
+                  IValue &v = val->At((int_type)idx->GetFloat());
                   ptr_val_type pVar( new Variable(&v) );
                   stVal.push(pVar);
                 }
@@ -1067,7 +1067,7 @@ MUP_NAMESPACE_START
                 else 
                   throw;
               }
-              val.Reset(new Variable( &(*val)[i]));
+              val.Reset(new Variable( &(val->At(i)) ) );
             }
             continue;
 
@@ -1101,6 +1101,16 @@ MUP_NAMESPACE_START
                err.Errc = ecEVAL;
                err.Pos = pFun->GetExprPos();
                err.Hint = exc.GetMsg();
+               throw ParserError(err);
+             }
+             catch(MatrixError &exc)
+             {
+               ErrorContext err;
+               err.Expr = m_pTokenReader->GetExpr();
+               err.Ident = pFun->GetIdent();
+               err.Errc = ecEVAL;
+               err.Pos = pFun->GetExprPos();
+               err.Hint = _T("Matrix dimension mismatch");
                throw ParserError(err);
              }
            }

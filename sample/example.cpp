@@ -710,43 +710,43 @@ void Calc()
 
   // Create an array variable
   Value arr1(3, 0);
-  arr1[0] = (float_type)1.11;
-  arr1[1] = (float_type)2.22;
-  arr1[2] = (float_type)3.33;
+  arr1.At(0) = (float_type)1.11;
+  arr1.At(1) = (float_type)2.22;
+  arr1.At(2) = (float_type)3.33;
 
   // Create an array variable
   Value arr2(3, 0);
-  arr2[0] = (float_type)2.0;
-  arr2[1] = (float_type)2.0;
-  arr2[2] = (float_type)2.0;
+  arr2.At(0) = (float_type)2.0;
+  arr2.At(1) = (float_type)2.0;
+  arr2.At(2) = (float_type)2.0;
 
   Value arr3(4, 0);
-  arr3[0] = (float_type)1.0;
-  arr3[1] = (float_type)2.0;
-  arr3[2] = (float_type)3.0;
-  arr3[3] = (float_type)4.0;
+  arr3.At(0) = (float_type)1.0;
+  arr3.At(1) = (float_type)2.0;
+  arr3.At(2) = (float_type)3.0;
+  arr3.At(3) = (float_type)4.0;
 
   Value arr4(3, 0);
-  arr4[0] = (float_type)4.0;
-  arr4[1] = false;
-  arr4[2] = _T("hallo");
+  arr4.At(0) = (float_type)4.0;
+  arr4.At(1) = false;
+  arr4.At(2) = _T("hallo");
 
   // Create a 3x3 matrix with zero elements
   Value m1(3, 3, 0);
-  m1[0][0] = 1;
-  m1[1][1] = 1;
-  m1[2][2] = 1;
+  m1.At(0, 0) = 1;
+  m1.At(1, 1) = 1;
+  m1.At(2, 2) = 1;
 
   Value m2(3, 3, 0);
-  m2[0][0] = 1;
-  m2[0][1] = 2;
-  m2[0][2] = 3;
-  m2[1][0] = 4;
-  m2[1][1] = 5;
-  m2[1][2] = 6;
-  m2[2][0] = 7;
-  m2[2][1] = 8;
-  m2[2][2] = 9;
+  m2.At(0, 0) = 1;
+  m2.At(0, 1) = 2;
+  m2.At(0, 2) = 3;
+  m2.At(1, 0) = 4;
+  m2.At(1, 1) = 5;
+  m2.At(1, 2) = 6;
+  m2.At(2, 0) = 7;
+  m2.At(2, 1) = 8;
+  m2.At(2, 2) = 9;
 
   Value val[5];
   val[0] = (float_type)1.1;

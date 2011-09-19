@@ -43,6 +43,7 @@ MUP_NAMESPACE_START
   {
   friend std::ostream& operator<<(std::ostream &a_Stream, const IValue &a_Val);
   friend std::wostream& operator<<(std::wostream &a_Stream, const IValue &a_Val);
+  friend Value operator*(const IValue& lhs, const IValue& rhs);
 
   public:
 
@@ -68,7 +69,11 @@ MUP_NAMESPACE_START
     virtual IValue& operator=(const array_type &val) = 0;
             IValue& operator=(const IValue &ref);
 
-    virtual IValue& operator[](std::size_t idx) = 0;
+    virtual IValue& operator+=(const IValue &ref) = 0;
+    virtual IValue& operator-=(const IValue &ref) = 0;
+    virtual IValue& operator*=(const IValue &ref) = 0;
+
+    virtual IValue& At(int nRow, int nCol = 0) = 0;
     virtual int_type GetInteger() const = 0;
     virtual float_type GetFloat() const = 0;
     virtual float_type GetImag() const = 0;
@@ -82,13 +87,14 @@ MUP_NAMESPACE_START
     
     virtual bool IsVolatile() const = 0;
     virtual string_type ToString() const;
-    
+  
+/*
     //---------------------------------------------------------------------------
     inline std::size_t GetDim() const
     {
       return (GetType()!='a') ? 1 : GetArray().size();
     }
-
+*/
     //---------------------------------------------------------------------------
     /** \brief Returns true if the type is either floating point or interger. 
         \throw nothrow
@@ -150,6 +156,23 @@ MUP_NAMESPACE_START
   protected:
     virtual ~IValue();
   }; // class IValue
+
+  //---------------------------------------------------------------------------------------------
+  Value operator*(const IValue& lhs, const IValue& rhs);
+
+/*
+  //---------------------------------------------------------------------------------------------
+  IValue operator+(const IValue& lhs, const IValue& rhs)
+  {
+    return Value(lhs) += rhs;
+  }
+
+  //---------------------------------------------------------------------------------------------
+  IValue operator-(const IValue& lhs, const IValue& rhs)
+  {
+    return Value(lhs) -= rhs;
+  }
+*/
 }  // namespace mu
 
 #endif

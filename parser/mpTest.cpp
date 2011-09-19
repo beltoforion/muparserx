@@ -169,12 +169,51 @@ MUP_NAMESPACE_START
     int iNumErr = 0;
     *m_stream << _T("testing matrix calculations...");
 
-    Value unity(3,3,0);
-    unity[0][0] = 1;
-    unity[1][1] = 1;
-    unity[2][2] = 1;
+    Value unity(3, 3, 0);
+    unity.At(0, 0) = 1;
+    unity.At(1, 1) = 1;
+    unity.At(2, 2) = 1;
+
+    //Value m1(3, 3, 0);
+    //m1.At(0, 0) = 1;
+    //m1.At(1, 1) = 1;
+    //m1.At(2, 2) = 1;
+
+    //Value m2(3, 3, 0);
+    //m2.At(0, 0) = 1;  m2.At(0, 1) = 2;  m2.At(0, 2) = 3;
+    //m2.At(1, 0) = 4;  m2.At(1, 1) = 5;  m2.At(1, 2) = 6;
+    //m2.At(2, 0) = 7;  m2.At(2, 1) = 8;  m2.At(2, 2) = 9;
+
+    Value m1_plus_m2(3, 3, 0);
+    m1_plus_m2.At(0, 0) = 2;  m1_plus_m2.At(0, 1) = 2;  m1_plus_m2.At(0, 2) = 3;
+    m1_plus_m2.At(1, 0) = 4;  m1_plus_m2.At(1, 1) = 6;  m1_plus_m2.At(1, 2) = 6;
+    m1_plus_m2.At(2, 0) = 7;  m1_plus_m2.At(2, 1) = 8;  m1_plus_m2.At(2, 2) = 10;
+
+    Value m2_minus_m1(3, 3, 0);
+    m2_minus_m1.At(0, 0) = 0;  m2_minus_m1.At(0, 1) = 2;  m2_minus_m1.At(0, 2) = 3;
+    m2_minus_m1.At(1, 0) = 4;  m2_minus_m1.At(1, 1) = 4;  m2_minus_m1.At(1, 2) = 6;
+    m2_minus_m1.At(2, 0) = 7;  m2_minus_m1.At(2, 1) = 8;  m2_minus_m1.At(2, 2) = 8;
+
+    // Check matrix dimension mismatch error
+    iNumErr += ThrowTest(_T("va+m1"), ecEVAL); 
+    iNumErr += ThrowTest(_T("m1+va"), ecEVAL); 
+    iNumErr += ThrowTest(_T("va-m1"), ecEVAL); 
+    iNumErr += ThrowTest(_T("m1-va"), ecEVAL); 
+    iNumErr += ThrowTest(_T("va*m1"), ecEVAL); 
+    iNumErr += ThrowTest(_T("m1*va"), ecEVAL); 
+
+    iNumErr += ThrowTest(_T("a+m1"), ecEVAL); 
+    iNumErr += ThrowTest(_T("m1+a"), ecEVAL); 
+    iNumErr += ThrowTest(_T("a-m1"), ecEVAL); 
+    iNumErr += ThrowTest(_T("m1-a"), ecEVAL); 
+    iNumErr += ThrowTest(_T("a*m1"), ecEVAL); 
+    iNumErr += ThrowTest(_T("m1*a"), ecEVAL); 
+
+    // sample expressions
     iNumErr += EqnTest(_T("m1"), unity, true);
     iNumErr += EqnTest(_T("m1*m1"), unity, true);
+    iNumErr += EqnTest(_T("m1+m2"), m1_plus_m2, true);
+    iNumErr += EqnTest(_T("m2-m1"), m2_minus_m1, true);
 
     Assessment(iNumErr);
     return iNumErr;
@@ -194,14 +233,14 @@ MUP_NAMESPACE_START
     Value sVal1 = _T("hello world");   // Test assignment from const char* to string
     Value cVal = cmplx_type(1,1);
     Value aVal(2,0);
-    aVal[0] = (float_type)2.0;
-    aVal[1] = (float_type)3.0;
+    aVal.At(0) = (float_type)2.0;
+    aVal.At(1) = (float_type)3.0;
 
     // Create a 3x3 matrix
     Value matrix(3, 0);
-    matrix[0] = Value(3, 0);
-    matrix[1] = Value(3, 0);
-    matrix[2] = Value(3, 0);
+    matrix.At(0) = Value(3, 0);
+    matrix.At(1) = Value(3, 0);
+    matrix.At(2) = Value(3, 0);
 
     Variable bVar(&bVal), 
              iVar(&iVal), 
@@ -215,13 +254,13 @@ MUP_NAMESPACE_START
     try
     {
       // Test if matrix values do work
-      if (!matrix.IsArray() || matrix.GetDim()!=3)
+      if (!matrix.IsArray() || matrix.GetRows()!=3)
         iNumErr++;
 
-      std::size_t sz = matrix.GetDim();
+      std::size_t sz = matrix.GetRows();
       for (std::size_t i=0; i<sz; ++i)
       {
-        std::size_t dim_row = matrix[i].GetDim();
+        std::size_t dim_row = matrix.At(i).GetRows();
         if (dim_row!=3)
         {
           iNumErr++;
@@ -610,13 +649,13 @@ MUP_NAMESPACE_START
     //iNumErr += ThrowTest(_T("9==va"),      ecEVAL);
 
     Value v(3, 0);
-    v[0] = 5.0, v[1] = 5.0, v[2] = 5.0;      
+    v.At(0) = 5.0, v.At(1) = 5.0, v.At(2) = 5.0;      
     iNumErr += EqnTest(_T("va+vb"), v, true);
 
-    v[0] = 5.0, v[1] = 5.0, v[2] = 6.0;      
+    v.At(0) = 5.0, v.At(1) = 5.0, v.At(2) = 6.0;      
     iNumErr += EqnTest(_T("va+vb"), v, false);
 
-    v[0] = -1.0, v[1] = -2.0, v[2] = -3.0;
+    v.At(0) = -1.0, v.At(1) = -2.0, v.At(2) = -3.0;
     iNumErr += EqnTest(_T("-va"), v, true);
 
     iNumErr += EqnTest(_T("sizeof(va+vb)"), 3, true);
@@ -1197,28 +1236,41 @@ MUP_NAMESPACE_START
       p.DefineVar( _T("c"), Variable(&vVarVal[2]) );
       p.DefineVar( _T("d"), Variable(&vVarVal[3]) );
 
-      // some vector variables
+      // array variables
       Value aVal1(3, 0);
-      aVal1[0] = (float_type)1.0;
-      aVal1[1] = (float_type)2.0;
-      aVal1[2] = (float_type)3.0;
+      aVal1.At(0) = (float_type)1.0;
+      aVal1.At(1) = (float_type)2.0;
+      aVal1.At(2) = (float_type)3.0;
   
       Value aVal2(3, 0);
-      aVal2[0] = (float_type)4.0;
-      aVal2[1] = (float_type)3.0;
-      aVal2[2] = (float_type)2.0;
+      aVal2.At(0) = (float_type)4.0;
+      aVal2.At(1) = (float_type)3.0;
+      aVal2.At(2) = (float_type)2.0;
 
       Value aVal3(4, 0);
-      aVal3[0] = (float_type)4.0;
-      aVal3[1] = (float_type)3.0;
-      aVal3[2] = (float_type)2.0;
-      aVal3[3] = (float_type)5.0;
+      aVal3.At(0) = (float_type)4.0;
+      aVal3.At(1) = (float_type)3.0;
+      aVal3.At(2) = (float_type)2.0;
+      aVal3.At(3) = (float_type)5.0;
 
       Value aVal4(4, 0);
-      aVal4[0] = (float_type)4.0;
-      aVal4[1] = false;
-      aVal4[2] = _T("hallo");
+      aVal4.At(0) = (float_type)4.0;
+      aVal4.At(1) = false;
+      aVal4.At(2) = _T("hallo");
 
+      // Matrix variables
+      Value m1(3, 3, 0);
+      m1.At(0, 0) = 1;
+      m1.At(1, 1) = 1;
+      m1.At(2, 2) = 1;
+
+      Value m2(3, 3, 0);
+      m2.At(0, 0) = 1;  m2.At(0, 1) = 2;  m2.At(0, 2) = 3;
+      m2.At(1, 0) = 4;  m2.At(1, 1) = 5;  m2.At(1, 2) = 6;
+      m2.At(2, 0) = 7;  m2.At(2, 1) = 8;  m2.At(2, 2) = 9;
+
+      p.DefineVar(_T("m1"), Variable(&m1));
+      p.DefineVar(_T("m2"), Variable(&m1));
       p.DefineVar(_T("va"), Variable(&aVal1));
       p.DefineVar(_T("vb"), Variable(&aVal2)); 
       p.DefineVar(_T("vc"), Variable(&aVal3)); 
@@ -1275,10 +1327,17 @@ MUP_NAMESPACE_START
       // Add variables
       Value vVarVal[] = { 1, 2, 3, -2, -1};
 
-      Value m1(3,3,0);
-      m1[0][0] = 1;
-      m1[1][1] = 1;
-      m1[2][2] = 1;
+      // m1 ist die Einheitsmatrix
+      Value m1(3, 3, 0);
+      m1.At(0, 0) = 1;
+      m1.At(1, 1) = 1;
+      m1.At(2, 2) = 1;
+
+      // m2 ist die Einheitsmatrix
+      Value m2(3, 3, 0);
+      m2.At(0, 0) = 1;  m2.At(0, 1) = 2;  m2.At(0, 2) = 3;
+      m2.At(1, 0) = 4;  m2.At(1, 1) = 5;  m2.At(1, 2) = 6;
+      m2.At(2, 0) = 7;  m2.At(2, 1) = 8;  m2.At(2, 2) = 9;
 
       p1->DefineOprt(new DbgSillyAdd);
       p1->DefineFun(new FunTest0);
@@ -1289,6 +1348,7 @@ MUP_NAMESPACE_START
       p1->DefineVar( _T("d"),  Variable(&vVarVal[3]) );
       p1->DefineVar( _T("f"),  Variable(&vVarVal[4]) );
       p1->DefineVar( _T("m1"), Variable(&m1) );
+      p1->DefineVar( _T("m2"), Variable(&m2) );
 
       // Add constants
       p1->DefineConst(_T("pi"), (float_type)MUP_CONST_PI);
@@ -1299,14 +1359,14 @@ MUP_NAMESPACE_START
 
       // some vector variables
       Value aVal1(3, 0);
-      aVal1[0] = (float_type)1.0;
-      aVal1[1] = (float_type)2.0;
-      aVal1[2] = (float_type)3.0;
+      aVal1.At(0) = (float_type)1.0;
+      aVal1.At(1) = (float_type)2.0;
+      aVal1.At(2) = (float_type)3.0;
       
       Value aVal2(3, 0);
-      aVal2[0] = (float_type)4.0;
-      aVal2[1] = (float_type)3.0;
-      aVal2[2] = (float_type)2.0;
+      aVal2.At(0) = (float_type)4.0;
+      aVal2.At(1) = (float_type)3.0;
+      aVal2.At(2) = (float_type)2.0;
       p1->DefineVar(_T("va"), Variable(&aVal1));
       p1->DefineVar(_T("vb"), Variable(&aVal2)); 
 
@@ -1434,16 +1494,16 @@ MUP_NAMESPACE_START
                     if (v1.GetType()!=v2.GetType())
                       return false;
                     
-                    if (v1.GetDim()!=v2.GetDim())
+                    if (v1.GetRows()!=v2.GetRows())
                       return false;
 
                     if (v1.IsArray())
                     {
 
                       bool bCheck = true;
-                      for (std::size_t i=0; i<v1.GetDim(); ++i)
+                      for (int i=0; i<v1.GetRows(); ++i)
                       {
-                        if (!Check(v1[i], v2[i]))
+                        if (!Check(v1.At(i), v2.At(i)))
                           return false;
                       }
 

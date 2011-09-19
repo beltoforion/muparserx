@@ -32,6 +32,7 @@
 #include <cassert>
 
 //--- muParserX framework -----------------------------------------------------
+#include "mpValue.h"
 #include "mpError.h"
 #include "mpValue.h"
 
@@ -68,6 +69,12 @@ MUP_NAMESPACE_START
     return a_Stream << a_Val.ToString();
   }  
 #endif
+
+  //---------------------------------------------------------------------------------------------
+  Value operator*(const IValue& lhs, const IValue& rhs)
+  {
+    return Value(lhs) *= rhs;
+  }
 
   //---------------------------------------------------------------------------
   IValue::IValue(ECmdCode a_iCode)
@@ -108,19 +115,20 @@ MUP_NAMESPACE_START
     case 'a':  
                {
                  const array_type &arr(GetArray());
-                 ss << _T("["); 
-                 for (std::size_t i=0; i<arr.size(); ++i)
+                 ss << _T("{"); 
+                 for (int i=0; i<arr.GetRows(); ++i)
                  {
-                   ss << arr[i];
-                   if (i!=arr.size()-1)
+                   ss << _T(" {");
+                   for (int j=0; j<arr.GetCols();++j)
                    {
-                     if (arr[i].GetType()!='a')
+                     ss << arr.At(i, j).ToString();
+                     if (j!=arr.GetCols()-1)
                        ss << _T("; ");
                      else
-                       ss << _T("\n ");
+                       ss << _T("} ");
                    }
                  }
-                 ss << _T("]"); 
+                 ss << _T("}"); 
                }
                break;
     case 'c':
@@ -172,15 +180,15 @@ MUP_NAMESPACE_START
       case 's': return GetString()  == a_Val.GetString();
       case 'b': return GetBool()    == a_Val.GetBool();
       case 'v': return false;
-      case 'a': if (GetDim()!=a_Val.GetDim())
+      case 'a': if (GetRows()!=a_Val.GetRows() || GetCols()!=a_Val.GetCols())
                 {
                   return false;
                 }
                 else
                 {
-                  for (std::size_t i=0; i<GetDim(); ++i)
+                  for (int i=0; i<GetRows(); ++i)
                   {
-                    if (const_cast<IValue*>(this)->operator[](i)!=const_cast<IValue&>(a_Val)[i])
+                    if (const_cast<IValue*>(this)->At(i)!=const_cast<IValue&>(a_Val).At(i))
                       return false;
                   }
 
@@ -217,15 +225,15 @@ MUP_NAMESPACE_START
       case 'c': return (GetFloat() != a_Val.GetFloat()) || (GetImag() != a_Val.GetImag());
       case 'b': return GetBool() != a_Val.GetBool();
       case 'v': return true;
-      case 'a': if (GetDim()!=a_Val.GetDim())
+      case 'a': if (GetRows()!=a_Val.GetRows() || GetCols()!=a_Val.GetCols())
                 {
                   return true;
                 }
                 else
                 {
-                  for (std::size_t i=0; i<GetDim(); ++i)
+                  for (int i=0; i<GetRows(); ++i)
                   {
-                    if (const_cast<IValue*>(this)->operator[](i)!=const_cast<IValue&>(a_Val)[i])
+                    if (const_cast<IValue*>(this)->At(i)!=const_cast<IValue&>(a_Val).At(i))
                       return true;
                   }
 

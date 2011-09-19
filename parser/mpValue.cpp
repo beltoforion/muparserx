@@ -43,8 +43,6 @@ MUP_NAMESPACE_START
     ,m_cType(cType)
     ,m_iFlags(flNONE)
     ,m_pCache(NULL)
-    ,m_nCols(1)
-    ,m_nRows(1)
   {
     // strings and arrays must allocate their memory
     switch (cType)
@@ -63,8 +61,6 @@ MUP_NAMESPACE_START
     ,m_cType('i')
     ,m_iFlags(flNONE)
     ,m_pCache(NULL)
-    ,m_nCols(1)
-    ,m_nRows(1)
   {}
 
   //---------------------------------------------------------------------------
@@ -76,8 +72,6 @@ MUP_NAMESPACE_START
     ,m_cType('b')
     ,m_iFlags(flNONE)
     ,m_pCache(NULL)
-    ,m_nCols(1)
-    ,m_nRows(1)
   {}
 
   //---------------------------------------------------------------------------
@@ -89,52 +83,31 @@ MUP_NAMESPACE_START
     ,m_cType('s')
     ,m_iFlags(flNONE)
     ,m_pCache(NULL)
-    ,m_nCols(1)
-    ,m_nRows(1)
   {}
 
   //---------------------------------------------------------------------------
-  Value::Value(int_type array_size, float_type val)
+  Value::Value(int_type array_size, float_type v)
     :IValue(cmVAL)
     ,m_val()
     ,m_psVal(NULL)
-    ,m_pvVal(new array_type(array_size, Value(val)))
+    ,m_pvVal(new array_type(array_size, Value(v)))
     ,m_cType('a')
     ,m_iFlags(flNONE)
     ,m_pCache(NULL)
-    ,m_nCols(1)
-    ,m_nRows(array_size)
   {}
 
   //---------------------------------------------------------------------------
-  Value::Value(int_type m, int_type n, float_type val)
+  /** \brief Create a m x n matrix
+  */
+  Value::Value(int_type m, int_type n, float_type v)
     :IValue(cmVAL)
     ,m_val()
     ,m_psVal(NULL)
-    ,m_pvVal(NULL)
+    ,m_pvVal(new array_type(m, n, Value(v)))
     ,m_cType('a')
     ,m_iFlags(flNONE)
     ,m_pCache(NULL)
-    ,m_nCols(1)
-    ,m_nRows(m)
-  {
-/*
-    <ibg 20110808> Neuer Code für zukünftige Matriximplementierung
-    if (m<=0 || n<=0)
-      throw ParserError( ErrorContext(ecAPI_INVALID_DIMENSIONS) ); 
-  
-    m_pVal = new array_type(m*n, Value()); 
-    for (int_type i=0; i<n; ++i)
-    {
-      (*m_pvVal)[i] = Value(val);
-    }
-*/
-    m_pvVal = new array_type(n, Value()); 
-    for (int_type i=0; i<n; ++i)
-    {
-      (*m_pvVal)[i] = Value(m, val);
-    }
-  }
+  {}
 
   //---------------------------------------------------------------------------
   Value::Value(const char_type *a_szVal)
@@ -145,8 +118,6 @@ MUP_NAMESPACE_START
     ,m_cType('s')
     ,m_iFlags(flNONE)
     ,m_pCache(NULL)
-    ,m_nCols(1)
-    ,m_nRows(1)
   {}
 
   //---------------------------------------------------------------------------
@@ -158,8 +129,6 @@ MUP_NAMESPACE_START
     ,m_cType('c')
     ,m_iFlags(flNONE)
     ,m_pCache(NULL)
-    ,m_nCols(1)
-    ,m_nRows(1)
   {
     if ( (m_val.real()==(int_type)m_val.real()) && (m_val.imag()==0) )
       m_cType = 'i';
@@ -176,8 +145,6 @@ MUP_NAMESPACE_START
     ,m_cType((val==(int_type)val) ? 'i' : 'f')
     ,m_iFlags(flNONE)
     ,m_pCache(NULL)
-    ,m_nCols(1)
-    ,m_nRows(1)
   {}
 
   //---------------------------------------------------------------------------
@@ -189,8 +156,6 @@ MUP_NAMESPACE_START
     ,m_cType('a')
     ,m_iFlags(flNONE)
     ,m_pCache(NULL)
-    ,m_nCols(1)
-    ,m_nRows(val.size())
   {}
 
   //---------------------------------------------------------------------------
@@ -250,15 +215,15 @@ MUP_NAMESPACE_START
   }
 
   //---------------------------------------------------------------------------
-  IValue& Value::operator[](std::size_t i)
+  IValue& Value::At(int nRow, int nCol)
   {
     if (m_cType!='a' || m_pvVal==NULL)
       throw ParserError( ErrorContext(ecAPI_NOT_AN_ARRAY) ); 
 
-    if (i>=m_pvVal->size())
+    if (nRow>=m_pvVal->GetRows() || nCol>=m_pvVal->GetCols())
       throw ParserError( ErrorContext(ecINDEX_OUT_OF_BOUNDS) ); 
 
-    return (*m_pvVal)[i];
+    return m_pvVal->At(nRow, nCol);
   }
 
   //---------------------------------------------------------------------------
@@ -287,8 +252,6 @@ MUP_NAMESPACE_START
       return;
 
     m_val   = ref.m_val;
-    m_nCols = ref.m_nCols;
-    m_nRows = ref.m_nRows;
 
     // allocate room for a string
     if (ref.m_psVal)
@@ -340,8 +303,6 @@ MUP_NAMESPACE_START
 
     m_cType = 'f';
     m_iFlags = flNONE;
-    m_nCols = 1;
-    m_nRows = 1;
   }
 
   //---------------------------------------------------------------------------
@@ -357,8 +318,6 @@ MUP_NAMESPACE_START
 
     m_cType = 'b';
     m_iFlags = flNONE;
-    m_nCols = 1;
-    m_nRows = 1;
     return *this;
   }
 
@@ -375,8 +334,6 @@ MUP_NAMESPACE_START
 
     m_cType = 'i';
     m_iFlags = flNONE;
-    m_nCols = 1;
-    m_nRows = 1;
     return *this;
   }
 
@@ -393,8 +350,6 @@ MUP_NAMESPACE_START
 
     m_cType = (val==(int_type)val) ? 'i' : 'f';
     m_iFlags = flNONE;
-    m_nCols = 1;
-    m_nRows = 1;
     return *this;
   }
 
@@ -413,8 +368,6 @@ MUP_NAMESPACE_START
 
     m_cType = 's';
     m_iFlags = flNONE;
-    m_nCols = 1;
-    m_nRows = 1;
     return *this;
   }
 
@@ -433,8 +386,6 @@ MUP_NAMESPACE_START
 
     m_cType = 's';
     m_iFlags = flNONE;
-    m_nCols = 1;
-    m_nRows = 1;
     return *this;
   }
 
@@ -453,8 +404,6 @@ MUP_NAMESPACE_START
     
     m_cType = 'a';
     m_iFlags = flNONE;
-    m_nCols = 1;
-    m_nRows = a_vVal.size();
 
     return *this;
   }
@@ -473,8 +422,80 @@ MUP_NAMESPACE_START
     m_cType = (m_val.imag()==0) ? ( (m_val.real()==(int)m_val.real()) ? 'i' : 'f' ) : 'c';
     m_iFlags = flNONE;
 
-    m_nCols = 1;
-    m_nRows = 1;
+    return *this;
+  }
+
+  //---------------------------------------------------------------------------
+  IValue& Value::operator+=(const IValue &val)
+  {
+    if (IsScalar() && val.IsScalar())
+    {
+      // Scalar/Scalar addition
+      m_val += val.GetComplex();
+    }
+    else if (IsArray() && val.IsArray())
+    {
+      // Matrix/Matrix addition
+      assert(m_pvVal);
+      *m_pvVal += val.GetArray();
+    }
+    else if (IsString() && val.IsString())
+    {
+      // string/string addition
+      assert(m_psVal);
+      *m_psVal += val.GetString();
+    }
+    else
+    {
+      // Type conflict
+      throw ParserError(ErrorContext(ecTYPE_CONFLICT_FUN, -1, _T("+"), GetType(), val.GetType(), 2));
+    }
+
+    return *this;
+  }
+
+  //---------------------------------------------------------------------------
+  IValue& Value::operator-=(const IValue &val)
+  {
+    if (IsScalar() && val.IsScalar())
+    {
+      // Scalar/Scalar addition
+      m_val -= val.GetComplex();
+    }
+    else if (IsArray() && val.IsArray())
+    {
+      // Matrix/Matrix addition
+      assert(m_pvVal);
+      *m_pvVal -= val.GetArray();
+    }
+    else
+    {
+      // There is a typeconflict:
+      throw ParserError(ErrorContext(ecTYPE_CONFLICT_FUN, -1, _T("-"), GetType(), val.GetType(), 2));
+    }
+
+    return *this;
+  }
+
+  //---------------------------------------------------------------------------
+  IValue& Value::operator*=(const IValue &val)
+  {
+    if (IsScalar() && val.IsScalar())
+    {
+      // Scalar/Scalar addition
+      m_val *= val.GetComplex();
+    }
+    else if (IsArray() && val.IsArray())
+    {
+      // Matrix/Matrix addition
+      assert(m_pvVal);
+      *m_pvVal *= val.GetArray();
+    }
+    else
+    {
+      // Type conflict
+      throw ParserError(ErrorContext(ecTYPE_CONFLICT_FUN, -1, _T("*"), GetType(), val.GetType(), 2));
+    }
 
     return *this;
   }
@@ -607,13 +628,13 @@ MUP_NAMESPACE_START
   //---------------------------------------------------------------------------
   int Value::GetRows() const
   {
-    return m_nRows;
+    return (GetType()!='a') ? 1 : GetArray().GetRows();
   }
   
   //---------------------------------------------------------------------------
   int Value::GetCols() const
   {
-    return m_nCols;
+    return 1;
   }
 
   //---------------------------------------------------------------------------

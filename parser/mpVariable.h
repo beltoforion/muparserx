@@ -51,7 +51,7 @@ MUP_NAMESPACE_START
     Variable(const Variable &a_Var);
     Variable& operator=(const Variable &a_Var);
 
-    virtual IValue& operator[](std::size_t idx);
+    virtual IValue& At(int nRow, int nCol);
     virtual IValue& operator=(const Value &val);
     virtual IValue& operator=(const array_type &val);
     virtual IValue& operator=(const cmplx_type &val);
@@ -59,6 +59,9 @@ MUP_NAMESPACE_START
     virtual IValue& operator=(float_type val);
     virtual IValue& operator=(string_type val);
     virtual IValue& operator=(bool_type val);
+    virtual IValue& operator+=(const IValue &ref);
+    virtual IValue& operator-=(const IValue &ref);
+    virtual IValue& operator*=(const IValue &val);
 
     virtual ~Variable();
 

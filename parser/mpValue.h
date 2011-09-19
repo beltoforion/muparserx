@@ -59,10 +59,8 @@ MUP_NAMESPACE_START
     Value(const cmplx_type &v);
     Value(const array_type &val);
 
-    // Array constructor
+    // Array and Matrix constructors
     Value(int_type m, float_type v);
-
-    // Matrix constructor
     Value(int_type m, int_type n, float_type v);
 
     Value(const Value &a_Val );
@@ -70,8 +68,8 @@ MUP_NAMESPACE_START
     Value& operator=(const Value &a_Val);
 
     virtual ~Value();
-
-    virtual IValue& operator[](std::size_t idx);
+ 
+    virtual IValue& At(int nRow, int nCol = 0);
     virtual IValue& operator=(int_type a_iVal);
     virtual IValue& operator=(float_type a_fVal);
     virtual IValue& operator=(string_type a_sVal);
@@ -79,6 +77,9 @@ MUP_NAMESPACE_START
     virtual IValue& operator=(const array_type &a_vVal);
     virtual IValue& operator=(const cmplx_type &val);
     virtual IValue& operator=(const char_type *a_szVal);
+    virtual IValue& operator+=(const IValue &val);
+    virtual IValue& operator-=(const IValue &val);
+    virtual IValue& operator*=(const IValue &val);
 
     virtual char_type GetType() const;
     virtual int_type GetInteger() const;
@@ -116,6 +117,7 @@ MUP_NAMESPACE_START
 
     virtual void Release();
   }; // class Value
+
 
 MUP_NAMESPACE_END
 
