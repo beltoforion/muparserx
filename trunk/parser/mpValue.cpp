@@ -491,6 +491,16 @@ MUP_NAMESPACE_START
       assert(m_pvVal);
       *m_pvVal *= val.GetArray();
     }
+    else if ( IsArray() && val.IsScalar() )
+    {
+      *m_pvVal *= val;
+    }
+    else if ( IsScalar() * val.IsArray() )
+    {
+      // transform this into a matrix and multiply with rhs
+      Value prod = val * (*this);
+      Assign(prod);
+    }
     else
     {
       // Type conflict

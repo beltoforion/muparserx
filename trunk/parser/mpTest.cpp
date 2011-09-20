@@ -174,10 +174,10 @@ MUP_NAMESPACE_START
     unity.At(1, 1) = 1;
     unity.At(2, 2) = 1;
 
-    //Value m1(3, 3, 0);
-    //m1.At(0, 0) = 1;
-    //m1.At(1, 1) = 1;
-    //m1.At(2, 2) = 1;
+    Value va(3, 0);
+    va.At(0) = 1;
+    va.At(1) = 2;
+    va.At(2) = 3;
 
     //Value m2(3, 3, 0);
     //m2.At(0, 0) = 1;  m2.At(0, 1) = 2;  m2.At(0, 2) = 3;
@@ -194,26 +194,35 @@ MUP_NAMESPACE_START
     m2_minus_m1.At(1, 0) = 4;  m2_minus_m1.At(1, 1) = 4;  m2_minus_m1.At(1, 2) = 6;
     m2_minus_m1.At(2, 0) = 7;  m2_minus_m1.At(2, 1) = 8;  m2_minus_m1.At(2, 2) = 8;
 
+    Value m2_times_10(3, 3, 0);
+    m2_times_10.At(0, 0) = 10;  m2_times_10.At(0, 1) = 20;  m2_times_10.At(0, 2) = 30;
+    m2_times_10.At(1, 0) = 40;  m2_times_10.At(1, 1) = 50;  m2_times_10.At(1, 2) = 60;
+    m2_times_10.At(2, 0) = 70;  m2_times_10.At(2, 1) = 80;  m2_times_10.At(2, 2) = 90;
+
     // Check matrix dimension mismatch error
+    iNumErr += ThrowTest(_T("\"hallo\"+m1"), ecEVAL); 
+    iNumErr += ThrowTest(_T("m1+\"hallo\""), ecEVAL); 
     iNumErr += ThrowTest(_T("va+m1"), ecEVAL); 
     iNumErr += ThrowTest(_T("m1+va"), ecEVAL); 
     iNumErr += ThrowTest(_T("va-m1"), ecEVAL); 
     iNumErr += ThrowTest(_T("m1-va"), ecEVAL); 
-    iNumErr += ThrowTest(_T("va*m1"), ecEVAL); 
-    iNumErr += ThrowTest(_T("m1*va"), ecEVAL); 
+    iNumErr += ThrowTest(_T("va*m1"), ecEVAL); // matrix dimension mismatch
 
     iNumErr += ThrowTest(_T("a+m1"), ecEVAL); 
     iNumErr += ThrowTest(_T("m1+a"), ecEVAL); 
     iNumErr += ThrowTest(_T("a-m1"), ecEVAL); 
     iNumErr += ThrowTest(_T("m1-a"), ecEVAL); 
-    iNumErr += ThrowTest(_T("a*m1"), ecEVAL); 
-    iNumErr += ThrowTest(_T("m1*a"), ecEVAL); 
 
     // sample expressions
-    iNumErr += EqnTest(_T("m1"), unity, true);
-    iNumErr += EqnTest(_T("m1*m1"), unity, true);
-    iNumErr += EqnTest(_T("m1+m2"), m1_plus_m2, true);
-    iNumErr += EqnTest(_T("m2-m1"), m2_minus_m1, true);
+    iNumErr += EqnTest(_T("m1"),     unity, true);
+    iNumErr += EqnTest(_T("m1*m1"),  unity, true);
+    iNumErr += EqnTest(_T("m1+m2"),  m1_plus_m2, true);
+    iNumErr += EqnTest(_T("m2-m1"),  m2_minus_m1, true);
+    iNumErr += EqnTest(_T("10*m2"),  m2_times_10, true);
+    iNumErr += EqnTest(_T("m2*10"),  m2_times_10, true);
+    iNumErr += EqnTest(_T("5*m2*b"), m2_times_10, true);
+    iNumErr += EqnTest(_T("b*m2*5"), m2_times_10, true);
+    iNumErr += EqnTest(_T("m1*va"),  va, true); 
 
     Assessment(iNumErr);
     return iNumErr;
@@ -635,6 +644,9 @@ MUP_NAMESPACE_START
     iNumErr += ThrowTest(_T("va+vc"),      ecEVAL);   // fail: vectors of different size
     iNumErr += ThrowTest(_T("va-vc"),      ecEVAL);   // fail: vectors of different size
     iNumErr += ThrowTest(_T("va*vc"),      ecEVAL);   // fail: vectors of different size
+    iNumErr += ThrowTest(_T("va*vb"),      ecEVAL);   // fail: matrix dimension mismatch
+    iNumErr += ThrowTest(_T("va*va"),      ecEVAL);   // fail: matrix dimension mismatch
+    iNumErr += ThrowTest(_T("(va*vb)*b"),  ecEVAL);   // fail: matrix dimension mismatch
     iNumErr += ThrowTest(_T("va[1.23]"),   ecTYPE_CONFLICT_IDX, 7);   // fail: float value used as index
     iNumErr += ThrowTest(_T("va[sin(8)]"), ecTYPE_CONFLICT_IDX, 9);   // fail: float value used as index
     iNumErr += ThrowTest(_T("va[-1]"),     ecINDEX_OUT_OF_BOUNDS); // fail: negative value used as an index
@@ -643,6 +655,7 @@ MUP_NAMESPACE_START
     iNumErr += ThrowTest(_T("a[1]"),       ecNOT_AN_ARRAY);   // fail: number + vector
     iNumErr += ThrowTest(_T("va[1"),       ecMISSING_SQR_BRACKET);
     iNumErr += ThrowTest(_T("va[1]]"),     ecUNEXPECTED_SQR_BRACKET);
+
     //iNumErr += ThrowTest(_T("va==9"),      ecEVAL);
     //iNumErr += ThrowTest(_T("va==a"),      ecEVAL);
     //iNumErr += ThrowTest(_T("a==va"),      ecEVAL);
@@ -668,16 +681,13 @@ MUP_NAMESPACE_START
     //iNumErr += EqnTest(_T("va<=vb"), false, true);
     //iNumErr += EqnTest(_T("va>=vb"), true, true);
 
-    iNumErr += EqnTest(_T("va*vb"), 16, true);
-    iNumErr += EqnTest(_T("va*va"), 14, true);
-    iNumErr += EqnTest(_T("(va*vb)*b"), 32, true);
     iNumErr += EqnTest(_T("vb[va[0]]"), 3, true);
-    iNumErr += EqnTest(_T("m1[0][0]+m1[1][1]+m1[2][2]"), 3, true);
-    iNumErr += EqnTest(_T("vb[m1[0][0]]"), 3, true);
+    iNumErr += EqnTest(_T("m1[0,0]+m1[1,1]+m1[2,2]"), 3, true);
+    iNumErr += EqnTest(_T("vb[m1[0,0]]"), 3, true);
 
-    iNumErr += EqnTest(_T("m1[0][0]=2"), 2, true);
-    iNumErr += EqnTest(_T("m1[1][1]=2"), 2, true);
-    iNumErr += EqnTest(_T("m1[2][2]=2"), 2, true);
+    iNumErr += EqnTest(_T("m1[0,0]=2"), 2, true);
+    iNumErr += EqnTest(_T("m1[1,1]=2"), 2, true);
+    iNumErr += EqnTest(_T("m1[2,2]=2"), 2, true);
     iNumErr += EqnTest(_T("va[0]=12.3"), (float_type)12.3, true);
     iNumErr += EqnTest(_T("va[1]=12.3"), (float_type)12.3, true);
     iNumErr += EqnTest(_T("va[2]=12.3"), (float_type)12.3, true);
@@ -1270,7 +1280,7 @@ MUP_NAMESPACE_START
       m2.At(2, 0) = 7;  m2.At(2, 1) = 8;  m2.At(2, 2) = 9;
 
       p.DefineVar(_T("m1"), Variable(&m1));
-      p.DefineVar(_T("m2"), Variable(&m1));
+      p.DefineVar(_T("m2"), Variable(&m2));
       p.DefineVar(_T("va"), Variable(&aVal1));
       p.DefineVar(_T("vb"), Variable(&aVal2)); 
       p.DefineVar(_T("vc"), Variable(&aVal3)); 
