@@ -20,19 +20,30 @@
 #                                                                       #
 #########################################################################
 
-V1.10.3 (20111109; SVN only; Work in Progress!)
+V1.10.3 (20110919; SVN only; Work in Progress!)
 -----------------------------------------------
+
+!!! This is a work in progress!
+!!! Totalnumber of unit test fails: 5
+!!!
+!!! Things that don't work: 
+!!!  - Index operator for matrices
+
 Changes:
 - Fundamental datatype changed to a matrix type instead of a vector type
 
-V1.10.2 (20111109; SVN only)
+Bugfixes:
+- Matrix addition and subtraction work properly now.
+
+
+V1.10.2 (20110911; SVN only)
 ----------------------------
 Bugfixes:
 - Fix for changed behaviour of tellg in GCC 4.6.1. A Space is now appended 
   to every expression in order to avoid problems.
 
 
-V1.10 (20111003)
+V1.10 (20110310)
 ----------------
 Warning:
 The API of this version is not backwards compatible and requires minor 

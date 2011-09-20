@@ -162,6 +162,21 @@ MUP_NAMESPACE_START
     }
 
     //---------------------------------------------------------------------------------------------
+    Matrix& operator*=(const T &rhs)
+    {
+      // Matrix x Matrix multiplication
+      for (int m=0; m<m_nRows; ++m)
+      {
+        for (int n=0; n<m_nCols; ++n)
+        {
+          At(m, n) *= rhs;
+        }
+      }
+
+      return *this;
+    }
+
+    //---------------------------------------------------------------------------------------------
     Matrix& operator*=(const Matrix &rhs)
     {
       // Matrix x Matrix multiplication
@@ -357,7 +372,6 @@ MUP_NAMESPACE_START
     int m_nCols;
     int m_nRows;
     std::vector<T> m_vData;
-
     EMatrixStorageScheme m_eStorageScheme;
 
     //---------------------------------------------------------------------------------------------
@@ -370,6 +384,12 @@ MUP_NAMESPACE_START
     }
   };
 
+  //---------------------------------------------------------------------------------------------
+  template<typename T>
+  Matrix<T> operator*(const Matrix<T>& lhs, const T& rhs)
+  {
+    return Matrix<T>(lhs) *= rhs;
+  }
 
   //---------------------------------------------------------------------------------------------
   template<typename T>

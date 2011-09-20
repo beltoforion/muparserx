@@ -43,7 +43,6 @@ MUP_NAMESPACE_START
   {
   friend std::ostream& operator<<(std::ostream &a_Stream, const IValue &a_Val);
   friend std::wostream& operator<<(std::wostream &a_Stream, const IValue &a_Val);
-  friend Value operator*(const IValue& lhs, const IValue& rhs);
 
   public:
 

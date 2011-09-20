@@ -204,35 +204,31 @@ MUP_NAMESPACE_START
   //-----------------------------------------------------------
   void OprtMulCmplx::Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int num)
   { 
+/*
+    assert(num==2);
+    IValue *arg1 = a_pArg[0].Get();
+    IValue *arg2 = a_pArg[1].Get();
+    *ret = (*arg1) * (*arg2);
+*/
     assert(num==2);
     IValue *arg1 = a_pArg[0].Get();
     IValue *arg2 = a_pArg[1].Get();
     if (arg1->IsNonComplexScalar() && arg2->IsNonComplexScalar())
     {
-      *ret = arg1->GetFloat() * arg2->GetFloat(); 
+//      *ret = arg1->GetFloat() * arg2->GetFloat(); 
+      *ret = (*arg1) * (*arg2);
     }
     else if (arg1->GetType()=='a' && arg2->GetType()=='a')
     {
-      // Matrix * Matrix; includes scalar multiplication
-      *ret = arg1->GetArray() - arg2->GetArray();
+      // Matrix * Matrix; (including matrix * vector)
+//      *ret = arg1->GetArray() * arg2->GetArray();
+      *ret = (*arg1) * (*arg2);
     }
-    else if (a_pArg[0]->GetType()=='a' && a_pArg[1]->IsScalar())
+    else if (arg1->GetType()=='a' && arg2->IsScalar() ||
+             arg2->GetType()=='a' && arg1->IsScalar() )
     {
-      // Skalar * Vector
-      array_type out(a_pArg[0]->GetArray());
-      for (int i=0; i<out.GetRows(); ++i)
-        out.At(i) = out.At(i).GetFloat() * a_pArg[1]->GetFloat();
-
-      *ret = out; 
-    }
-    else if (a_pArg[1]->GetType()=='a' && a_pArg[0]->IsScalar())
-    {
-      // Vector * Skalar
-      array_type out(a_pArg[1]->GetArray());
-      for (int i=0; i<out.GetRows(); ++i)
-        out.At(i) = out.At(i).GetFloat() * a_pArg[0]->GetFloat();
-
-      *ret = out; 
+      // Scalar * Matrix
+      *ret = (*arg1) * (*arg2);
     }
     else
     {
