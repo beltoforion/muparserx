@@ -224,6 +224,17 @@ MUP_NAMESPACE_START
     iNumErr += EqnTest(_T("b*m2*5"), m2_times_10, true);
     iNumErr += EqnTest(_T("m1*va"),  va, true); 
 
+    // ones
+    Value ones_3(3, 1.0);
+    Value ones_3x3(3, 3, 1.0);
+    iNumErr += ThrowTest(_T("ones(1,2,3)"), ecEVAL); 
+    iNumErr += ThrowTest(_T("ones()"),      ecEVAL); 
+    iNumErr += EqnTest(_T("ones(1,1)"),  1, true); 
+    iNumErr += EqnTest(_T("ones(1)"),    1, true); 
+    iNumErr += EqnTest(_T("ones(3,3)"),  ones_3x3, true); 
+    iNumErr += EqnTest(_T("ones(3,1)"),  ones_3,   true); 
+    iNumErr += EqnTest(_T("ones(3)"),    ones_3,   true); 
+
     Assessment(iNumErr);
     return iNumErr;
   }
@@ -823,7 +834,7 @@ MUP_NAMESPACE_START
   int ParserTester::TestMultiLine()
   {
     int  iNumErr = 0;
-    *m_stream << _T("testing multiline expressions");
+    *m_stream << _T("testing multiline expressions...");
 
     // Test error detection
     iNumErr += ThrowTest(_T("sin(\n"), ecUNEXPECTED_NEWLINE);

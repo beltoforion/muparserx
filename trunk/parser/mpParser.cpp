@@ -35,7 +35,7 @@
 #include "mpPackageCmplx.h"
 #include "mpPackageNonCmplx.h"
 #include "mpPackageCommon.h"
-
+#include "mpPackageMatrix.h"
 
 using namespace std;
 
@@ -70,5 +70,8 @@ MUP_NAMESPACE_START
 
     if (ePackages & pckCOMMON)
       AddPackage(PackageCommon::Instance());
+
+    if (ePackages & pckMATRIX)
+      AddPackage(PackageMatrix::Instance());
   }
 } // namespace mu

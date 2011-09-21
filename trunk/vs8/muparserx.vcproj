@@ -220,6 +220,14 @@
 						>
 					</File>
 					<File
+						RelativePath="..\parser\mpFuncMatrix.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\parser\mpFuncMatrix.h"
+						>
+					</File>
+					<File
 						RelativePath="..\parser\mpFuncNonCmplx.cpp"
 						>
 					</File>
@@ -477,6 +485,14 @@
 					</File>
 					<File
 						RelativePath="..\parser\mpPackageCommon.h"
+						>
+					</File>
+					<File
+						RelativePath="..\parser\mpPackageMatrix.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\parser\mpPackageMatrix.h"
 						>
 					</File>
 					<File

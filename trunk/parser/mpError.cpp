@@ -110,6 +110,8 @@ MUP_NAMESPACE_START
     m_vErrMsg[ecMISSING_SQR_BRACKET]     = _T("Missing \"]\"");
     m_vErrMsg[ecASSIGNEMENT_TO_VALUE]    = _T("Assignment operator \"$IDENT$\" can't be used in this context");
     m_vErrMsg[ecEVAL]                    = _T("Can't evaluate function/operator \"$IDENT$\": $HINT$");
+    m_vErrMsg[ecINVALID_PARAMETER]       = _T("Parameter $ARG$ of function \"$IDENT$\" is invalid");
+    m_vErrMsg[ecINVALID_NUMBER_OF_PARAMETERS] = _T("Invalid number of function arguments");
 
     #if defined(_DEBUG)
       for (int i=0; i<ecCOUNT; ++i)

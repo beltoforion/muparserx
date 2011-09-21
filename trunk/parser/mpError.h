@@ -72,33 +72,34 @@ MUP_NAMESPACE_START
       ecNOT_AN_ARRAY           = 25, ///< Using the index operator on a scalar variable
       ecUNEXPECTED_SQR_BRACKET = 26, ///< Invalid use of the index operator 
 
-      // Invalid Parser input Parameters
       ecINVALID_NAME           = 27, ///< Invalid function, variable or constant name.
       ecBUILTIN_OVERLOAD       = 28, ///< Trying to overload builtin operator
       ecINVALID_FUN_PTR        = 29, ///< Invalid callback function pointer 
       ecINVALID_VAR_PTR        = 30, ///< Invalid variable pointer 
+      ecINVALID_PARAMETER      = 31, ///< Invalid function parameter
+      ecINVALID_NUMBER_OF_PARAMETERS = 32,
 
-      ecNAME_CONFLICT          = 31, ///< Name conflict
-      ecOPT_PRI                = 32, ///< Invalid operator priority
-      ecASSIGNEMENT_TO_VALUE   = 33, ///< Assignment to operator (3=4 instead of a=4)
+      ecNAME_CONFLICT          = 33, ///< Name conflict
+      ecOPT_PRI                = 34, ///< Invalid operator priority
+      ecASSIGNEMENT_TO_VALUE   = 35, ///< Assignment to operator (3=4 instead of a=4)
 
       // 
-      ecDOMAIN_ERROR           = 34, ///< catch division by zero, sqrt(-1), log(0) (currently unused)
-      ecDIV_BY_ZERO            = 35, ///< Division by zero (currently unused)
-      ecGENERIC                = 36, ///< Generic error
+      ecDOMAIN_ERROR           = 36, ///< catch division by zero, sqrt(-1), log(0) (currently unused)
+      ecDIV_BY_ZERO            = 37, ///< Division by zero (currently unused)
+      ecGENERIC                = 38, ///< Generic error
 
-      ecAPI_INVALID_PROTOTYPE  = 37, ///< API error: tried to create a callback with an invalid prototype definition
-      ecAPI_NOT_AN_ARRAY       = 38, ///< Trying to access a non array type as an array
-      ecAPI_INVALID_DIMENSION  = 39, ///< Trying to access a non array type as an array
-      ecINDEX_OUT_OF_BOUNDS    = 40, ///< Array index is out of bounds
-      ecMISSING_SQR_BRACKET    = 41, ///< The index operator was not closed properly (i.e. "v[3")
-      ecEVAL                   = 42, ///< Error while evaluating function / operator
-
+      ecAPI_INVALID_PROTOTYPE  = 39, ///< API error: tried to create a callback with an invalid prototype definition
+      ecAPI_NOT_AN_ARRAY       = 40, ///< Trying to access a non array type as an array
+      ecAPI_INVALID_DIMENSION  = 41, ///< Trying to access a non array type as an array
+      ecINDEX_OUT_OF_BOUNDS    = 42, ///< Array index is out of bounds
+      ecMISSING_SQR_BRACKET    = 43, ///< The index operator was not closed properly (i.e. "v[3")
+      ecEVAL                   = 44, ///< Error while evaluating function / operator
+      
       // internal errors
-      ecINTERNAL_ERROR         = 43, ///< Internal error of any kind.
+      ecINTERNAL_ERROR         = 45, ///< Internal error of any kind.
 
       // The last two are special entries 
-      ecCOUNT,                    ///< This is no error code, It just stores just the total number of error codes
+      ecCOUNT,                       ///< This is no error code, It just stores just the total number of error codes
       ecUNDEFINED              = -1, ///< Undefined message, placeholder to detect unassigned error messages
     };
 

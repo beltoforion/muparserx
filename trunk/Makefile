@@ -16,7 +16,7 @@ LIB_SRC = mpError.cpp mpRPN.cpp mpICallback.cpp mpIValReader.cpp mpParserBase.cp
           mpIToken.cpp mpOprtCmplx.cpp mpOprtNonCmplx.cpp mpOprtBinCommon.cpp mpOprtBinAssign.cpp\
           mpIPackage.cpp mpPackageCommon.cpp mpPackageStr.cpp mpPackageCmplx.cpp mpPackageNonCmplx.cpp\
           mpIfThenElse.cpp mpValueCache.cpp mpPackageUnit.cpp mpValue.cpp mpTest.cpp mpScriptTokens.cpp\
-		  mpMatrix.cpp
+		  mpPackageMatrix.cpp mpFuncMatrix.cpp
 LIB_OBJ = ${LIB_SRC:.cpp=.o}
 NAME_LIB = libmuparserx.a
 
