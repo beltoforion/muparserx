@@ -195,8 +195,9 @@ MUP_NAMESPACE_START
     pckCOMPLEX         = 1 << 2,
     pckNON_COMPLEX     = 1 << 3,
     pckSTRING          = 1 << 4,
-    pckALL_COMPLEX     = pckCOMMON | pckCOMPLEX | pckSTRING | pckUNIT,
-    pckALL_NON_COMPLEX = pckCOMMON | pckNON_COMPLEX | pckSTRING | pckUNIT
+    pckMATRIX          = 1 << 5,
+    pckALL_COMPLEX     = pckCOMMON | pckCOMPLEX | pckSTRING | pckUNIT | pckMATRIX,
+    pckALL_NON_COMPLEX = pckCOMMON | pckNON_COMPLEX | pckSTRING | pckUNIT | pckMATRIX
   };
 
   //------------------------------------------------------------------------------

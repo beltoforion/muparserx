@@ -12,14 +12,14 @@
 MUP_NAMESPACE_START
 
   //-----------------------------------------------------------------------------------------------
-  template<typename T>
+  template<class T>
   class Matrix  
   {
-  template<typename T>
-  friend Matrix<T> operator+(const Matrix<T>& lhs, const Matrix<T>& rhs);
+  template<class T2>
+  friend Matrix operator+(const Matrix& lhs, const Matrix& rhs);
 
-  template<typename T>
-  friend Matrix<T> operator-(const Matrix<T>& lhs, const Matrix<T>& rhs);
+  template<class T2>
+  friend Matrix operator-(const Matrix& lhs, const Matrix& rhs);
 
   public:
 
@@ -339,7 +339,7 @@ MUP_NAMESPACE_START
     }
 
     //---------------------------------------------------------------------------------------------
-    void SetStorageScheme(EMatrixStorageScheme eSheme)
+    void SetStorageScheme(EMatrixStorageScheme eScheme)
     {
       m_eStorageScheme = eScheme;
     }
@@ -347,7 +347,7 @@ MUP_NAMESPACE_START
     //---------------------------------------------------------------------------------------------
     EMatrixStorageScheme GetStorageScheme() const
     {
-      return m_eScheme;
+      return m_eStorageScheme;
     }
 
     //---------------------------------------------------------------------------------------------
@@ -385,28 +385,28 @@ MUP_NAMESPACE_START
   };
 
   //---------------------------------------------------------------------------------------------
-  template<typename T>
+  template<class T>
   Matrix<T> operator*(const Matrix<T>& lhs, const T& rhs)
   {
     return Matrix<T>(lhs) *= rhs;
   }
 
   //---------------------------------------------------------------------------------------------
-  template<typename T>
+  template<class T>
   Matrix<T> operator*(const Matrix<T>& lhs, const Matrix<T>& rhs)
   {
     return Matrix<T>(lhs) *= rhs;
   }
 
   //---------------------------------------------------------------------------------------------
-  template<typename T>
+  template<class T>
   Matrix<T> operator+(const Matrix<T>& lhs, const Matrix<T>& rhs)
   {
     return Matrix<T>(lhs) += rhs;
   }
 
   //---------------------------------------------------------------------------------------------
-  template<typename T>
+  template<class T>
   Matrix<T> operator-(const Matrix<T>& lhs, const Matrix<T>& rhs)
   {
     return Matrix<T>(lhs) -= rhs;
