@@ -710,14 +710,13 @@ void Calc()
 
   // Create an array variable
   Value arr1(3, 0);
-  arr1.At(0) = (float_type)1.11;
-  arr1.At(1) = (float_type)2.22;
-  arr1.At(2) = (float_type)3.33;
+  arr1.At(0) = (float_type)1.0;
+  arr1.At(1) = (float_type)2.0;
+  arr1.At(2) = (float_type)3.0;
 
-  // Create an array variable
   Value arr2(3, 0);
-  arr2.At(0) = (float_type)2.0;
-  arr2.At(1) = (float_type)2.0;
+  arr2.At(0) = (float_type)4.0;
+  arr2.At(1) = (float_type)3.0;
   arr2.At(2) = (float_type)2.0;
 
   Value arr3(4, 0);

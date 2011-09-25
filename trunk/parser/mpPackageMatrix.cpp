@@ -2,6 +2,7 @@
 
 #include "mpParserBase.h"
 #include "mpFuncMatrix.h"
+#include "mpOprtMatrix.h"
 
 MUP_NAMESPACE_START
 
@@ -23,11 +24,10 @@ IPackage* PackageMatrix::Instance()
 void PackageMatrix::AddToParser(ParserXBase *pParser)
 {
   // Matrix functions
-//  pParser->DefineFun(new FunMatrixTrace());
   pParser->DefineFun(new FunMatrixOnes());
-
+  
   // Matrix Operators
-//  pParser->DefineOprt(new OprtMatrixTranspose());
+  pParser->DefinePostfixOprt(new OprtTranspose(this));
 }
 
 //------------------------------------------------------------------------------
