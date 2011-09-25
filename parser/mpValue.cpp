@@ -246,12 +246,15 @@ MUP_NAMESPACE_START
   }
 
   //---------------------------------------------------------------------------
+  /** \brief Copy constructor. */
   void Value::Assign(const Value &ref)
   {
     if (this==&ref)
       return;
 
-    m_val   = ref.m_val;
+    m_val    = ref.m_val;
+    m_cType  = ref.m_cType;
+    m_iFlags = ref.m_iFlags;
 
     // allocate room for a string
     if (ref.m_psVal)
@@ -281,13 +284,13 @@ MUP_NAMESPACE_START
       m_pvVal = NULL;
     }
 
-    m_cType  = ref.m_cType;
-    m_iFlags = ref.m_iFlags;
-
-    // Do not copy the value cache pointer!
-    // Value cache should be assigned expplicitely and
-    // not implicitely (i.e. when retrieving the final result.)
-    //m_pCache = ref.m_pCache;
+    // Do NOT access ref beyound this point! If you do, "unboxing" of
+    // a 1 x 1 matrix using:
+    //
+    // this->Assign(m_pvVal->At(0,0));
+    // 
+    // will blow up in your face since ref will become invalid at them very
+    // moment you delete m_pvVal!
   }
 
   //---------------------------------------------------------------------------
@@ -478,18 +481,40 @@ MUP_NAMESPACE_START
   }
 
   //---------------------------------------------------------------------------
+  /** \brief Assign a value with multiplication
+      \param val The value to multiply to this
+
+    When multiplying to values with each value representing a matrix type
+    the result is checked whether it is a 1 x 1 matrix. If so the value is
+    "unboxed" and stored directly in this value object. It is no longer 
+    treated as a matrix internally.
+  */
   IValue& Value::operator*=(const IValue &val)
   {
     if (IsScalar() && val.IsScalar())
     {
-      // Scalar/Scalar addition
+      // Scalar/Scalar multiplication
       m_val *= val.GetComplex();
+      
+      // Check whether we're dealing with a complex or integer result, if so set the 
+      // type flag accordingly
+      if (m_val.imag()!=0)
+        m_cType = 'c';
+      else if ((double)(int)m_val.real()==m_val.real())
+        m_cType = 'i';
     }
     else if (IsArray() && val.IsArray())
     {
       // Matrix/Matrix addition
       assert(m_pvVal);
       *m_pvVal *= val.GetArray();
+
+      // The result may actually be a scalar value, i.e. the scalar product of
+      // two vectors.
+      if (m_pvVal->GetCols()==1 && m_pvVal->GetRows()==1)
+      {
+        Assign(m_pvVal->At(0,0));
+      }
     }
     else if ( IsArray() && val.IsScalar() )
     {

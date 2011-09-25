@@ -204,53 +204,16 @@ MUP_NAMESPACE_START
   //-----------------------------------------------------------
   void OprtMulCmplx::Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int num)
   { 
-/*
     assert(num==2);
     IValue *arg1 = a_pArg[0].Get();
     IValue *arg2 = a_pArg[1].Get();
-    *ret = (*arg1) * (*arg2);
-*/
-    assert(num==2);
-    IValue *arg1 = a_pArg[0].Get();
-    IValue *arg2 = a_pArg[1].Get();
-    if (arg1->IsNonComplexScalar() && arg2->IsNonComplexScalar())
-    {
-//      *ret = arg1->GetFloat() * arg2->GetFloat(); 
-      *ret = (*arg1) * (*arg2);
-    }
-    else if (arg1->GetType()=='a' && arg2->GetType()=='a')
-    {
-      // Matrix * Matrix; (including matrix * vector)
-//      *ret = arg1->GetArray() * arg2->GetArray();
-      *ret = (*arg1) * (*arg2);
-    }
-    else if (arg1->GetType()=='a' && arg2->IsScalar() ||
-             arg2->GetType()=='a' && arg1->IsScalar() )
-    {
-      // Scalar * Matrix
-      *ret = (*arg1) * (*arg2);
-    }
-    else
-    {
-      if (!a_pArg[0]->IsScalar())
-        throw ParserError( ErrorContext(ecTYPE_CONFLICT_FUN, GetExprPos(), GetIdent(), a_pArg[0]->GetType(), 'c', 1)); 
-
-      if (!a_pArg[1]->IsScalar())
-        throw ParserError( ErrorContext(ecTYPE_CONFLICT_FUN, GetExprPos(), GetIdent(), a_pArg[1]->GetType(), 'c', 2)); 
-
-      // multiplication of two imaginary numbers      
-      float_type a = a_pArg[0]->GetFloat(),
-                 b = a_pArg[0]->GetImag(),
-                 c = a_pArg[1]->GetFloat(),
-                 d = a_pArg[1]->GetImag();
-      *ret = cmplx_type(a*c-b*d, a*d+b*c); 
-    }
+   *ret = (*arg1) * (*arg2);
   }
 
   //-----------------------------------------------------------
   const char_type* OprtMulCmplx::GetDesc() const 
   { 
-    return _T("multiplication"); 
+    return _T("foo*bar - multiplication"); 
   }
   
   //-----------------------------------------------------------

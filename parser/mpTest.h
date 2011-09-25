@@ -58,6 +58,7 @@ MUP_BINARY_OPERATOR(DbgSillyAdd, _T("++"), float_type, _T(""), 3, oaLEFT, a+b)
         int TestIfElse();
         int TestMultiLine();
         int TestMatrix();
+        int TestComplex();
 
         void Assessment(int a_iNumErr) const;
         void Abort() const;

@@ -84,6 +84,7 @@ MUP_NAMESPACE_START
     AddTest(&ParserTester::TestMultiLine);
     AddTest(&ParserTester::TestStringFun);
     AddTest(&ParserTester::TestMatrix);
+    AddTest(&ParserTester::TestComplex);
     AddTest(&ParserTester::TestVector);
     AddTest(&ParserTester::TestBinOp);
     AddTest(&ParserTester::TestPostfix);
@@ -199,6 +200,11 @@ MUP_NAMESPACE_START
     m2_times_10.At(1, 0) = 40;  m2_times_10.At(1, 1) = 50;  m2_times_10.At(1, 2) = 60;
     m2_times_10.At(2, 0) = 70;  m2_times_10.At(2, 1) = 80;  m2_times_10.At(2, 2) = 90;
 
+    Value va_times_vb_transp(3, 3, 0);
+    va_times_vb_transp.At(0, 0) = 4;   va_times_vb_transp.At(0, 1) = 3;   va_times_vb_transp.At(0, 2) = 2;
+    va_times_vb_transp.At(1, 0) = 8;   va_times_vb_transp.At(1, 1) = 6;   va_times_vb_transp.At(1, 2) = 4;
+    va_times_vb_transp.At(2, 0) = 12;  va_times_vb_transp.At(2, 1) = 9;   va_times_vb_transp.At(2, 2) = 6;
+
     // Check matrix dimension mismatch error
     iNumErr += ThrowTest(_T("\"hallo\"+m1"), ecEVAL); 
     iNumErr += ThrowTest(_T("m1+\"hallo\""), ecEVAL); 
@@ -234,6 +240,81 @@ MUP_NAMESPACE_START
     iNumErr += EqnTest(_T("ones(3,3)"),  ones_3x3, true); 
     iNumErr += EqnTest(_T("ones(3,1)"),  ones_3,   true); 
     iNumErr += EqnTest(_T("ones(3)"),    ones_3,   true); 
+
+    // transposition
+    iNumErr += EqnTest(_T("va'*vb"),    16,   true); 
+    iNumErr += EqnTest(_T("2*va'*vb"),  32,   true); 
+    iNumErr += EqnTest(_T("va*vb'"),    va_times_vb_transp,   true); 
+
+    Assessment(iNumErr);
+    return iNumErr;
+  }
+
+  //---------------------------------------------------------------------------
+  int ParserTester::TestComplex()
+  {
+    int iNumErr = 0;
+    *m_stream << _T("testing complex calculations...");
+
+    // complex numbers
+    // ca=1+i, cb=2+3i, cc=3+4i
+    iNumErr += EqnTest(_T("ca==1+i"),  true,  true);
+    iNumErr += EqnTest(_T("ca==ca"),   true,  true);
+    iNumErr += EqnTest(_T("ca!=1+i"),  false, true);
+    iNumErr += EqnTest(_T("ca!=ca"),   false, true);
+    iNumErr += EqnTest(_T("ca!=cb"),   true,  true);
+    iNumErr += EqnTest(_T("ca!=va"),   true,  true);
+    iNumErr += EqnTest(_T("ca==va"),   false, true);
+
+    // When comparing complex number Matlab/Octave compare only the real part
+    // I'll do the same...
+    iNumErr += EqnTest(_T("ca<10+i"),  true,  true);
+    iNumErr += EqnTest(_T("ca>10+i"),  false, true);
+    iNumErr += EqnTest(_T("ca<=10+i"), true,  true);
+    iNumErr += EqnTest(_T("ca>=10+i"), false, true);
+    iNumErr += EqnTest(_T("ca<=1"),    true,  true);
+    iNumErr += EqnTest(_T("ca>=1"),    true,  true);
+
+    // complex numbers
+    iNumErr += EqnTest(_T("i*i"), -1, true, 0);
+    iNumErr += EqnTest(_T("norm(3+4i)"), 25, true, 0);
+    iNumErr += EqnTest(_T("norm(4i+3)"), 25, true, 0);
+    iNumErr += EqnTest(_T("norm(3i+4)"), 25, true, 0);
+    iNumErr += EqnTest(_T("real(4.1i+3.1)"), (float_type)3.1, true, 0);
+    iNumErr += EqnTest(_T("imag(3.1i+4.1)"), (float_type)3.1, true, 0);
+    iNumErr += EqnTest(_T("real(3.1)"),  (float_type)3.1, true, 0);
+    iNumErr += EqnTest(_T("imag(2.1i)"), (float_type)2.1, true, 0);
+    iNumErr += EqnTest(_T("-(4i+5)"),       cmplx_type(-5, -4), true, 0);
+    iNumErr += EqnTest(_T("sqrt(-1)"),      cmplx_type(0, 1), true, 0);
+    iNumErr += EqnTest(_T("sqrt(i*i)"),     cmplx_type(0, 1), true, 0);
+    iNumErr += EqnTest(_T("sqrt(f)"),       cmplx_type(0, 1), true, 1);
+    iNumErr += EqnTest(_T("sqrt(2-3)"),     cmplx_type(0, 1), true, 0);
+    iNumErr += EqnTest(_T("sqrt(a-b)"),     cmplx_type(0, 1), true, 2);
+    iNumErr += EqnTest(_T("sqrt((2-3))"),   cmplx_type(0, 1), true, 0);
+    iNumErr += EqnTest(_T("sqrt((a-b))"),   cmplx_type(0, 1), true, 2);
+    iNumErr += EqnTest(_T("sqrt(-(1))"),    cmplx_type(0, 1), true, 0);
+    iNumErr += EqnTest(_T("sqrt((-1))"),    cmplx_type(0, 1), true, 0);
+    iNumErr += EqnTest(_T("sqrt(-(-1))"),   cmplx_type(1, 0), true, 0);
+    iNumErr += EqnTest(_T("sqrt(1)"),       cmplx_type(1, 0), true, 0);
+    iNumErr += EqnTest(_T("a=1+2i"),        cmplx_type(1, 2), true, 1);
+    iNumErr += EqnTest(_T("-(1+2i)"),       cmplx_type(-1, -2), true, 0);
+    iNumErr += EqnTest(_T("-(-1-2i)"),      cmplx_type(1, 2), true, 0);
+    iNumErr += EqnTest(_T("a*i"),           cmplx_type(0, 1), true, 1);
+    iNumErr += EqnTest(_T("-(a+b*i)"),      cmplx_type(-1, -2), true, 2);
+    iNumErr += EqnTest(_T("-(-a-b*i)"),     cmplx_type(1, 2), true, 2);
+    iNumErr += EqnTest(_T("(2+4i)*(8-6i)"), cmplx_type(40, 20), true, 0);
+
+    // Test assignment operator with complex numbers. This needs to be written
+    // in a bit of an obfuscated way in order to make the test work. EqnTest
+    // computes the expression multiple times which would assign the variable
+    // multiple times with different values. This would cause false positives
+    // in the fail count. The result of the test expression is assigned to the
+    // variable c, the original variable is then reset and finally the value
+    // in c is used as the expression result...
+    iNumErr += EqnTest(_T("c=(a+=1+2i), a=1, c"), cmplx_type(2, 2), true, 2);
+    iNumErr += EqnTest(_T("c=(a-=1+2i), a=1, c"), cmplx_type(0, -2), true, 2);
+    iNumErr += EqnTest(_T("c=(b*=1+2i), b=2, c"), cmplx_type(2, 4), true, 2);
+    iNumErr += EqnTest(_T("c=(b/=1+2i), b=2, c"), cmplx_type((float_type)0.4, (float_type)-0.8), true, 2);
 
     Assessment(iNumErr);
     return iNumErr;
@@ -803,25 +884,6 @@ MUP_NAMESPACE_START
     iNumErr += EqnTest(_T("sqrt(a)+1.01"), 2.01, true);
     iNumErr += EqnTest(_T("sqrt(a)-1.01"), -0.01, true);
 
-    // complex numbers
-    // ca=1+i, cb=2+3i, cc=3+4i
-    iNumErr += EqnTest(_T("ca==1+i"),  true,  true);
-    iNumErr += EqnTest(_T("ca==ca"),   true,  true);
-    iNumErr += EqnTest(_T("ca!=1+i"),  false, true);
-    iNumErr += EqnTest(_T("ca!=ca"),   false, true);
-    iNumErr += EqnTest(_T("ca!=cb"),   true,  true);
-    iNumErr += EqnTest(_T("ca!=va"),   true,  true);
-    iNumErr += EqnTest(_T("ca==va"),   false, true);
-
-    // When comparing complex number Matlab/Octave compare only the real part
-    // I'll do the same...
-    iNumErr += EqnTest(_T("ca<10+i"),  true,  true);
-    iNumErr += EqnTest(_T("ca>10+i"),  false, true);
-    iNumErr += EqnTest(_T("ca<=10+i"), true,  true);
-    iNumErr += EqnTest(_T("ca>=10+i"), false, true);
-    iNumErr += EqnTest(_T("ca<=1"),    true,  true);
-    iNumErr += EqnTest(_T("ca>=1"),    true,  true);
-
     // interaction with sign operator
     iNumErr += EqnTest( _T("3-(-a)"), 4, true);
     iNumErr += EqnTest( _T("3--a"), 4,   true);
@@ -990,47 +1052,6 @@ MUP_NAMESPACE_START
 
     // Functions
     iNumErr += EqnTest(_T("10*strlen(toupper(\"12345\"))"), 50, true);
-
-    // complex numbers
-    iNumErr += EqnTest(_T("i*i"), -1, true, 0);
-    iNumErr += EqnTest(_T("norm(3+4i)"), 25, true, 0);
-    iNumErr += EqnTest(_T("norm(4i+3)"), 25, true, 0);
-    iNumErr += EqnTest(_T("norm(3i+4)"), 25, true, 0);
-    iNumErr += EqnTest(_T("real(4.1i+3.1)"), (float_type)3.1, true, 0);
-    iNumErr += EqnTest(_T("imag(3.1i+4.1)"), (float_type)3.1, true, 0);
-    iNumErr += EqnTest(_T("real(3.1)"),  (float_type)3.1, true, 0);
-    iNumErr += EqnTest(_T("imag(2.1i)"), (float_type)2.1, true, 0);
-    iNumErr += EqnTest(_T("-(4i+5)"), cmplx_type(-5, -4), true, 0);
-    iNumErr += EqnTest(_T("sqrt(-1)"), cmplx_type(0, 1), true, 0);
-    iNumErr += EqnTest(_T("sqrt(i*i)"), cmplx_type(0, 1), true, 0);
-    iNumErr += EqnTest(_T("sqrt(f)"), cmplx_type(0, 1), true, 1);
-    iNumErr += EqnTest(_T("sqrt(2-3)"), cmplx_type(0, 1), true, 0);
-    iNumErr += EqnTest(_T("sqrt(a-b)"), cmplx_type(0, 1), true, 2);
-    iNumErr += EqnTest(_T("sqrt((2-3))"), cmplx_type(0, 1), true, 0);
-    iNumErr += EqnTest(_T("sqrt((a-b))"), cmplx_type(0, 1), true, 2);
-    iNumErr += EqnTest(_T("sqrt(-(1))"), cmplx_type(0, 1), true, 0);
-    iNumErr += EqnTest(_T("sqrt((-1))"), cmplx_type(0, 1), true, 0);
-    iNumErr += EqnTest(_T("sqrt(-(-1))"), cmplx_type(1, 0), true, 0);
-    iNumErr += EqnTest(_T("sqrt(1)"), cmplx_type(1, 0), true, 0);
-    iNumErr += EqnTest(_T("a=1+2i"), cmplx_type(1, 2), true, 1);
-    iNumErr += EqnTest(_T("-(1+2i)"), cmplx_type(-1, -2), true, 0);
-    iNumErr += EqnTest(_T("-(-1-2i)"), cmplx_type(1, 2), true, 0);
-    iNumErr += EqnTest(_T("-(a+b*i)"), cmplx_type(-1, -2), true, 2);
-    iNumErr += EqnTest(_T("-(-a-b*i)"), cmplx_type(1, 2), true, 2);
-
-    iNumErr += EqnTest(_T("(2+4i)*(8-6i)"), cmplx_type(40, 20), true, 0);
-
-    // Test assignment operator with complex numbers. This needs to be written
-    // in a bit of an obfuscated way in order to make the test work. EqnTest
-    // computes the expression multiple times which would assign the variable
-    // multiple times with different values. This would cause false positives
-    // in the fail count. The result of the test expression is assigned to the
-    // variable c, the original variable is then reset and finally the value
-    // in c is used as the expression result...
-    iNumErr += EqnTest(_T("c=(a+=1+2i), a=1, c"), cmplx_type(2, 2), true, 2);
-    iNumErr += EqnTest(_T("c=(a-=1+2i), a=1, c"), cmplx_type(0, -2), true, 2);
-    iNumErr += EqnTest(_T("c=(b*=1+2i), b=2, c"), cmplx_type(2, 4), true, 2);
-    iNumErr += EqnTest(_T("c=(b/=1+2i), b=2, c"), cmplx_type((float_type)0.4, (float_type)-0.8), true, 2);
 
     // hex value recognition
     iNumErr += EqnTest(_T("0xff"), 255, true);
