@@ -96,7 +96,7 @@ MUP_NAMESPACE_START
     m_vErrMsg[ecVAL_EXPECTED]            = _T("Numerical function called with a non value type of argument");
     m_vErrMsg[ecTYPE_CONFLICT]           = _T("Value \"$IDENT$\" is of type '$TYPE1$'. There is no implicit conversion to type '$TYPE2$'");
     m_vErrMsg[ecTYPE_CONFLICT_FUN]       = _T("Argument $ARG$ of function/operator \"$IDENT$\" is of type '$TYPE1$' whereas type '$TYPE2$' was expected");
-    m_vErrMsg[ecTYPE_CONFLICT_IDX]       = _T("Index to variable \"$IDENT$\" must be a positive integer value");
+    m_vErrMsg[ecTYPE_CONFLICT_IDX]       = _T("Index to \"$IDENT$\" must be a positive integer value. '$TYPE1$' is not an acceptable type.");
     m_vErrMsg[ecGENERIC]                 = _T("Parser error");
     m_vErrMsg[ecINVALID_TYPE]            = _T("Invalid argument type");
     m_vErrMsg[ecINVALID_TYPECAST]        = _T("Value type conversion from type '$TYPE1$' to '$TYPE2$' is not supported!");
@@ -107,6 +107,7 @@ MUP_NAMESPACE_START
     m_vErrMsg[ecAPI_NOT_AN_ARRAY]        = _T("Not an array");
     m_vErrMsg[ecAPI_INVALID_DIMENSION]   = _T("Invalid matrix dimensions");
     m_vErrMsg[ecINDEX_OUT_OF_BOUNDS]     = _T("Index to variable \"$IDENT$\" is out of bounds");
+    m_vErrMsg[ecINDEX_DIMENSION]         = _T("Index operator dimension error");
     m_vErrMsg[ecMISSING_SQR_BRACKET]     = _T("Missing \"]\"");
     m_vErrMsg[ecASSIGNEMENT_TO_VALUE]    = _T("Assignment operator \"$IDENT$\" can't be used in this context");
     m_vErrMsg[ecEVAL]                    = _T("Can't evaluate function/operator \"$IDENT$\": $HINT$");

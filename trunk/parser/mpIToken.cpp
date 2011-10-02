@@ -267,6 +267,12 @@ MUP_NAMESPACE_START
   }
 
   //------------------------------------------------------------------------------
+  IOprtIndex* IToken::AsIOprtIndex()
+  {
+    return NULL;
+  }
+
+  //------------------------------------------------------------------------------
   void IToken::Compile(const string_type &sArg)
   {
   }

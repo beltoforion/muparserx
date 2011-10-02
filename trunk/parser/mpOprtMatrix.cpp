@@ -40,9 +40,9 @@ OprtTranspose::OprtTranspose(IPackage* pPackage)
 //-------------------------------------------------------------------------------------------------
 void OprtTranspose::Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int a_iArgc)
 {
-  if (a_pArg[0]->IsArray())
+  if (a_pArg[0]->IsMatrix())
   {
-    array_type matrix = a_pArg[0]->GetArray();
+    matrix_type matrix = a_pArg[0]->GetArray();
     matrix.Transpose();
    *ret = matrix;
   }

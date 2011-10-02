@@ -36,6 +36,7 @@
 #include "mpIValReader.h"
 #include "mpIfThenElse.h"
 #include "mpScriptTokens.h"
+#include "mpOprtIndex.h"
 
 
 MUP_NAMESPACE_START
@@ -475,7 +476,8 @@ MUP_NAMESPACE_START
                 if (m_nNumIndex<0)
                   throw ecUNEXPECTED_SQR_BRACKET;
 
-                a_Tok = ptr_tok_type(new GenericToken((ECmdCode)i, pOprtDef[i]));
+//                a_Tok = ptr_tok_type(new GenericToken((ECmdCode)i, pOprtDef[i]));
+                a_Tok = ptr_tok_type(new OprtIndex());
                 break;
 
           default:  // The operator is listed in c_DefaultOprt, but not here. This is a bad thing...

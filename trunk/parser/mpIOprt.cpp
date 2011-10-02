@@ -150,4 +150,60 @@ MUP_NAMESPACE_START
 
     return ss.str();
   }
+
+  //------------------------------------------------------------------------------
+  //
+  // Index operators
+  //
+  //------------------------------------------------------------------------------
+
+  IOprtIndex::IOprtIndex(int nArgc)
+    :IToken(cmIC, _T("[...]"))
+    ,m_nArgc(nArgc)
+  {}
+
+  //------------------------------------------------------------------------------
+  IOprtIndex::~IOprtIndex()
+  {}
+
+  //------------------------------------------------------------------------------
+  string_type IOprtIndex::AsciiDump() const
+  {
+    stringstream_type ss;
+
+    ss << g_sCmdCode[ GetCode() ];
+    ss << _T(" [addr=0x") << std::hex << this << std::dec;
+    ss << _T("; ident=\"") << GetIdent() << _T("\"");
+    ss << _T("; argc=") << GetArgc();
+    ss << _T("]");
+
+    return ss.str();
+  }
+
+  //-----------------------------------------------------------------------------------------------
+  IOprtIndex* IOprtIndex::AsIOprtIndex()
+  {
+    return this;
+  }
+
+  //-----------------------------------------------------------------------------------------------
+  int  IOprtIndex::GetArgc() const
+  {
+    return m_nArgc;
+  }
+
+  //-----------------------------------------------------------------------------------------------
+  void IOprtIndex::SetNumArgsPresent(int argc)
+  {
+    m_nArgsPresent = argc;
+  }
+
+  //-----------------------------------------------------------------------------------------------
+  int IOprtIndex::GetArgsPresent() const
+  {
+    if (m_nArgc!=-1)
+      return m_nArgc;
+    else
+      return m_nArgsPresent;
+  }
 }  // namespace mu

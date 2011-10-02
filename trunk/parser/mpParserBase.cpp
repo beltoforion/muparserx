@@ -528,7 +528,6 @@ MUP_NAMESPACE_START
 
   {
     while (stOpt.size() &&
-//           stOpt.top()->GetCode() != cmNEWLINE && 
            stOpt.top()->GetCode() != cmBO && 
            stOpt.top()->GetCode() != cmIO && 
            stOpt.top()->GetCode() != cmIF)
@@ -610,7 +609,8 @@ MUP_NAMESPACE_START
     catch(ParserError &e)
     {
       // This are type related errors caused by undefined
-      // variables. They must be ignored...
+      // variables. They must be ignored if the parser is
+      // just checking the presence of expression variables
       if (!m_bIsQueryingExprVar)
       {
         ErrorContext &err = e.GetContext();
@@ -679,6 +679,7 @@ MUP_NAMESPACE_START
     Stack<ptr_val_type> stVal;
     Stack<ICallback*>   stFunc;  
     Stack<int>  stArgCount;
+    Stack<int>  stIdxCount;
     ptr_tok_type pTok, pTokPrev;
     Value val;    
 
@@ -726,6 +727,13 @@ MUP_NAMESPACE_START
 
       case  cmIC:
             {
+              // The argument count for parameterless functions is zero
+              // by default an opening bracket sets parameter count to 1
+              // in preparation of arguments to come. If the last token
+              // was an opening bracket we know better...
+              if (pTokPrev.Get()!=NULL && pTokPrev->GetCode()==cmIO)
+                --stArgCount.top();
+
               ApplyRemainingOprt(stOpt, stVal);
 
               // if opt is "]" and opta is "[" the bracket content has been evaluated.
@@ -736,34 +744,29 @@ MUP_NAMESPACE_START
               //   if so evaluate it afterwards to apply an infix operator.
               if ( stOpt.size() && stOpt.top()->GetCode()==cmIO )
               {
-                m_rpn.Add(pTok);
+                //
+                // Find out how many dimensions were used in the index operator.
+                //
+                std::size_t iArgc = stArgCount.pop();
+
                 stOpt.pop(); // Take opening bracket from stack
                 
-                // It's time to apply the index operator
-                MUP_ASSERT(stVal.size()>=2);
-                ptr_val_type idx = stVal.pop();
+                IOprtIndex *pOprtIndex = pTok->AsIOprtIndex();
+                MUP_ASSERT(pOprtIndex!=NULL);
 
-                ptr_val_type val = stVal.pop();
-                if (!val->IsArray())
-                  Error(ecNOT_AN_ARRAY, pTok->GetExprPos(), val.Get()); 
+                pOprtIndex->SetNumArgsPresent(iArgc);
+                m_rpn.Add(pTok);
+                
+                // Pop the index values from the stack
+                MUP_ASSERT(stVal.size()>=iArgc+1); 
+                for (std::size_t i=0; i<iArgc; ++i)
+                  stVal.pop();
 
-                if (idx->GetFloat() >= val->GetArray().GetRows() || idx->GetFloat() < 0 )
-                  Error(ecINDEX_OUT_OF_BOUNDS, pTok->GetExprPos(), val.Get()); 
-
-                if (val->AsValue()!=NULL)
-                {
-                  // Index of a value item
-                  ptr_val_type pValue( new Value( val->At((int_type)idx->GetFloat()) ) );
-                  pValue->AddFlags(IToken::flVOLATILE);
-                  stVal.push(pValue);
-                }
-                else
-                {
-                  // index of a variable item
-                  IValue &v = val->At((int_type)idx->GetFloat());
-                  ptr_val_type pVar( new Variable(&v) );
-                  stVal.push(pVar);
-                }
+                // Now i would need to pop the topmost value from the stack, apply the index
+                // opertor and push the result back to the stack. But here we are just creating the
+                // RPN and are working with dummy values anyway so i just mark the topmost value as 
+                // volatile and leave it were it is. The real index logic is in the RPN evaluator...
+                stVal.top()->AddFlags(IToken::flVOLATILE);
               } // if opening index bracket is on top of operator stack
             }
             break;
@@ -1048,6 +1051,20 @@ MUP_NAMESPACE_START
 
       case  cmIC:
             {
+              IOprtIndex *pIdxOprt = static_cast<IOprtIndex*>(pTok);
+              int nArgs = pIdxOprt->GetArgsPresent();
+              sidx -= nArgs - 1;
+              assert(sidx>=0);
+
+              ptr_val_type &idx = pStack[sidx];     // Pointer to the first index
+              ptr_val_type &val = pStack[--sidx];   // Pointer to the variable or value beeing indexed
+              pIdxOprt->At(val, &idx, nArgs);
+
+
+
+
+/*
+
               // apply the index operator
               ptr_val_type &idx = pStack[sidx--];
               ptr_val_type &val = pStack[sidx];
@@ -1068,6 +1085,7 @@ MUP_NAMESPACE_START
                   throw;
               }
               val.Reset(new Variable( &(val->At(i)) ) );
+*/
             }
             continue;
 

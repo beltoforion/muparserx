@@ -20,24 +20,23 @@
 #                                                                       #
 #########################################################################
 
-V1.10.3 (20110919; SVN only; Work in Progress!)
+V1.10.3 (20111002; SVN only)
 -----------------------------------------------
-
-!!! This is a work in progress!
-!!! Totalnumber of unit test fails: 5
-!!!
-!!! Things that don't work: 
-!!!  - Index operator for matrices
 
 Changes:
 - Fundamental datatype changed to a matrix type instead of a vector type
+- Multidimensional index operator added
+  old:
+	"m[1][2] = 1"
+  new:
+	"m[1,2] = 1"
 
 Bugfixes:
 - Matrix addition and subtraction work properly now.
 
 
-V1.10.2 (20110911; SVN only)
-----------------------------
+V1.10.2 (20110911)
+------------------
 Bugfixes:
 - Fix for changed behaviour of tellg in GCC 4.6.1. A Space is now appended 
   to every expression in order to avoid problems.

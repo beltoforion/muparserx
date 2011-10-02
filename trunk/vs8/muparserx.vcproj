@@ -272,6 +272,14 @@
 						>
 					</File>
 					<File
+						RelativePath="..\parser\mpOprtIndex.cpp"
+						>
+					</File>
+					<File
+						RelativePath="..\parser\mpOprtIndex.h"
+						>
+					</File>
+					<File
 						RelativePath="..\parser\mpOprtMatrix.cpp"
 						>
 					</File>

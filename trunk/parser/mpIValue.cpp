@@ -95,6 +95,21 @@ MUP_NAMESPACE_START
   {}
 
   //---------------------------------------------------------------------------
+  /** \brief Returns the dimension of the value represented by a value object.
+      
+      The value represents the dimension of the object. Possible value are:
+      <ul>
+        <li>0 - scalar</li>
+        <li>1 - vector</li>
+        <li>2 - matrix</li>
+      </ul>
+  */
+  int IValue::GetDim() const
+  {
+    return (IsMatrix()) ? GetArray().GetDim() : 0;
+  }
+
+  //---------------------------------------------------------------------------
   ICallback* IValue::AsICallback()
   {
     return NULL;
@@ -114,7 +129,7 @@ MUP_NAMESPACE_START
     {
     case 'a':  
                {
-                 const array_type &arr(GetArray());
+                 const matrix_type &arr(GetArray());
                  ss << _T("{"); 
                  for (int i=0; i<arr.GetRows(); ++i)
                  {

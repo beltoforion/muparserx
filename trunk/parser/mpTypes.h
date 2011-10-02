@@ -95,10 +95,8 @@ MUP_NAMESPACE_START
   */
   typedef bool bool_type;   
 
-  /** \brief The parsers array type. */
-  //typedef std::vector<Value> array_type;
-
-  typedef Matrix<Value> array_type;
+  /** \brief The parsers underlying matrix type. */
+  typedef Matrix<Value> matrix_type;
 
   /** \brief Parser datatype for strings. */
   typedef MUP_STRING_TYPE string_type;
@@ -170,7 +168,7 @@ MUP_NAMESPACE_START
     cmSCRIPT_IF         = 19,  ///< Reserved for future use
     cmSCRIPT_ELSE       = 20,  ///< Reserved for future use
     cmSCRIPT_ELSEIF     = 21,  ///< Reserved for future use
-    cnSCRIPT_ENDIF      = 22,  ///< Reserved for future use
+    cmSCRIPT_ENDIF      = 22,  ///< Reserved for future use
     cmSCRIPT_NEWLINE    = 23,  ///< Newline
     cmSCRIPT_FUNCTION   = 24,  ///< Reserved for future use
 

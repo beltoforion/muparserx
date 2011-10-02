@@ -212,7 +212,10 @@ MUP_NAMESPACE_START
     iNumErr += ThrowTest(_T("m1+va"), ecEVAL); 
     iNumErr += ThrowTest(_T("va-m1"), ecEVAL); 
     iNumErr += ThrowTest(_T("m1-va"), ecEVAL); 
-    iNumErr += ThrowTest(_T("va*m1"), ecEVAL); // matrix dimension mismatch
+    iNumErr += ThrowTest(_T("va*m1"), ecEVAL);            // matrix dimension mismatch
+    iNumErr += ThrowTest(_T("m1[1]"),     ecINDEX_DIMENSION);
+    iNumErr += ThrowTest(_T("m1[1,2,3]"), ecINDEX_DIMENSION);
+    iNumErr += ThrowTest(_T("va[1,2]"),   ecINDEX_DIMENSION);
 
     iNumErr += ThrowTest(_T("a+m1"), ecEVAL); 
     iNumErr += ThrowTest(_T("m1+a"), ecEVAL); 
@@ -355,7 +358,7 @@ MUP_NAMESPACE_START
     try
     {
       // Test if matrix values do work
-      if (!matrix.IsArray() || matrix.GetRows()!=3)
+      if (!matrix.IsMatrix() || matrix.GetRows()!=3)
         iNumErr++;
 
       std::size_t sz = matrix.GetRows();
@@ -372,22 +375,22 @@ MUP_NAMESPACE_START
 
 
       // test type checking of values
-      if ( !iVal.IsScalar()  ||  iVal.IsArray()  || iVal.GetType()!='i')  iNumErr++;
-      if ( !fVal.IsScalar()  ||  fVal.IsArray()  || fVal.GetType()!='f')  iNumErr++;
-      if ( !cVal.IsScalar()  ||  cVal.IsArray()  || cVal.GetType()!='c')  iNumErr++;
-      if (  aVal.IsScalar()  || !aVal.IsArray()  || aVal.GetType()!='a')  iNumErr++;
-      if (  sVal.IsScalar()  ||  sVal.IsArray()  || sVal.GetType()!='s')  iNumErr++;
-      if (  sVal1.IsScalar() ||  sVal1.IsArray() || sVal1.GetType()!='s') iNumErr++;
-      if (  bVal.IsScalar()  ||  bVal.IsArray()  || bVal.GetType()!='b')  iNumErr++;
+      if ( !iVal.IsScalar()  ||  iVal.IsMatrix()  || iVal.GetType()!='i')  iNumErr++;
+      if ( !fVal.IsScalar()  ||  fVal.IsMatrix()  || fVal.GetType()!='f')  iNumErr++;
+      if ( !cVal.IsScalar()  ||  cVal.IsMatrix()  || cVal.GetType()!='c')  iNumErr++;
+      if (  aVal.IsScalar()  || !aVal.IsMatrix()  || aVal.GetType()!='a')  iNumErr++;
+      if (  sVal.IsScalar()  ||  sVal.IsMatrix()  || sVal.GetType()!='s')  iNumErr++;
+      if (  sVal1.IsScalar() ||  sVal1.IsMatrix() || sVal1.GetType()!='s') iNumErr++;
+      if (  bVal.IsScalar()  ||  bVal.IsMatrix()  || bVal.GetType()!='b')  iNumErr++;
 
       // test type checking of variables
-      if ( !iVar.IsScalar()  ||  iVar.IsArray()  || iVar.GetType()!='i')  iNumErr++;
-      if ( !fVar.IsScalar()  ||  fVar.IsArray()  || fVar.GetType()!='f')  iNumErr++;
-      if ( !cVar.IsScalar()  ||  cVar.IsArray()  || cVar.GetType()!='c')  iNumErr++;
-      if (  aVar.IsScalar()  || !aVar.IsArray()  || aVar.GetType()!='a')  iNumErr++;
-      if (  sVar.IsScalar()  ||  sVar.IsArray()  || sVar.GetType()!='s')  iNumErr++;
-      if (  sVar1.IsScalar() ||  sVar1.IsArray() || sVar1.GetType()!='s') iNumErr++;
-      if (  bVar.IsScalar()  ||  bVar.IsArray()  || bVar.GetType()!='b')  iNumErr++;
+      if ( !iVar.IsScalar()  ||  iVar.IsMatrix()  || iVar.GetType()!='i')  iNumErr++;
+      if ( !fVar.IsScalar()  ||  fVar.IsMatrix()  || fVar.GetType()!='f')  iNumErr++;
+      if ( !cVar.IsScalar()  ||  cVar.IsMatrix()  || cVar.GetType()!='c')  iNumErr++;
+      if (  aVar.IsScalar()  || !aVar.IsMatrix()  || aVar.GetType()!='a')  iNumErr++;
+      if (  sVar.IsScalar()  ||  sVar.IsMatrix()  || sVar.GetType()!='s')  iNumErr++;
+      if (  sVar1.IsScalar() ||  sVar1.IsMatrix() || sVar1.GetType()!='s') iNumErr++;
+      if (  bVar.IsScalar()  ||  bVar.IsMatrix()  || bVar.GetType()!='b')  iNumErr++;
 
       // Test type identifier after calling an assignment operator
       
@@ -744,7 +747,7 @@ MUP_NAMESPACE_START
     iNumErr += ThrowTest(_T("va[-1]"),     ecINDEX_OUT_OF_BOUNDS); // fail: negative value used as an index
     iNumErr += ThrowTest(_T("va[c]"),      ecINDEX_OUT_OF_BOUNDS);
     iNumErr += ThrowTest(_T("va[(3)]"),    ecINDEX_OUT_OF_BOUNDS);
-    iNumErr += ThrowTest(_T("a[1]"),       ecNOT_AN_ARRAY);   // fail: number + vector
+    iNumErr += ThrowTest(_T("a[1]"),       ecINDEX_DIMENSION); 
     iNumErr += ThrowTest(_T("va[1"),       ecMISSING_SQR_BRACKET);
     iNumErr += ThrowTest(_T("va[1]]"),     ecUNEXPECTED_SQR_BRACKET);
 
@@ -1539,7 +1542,7 @@ MUP_NAMESPACE_START
                     if (v1.GetRows()!=v2.GetRows())
                       return false;
 
-                    if (v1.IsArray())
+                    if (v1.IsMatrix())
                     {
 
                       bool bCheck = true;

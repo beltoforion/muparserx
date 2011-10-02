@@ -52,8 +52,10 @@ MUP_NAMESPACE_START
     Variable& operator=(const Variable &a_Var);
 
     virtual IValue& At(int nRow, int nCol);
+    virtual IValue& At(const IValue &nRows, const IValue &nCols);
+
     virtual IValue& operator=(const Value &val);
-    virtual IValue& operator=(const array_type &val);
+    virtual IValue& operator=(const matrix_type &val);
     virtual IValue& operator=(const cmplx_type &val);
     virtual IValue& operator=(int_type val);
     virtual IValue& operator=(float_type val);
@@ -73,7 +75,7 @@ MUP_NAMESPACE_START
     virtual bool GetBool() const;
     virtual const cmplx_type& GetComplex() const;
     virtual const string_type& GetString() const;
-    virtual const array_type& GetArray() const;
+    virtual const matrix_type& GetArray() const;
     virtual int GetRows() const;
     virtual int GetCols() const;
 

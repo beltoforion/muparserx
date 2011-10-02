@@ -52,7 +52,7 @@
 #endif
 
 /** \brief A macro containing the version of muParserX. */
-#define MUP_PARSER_VERSION _T("1.10.3 (20110920)")
+#define MUP_PARSER_VERSION _T("1.10.3 (20111002)")
 
 /** \brief A macro for setting the parser namespace. */
 #define MUP_NAMESPACE_START namespace mup {
@@ -60,16 +60,9 @@
 /** \brief Closing bracket for the parser namespace macro. */
 #define MUP_NAMESPACE_END }
 
-/** \brief A macro for casting between different token types.
-    \param TYPE The token type
-    \param POINTER Pointer to the token object
-
-  This macro uses a dynamic_cast in debugbuilds and a static_cast
-  in release builds for doing the cast operation.
-*/
-#define MUP_TOK_CAST(TYPE, POINTER)  static_cast<TYPE>(POINTER);
 
 #if defined(_DEBUG)
+  #define MUP_TOK_CAST(TYPE, POINTER)  dynamic_cast<TYPE>(POINTER);
 
   /** \brief Debug macro to force an abortion of the programm with a certain message.
   */
@@ -95,6 +88,7 @@
 #else
   #define MUP_FAIL(MSG)
   #define MUP_ASSERT(COND)
+  #define MUP_TOK_CAST(TYPE, POINTER)  static_cast<TYPE>(POINTER);
 #endif
 
   /** \brief Include tests for features about to be implemented in 

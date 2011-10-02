@@ -92,11 +92,12 @@ MUP_NAMESPACE_START
       ecAPI_NOT_AN_ARRAY       = 40, ///< Trying to access a non array type as an array
       ecAPI_INVALID_DIMENSION  = 41, ///< Trying to access a non array type as an array
       ecINDEX_OUT_OF_BOUNDS    = 42, ///< Array index is out of bounds
-      ecMISSING_SQR_BRACKET    = 43, ///< The index operator was not closed properly (i.e. "v[3")
-      ecEVAL                   = 44, ///< Error while evaluating function / operator
+      ecINDEX_DIMENSION        = 43,
+      ecMISSING_SQR_BRACKET    = 44, ///< The index operator was not closed properly (i.e. "v[3")
+      ecEVAL                   = 45, ///< Error while evaluating function / operator
       
       // internal errors
-      ecINTERNAL_ERROR         = 45, ///< Internal error of any kind.
+      ecINTERNAL_ERROR         = 46, ///< Internal error of any kind.
 
       // The last two are special entries 
       ecCOUNT,                       ///< This is no error code, It just stores just the total number of error codes

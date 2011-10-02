@@ -96,12 +96,12 @@ MUP_NAMESPACE_START
     if (arg1->GetType()=='a' && arg2->GetType()=='a')
     {
       // Vector + Vector
-      const array_type &a1 = arg1->GetArray(),
+      const matrix_type &a1 = arg1->GetArray(),
                        &a2 = arg2->GetArray();
       if (a1.GetRows()!=a2.GetRows())
         throw ParserError(ErrorContext(ecARRAY_SIZE_MISMATCH, -1, GetIdent(), 'a', 'a', 2));
       
-      array_type rv(a1.GetRows());
+      matrix_type rv(a1.GetRows());
       for (int i=0; i<a1.GetRows(); ++i)
       {
         if (!a1.At(i).IsNonComplexScalar())
@@ -156,12 +156,12 @@ MUP_NAMESPACE_START
 
     if (a_pArg[0]->GetType()=='a' && a_pArg[1]->GetType()=='a')
     {
-      const array_type &a1 = a_pArg[0]->GetArray(),
+      const matrix_type &a1 = a_pArg[0]->GetArray(),
                        &a2 = a_pArg[1]->GetArray();
       if (a1.GetRows()!=a2.GetRows())
         throw ParserError(ErrorContext(ecARRAY_SIZE_MISMATCH, -1, GetIdent(), 'a', 'a', 2));
       
-      array_type rv(a1.GetRows());
+      matrix_type rv(a1.GetRows());
       for (int i=0; i<a1.GetRows(); ++i)
       {
         if (!a1.At(i).IsNonComplexScalar())
@@ -219,8 +219,8 @@ MUP_NAMESPACE_START
     if (arg1->GetType()=='a' && arg2->GetType()=='a')
     {
       // Scalar multiplication
-      array_type a1 = arg1->GetArray();
-      array_type a2 = arg2->GetArray();
+      matrix_type a1 = arg1->GetArray();
+      matrix_type a2 = arg2->GetArray();
 
       if (a1.GetRows()!=a2.GetRows())
         throw ParserError(ErrorContext(ecARRAY_SIZE_MISMATCH, -1, GetIdent(), 'a', 'a', 2));
@@ -234,7 +234,7 @@ MUP_NAMESPACE_START
     else if (arg1->GetType()=='a' && arg2->IsNonComplexScalar())
     {
       // Skalar * Vector
-      array_type out(a_pArg[0]->GetArray());
+      matrix_type out(a_pArg[0]->GetArray());
       for (int i=0; i<out.GetRows(); ++i)
         out.At(i) = out.At(i).GetFloat() * arg2->GetFloat();
 
@@ -243,7 +243,7 @@ MUP_NAMESPACE_START
     else if (arg2->GetType()=='a' && arg1->IsNonComplexScalar())
     {
       // Vector * Skalar
-      array_type out(arg2->GetArray());
+      matrix_type out(arg2->GetArray());
       for (int i=0; i<out.GetRows(); ++i)
         out.At(i) = out.At(i).GetFloat() * arg1->GetFloat();
 
