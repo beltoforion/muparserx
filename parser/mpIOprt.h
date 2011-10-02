@@ -92,6 +92,28 @@ MUP_NAMESPACE_START
         virtual ~IOprtInfix();
         virtual string_type AsciiDump() const;
     }; // class IOperator
+
+    //------------------------------------------------------------------------------
+    /** \brief Interface for index operator tokens.
+    */
+    class IOprtIndex : public IToken
+    {
+    public:
+        IOprtIndex(int nArgc);
+        virtual ~IOprtIndex();
+        virtual string_type AsciiDump() const;
+        virtual void At(ptr_val_type& ret, const ptr_val_type *arg, int argc) = 0;
+        virtual IOprtIndex* AsIOprtIndex();
+
+        int  GetArgc() const;
+        int  GetArgsPresent() const;
+        void SetNumArgsPresent(int argc);
+
+    private:
+        int m_nArgc;          ///< Number of arguments needed for the index operator (dimension of the index)
+        int m_nArgsPresent;   ///< Number of arguments actually submitted
+
+    }; // class IOperator
 }  // namespace mu
 
 #endif

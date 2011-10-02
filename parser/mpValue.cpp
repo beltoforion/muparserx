@@ -48,7 +48,7 @@ MUP_NAMESPACE_START
     switch (cType)
     {
     case 's': m_psVal = new string_type(); break;
-    case 'a': m_pvVal = new array_type(0, Value(0)); break;
+    case 'a': m_pvVal = new matrix_type(0, Value(0)); break;
     }
   }
 
@@ -90,7 +90,7 @@ MUP_NAMESPACE_START
     :IValue(cmVAL)
     ,m_val()
     ,m_psVal(NULL)
-    ,m_pvVal(new array_type(array_size, Value(v)))
+    ,m_pvVal(new matrix_type(array_size, Value(v)))
     ,m_cType('a')
     ,m_iFlags(flNONE)
     ,m_pCache(NULL)
@@ -103,7 +103,7 @@ MUP_NAMESPACE_START
     :IValue(cmVAL)
     ,m_val()
     ,m_psVal(NULL)
-    ,m_pvVal(new array_type(m, n, Value(v)))
+    ,m_pvVal(new matrix_type(m, n, Value(v)))
     ,m_cType('a')
     ,m_iFlags(flNONE)
     ,m_pCache(NULL)
@@ -148,11 +148,11 @@ MUP_NAMESPACE_START
   {}
 
   //---------------------------------------------------------------------------
-  Value::Value(const array_type &val)
+  Value::Value(const matrix_type &val)
     :IValue(cmVAL)
     ,m_val()
     ,m_psVal(NULL)
-    ,m_pvVal(new array_type(val))
+    ,m_pvVal(new matrix_type(val))
     ,m_cType('a')
     ,m_iFlags(flNONE)
     ,m_pCache(NULL)
@@ -195,7 +195,7 @@ MUP_NAMESPACE_START
               break;
 
     case 'a': if (!m_pvVal) 
-                m_pvVal = new array_type(a_Val.GetArray());
+                m_pvVal = new matrix_type(a_Val.GetArray());
               else
                *m_pvVal  = a_Val.GetArray();  
               break;
@@ -215,15 +215,44 @@ MUP_NAMESPACE_START
   }
 
   //---------------------------------------------------------------------------
+  /** \brief Return the matrix element at row col.
+      
+    Row and col are the indices of the matrix. If this element does not
+    represent a matrix row and col must be 0 otherwise an index out of bound error
+    is thrown.
+  */
+  IValue& Value::At(const IValue &row, const IValue &col)
+  {
+    if (!row.IsInteger() || !col.IsInteger())
+    {
+      ErrorContext errc(ecTYPE_CONFLICT_IDX, GetExprPos());
+      errc.Hint = _T("Array index must be an integer value.");
+      errc.Type1 = (!row.IsInteger()) ? row.GetType() : col.GetType();
+      errc.Type2 = 'i';
+      throw ParserError(errc);
+    }
+
+    int nRow = row.GetInteger(),
+        nCol = col.GetInteger();
+    return At(nRow, nCol);
+  }
+
+  //---------------------------------------------------------------------------
   IValue& Value::At(int nRow, int nCol)
   {
-    if (m_cType!='a' || m_pvVal==NULL)
-      throw ParserError( ErrorContext(ecAPI_NOT_AN_ARRAY) ); 
+    if (IsMatrix())
+    {
+      if (nRow>=m_pvVal->GetRows() || nCol>=m_pvVal->GetCols() || nRow<0 || nCol<0)
+        throw ParserError( ErrorContext(ecINDEX_OUT_OF_BOUNDS, -1, GetIdent()) ); 
 
-    if (nRow>=m_pvVal->GetRows() || nCol>=m_pvVal->GetCols())
+      return m_pvVal->At(nRow, nCol);
+    }
+    else if (nRow==0 && nCol==0)
+    {
+      return *this;
+    }
+    else
       throw ParserError( ErrorContext(ecINDEX_OUT_OF_BOUNDS) ); 
-
-    return m_pvVal->At(nRow, nCol);
   }
 
   //---------------------------------------------------------------------------
@@ -274,7 +303,7 @@ MUP_NAMESPACE_START
     if (ref.m_pvVal)
     {
       if (m_pvVal==NULL)
-        m_pvVal = new array_type(*ref.m_pvVal);
+        m_pvVal = new matrix_type(*ref.m_pvVal);
       else
        *m_pvVal = *ref.m_pvVal;
     }
@@ -393,7 +422,7 @@ MUP_NAMESPACE_START
   }
 
   //---------------------------------------------------------------------------
-  IValue& Value::operator=(const array_type &a_vVal)
+  IValue& Value::operator=(const matrix_type &a_vVal)
   {
     m_val = cmplx_type(0,0);
 
@@ -401,7 +430,7 @@ MUP_NAMESPACE_START
     m_psVal = NULL;
 		
     if (m_pvVal==NULL)
-      m_pvVal = new array_type(a_vVal);
+      m_pvVal = new matrix_type(a_vVal);
     else
       *m_pvVal = a_vVal;
     
@@ -436,7 +465,7 @@ MUP_NAMESPACE_START
       // Scalar/Scalar addition
       m_val += val.GetComplex();
     }
-    else if (IsArray() && val.IsArray())
+    else if (IsMatrix() && val.IsMatrix())
     {
       // Matrix/Matrix addition
       assert(m_pvVal);
@@ -465,7 +494,7 @@ MUP_NAMESPACE_START
       // Scalar/Scalar addition
       m_val -= val.GetComplex();
     }
-    else if (IsArray() && val.IsArray())
+    else if (IsMatrix() && val.IsMatrix())
     {
       // Matrix/Matrix addition
       assert(m_pvVal);
@@ -503,7 +532,7 @@ MUP_NAMESPACE_START
       else if ((double)(int)m_val.real()==m_val.real())
         m_cType = 'i';
     }
-    else if (IsArray() && val.IsArray())
+    else if (IsMatrix() && val.IsMatrix())
     {
       // Matrix/Matrix addition
       assert(m_pvVal);
@@ -516,11 +545,11 @@ MUP_NAMESPACE_START
         Assign(m_pvVal->At(0,0));
       }
     }
-    else if ( IsArray() && val.IsScalar() )
+    else if ( IsMatrix() && val.IsScalar() )
     {
       *m_pvVal *= val;
     }
-    else if ( IsScalar() * val.IsArray() )
+    else if ( IsScalar() * val.IsMatrix() )
     {
       // transform this into a matrix and multiply with rhs
       Value prod = val * (*this);
@@ -536,6 +565,11 @@ MUP_NAMESPACE_START
   }
 
   //---------------------------------------------------------------------------
+  /** \brief Returns a character representing the type of this value instance. 
+      \return m_cType Either one of 'c' for comlex, 'i' for integer, 
+              'f' for floating point, 'b' for boolean, 's' for string or 
+              'm' for matrix values.
+  */
   char_type Value::GetType() const
   {
     return m_cType;
@@ -605,6 +639,9 @@ MUP_NAMESPACE_START
   }
 
   //---------------------------------------------------------------------------
+  /** \brief Get the imaginary part of the value. 
+      \throw ParserError in case this value represents a string or a matrix
+  */
   float_type Value::GetImag() const
   {
     if (!IsScalar())
@@ -632,6 +669,13 @@ MUP_NAMESPACE_START
   }
 
   //---------------------------------------------------------------------------
+  /** \brief Returns this value as a complex number. 
+      \throw nothrow
+
+    If the value instance does not represent a complex value the returned value
+    is undefined. No exception is triggered. If you are unsure about the type
+    use IsComplex() or GetType() to verify the type.
+  */
   const cmplx_type& Value::GetComplex() const
   {
     return m_val;
@@ -653,7 +697,7 @@ MUP_NAMESPACE_START
   }
 
   //---------------------------------------------------------------------------
-  const array_type& Value::GetArray() const
+  const matrix_type& Value::GetArray() const
   {
     CheckType('a');
     assert(m_pvVal!=NULL);

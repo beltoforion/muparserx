@@ -22,27 +22,37 @@
   You should have received a copy of the GNU Lesser General Public License
   along with this program.  If not, see http://www.gnu.org/licenses.
 */
-#ifndef MUP_FWD_DECL_H
-#define MUP_FWD_DECL_H
+#ifndef MP_OPRT_INDEX_H
+#define MP_OPRT_INDEX_H
 
-#include "mpDefines.h"
+/** \file 
+    \brief Definitions of index operator classes. 
+*/
+
+/** \defgroup binop Binary operator callbacks
+
+  This group lists the objects representing the binary operators of muParserX.
+*/
+
+#include <cmath>
+#include "mpIOprt.h"
+#include "mpValue.h"
+#include "mpError.h"
 
 
 MUP_NAMESPACE_START
 
-  class ParserXBase;
-
-  class ICallback;
-  class IToken;
-  class IValue;
-  class IValueReader;
-  class IPrecedence;
-  class IOprtIndex;
-  class Value;
-  class ValueCache;
-
-  template<typename T>
-  class TokenPtr;
+  //-----------------------------------------------------------------------------------------------
+  /** \brief Default implementation of a multidimensional index operator.
+  */
+  class OprtIndex : public IOprtIndex
+  {
+  public:
+    OprtIndex(IPackage* pPackage=NULL);
+    virtual void At(ptr_val_type& ret, const ptr_val_type *arg, int argc);
+    virtual const char_type* GetDesc() const;
+    virtual IToken* Clone() const;
+  }; 
 
 MUP_NAMESPACE_END
 

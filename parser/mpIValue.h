@@ -65,7 +65,7 @@ MUP_NAMESPACE_START
     virtual IValue& operator=(string_type val) = 0;
     virtual IValue& operator=(bool_type val) = 0;
     virtual IValue& operator=(const cmplx_type &val) = 0;
-    virtual IValue& operator=(const array_type &val) = 0;
+    virtual IValue& operator=(const matrix_type &val) = 0;
             IValue& operator=(const IValue &ref);
 
     virtual IValue& operator+=(const IValue &ref) = 0;
@@ -73,17 +73,20 @@ MUP_NAMESPACE_START
     virtual IValue& operator*=(const IValue &ref) = 0;
 
     virtual IValue& At(int nRow, int nCol = 0) = 0;
+    virtual IValue& At(const IValue &nRows, const IValue &nCols) = 0;
+
     virtual int_type GetInteger() const = 0;
     virtual float_type GetFloat() const = 0;
     virtual float_type GetImag() const = 0;
     virtual bool GetBool() const = 0;
     virtual const cmplx_type& GetComplex() const = 0;
     virtual const string_type&  GetString() const = 0;
-    virtual const array_type& GetArray() const = 0;
+    virtual const matrix_type& GetArray() const = 0;
     virtual char_type GetType() const = 0;
     virtual int GetRows() const = 0;
     virtual int GetCols() const = 0;
-    
+    int GetDim() const;
+
     virtual bool IsVolatile() const = 0;
     virtual string_type ToString() const;
   
@@ -129,7 +132,7 @@ MUP_NAMESPACE_START
     /** \brief Returns true if this value is an array. 
         \throw nothrow
     */  
-    inline bool IsArray() const 
+    inline bool IsMatrix() const 
     {
       return GetType() == 'a';  
     }

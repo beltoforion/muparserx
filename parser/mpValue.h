@@ -57,7 +57,7 @@ MUP_NAMESPACE_START
     Value(string_type val);
     Value(const char_type *val);
     Value(const cmplx_type &v);
-    Value(const array_type &val);
+    Value(const matrix_type &val);
 
     // Array and Matrix constructors
     Value(int_type m, float_type v);
@@ -70,11 +70,13 @@ MUP_NAMESPACE_START
     virtual ~Value();
  
     virtual IValue& At(int nRow, int nCol = 0);
+    virtual IValue& At(const IValue &row, const IValue &col);
+
     virtual IValue& operator=(int_type a_iVal);
     virtual IValue& operator=(float_type a_fVal);
     virtual IValue& operator=(string_type a_sVal);
     virtual IValue& operator=(bool val);
-    virtual IValue& operator=(const array_type &a_vVal);
+    virtual IValue& operator=(const matrix_type &a_vVal);
     virtual IValue& operator=(const cmplx_type &val);
     virtual IValue& operator=(const char_type *a_szVal);
     virtual IValue& operator+=(const IValue &val);
@@ -88,7 +90,7 @@ MUP_NAMESPACE_START
     virtual bool GetBool() const;
     virtual const cmplx_type& GetComplex() const;
     virtual const string_type& GetString() const;
-    virtual const array_type& GetArray() const;
+    virtual const matrix_type& GetArray() const;
     virtual int GetRows() const;
     virtual int GetCols() const;
 
@@ -103,7 +105,7 @@ MUP_NAMESPACE_START
 
     cmplx_type   m_val;    ///< Member variable for storing the value of complex, float, int and boolean values
     string_type *m_psVal;  ///< Variable for storing a string value
-    array_type  *m_pvVal;  ///< A Vector for storing array variable content
+    matrix_type  *m_pvVal;  ///< A Vector for storing array variable content
     char_type    m_cType;  ///< A byte indicating the type os the represented value
     EFlags       m_iFlags; ///< Additional flags
     ValueCache  *m_pCache; ///< Pointer to the Value Cache

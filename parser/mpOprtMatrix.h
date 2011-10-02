@@ -26,13 +26,9 @@
 #define MP_OPRT_MATRIX_H
 
 /** \file 
-    \brief Definitions of classes used as callbacks for standard binary operators. 
+    \brief Definitions of classes used as callbacks for matrix operators. 
 */
 
-/** \defgroup binop Binary operator callbacks
-
-  This group lists the objects representing the binary operators of muParserX.
-*/
 
 #include <cmath>
 #include "mpIOprt.h"

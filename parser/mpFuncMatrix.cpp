@@ -66,7 +66,7 @@ MUP_NAMESPACE_START
               if (m==1)
                 *ret = 1.0;
               else
-                *ret = array_type(a_pArg[0]->GetInteger(), 1, 1.0);
+                *ret = matrix_type(a_pArg[0]->GetInteger(), 1, 1.0);
             }
             break;
 
@@ -78,7 +78,7 @@ MUP_NAMESPACE_START
               if (m==n && m==1)
                 *ret = 1.0;
               else
-                *ret = array_type(a_pArg[0]->GetInteger(), a_pArg[1]->GetInteger(), 1.0);
+                *ret = matrix_type(a_pArg[0]->GetInteger(), a_pArg[1]->GetInteger(), 1.0);
             }
             break;
     
