@@ -13,10 +13,10 @@ PATH_OBJ = ./obj
 LIB_SRC = mpError.cpp mpRPN.cpp mpICallback.cpp mpIValReader.cpp mpParserBase.cpp mpTokenReader.cpp\
           mpVariable.cpp mpIOprt.cpp mpIValue.cpp\
           mpParser.cpp mpValReader.cpp mpFuncStr.cpp mpFuncCommon.cpp mpFuncNonCmplx.cpp mpFuncCmplx.cpp\
-          mpIToken.cpp mpOprtCmplx.cpp mpOprtNonCmplx.cpp mpOprtBinCommon.cpp mpOprtBinAssign.cpp\
+          mpIToken.cpp mpOprtCmplx.cpp mpOprtNonCmplx.cpp mpOprtBinCommon.cpp mpOprtBinAssign.cpp mpOprtMatrix.cpp\
           mpIPackage.cpp mpPackageCommon.cpp mpPackageStr.cpp mpPackageCmplx.cpp mpPackageNonCmplx.cpp\
-          mpIfThenElse.cpp mpValueCache.cpp mpPackageUnit.cpp mpValue.cpp mpTest.cpp mpScriptTokens.cpp\
-		  mpPackageMatrix.cpp mpFuncMatrix.cpp mpOprtIndex.cpp
+          mpPackageMatrix.cpp mpIfThenElse.cpp mpValueCache.cpp mpPackageUnit.cpp mpValue.cpp mpTest.cpp\
+		  mpScriptTokens.cpp mpFuncMatrix.cpp mpOprtIndex.cpp
 LIB_OBJ = ${LIB_SRC:.cpp=.o}
 NAME_LIB = libmuparserx.a
 
