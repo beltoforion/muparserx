@@ -35,16 +35,27 @@ class MySine : public mup::ICallback
   };
 }}}
 
-The mup::ICallback constructor takes three argument. The first determines the type of the callback. If you want to add a parser function use cmFUNC. The second is the function name and the last parameter is the number of arguments. Please note that the parser leaves the type checking of the function arguments entirely to your implementation of ICallback::Eval.
+The mup::ICallback constructor takes three argument. The first determines the type of the callback. If you want to add a parser function use cmFUNC. The second is the function name and the last parameter is the number of arguments. 
 
-Binary operators are treated like functions taking two arguments, unary operators like functions with a single argument. Once you have a class which you would like to add as a function to muParserX you have to bind it to your parser instance using the DefineFun member function: 
+The implementation of your callback has to be done in the Eval function. Eval takes three parameters. The first one is a reference to a smartpointer of type IValue holding the return value. The second one is a pointer to an array containing the function arguments. These arguments are also passed via a smartpointer. The last argument is the number of arguments. 
+
+By using the member functions implemented by the IValue interface you can now easily access the values and perform the actual work. In this sample the first (and only) argument is interpreted as a double value, its sine is calculated and it is then written to the return value. Please note that the parser leaves the type checking of the function arguments entirely to your implementation of ICallback::Eval.
+
+{{{
+  float_type a = argv[0]->GetFloat();
+  *ret = sin(a);
+}}}
+
+The menanism for implementing callback functions is always the same. Binary operators are treated like functions taking two arguments, unary operators like functions with a single argument. 
+
+After implementing the logic you have to register it with muParserX by using the DefineFun member function: 
 
 {{{
 ParserX p;
 p.DefineFun(new MySine);
 }}}
 
-Once submitted to DefineFun the parser takes ownership of the newly created pointer. You may not release it on your own! 
+One important thing to note is that once submitted to DefineFun the parser takes ownership of the newly created pointer. You may not release it on your own! 
 
 == Defining custom operators ==
 Defining your own operators is very similar to defining new functions. You have to create a callback object and register it at the parser instance. The parser lets you add unary operators (both infix and prefix) as well as binary operators using the following member functions:
@@ -53,4 +64,39 @@ Defining your own operators is very similar to defining new functions. You have 
  void DefineOprt(IOprtBin *a_pCallback)
  void DefinePostfixOprt(IOprtPostfix *a_pCallback)
  void DefineInfixOprt(IOprtInfix *a_pCallback)
+}}}
+
+=== Defining binary operators ===
+{{{
+  class OprtAdd : public IOprtBin    
+  {
+  public:
+    OprtAdd::OprtAdd() 
+      :IOprtBin(_T("+"), (int)prADD_SUB, oaLEFT) 
+    {}
+
+    virtual void Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int)
+    {
+      const IValue *arg1 = a_pArg[0].Get();
+      const IValue *arg2 = a_pArg[1].Get();
+
+      if (!arg1->IsNonComplexScalar())
+        throw ParserError( ErrorContext(ecTYPE_CONFLICT_FUN, -1, GetIdent(), arg1->GetType(), 'f', 1)); 
+
+      if (!arg2->IsNonComplexScalar())
+        throw ParserError( ErrorContext(ecTYPE_CONFLICT_FUN, -1, GetIdent(), arg2->GetType(), 'f', 2)); 
+      
+      *ret = arg1->GetFloat() + arg2->GetFloat(); 
+    }
+
+    virtual const char_type* OprtAdd::GetDesc() const 
+    { 
+      return _T("x+y - Addition for noncomplex values"); 
+    }
+  
+    virtual IToken* OprtAdd::Clone() const
+    { 
+      return new OprtAdd(*this); 
+    }
+  };
 }}}
