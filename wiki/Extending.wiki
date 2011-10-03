@@ -104,6 +104,26 @@ In order to do this you can use the predefined precedence values as defined by m
   };
 }}}
 
+The <a href="http://en.wikipedia.org/wiki/Operator_associativity">operator associativity</a> is a parameter that determines how operators of the same precedence are grouped in the absence of parentheses. It can either be right associative or left associative. For instance lets have a look at the following expression:
+
+{{{
+5^4^3^2
+}}}
+
+Depending on the operator associativity this expression could either be interpreted as 
+
+{{{
+5^(4^(3^2))
+}}}
+
+which correctly implements the power operator as a right associative operator or alternatively one could also evaluate:
+
+{{{
+((5^4)^3)^2 
+}}}
+
+Which would (incorrectly) ignore the right associativity of the power operator and compute a different result.
+
 By putting this information together we can now implement a simple binary operator for the addition of noncomplex scalar values:
 
 {{{
