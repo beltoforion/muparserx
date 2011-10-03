@@ -104,6 +104,8 @@ In order to do this you can use the predefined precedence values as defined by m
   };
 }}}
 
+By putting this information together we can now implement a simple binary operator for the addition of noncomplex scalar values:
+
 {{{
   class OprtAdd : public IOprtBin    
   {
