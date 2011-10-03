@@ -67,6 +67,43 @@ Defining your own operators is very similar to defining new functions. You have 
 }}}
 
 === Defining binary operators ===
+
+As already mentioned binary operators are defined in a very similar manner as function definitions. The main difference is that you don't have to implement the ICallback interface directly but use it indirectly by implementing the IOprtBin interface which itself is derived from ICallback. IOprtBin is an Extension to ICallback able to handle precedence and associativity parameters needed by binary operators. Consequently you need additional parameters for the construction of binary operators. Namely operator precedence and operator associativity. 
+
+Operator precedence is a rule used to <a href="http://en.wikipedia.org/wiki/Order_of_operations">clarify unambiguously which procedures should be performed first</a> in a given mathematical expression. The precedence value for in muParserX is a simple integer value. The higher the value, the higher the priority of the operation. For instance if you want to compute the following expression properly:
+
+{{{
+2 + 3 * 4
+}}} 
+
+Then you need to make sure that the addition has a lower precedence than the multiplication. So basically what you are calculating is
+
+{{{
+(3 * 4) + 2 = 14
+}}}
+
+In order to do this you can use the predefined precedence values as defined by muParserX in the enumerator EOprtPrecedence. This enumerator does not only contain precedence values for binary operators but also for unary operatory and the ternary if-then-else operator:
+
+{{{
+  enum EOprtPrecedence
+  {
+    prASSIGN       = -1,
+    prIF_THEN_ELSE =  0,
+    prLOGIC_OR     =  1,
+    prLOGIC_AND    =  2,
+    prBIT_OR       =  3,
+    prBIT_AND      =  4, 
+    prRELATIONAL1  =  5, ///< For "==", "!=" 
+    prRELATIONAL2  =  6, ///< Relational operators "<", "<=", ">", ">="
+    prSHIFT        =  7, ///< Shift operators "<<", ">>"
+    prADD_SUB      =  8, ///< addition
+    prMUL_DIV      =  9, ///< multiplication/division
+    prPOW          = 10, ///< power operator priority (highest)
+    prINFIX        =  9, ///< Signs have a higher priority than ADD_SUB, but lower than power operator
+    prPOSTFIX      =  9  ///< Postfix operator priority (currently unused)
+  };
+}}}
+
 {{{
   class OprtAdd : public IOprtBin    
   {
