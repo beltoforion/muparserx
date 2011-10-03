@@ -39,14 +39,14 @@ The mup::ICallback constructor takes three argument. The first determines the ty
 
 The implementation of your callback has to be done in the Eval function. Eval takes three parameters. The first one is a reference to a smartpointer of type IValue holding the return value. The second one is a pointer to an array containing the function arguments. These arguments are also passed via a smartpointer. The last argument is the number of arguments. 
 
-By using the member functions implemented by the IValue interface you can now easily access the values and perform the actual work. In this sample the first (and only) argument is interpreted as a double value, its sine is calculated and it is then written to the return value. Please note that the parser leaves the type checking of the function arguments entirely to your implementation of ICallback::Eval.
+By using the member functions implemented by the IValue interface you can now easily access the values and perform the actual work. In this sample the first (and only) argument is interpreted as a double value, its sine is calculated and it is then written to the return value. 
 
 {{{
   float_type a = argv[0]->GetFloat();
   *ret = sin(a);
 }}}
 
-The menanism for implementing callback functions is always the same. Binary operators are treated like functions taking two arguments, unary operators like functions with a single argument. 
+Please note that the parser leaves the type checking of the function arguments entirely to your implementation of ICallback::Eval. The menanism for implementing callback functions is always the same. Binary operators are treated like functions taking two arguments, unary operators like functions with a single argument. 
 
 After implementing the logic you have to register it with muParserX by using the DefineFun member function: 
 
