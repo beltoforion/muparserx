@@ -74,7 +74,7 @@ Variables can be defined either explicitely in your C++ code or implicitely at p
 In order to create a value for use with muParserX you have to create a value object first. The value class provides overloaded constructors for all relevant types: 
 
 {{{
- using namespace mup;
+  using namespace mup;
 
   // ...
 
@@ -127,7 +127,7 @@ Once a variable is defined there is no need to call DefineVar again just to chan
 Implicit creation of variables refers to the creation of parser variables at parser runtime. With this feature you can create variables on the fly without any additional client code. Since this is usefull only for applications requiring direct user interaction it is turned off by default. In order to use it you have to activate it first by calling the EnableAutoCreateVar member function: 
 
 {{{
-ParserX p;
+  ParserX p;
   p.EnableAutoCreateVar(true);
 
   // Lets set up an expression for defining a new variable named "a" with the value 123
@@ -143,7 +143,7 @@ Once you have activated the automatic creation of variables the parser will add 
 After setting up your variables properly you can use the SetExpr member function of muParser in order to define the expression. The next thing you have to do is call Eval to evaluate the expression. The return value is again stored in an object of type mup::Value. The complete code for creating variables, setting up the expression and evaluating the result is shown here: 
 
 {{{
- // Create the parser instance
+  // Create the parser instance
   ParserX  p;
 
   // Create an array of mixed type
@@ -179,7 +179,7 @@ After setting up your variables properly you can use the SetExpr member function
 Sometimes its necessary to get a list of all variables or constants currently defined be muParserX. You may either want to query all variables or just the variables used in an expression. The latter may be usefull when you are dealing with a large number of variables and it's not possible to define all of them before evaluating an expression. In order to get the list of all variables currently defined by an instance of muParserX simply use the ParserX::GetVar() member function. It returns a map containing the variable names as the keys and pointers to the variable tokens as the values. In order to further process the variable you should cast the token into its proper type (mup::Variable) as shown in the following sample:
 
 {{{
-// Get a map of all variables used by muParserX
+  // Get a map of all variables used by muParserX
   var_maptype vmap = parser.GetVar();
   for (var_maptype::iterator item = vmap.begin(); item!=vmap.end(); ++item)
     cout << item->first << "=" << (Variable&)(*(item->second)) << "\n";
@@ -188,7 +188,7 @@ Sometimes its necessary to get a list of all variables or constants currently de
 Getting the expressions used in an expression does work the same way except that you have to use the ParserX::GetExprVar() member function instead of ParserX::GeVar(). Querying the expression variables does only make sense after having set up an expression using ParserX::SetExpr(...). 
 
 {{{
-// Set the expression
+  // Set the expression
   parser.SetExpr("a*sin(b)");
 
   // Query the expression variables 
@@ -200,7 +200,7 @@ Getting the expressions used in an expression does work the same way except that
 Querying all parser constants works the same way by using ParserX::GetConst() member function: 
 
 {{{
-// Get a map containing all constants
+  // Get a map containing all constants
   val_maptype cmap = parser.GetConst();
   for (val_maptype::iterator item = cmap.begin(); item!=cmap.end(); ++item)
     cout << "  " << item->first << " =  " << (Value&)(*(item->second)) << "\n";
