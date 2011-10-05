@@ -95,14 +95,14 @@ In order to create a value for use with muParserX you have to create a value obj
 
   // Create a 3x3 identity matrix
   Value m1(3, 3, 0);
-  m1[0][0] = 1;
-  m1[1][1] = 1;
-  m1[2][2] = 1;
+  m1.At(0, 0) = 1;
+  m1.At(1, 1) = 1;
+  m1.At(2, 2) = 1;
 
   // Create an array
   Value arr(2, 0);      // Arguments: number of elements, default value
-  arr[0] = 2.0;
-  arr[1] = _T("hallo"); // note that arrays can consits of mixed type elements
+  arr.At(0) = 2.0;
+  arr.At(1) = _T("hallo"); // note that arrays can consits of mixed type elements
 }}}
 
 Once you have a parser value you can bind it to a variable object. A variable serves as a proxy class for value objects. It merely holds a pointer to the original value and refers all queries to it thus allowing the parser to change it. After creating the variable object use the DefineVar function in order to add it to the parser. In a similar procedure constants can be defined by using the DefineConst member function but they can be submitted directly. 
