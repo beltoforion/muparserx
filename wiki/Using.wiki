@@ -148,8 +148,8 @@ After setting up your variables properly you can use the SetExpr member function
 
   // Create an array of mixed type
   Value arr(3, 0);
-  arr[0] = 2.0;
-  arr[1] = "this is a string";
+  arr.At(0) = 2.0;
+  arr.At(1) = "this is a string";
 
   // Create some basic values
   Value cVal(cmplx_type(1, 1));
