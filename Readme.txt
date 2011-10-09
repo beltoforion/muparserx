@@ -21,7 +21,7 @@
 #########################################################################
 
 V1.10.3 (20111002; SVN only)
------------------------------------------------
+----------------------------
 
 Changes:
 - Fundamental datatype changed to a matrix type instead of a vector type
@@ -30,6 +30,9 @@ Changes:
 	"m[1][2] = 1"
   new:
 	"m[1,2] = 1"
+- type identifier for matrices is now 'a', dormerly 'a' was used to 
+  indicate arrays. An arrays are now seen as subsets of matrices, there is no 
+  special type for arrays.
 
 Bugfixes:
 - Matrix addition and subtraction work properly now.

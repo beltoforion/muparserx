@@ -258,14 +258,16 @@ MUP_NAMESPACE_START
     prRELATIONAL1  =  5, ///< For "==", "!=" 
     prRELATIONAL2  =  6, ///< Relational operators "<", "<=", ">", ">="
     prSHIFT        =  7, ///< Shift operators "<<", ">>"
+    
+    prCOLON        =  8, ///< Colon operator
 
-    prADD_SUB      =  8, ///< addition
-    prMUL_DIV      =  9, ///< multiplication/division
-    prPOW          = 10, ///< power operator priority (highest)
+    prADD_SUB      =  9, ///< addition
+    prMUL_DIV      = 10, ///< multiplication/division
+    prPOW          = 11, ///< power operator priority (highest)
 
     // infix operators
-    prINFIX        =  9, ///< Signs have a higher priority than ADD_SUB, but lower than power operator
-    prPOSTFIX      =  9  ///< Postfix operator priority (currently unused)
+    prINFIX        = 10, ///< Signs have a higher priority than ADD_SUB, but lower than power operator
+    prPOSTFIX      = 10  ///< Postfix operator priority (currently unused)
   };
 
 #if defined(_UNICODE)

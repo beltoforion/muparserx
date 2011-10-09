@@ -45,7 +45,7 @@ MUP_NAMESPACE_START
     {
       *ret = -a_pArg[0]->GetFloat();
     }
-    else if (a_pArg[0]->GetType()=='a')
+    else if (a_pArg[0]->GetType()=='m')
     {
       Value v(a_pArg[0]->GetRows(), 0);
       for (int i=0; i<a_pArg[0]->GetRows(); ++i)
@@ -93,13 +93,13 @@ MUP_NAMESPACE_START
 
     const IValue *arg1 = a_pArg[0].Get();
     const IValue *arg2 = a_pArg[1].Get();
-    if (arg1->GetType()=='a' && arg2->GetType()=='a')
+    if (arg1->GetType()=='m' && arg2->GetType()=='m')
     {
       // Vector + Vector
       const matrix_type &a1 = arg1->GetArray(),
                        &a2 = arg2->GetArray();
       if (a1.GetRows()!=a2.GetRows())
-        throw ParserError(ErrorContext(ecARRAY_SIZE_MISMATCH, -1, GetIdent(), 'a', 'a', 2));
+        throw ParserError(ErrorContext(ecARRAY_SIZE_MISMATCH, -1, GetIdent(), 'm', 'm', 2));
       
       matrix_type rv(a1.GetRows());
       for (int i=0; i<a1.GetRows(); ++i)
@@ -154,12 +154,12 @@ MUP_NAMESPACE_START
   { 
     assert(num==2);
 
-    if (a_pArg[0]->GetType()=='a' && a_pArg[1]->GetType()=='a')
+    if (a_pArg[0]->GetType()=='m' && a_pArg[1]->GetType()=='m')
     {
       const matrix_type &a1 = a_pArg[0]->GetArray(),
                        &a2 = a_pArg[1]->GetArray();
       if (a1.GetRows()!=a2.GetRows())
-        throw ParserError(ErrorContext(ecARRAY_SIZE_MISMATCH, -1, GetIdent(), 'a', 'a', 2));
+        throw ParserError(ErrorContext(ecARRAY_SIZE_MISMATCH, -1, GetIdent(), 'm', 'm', 2));
       
       matrix_type rv(a1.GetRows());
       for (int i=0; i<a1.GetRows(); ++i)
@@ -216,14 +216,14 @@ MUP_NAMESPACE_START
     assert(num==2);
     IValue *arg1 = a_pArg[0].Get();
     IValue *arg2 = a_pArg[1].Get();
-    if (arg1->GetType()=='a' && arg2->GetType()=='a')
+    if (arg1->GetType()=='m' && arg2->GetType()=='m')
     {
       // Scalar multiplication
       matrix_type a1 = arg1->GetArray();
       matrix_type a2 = arg2->GetArray();
 
       if (a1.GetRows()!=a2.GetRows())
-        throw ParserError(ErrorContext(ecARRAY_SIZE_MISMATCH, -1, GetIdent(), 'a', 'a', 2));
+        throw ParserError(ErrorContext(ecARRAY_SIZE_MISMATCH, -1, GetIdent(), 'm', 'm', 2));
 
       float_type val(0);
       for (int i=0; i<a1.GetRows(); ++i)
@@ -231,7 +231,7 @@ MUP_NAMESPACE_START
 
       *ret = val;
     }
-    else if (arg1->GetType()=='a' && arg2->IsNonComplexScalar())
+    else if (arg1->GetType()=='m' && arg2->IsNonComplexScalar())
     {
       // Skalar * Vector
       matrix_type out(a_pArg[0]->GetArray());
@@ -240,7 +240,7 @@ MUP_NAMESPACE_START
 
       *ret = out; 
     }
-    else if (arg2->GetType()=='a' && arg1->IsNonComplexScalar())
+    else if (arg2->GetType()=='m' && arg1->IsNonComplexScalar())
     {
       // Vector * Skalar
       matrix_type out(arg2->GetArray());

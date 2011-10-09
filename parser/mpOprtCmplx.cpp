@@ -57,7 +57,7 @@ MUP_NAMESPACE_START
       cmplx_type v((re==0) ? 0 : -re, (im==0) ? 0 : -im);
       *ret = v; 
     }
-    else if (a_pArg[0]->GetType()=='a')
+    else if (a_pArg[0]->GetType()=='m')
     {
       Value v(a_pArg[0]->GetRows(), 0);
       for (int i=0; i<a_pArg[0]->GetRows(); ++i)
@@ -110,7 +110,7 @@ MUP_NAMESPACE_START
     {
       *ret = arg1->GetFloat() + arg2->GetFloat(); 
     }
-    else if (arg1->GetType()=='a' && arg2->GetType()=='a')
+    else if (arg1->GetType()=='m' && arg2->GetType()=='m')
     {
       // Matrix + Matrix
       *ret = arg1->GetArray() + arg2->GetArray();
@@ -161,7 +161,7 @@ MUP_NAMESPACE_START
     {
       *ret = arg1->GetFloat() - arg2->GetFloat(); 
     }
-    else if (a_pArg[0]->GetType()=='a' && a_pArg[1]->GetType()=='a')
+    else if (a_pArg[0]->GetType()=='m' && a_pArg[1]->GetType()=='m')
     {
       // Matrix + Matrix
       *ret = arg1->GetArray() - arg2->GetArray();

@@ -95,21 +95,6 @@ MUP_NAMESPACE_START
   {}
 
   //---------------------------------------------------------------------------
-  /** \brief Returns the dimension of the value represented by a value object.
-      
-      The value represents the dimension of the object. Possible value are:
-      <ul>
-        <li>0 - scalar</li>
-        <li>1 - vector</li>
-        <li>2 - matrix</li>
-      </ul>
-  */
-  int IValue::GetDim() const
-  {
-    return (IsMatrix()) ? GetArray().GetDim() : 0;
-  }
-
-  //---------------------------------------------------------------------------
   ICallback* IValue::AsICallback()
   {
     return NULL;
@@ -127,25 +112,37 @@ MUP_NAMESPACE_START
     stringstream_type ss;
     switch (GetType())
     {
-    case 'a':  
-               {
-                 const matrix_type &arr(GetArray());
-                 ss << _T("{"); 
-                 for (int i=0; i<arr.GetRows(); ++i)
-                 {
-                   ss << _T(" {");
-                   for (int j=0; j<arr.GetCols();++j)
-                   {
-                     ss << arr.At(i, j).ToString();
-                     if (j!=arr.GetCols()-1)
-                       ss << _T("; ");
-                     else
-                       ss << _T("} ");
-                   }
-                 }
-                 ss << _T("}"); 
-               }
-               break;
+    case 'm':  
+          {
+            const matrix_type &arr(GetArray());
+
+            if (arr.GetRows()>1)
+              ss << _T("{");
+
+            for (int i=0; i<arr.GetRows(); ++i)
+            {
+              if (arr.GetCols()>1)
+                ss << _T("{");
+
+              for (int j=0; j<arr.GetCols();++j)
+              {
+                ss << arr.At(i, j).ToString();
+                if (j!=arr.GetCols()-1)
+                  ss << _T(", ");
+              }
+
+              if (arr.GetCols()>1)
+                ss << _T("}");
+
+              if (i!=arr.GetRows()-1)
+                ss << _T(", ");
+            }
+
+            if (arr.GetRows()>1)
+              ss << _T("} ");
+          }
+          break;
+
     case 'c':
               {
                 float_type re = GetFloat(),
@@ -195,7 +192,7 @@ MUP_NAMESPACE_START
       case 's': return GetString()  == a_Val.GetString();
       case 'b': return GetBool()    == a_Val.GetBool();
       case 'v': return false;
-      case 'a': if (GetRows()!=a_Val.GetRows() || GetCols()!=a_Val.GetCols())
+      case 'm': if (GetRows()!=a_Val.GetRows() || GetCols()!=a_Val.GetCols())
                 {
                   return false;
                 }
@@ -240,7 +237,7 @@ MUP_NAMESPACE_START
       case 'c': return (GetFloat() != a_Val.GetFloat()) || (GetImag() != a_Val.GetImag());
       case 'b': return GetBool() != a_Val.GetBool();
       case 'v': return true;
-      case 'a': if (GetRows()!=a_Val.GetRows() || GetCols()!=a_Val.GetCols())
+      case 'm': if (GetRows()!=a_Val.GetRows() || GetCols()!=a_Val.GetCols())
                 {
                   return true;
                 }
@@ -425,7 +422,7 @@ MUP_NAMESPACE_START
     case 'f': 
     case 'c': return *this = cmplx_type(ref.GetFloat(), ref.GetImag());
     case 's': return *this = ref.GetString();
-    case 'a': return *this = ref.GetArray();
+    case 'm': return *this = ref.GetArray();
     case 'b': return *this = ref.GetBool();
     case 'v': 
       throw ParserError(_T("Assignment from void type is not possible"));
