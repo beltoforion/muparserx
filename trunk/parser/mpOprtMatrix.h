@@ -48,6 +48,15 @@ MUP_NAMESPACE_START
     virtual IToken* Clone() const;
   }; 
 
+  //-----------------------------------------------------------------------------------------------
+  class OprtColon : public IOprtBin
+  {
+  public:
+    OprtColon();
+    virtual void Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int a_iArgc);
+    virtual const char_type* GetDesc() const;
+    virtual IToken* Clone() const;
+  }; 
 MUP_NAMESPACE_END
 
 #endif

@@ -378,7 +378,7 @@ MUP_NAMESPACE_START
       if ( !iVal.IsScalar()  ||  iVal.IsMatrix()  || iVal.GetType()!='i')  iNumErr++;
       if ( !fVal.IsScalar()  ||  fVal.IsMatrix()  || fVal.GetType()!='f')  iNumErr++;
       if ( !cVal.IsScalar()  ||  cVal.IsMatrix()  || cVal.GetType()!='c')  iNumErr++;
-      if (  aVal.IsScalar()  || !aVal.IsMatrix()  || aVal.GetType()!='a')  iNumErr++;
+      if (  aVal.IsScalar()  || !aVal.IsMatrix()  || aVal.GetType()!='m')  iNumErr++;
       if (  sVal.IsScalar()  ||  sVal.IsMatrix()  || sVal.GetType()!='s')  iNumErr++;
       if (  sVal1.IsScalar() ||  sVal1.IsMatrix() || sVal1.GetType()!='s') iNumErr++;
       if (  bVal.IsScalar()  ||  bVal.IsMatrix()  || bVal.GetType()!='b')  iNumErr++;
@@ -387,7 +387,7 @@ MUP_NAMESPACE_START
       if ( !iVar.IsScalar()  ||  iVar.IsMatrix()  || iVar.GetType()!='i')  iNumErr++;
       if ( !fVar.IsScalar()  ||  fVar.IsMatrix()  || fVar.GetType()!='f')  iNumErr++;
       if ( !cVar.IsScalar()  ||  cVar.IsMatrix()  || cVar.GetType()!='c')  iNumErr++;
-      if (  aVar.IsScalar()  || !aVar.IsMatrix()  || aVar.GetType()!='a')  iNumErr++;
+      if (  aVar.IsScalar()  || !aVar.IsMatrix()  || aVar.GetType()!='m')  iNumErr++;
       if (  sVar.IsScalar()  ||  sVar.IsMatrix()  || sVar.GetType()!='s')  iNumErr++;
       if (  sVar1.IsScalar() ||  sVar1.IsMatrix() || sVar1.GetType()!='s') iNumErr++;
       if (  bVar.IsScalar()  ||  bVar.IsMatrix()  || bVar.GetType()!='b')  iNumErr++;
@@ -1522,7 +1522,7 @@ MUP_NAMESPACE_START
             }
             break;
 
-      case 'a':
+      case 'm':
             {
               bStat = true;
   	          int num = sizeof(fVal)/sizeof(Value);

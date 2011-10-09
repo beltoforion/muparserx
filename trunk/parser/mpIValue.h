@@ -85,18 +85,25 @@ MUP_NAMESPACE_START
     virtual char_type GetType() const = 0;
     virtual int GetRows() const = 0;
     virtual int GetCols() const = 0;
-    int GetDim() const;
 
     virtual bool IsVolatile() const = 0;
     virtual string_type ToString() const;
   
-/*
     //---------------------------------------------------------------------------
-    inline std::size_t GetDim() const
+    /** \brief Returns the dimension of the value represented by a value object.
+        
+        The value represents the dimension of the object. Possible value are:
+        <ul>
+          <li>0 - scalar</li>
+          <li>1 - vector</li>
+          <li>2 - matrix</li>
+        </ul>
+    */
+    inline int GetDim() const
     {
-      return (GetType()!='a') ? 1 : GetArray().size();
+      return (IsMatrix()) ? GetArray().GetDim() : 0;
     }
-*/
+
     //---------------------------------------------------------------------------
     /** \brief Returns true if the type is either floating point or interger. 
         \throw nothrow
@@ -134,7 +141,7 @@ MUP_NAMESPACE_START
     */  
     inline bool IsMatrix() const 
     {
-      return GetType() == 'a';  
+      return GetType() == 'm';  
     }
 
     //---------------------------------------------------------------------------

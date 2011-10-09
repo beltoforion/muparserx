@@ -303,7 +303,7 @@ MUP_NAMESPACE_START
     {
     case 'i': ss << (int_type)GetFloat(); break;
     case 'f': ss << GetFloat(); break;
-    case 'a': ss << _T("(array)"); break;
+    case 'm': ss << _T("(array)"); break;
     case 's': ss << _T("\"") << GetString() << _T("\""); break;
     }
 

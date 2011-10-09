@@ -28,6 +28,9 @@ void PackageMatrix::AddToParser(ParserXBase *pParser)
   
   // Matrix Operators
   pParser->DefinePostfixOprt(new OprtTranspose(this));
+
+  // Colon operator
+  pParser->DefineOprt(new OprtColon());
 }
 
 //------------------------------------------------------------------------------

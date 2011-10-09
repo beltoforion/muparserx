@@ -48,7 +48,7 @@ MUP_NAMESPACE_START
     switch (cType)
     {
     case 's': m_psVal = new string_type(); break;
-    case 'a': m_pvVal = new matrix_type(0, Value(0)); break;
+    case 'm': m_pvVal = new matrix_type(0, Value(0)); break;
     }
   }
 
@@ -91,7 +91,7 @@ MUP_NAMESPACE_START
     ,m_val()
     ,m_psVal(NULL)
     ,m_pvVal(new matrix_type(array_size, Value(v)))
-    ,m_cType('a')
+    ,m_cType('m')
     ,m_iFlags(flNONE)
     ,m_pCache(NULL)
   {}
@@ -104,7 +104,7 @@ MUP_NAMESPACE_START
     ,m_val()
     ,m_psVal(NULL)
     ,m_pvVal(new matrix_type(m, n, Value(v)))
-    ,m_cType('a')
+    ,m_cType('m')
     ,m_iFlags(flNONE)
     ,m_pCache(NULL)
   {}
@@ -153,7 +153,7 @@ MUP_NAMESPACE_START
     ,m_val()
     ,m_psVal(NULL)
     ,m_pvVal(new matrix_type(val))
-    ,m_cType('a')
+    ,m_cType('m')
     ,m_iFlags(flNONE)
     ,m_pCache(NULL)
   {}
@@ -194,7 +194,7 @@ MUP_NAMESPACE_START
                *m_psVal = a_Val.GetString();
               break;
 
-    case 'a': if (!m_pvVal) 
+    case 'm': if (!m_pvVal) 
                 m_pvVal = new matrix_type(a_Val.GetArray());
               else
                *m_pvVal  = a_Val.GetArray();  
@@ -434,7 +434,7 @@ MUP_NAMESPACE_START
     else
       *m_pvVal = a_vVal;
     
-    m_cType = 'a';
+    m_cType = 'm';
     m_iFlags = flNONE;
 
     return *this;
@@ -558,7 +558,11 @@ MUP_NAMESPACE_START
     else
     {
       // Type conflict
-      throw ParserError(ErrorContext(ecTYPE_CONFLICT_FUN, -1, _T("*"), GetType(), val.GetType(), 2));
+      ErrorContext errc(ecTYPE_CONFLICT_FUN, -1, _T("*"));
+      errc.Type1 = GetType();
+      errc.Type2 = 'm'; //val.GetType();
+      errc.Arg = 2;
+      throw ParserError(errc);
     }
 
     return *this;
@@ -699,7 +703,7 @@ MUP_NAMESPACE_START
   //---------------------------------------------------------------------------
   const matrix_type& Value::GetArray() const
   {
-    CheckType('a');
+    CheckType('m');
     assert(m_pvVal!=NULL);
     return *m_pvVal;
   }
@@ -707,7 +711,7 @@ MUP_NAMESPACE_START
   //---------------------------------------------------------------------------
   int Value::GetRows() const
   {
-    return (GetType()!='a') ? 1 : GetArray().GetRows();
+    return (GetType()!='m') ? 1 : GetArray().GetRows();
   }
   
   //---------------------------------------------------------------------------
@@ -762,7 +766,7 @@ MUP_NAMESPACE_START
     {
     case 'i': ss << (int_type)m_val.real(); break;
     case 'f': ss << m_val.real(); break;
-    case 'a': ss << _T("(array)"); break;
+    case 'm': ss << _T("(matrix)"); break;
     case 's': 
               assert(m_psVal!=NULL);
               ss << _T("\"") << m_psVal << _T("\""); break;

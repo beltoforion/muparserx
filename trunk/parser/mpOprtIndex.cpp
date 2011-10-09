@@ -42,13 +42,13 @@ MUP_NAMESPACE_START
       \param ret A reference to the return value
       \param a_pArg Pointer to an array with the indices as ptr_val_type
       \param a_iArgc Number of indices (=dimension) actully used in the expression found. This must 
-             be 1 or 2 since thrww dimensional data structures are not supported by muParserX.
+             be 1 or 2 since three dimensional data structures are not supported by muParserX.
   */
   void OprtIndex::At(ptr_val_type &ret, const ptr_val_type *a_pArg, int a_iArgc)
   {
     try
     {
-      // yup the index is -1, thats tha actual variable reference
+      // The index is -1, thats the actual variable reference
       if (a_iArgc!=a_pArg[-1]->GetDim())
       {
         throw ParserError(ErrorContext(ecINDEX_DIMENSION, -1, GetIdent()));
@@ -57,15 +57,15 @@ MUP_NAMESPACE_START
       switch(a_iArgc)
       {
       case 1:
-        ret.Reset(new Variable( &(ret->At(*a_pArg[0], Value(0))) ) );
-        break;
+          ret.Reset(new Variable( &(ret->At(*a_pArg[0], Value(0))) ) );
+          break;
 
       case 2:
-        ret.Reset(new Variable( &(ret->At(*a_pArg[0], *a_pArg[1])) ) );
-        break;
+          ret.Reset(new Variable( &(ret->At(*a_pArg[0], *a_pArg[1])) ) );
+          break;
 
       default:
-        throw ParserError(ErrorContext(ecINDEX_DIMENSION, -1, GetIdent()));
+          throw ParserError(ErrorContext(ecINDEX_DIMENSION, -1, GetIdent()));
       }
     }
     catch(ParserError &exc)
@@ -78,7 +78,7 @@ MUP_NAMESPACE_START
   //-----------------------------------------------------------------------------------------------
   const char_type* OprtIndex::GetDesc() const
   {
-    return _T("[...] - The index operator.");
+    return _T("[,] - The index operator.");
   }
 
   //-----------------------------------------------------------------------------------------------
