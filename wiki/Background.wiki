@@ -7,10 +7,9 @@ Immediately after releasing the original muParser I occasionally received questi
 
 However in the meantime it turned out that i could use muParserX to test new features and so i did. muParserX became my testbed for new features a playground were i could test things without having to care for a large existing userbase. The if-then-else conditionals were first added to muParserX and later backported to muParser. In addition to that i added optional support for complex numbers something which the original muParser never could handle very well and finally i added support for arrays which turned into fully fledged matrix support with the most recent version. I finally had created a new math expression parser and called it muParserX. Originally "X" was supposed to be a placeholder for a final version number but now but i'd like to see it standing for "experimental" or "extended".
 
-= Future Plans =
+= Current state and Future Plans =
 
-I have recently heard of a study finding that people who publicly talk about their plans are less likely to actually implement them. So no details here but i can tell you the obvious:
-muParserX has now a great framework and a lot of built in functions however it is lacking a lot of functions when it comes to dealing with matrices. It has the framework and basic support but that's pretty much it so there is plenty or room for improvement. This is however a lot of work and if you happen to use muParserX and added functions yourself i would like to hear from you...
+muParserX can now do almost anything i ever envisioned for a math parser but frankly i'm not sure whether there really is a real demand for a library like this. So lets face it: This project is not nearly as popular as muParser. The total number of downloads is a low triple digit number and the feedback i received so far is very little. I'm not aware of any larger project using it and i don't have a project were i could use it myself. I moved the project to google code so the few people that look for such a library will find it and maybe, just maybe, this wasn't a complete waste of my time.
 
-= Current state of the Project =
-Well lets face it this project is not nearly as popular as muParser. The total number of downloads is a low triple digit number and i'm sometimes i'm not entirely sure whether this is a monumental waste of my time.
+As for its future: I have recently heard of a study finding that people who publicly talk about their plans are less likely to actually implement them. So no details here but i can tell you the obvious:
+muParserX has now a great framework and a lot of built in functions however it is lacking a lot of functions when it comes to dealing with matrices. It has the framework and support for basic matrix operations (i.e. multiplication)  but that's pretty much it so there is plenty or room for improvement. This is however a lot of work...
