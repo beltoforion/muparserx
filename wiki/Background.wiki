@@ -10,4 +10,7 @@ However in the meantime it turned out that i could use muParserX to test new fea
 = Future Plans =
 
 I have recently heard of a study finding that people who publicly talk about their plans are less likely to actually implement them. So no details here but i can tell you the obvious:
-muParserX has now a great framework and a lot of built in functions however it is lacking a lot of functions when it comes to dealing with matrices. It has the framework and basic support but's pretty much it so there is plenty or room for improvement. This is however a lot of work and if you happen to use muParserX and added functions yourself i would like to hear from you...
+muParserX has now a great framework and a lot of built in functions however it is lacking a lot of functions when it comes to dealing with matrices. It has the framework and basic support but that's pretty much it so there is plenty or room for improvement. This is however a lot of work and if you happen to use muParserX and added functions yourself i would like to hear from you...
+
+= Current state of the Project =
+Well lets face it this project is not nearly as popular as muParser. The total number of downloads is a low triple digit number and i'm sometimes i'm not entirely sure whether this is a monumental waste of my time.
