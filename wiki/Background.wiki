@@ -1,4 +1,5 @@
 #summary Background Information
+#sidebar TableOfContents
 
 = Background  =
 
