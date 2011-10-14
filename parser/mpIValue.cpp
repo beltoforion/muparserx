@@ -135,7 +135,7 @@ MUP_NAMESPACE_START
                 ss << _T("}");
 
               if (i!=arr.GetRows()-1)
-                ss << _T(", ");
+                ss << _T("; ");
             }
 
             if (arr.GetRows()>1)

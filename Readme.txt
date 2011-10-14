@@ -20,6 +20,13 @@
 #                                                                       #
 #########################################################################
 
+V2.0.1 (20111014)
+-----------------
+Bugfixes:
+  - Issue 1 fixed: Assertion when using a function with multiple arguments 
+    in the same expression twice with different number of arguments.
+    (Reference: http://code.google.com/p/muparserx/issues/detail?id=1)
+
 V2.0.0 (20111009)
 -----------------
 

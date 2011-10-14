@@ -11,7 +11,7 @@
         \/                     \/           \/     \/           \_/
 
   muParserX - A C++ math parser library with array and string support
-  Copyright 2010 Ingo Berg
+  Copyright 2011 Ingo Berg
 
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU LESSER GENERAL PUBLIC LICENSE
@@ -607,7 +607,7 @@ MUP_NAMESPACE_START
         if (sTok.find(item->first)!=0)
           continue;
 
-        a_Tok = item->second;
+        a_Tok = ptr_tok_type(item->second->Clone());
         m_nPos += (int)item->first.length();
 
         if (m_nSynFlags & noIFX)
@@ -650,7 +650,7 @@ MUP_NAMESPACE_START
         return false;
 
       m_nPos = (int)iEnd;
-      a_Tok = item->second;
+      a_Tok = ptr_tok_type(item->second->Clone());
       a_Tok->Compile(_T("xxx"));
 
       if (m_nSynFlags & noFUN)
@@ -697,7 +697,7 @@ MUP_NAMESPACE_START
         if (sTok.find(item->first)!=0)
           continue;
 
-        a_Tok = item->second;
+        a_Tok = ptr_tok_type(item->second->Clone());
         m_nPos += (int)item->first.length();
 
         if (m_nSynFlags & noPFX)

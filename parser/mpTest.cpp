@@ -63,7 +63,7 @@ MUP_NAMESPACE_START
     
     virtual IToken* Clone() const
     {
-      return new FunTest0();
+      return new FunTest0(*this);
     }
   }; // class FunTest0
 
@@ -723,6 +723,19 @@ MUP_NAMESPACE_START
     // 
     iNumErr += EqnTest(_T("a=test0()"), (float_type)0, true);
     iNumErr += EqnTest(_T("b=a+test0()"), (float_type)1, true);
+
+    // added as response to this bugreport:
+    // http://code.google.com/p/muparserx/issues/detail?id=1
+    // cause of the error: Function tokens were not cloned in the tokenreader when beeing found.
+    //                     a pointer to the one and only function onject was returned instead
+    //                     consequently the argument counter was overwritten by the second function call 
+    //                     causing an assertion later on.
+    iNumErr += EqnTest(_T("sum(1,2)/sum(3,4)"), (float_type)0.428571, true);
+    iNumErr += EqnTest(_T("3/sum(3,4,5)"), (float_type)0.25, true);
+    iNumErr += EqnTest(_T("sum(3)/sum(3,4,5)"), (float_type)0.25, true);
+    iNumErr += EqnTest(_T("sum(3)+sum(3,4,5)"), (float_type)15, true);
+    iNumErr += EqnTest(_T("sum(1,2)/sum(3,4,5)"), (float_type)0.25, true);
+
     Assessment(iNumErr);
     return iNumErr;
   }

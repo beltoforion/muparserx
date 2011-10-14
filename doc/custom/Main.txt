@@ -1,60 +1,16 @@
 /** \mainpage
 
 <div>
-  <img src="../muParserX.jpg"/>
+  <img src="../muParserX.png"/>
 </div>
 
 	\section intro_sec Introduction
 
-Welcome to the <strong>muParserX</strong> documentation. <strong>muParserX</strong> is 
-an experimental mathematical expressions parser based on 
-<a href="http://muparser.sourceforge.net">muParser</a>. muParser is a great parser, it's
-flexible and its fast but since it's primary design goal was to make <a href="http://muparser.sourceforge.net">muParser</a> fast 
-it has some limitations which are hard to overcome. For instance the most frequently 
-requested features in <b>muParser</b> are:
+	muParserX is a mathematical expression parser with support for complex numbers and matrix calculations.	This is the API documentation of muParserX. 
+	For additional documentation consult the <a href="http://code.google.com/p/muparserx/">project home page at google code</a>.
 
-<ul>
-  <li>support for arrays</li>
-  <li>support for complex numbers</li>
-  <li>support of strings</li>
-  <li>callback objects (rather than static functions)</li>
-</ul>
-
-The primary aim of <b>muParserX</b> is to overcome this limitations. However at the moment
-it does only parse directly from string which makes it slower than muParser. If you want to 
-change this you may consider making a donation in order to support the further development
-of <b>muParserX</b>.
-
-<div>
-<a href="http://muparserx.beltoforion.de/images">
-  <img src="http://muparser.sourceforge.net/images/download_muparser_.png" 
-       border="0" 
-       alt="muParser download"/>
-</a>
-</div>
-
-	\section intro_state State of the project
-	
-The parser engine is up and running and all major features are implemented. I would 
-consider it stable but it's not been tested thoroughly. At the moment 
-the performance of muParserX is limited since it has'nt been optimized
-in any way. It's lacking a feature similar to muParsers bytecode but this may 
-change in the future, albeit there is no fixed schedule. 
-
-The problem is the total lack of feedback regarding <b>muParserX</b>. I receive 
-a lot of feedback for <a href="http://muparser.sourceforge.net">muParser</a> but so far 
-not a single indication that anyone is actually using <b>muParserX</b>. Frankly spoken
-this page was set up in order to see if muParserX is a waste of time or not. If i 
-see a sufficient number of hits on this page, backlinks from people using it or if i
-receive direct feedback from people using it i will likely continue with it's 
-development. 
-
-Please note that this documentation is constantly beeing improved, so don't get mad when
-some topics arn't covered.
-
-\section toc Table of content
-\ref page_features<br/>
-\ref page_licence
+	\section toc Table of content
+	\ref page_features<br/>
 */
 
 
