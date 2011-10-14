@@ -7,7 +7,7 @@
         \/                     \/           \/     \/           \_/
 
   muParserX - A C++ math parser library with array and string support
-  Copyright 2010 Ingo Berg
+  Copyright 2011 Ingo Berg
 
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU LESSER GENERAL PUBLIC LICENSE

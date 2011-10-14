@@ -39,8 +39,11 @@ MUP_NAMESPACE_START
   //
   //  Reader for double values
   //
-//------------------------------------------------------------------------------
+  //------------------------------------------------------------------------------
 
+  /** \brief A class for reading floating point values from an expression string.
+      \ingroup valreader
+  */
   class DblValReader : public IValueReader
   {
   public:    
@@ -52,10 +55,13 @@ MUP_NAMESPACE_START
 
   //------------------------------------------------------------------------------
   //
-  //  Reader for integer values
+  //  Reader for boolean values
   //
   //------------------------------------------------------------------------------
 
+  /** \brief A class for reading boolean values from an expression string.
+      \ingroup valreader
+  */
   class BoolValReader : public IValueReader
   {
   public:    
@@ -71,6 +77,9 @@ MUP_NAMESPACE_START
   //
   //------------------------------------------------------------------------------
 
+  /** \brief A class for reading hex values from an expression string.
+      \ingroup valreader
+  */
   class HexValReader : public IValueReader
   {
   public:    
@@ -85,6 +94,9 @@ MUP_NAMESPACE_START
   //
   //------------------------------------------------------------------------------
 
+  /** \brief A class for reading binary values from an expression string.
+      \ingroup valreader
+  */
   class BinValReader : public IValueReader
   {
   public:    
@@ -100,6 +112,9 @@ MUP_NAMESPACE_START
   //
   //------------------------------------------------------------------------------
 
+  /** \brief A class for reading strings from an expression string.
+      \ingroup valreader
+  */
   class StrValReader : public IValueReader
   {
   public:    

@@ -69,7 +69,9 @@ MUP_NAMESPACE_START
   }
 
   //------------------------------------------------------------------------------
-  /** \brief Returns a pointer to the parser object owning this callback. */
+  /** \brief Returns a pointer to the parser object owning this callback. 
+      \pre [assert] m_pParent must be defined
+  */
   ParserXBase* ICallback::GetParent()
   {
     assert(m_pParent);

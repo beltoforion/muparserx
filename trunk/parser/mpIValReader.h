@@ -29,13 +29,19 @@
 #include "mpIToken.h"
 #include "mpTokenReader.h"
 
+/** \defgroup valreader Value reader classes
+
+  This group lists all classes that detect and parse values in an expression string.
+*/
+
 
 MUP_NAMESPACE_START
 
   class TokenReader;
 
   /** \brief Interface for custom value reader objects. 
-  
+      \ingroup valreader
+
     Value readers are objects used for identifying values 
     in an expression.
   */

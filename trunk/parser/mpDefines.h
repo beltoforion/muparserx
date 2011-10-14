@@ -10,7 +10,7 @@
         \/                     \/           \/     \/           \_/
 
   muParserX - A C++ math parser library with array and string support
-  Copyright 2010 Ingo Berg
+  Copyright 2011 Ingo Berg
 
   This program is free software: you can redistribute it and/or modify
   it under the terms of the GNU LESSER GENERAL PUBLIC LICENSE
@@ -52,7 +52,7 @@
 #endif
 
 /** \brief A macro containing the version of muParserX. */
-#define MUP_PARSER_VERSION _T("2.0.0 (20111009)")
+#define MUP_PARSER_VERSION _T("2.0.1 (20111009)")
 
 /** \brief A macro for setting the parser namespace. */
 #define MUP_NAMESPACE_START namespace mup {
