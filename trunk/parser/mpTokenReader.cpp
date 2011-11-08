@@ -225,7 +225,7 @@ MUP_NAMESPACE_START
   */
   void TokenReader::SetExpr(const string_type &a_sFormula)
   {
-    m_sExpr = a_sFormula;
+	m_sExpr = a_sFormula + string_type(_T(" "));
     m_vTokens.clear();
     ReInit();
   }

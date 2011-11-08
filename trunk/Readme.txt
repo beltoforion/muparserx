@@ -38,7 +38,7 @@ Changes:
   new:
 	"m[1,2] = 1"
 
-- type identifier for matrices is now 'a', formerly 'a' was used to 
+- type identifier for matrices is now 'm', formerly 'a' was used to 
   indicate arrays. An arrays are now seen as subsets of matrices, there is no 
   special type for arrays.
 
