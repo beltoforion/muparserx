@@ -223,9 +223,9 @@ MUP_NAMESPACE_START
       Sets the expression position index to zero and set Syntax flags to 
       default for initial parsing. 
   */
-  void TokenReader::SetExpr(const string_type &a_sFormula)
+  void TokenReader::SetExpr(const string_type &a_sExpr)
   {
-	m_sExpr = a_sFormula + string_type(_T(" "));
+	m_sExpr = a_sExpr + string_type(_T(" "));
     m_vTokens.clear();
     ReInit();
   }

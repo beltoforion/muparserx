@@ -9,8 +9,12 @@
 #  |__|_|  /____/|____|    (____  /__|  /____  >\___  >__| /___/\  \    #
 #        \/                     \/           \/     \/           \_/    #
 #                                                                       #
-#  http://muparserx.beltoforion.de                                      #
-#  (C) 2011 Ingo Berg                                                   #
+#  Copyright (C) 2011 Ingo Berg                                         #
+#                                                                       #
+#  Web:     http://muparserx.beltoforion.de                             #
+#  SVN:     http://muparserx.googlecode.com/svn/trunk                   #
+#  e-mail:  muparserx@beltoforion.de                                    #
+#                                                                       #
 #                                                                       #
 #########################################################################
 
@@ -20,12 +24,13 @@
 #                                                                       #
 #########################################################################
 
-V2.0.1 (20111014)
+V2.1.0 (20111016)
 -----------------
 Bugfixes:
   - Issue 1 fixed: Assertion when using a function with multiple arguments 
-    in the same expression twice with different number of arguments.
-    (Reference: http://code.google.com/p/muparserx/issues/detail?id=1)
+    		   in the same expression twice with different number of arguments.
+                   (Reference: http://code.google.com/p/muparserx/issues/detail?id=1)
+  - Issue 2 fixed: DblValReader::IsValue broken for numbers at the end of the string
 
 V2.0.0 (20111009)
 -----------------

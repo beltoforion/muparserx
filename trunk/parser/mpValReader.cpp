@@ -55,6 +55,12 @@ MUP_NAMESPACE_START
 
     iStart = stream.tellg(); // Record position before reading
     stream >> fVal;
+
+	// todo: check against GCC 4.6 implement using stream.fail(), remove space
+	//		 that is always inserted at the end of an expression
+	// if(stream.fail())
+    //   return false;
+
     iEnd = stream.tellg();   // Position after reading
 
     if (iEnd==-1)
