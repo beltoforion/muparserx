@@ -8,8 +8,8 @@ PATH_BIN = ./bin
 
 ########################################################################################################
 # muParser library sources
-PATH_LIB = ./parser
-PATH_OBJ = ./obj
+PATH_LIB = parser
+PATH_OBJ = obj
 LIB_SRC = mpError.cpp mpRPN.cpp mpICallback.cpp mpIValReader.cpp mpParserBase.cpp mpTokenReader.cpp\
           mpVariable.cpp mpIOprt.cpp mpIValue.cpp mpParser.cpp mpValReader.cpp mpFuncStr.cpp\
 		  mpFuncCommon.cpp mpFuncNonCmplx.cpp mpFuncCmplx.cpp mpIToken.cpp mpOprtCmplx.cpp \
@@ -29,7 +29,7 @@ all:	example
 
 new:  clean example
 
-$(NAME_LIB):	$(LIB_OBJ)
+$(NAME_LIB): $(LIB_OBJ:%.o=$(PATH_OBJ)/%.o)
 	@echo ""
 	@echo "#########################################################"
 	@echo "#                                                       #"
@@ -42,8 +42,8 @@ $(NAME_LIB):	$(LIB_OBJ)
 	ranlib $(NAME_LIB)
 	mv $(NAME_LIB) bin/
 
-$(LIB_OBJ):
-	$(CC) $(CFLAGS) -c $(PATH_LIB)/${@:.o=.cpp} -o $(PATH_OBJ)/$@
+$(LIB_OBJ:%.o=$(PATH_OBJ)/%.o):
+	$(CC) $(CFLAGS) -c $(subst $(PATH_OBJ),$(PATH_LIB),${@:.o=.cpp}) -o $@
 
 example:	$(NAME_LIB)
 	@echo ""
