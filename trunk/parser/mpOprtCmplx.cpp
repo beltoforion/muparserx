@@ -285,7 +285,13 @@ MUP_NAMESPACE_START
   void OprtPowCmplx::Eval(ptr_val_type& ret, const ptr_val_type *arg, int argc)
   {
     assert(argc==2);
-    *ret = exp(arg[1]->GetComplex() * log(arg[0]->GetComplex()));
+    // Its necessary to branch here since the exp/log expression will
+    // introduce very small imaginary parts into expressions using 
+    // only real values.
+    if (arg[1]->IsComplex() && arg[1]->IsComplex())
+      *ret = exp(arg[1]->GetComplex() * log(arg[0]->GetComplex()));
+    else
+      *ret = std::pow(arg[0]->GetFloat(), arg[1]->GetFloat());
   }
 
   //-----------------------------------------------------------

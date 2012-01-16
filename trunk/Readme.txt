@@ -27,6 +27,12 @@
 V2.1.0 (20111016)
 -----------------
 Bugfixes:
+  - Complex power operations could introduce small imaginary values in the result
+    (i.e. the result of -2^8 was something like "-8 + 9e-19i")
+
+V2.1.0 (20111016)
+-----------------
+Bugfixes:
   - Issue 1 fixed: Assertion when using a function with multiple arguments 
     		   in the same expression twice with different number of arguments.
                    (Reference: http://code.google.com/p/muparserx/issues/detail?id=1)
