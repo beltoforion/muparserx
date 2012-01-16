@@ -904,6 +904,8 @@ MUP_NAMESPACE_START
     iNumErr += EqnTest( _T("3-(-a)"), 4, true);
     iNumErr += EqnTest( _T("3--a"), 4,   true);
 
+    // Problems with complex numbers
+    iNumErr += EqnTest( _T("-2^3"), -8, true);   // When computed with the log/exp formula: -8 + 2.93e-15i 
     Assessment(iNumErr);
     return iNumErr;
   }
