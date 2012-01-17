@@ -109,7 +109,7 @@ public:
   
   virtual IToken* Clone() const
   {
-    return new FunPrint();
+    return new FunPrint(*this);
   }
 }; // class FunPrint
 
@@ -133,7 +133,7 @@ public:
   
   virtual IToken* Clone() const
   {
-    return new FunTest0();
+    return new FunTest0(*this);
   }
 }; // class FunTest0
 
@@ -182,7 +182,7 @@ public:
 
   virtual IToken* Clone() const
   {
-    return new FunListVar();
+    return new FunListVar(*this);
   }
 }; // class FunListVar
 
@@ -224,7 +224,7 @@ public:
 
   virtual IToken* Clone() const
   {
-    return new FunListConst();
+    return new FunListConst(*this);
   }
 }; // class FunListConst
 
@@ -361,7 +361,7 @@ public:
   
   virtual IToken* Clone() const
   {
-    return new FunBenchmark();
+    return new FunBenchmark(*this);
   }
 }; // class FunBenchmark
 
@@ -405,7 +405,7 @@ public:
   
   virtual IToken* Clone() const
   {
-    return new FunListFunctions();
+    return new FunListFunctions(*this);
   }
 }; // class FunListFunctions
 
@@ -430,7 +430,7 @@ public:
   
   virtual IToken* Clone() const
   {
-    return new FunEnableOptimizer();
+    return new FunEnableOptimizer(*this);
   }
 }; // class FunListFunctions
 
@@ -456,7 +456,7 @@ public:
   
   virtual IToken* Clone() const
   {
-    return new FunSelfTest();
+    return new FunSelfTest(*this);
   }
 }; // class FunSelfTest
 
@@ -479,7 +479,7 @@ public:
   
   virtual IToken* Clone() const
   {
-    return new FunEnableDebugDump();
+    return new FunEnableDebugDump(*this);
   }
 }; // class FunEnableDebugDump
 
@@ -570,7 +570,7 @@ public:
   
   virtual IToken* Clone() const
   {
-    return new FunDefine();
+    return new FunDefine(*this);
   }
 }; // class FunDefine
 
@@ -597,7 +597,7 @@ public:
 
   virtual IToken* Clone() const
   {
-    return new FunDerive();
+    return new FunDerive(*this);
   }
 }; // class FunDerive
 */
