@@ -27,6 +27,7 @@
  * [http://code.google.com/p/muparserx/wiki/History History]
 
 == Support the project ==
-If you like you can support the development of muParserX by making a donation.
+If you like he project you can support its further development 
+by making a small donation.
 <br/>
 <a href="http://beltoforion.de/donate/donate_en.png"><img src="http://beltoforion.de/donate/donate.png" width="200"/></a>
