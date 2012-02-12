@@ -190,10 +190,6 @@
 				>
 			</File>
 			<File
-				RelativePath=".\stdafx.h"
-				>
-			</File>
-			<File
 				RelativePath="..\sample\timer.cpp"
 				>
 			</File>
