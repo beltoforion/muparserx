@@ -30,4 +30,4 @@
 If you like he project you can support its further development 
 by making a small donation.
 <br/>
-<a href="http://beltoforion.de/donate/donate_en.png"><img src="http://beltoforion.de/donate/donate.png" width="200"/></a>
+<a href="http://beltoforion.de/donate/donate_en.html"><img src="http://beltoforion.de/donate/donate.png" width="200"/></a>
