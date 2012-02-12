@@ -25,3 +25,5 @@
  * [http://code.google.com/p/muparserx/wiki/Benchmarks Benchmarks]
  * [http://code.google.com/p/muparserx/wiki/Background Background Information]
  * [http://code.google.com/p/muparserx/wiki/History History]
+
+<a href="http://beltoforion.de/donate/donate_en.png"><img src="http://beltoforion.de/donate/donate.png"/></a>
