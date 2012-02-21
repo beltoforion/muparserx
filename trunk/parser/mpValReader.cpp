@@ -270,7 +270,7 @@ MUP_NAMESPACE_START
     // parser over escaped '\"' end replace them with '"'
     for(iEnd=sBuf.find(_T("\"")); iEnd!=string_type::npos; iEnd=sBuf.find(_T("\""), iEnd))
     {
-      if (sBuf[iEnd-1]!='\\') break;
+      if (iEnd==0 || sBuf[iEnd-1]!='\\') break;
       sBuf.replace(iEnd-1, 2, _T("\""));
       iSkip++;
     }
