@@ -99,7 +99,7 @@ MUP_NAMESPACE_START
     if (*argMax < *argMin)
       throw ParserError(_T("Colon operator: Maximum value smaller than Minimum!")); 
 
-    int n = (argMax->GetFloat() - argMin->GetFloat()) + 1;
+    int n = (int)(argMax->GetFloat() - argMin->GetFloat()) + 1;
     matrix_type arr(n);
     for (int i=0; i<n; ++i)
       arr.At(i) = argMin->GetFloat() + i;

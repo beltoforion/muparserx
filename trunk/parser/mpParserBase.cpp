@@ -1131,7 +1131,7 @@ MUP_NAMESPACE_START
                err.Hint = exc.GetMsg();
                throw ParserError(err);
              }
-             catch(MatrixError &exc)
+             catch(MatrixError & /*exc*/)
              {
                ErrorContext err;
                err.Expr = m_pTokenReader->GetExpr();

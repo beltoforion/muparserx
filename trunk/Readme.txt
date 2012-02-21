@@ -24,6 +24,15 @@
 #                                                                       #
 #########################################################################
 
+V2.1.2 (20120221)
+-----------------
+Changes:
+  - License changed to the BSD-2-Clause licence
+
+Bugfixes:
+  - Issue 4 fixed: 	memory exception in mpValReader.cpp
+   
+
 V2.1.1 (20120201)
 -----------------
 Bugfixes:
