@@ -625,7 +625,7 @@ void SelfTest()
 
 
   console() << _T("  Version ") << ParserXBase::GetVersion() << _T("\n");
-  console() << _T("  Copyright (C) 2011 Ingo Berg");
+  console() << _T("  Copyright (C) 2012 Ingo Berg");
   console() << _T("\n");
 
   console() << _T("-------------------------------------------------------------------------\n\n");
