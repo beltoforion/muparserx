@@ -9,7 +9,7 @@
 #  |__|_|  /____/|____|    (____  /__|  /____  >\___  >__| /___/\  \    #
 #        \/                     \/           \/     \/           \_/    #
 #                                                                       #
-#  Copyright (C) 2011 Ingo Berg                                         #
+#  Copyright (C) 2012 Ingo Berg                                         #
 #                                                                       #
 #  Web:     http://muparserx.beltoforion.de                             #
 #  SVN:     http://muparserx.googlecode.com/svn/trunk                   #
@@ -24,7 +24,7 @@
 #                                                                       #
 #########################################################################
 
-V2.1.0 (20111016)
+V2.1.1 (20120201)
 -----------------
 Bugfixes:
   - Complex power operations could introduce small imaginary values in the result
