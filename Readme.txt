@@ -30,6 +30,7 @@ Changes:
   - License changed to the BSD-2-Clause licence
 
 Bugfixes:
+  - Compiler warnings for gcc (gcc 4.3.4) fixed
   - Issue 4 fixed: 	memory exception in mpValReader.cpp
    
 

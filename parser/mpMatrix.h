@@ -404,10 +404,10 @@ MUP_NAMESPACE_START
     }
 
   private:
-    int m_nCols;
     int m_nRows;
-    std::vector<T> m_vData;
+    int m_nCols;
     EMatrixStorageScheme m_eStorageScheme;
+    std::vector<T> m_vData;
 
     //---------------------------------------------------------------------------------------------
     void Assign(const Matrix &ref)

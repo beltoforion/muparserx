@@ -111,7 +111,7 @@ MUP_NAMESPACE_START
 
       // The last two are special entries 
       ecCOUNT,                       ///< This is no error code, It just stores just the total number of error codes
-      ecUNDEFINED              = -1, ///< Undefined message, placeholder to detect unassigned error messages
+      ecUNDEFINED              = -1  ///< Undefined message, placeholder to detect unassigned error messages
     };
 
     //---------------------------------------------------------------------------

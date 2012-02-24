@@ -140,6 +140,9 @@ MUP_NAMESPACE_START
             idx = stElse.pop();
             static_cast<TokenIfThenElse*>(m_vRPN[idx].Get())->SetOffset(i - idx);
             break;
+			
+	  default:
+            throw ParserError(ecINTERNAL_ERROR);
       }
     }
   }
