@@ -888,8 +888,6 @@ MUP_NAMESPACE_START
         a_Tok->SetIdent(sTok);
         return true;
       }
-
-      return false;
     }
     catch(EErrorCodes e)
     {
@@ -901,7 +899,7 @@ MUP_NAMESPACE_START
       throw ParserError(err);
     }
 
-    return true;
+    return false;
   }
 
   //---------------------------------------------------------------------------

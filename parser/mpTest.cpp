@@ -60,7 +60,7 @@ MUP_NAMESPACE_START
     FunTest0() : ICallback(cmFUNC, _T("test0"), 0) 
     {}
 
-    virtual void Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int a_iArgc)
+    virtual void Eval(ptr_val_type &ret, const ptr_val_type * /*a_pArg*/, int /*a_iArgc*/)
     {
       // ParserXBase &parser = *GetParent();
       *ret = 0;

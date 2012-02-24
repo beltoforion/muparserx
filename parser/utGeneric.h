@@ -58,6 +58,10 @@ namespace utils
   private:
     T &m_ref;
     T  m_buf;
+
+    // Disable CC and assignment operator
+    scoped_setter(const scoped_setter &ref);
+    scoped_setter& operator=(const scoped_setter &ref);
   };
 }
 

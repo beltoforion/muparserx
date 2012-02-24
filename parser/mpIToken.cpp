@@ -283,7 +283,7 @@ MUP_NAMESPACE_START
   }
 
   //------------------------------------------------------------------------------
-  void IToken::Compile(const string_type &sArg)
+  void IToken::Compile(const string_type & /*sArg*/)
   {
   }
 
