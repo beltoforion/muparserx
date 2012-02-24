@@ -87,7 +87,7 @@ MUP_NAMESPACE_START
   //------------------------------------------------------------------------------
   void FunMax::Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int a_iArgc)
   {
-    float_type max(-1e30), val;
+    float_type max(-1e30), val(0);
     for (int i=0; i<a_iArgc; ++i)
     {
       switch(a_pArg[i]->GetType())

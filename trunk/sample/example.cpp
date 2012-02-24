@@ -106,7 +106,6 @@ public:
 
   virtual void Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int a_iArgc)
   {
-    ParserXBase &parser = *GetParent();
     console() << a_pArg[0].Get()->ToString() << _T("\n");
     *ret = 0;
   }
@@ -131,7 +130,7 @@ public:
 
   virtual void Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int a_iArgc)
   {
-    ParserXBase &parser = *GetParent();
+    // ParserXBase &parser = *GetParent(); 
     *ret = 0;
   }
 
@@ -357,7 +356,7 @@ public:
 
     avg_eval_per_sec /= (float_type)ct;
 
-    fprintf(pFile, "# Eval per s: %d", (long)avg_eval_per_sec);
+    fprintf(pFile, "# Eval per s: %ld", (long)avg_eval_per_sec);
 
     fflush(pFile);
     *ret = (float_type)avg_eval_per_sec;

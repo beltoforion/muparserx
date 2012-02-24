@@ -648,8 +648,6 @@ MUP_NAMESPACE_START
       MUP_ASSERT(a_stVal.size()>=3);
       MUP_ASSERT(a_stOpt.top()->GetCode()==cmELSE);
 
-      IToken &tokElse = *(a_stOpt.top().Get());
-
       // it then else is a ternary operator Pop all three values from the value 
       // stack and just return the right value
       ptr_val_type vVal2 = a_stVal.pop();
@@ -916,7 +914,6 @@ MUP_NAMESPACE_START
       //
       case  cmOPRT_POSTFIX:
             {
-              ICallback *pOprt = pTok->AsICallback();
               MUP_ASSERT(stVal.size());
 
               ptr_val_type &pVal(stVal.top());
