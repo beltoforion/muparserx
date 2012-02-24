@@ -24,6 +24,9 @@
 #                                                                       #
 #########################################################################
 
+V2.1.3 (20120221)
+-----------------
+
 V2.1.2 (20120221)
 -----------------
 Changes:
@@ -32,19 +35,19 @@ Changes:
 Bugfixes:
   - Compiler warnings for gcc (gcc 4.3.4) fixed
   - Issue 4 fixed: 	memory exception in mpValReader.cpp
-   
 
 V2.1.1 (20120201)
 -----------------
 Bugfixes:
-  - Complex power operations could introduce small imaginary values in the result
-    (i.e. the result of -2^8 was something like "-8 + 9e-19i")
+  - Complex power operations could introduce small imaginary values in the result 
+    even if both arguments were real numbers. 
+	(i.e. the result of -2^8 was something like "-8 + 9e-19i")
 
 V2.1.0 (20111016)
 -----------------
 Bugfixes:
   - Issue 1 fixed: Assertion when using a function with multiple arguments 
-    		   in the same expression twice with different number of arguments.
+                   in the same expression twice with different number of arguments.
                    (Reference: http://code.google.com/p/muparserx/issues/detail?id=1)
   - Issue 2 fixed: DblValReader::IsValue broken for numbers at the end of the string
 
