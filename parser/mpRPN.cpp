@@ -142,7 +142,7 @@ MUP_NAMESPACE_START
             break;
 			
 	  default:
-            throw ParserError(ecINTERNAL_ERROR);
+            continue;
       }
     }
   }
