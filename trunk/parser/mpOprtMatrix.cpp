@@ -43,12 +43,12 @@ MUP_NAMESPACE_START
 //
 //-------------------------------------------------------------------------------------------------
 
-  OprtTranspose::OprtTranspose(IPackage* pPackage)
+  OprtTranspose::OprtTranspose(IPackage* /*pPackage*/)
     :IOprtPostfix(_T("'"))
   {}
 
   //-------------------------------------------------------------------------------------------------
-  void OprtTranspose::Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int a_iArgc)
+  void OprtTranspose::Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int /*a_iArgc*/)
   {
     if (a_pArg[0]->IsMatrix())
     {

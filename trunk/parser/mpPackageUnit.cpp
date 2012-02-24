@@ -44,7 +44,7 @@ MUP_NAMESPACE_START
   These operators can be used for unit conversions.
 */
 #define MUP_POSTFIX_IMLP(CLASS, IDENT, MUL, DESC)                  \
-  CLASS::CLASS(IPackage *pPackage)                                 \
+  CLASS::CLASS(IPackage*)                                          \
     :IOprtPostfix(_T(IDENT))                                       \
   {}                                                               \
                                                                    \

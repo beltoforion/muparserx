@@ -353,7 +353,7 @@ MUP_NAMESPACE_START
   }
 
   //---------------------------------------------------------------------------
-  void ParserXBase::RemovePackage(IPackage *p)
+  void ParserXBase::RemovePackage(IPackage * /*p*/)
   {
   }
 

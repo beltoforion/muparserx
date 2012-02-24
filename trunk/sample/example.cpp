@@ -104,7 +104,7 @@ public:
   FunPrint() : ICallback(cmFUNC, _T("print"), 1) 
   {}
 
-  virtual void Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int a_iArgc)
+  virtual void Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int /*a_iArgc*/)
   {
     console() << a_pArg[0].Get()->ToString() << _T("\n");
     *ret = 0;
@@ -128,7 +128,7 @@ public:
   FunTest0() : ICallback(cmFUNC, _T("test0"), 0) 
   {}
 
-  virtual void Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int a_iArgc)
+  virtual void Eval(ptr_val_type &ret, const ptr_val_type * /*a_pArg*/, int /*a_iArgc*/)
   {
     // ParserXBase &parser = *GetParent(); 
     *ret = 0;
@@ -153,7 +153,7 @@ public:
   FunListVar() : ICallback(cmFUNC, _T("list_var"), 0) 
   {}
 
-  virtual void Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int a_iArgc)
+  virtual void Eval(ptr_val_type &ret, const ptr_val_type * /*a_pArg*/, int /*a_iArgc*/)
   {
     ParserXBase &parser = *GetParent();
 
@@ -203,7 +203,7 @@ public:
   FunListConst() : ICallback(cmFUNC, _T("list_const"), 0) 
   {}
 
-  virtual void Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int a_iArgc)
+  virtual void Eval(ptr_val_type &ret, const ptr_val_type * /*a_pArg*/, int /*a_iArgc*/)
   {
     ParserXBase &parser = *GetParent();
 
@@ -244,7 +244,7 @@ public:
   FunBenchmark() : ICallback(cmFUNC, _T("bench"), 0) 
   {}
 
-  virtual void Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int a_iArgc)
+  virtual void Eval(ptr_val_type &ret, const ptr_val_type * /*a_pArg*/, int /*a_iArgc*/)
   {
     char outstr[200];
     time_t t = time(NULL);
@@ -381,7 +381,7 @@ public:
   FunListFunctions() : ICallback(cmFUNC, _T("list_fun"), 0) 
   {}
 
-  virtual void Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int a_iArgc)
+  virtual void Eval(ptr_val_type &ret, const ptr_val_type * /*a_pArg*/, int /*a_iArgc*/)
   {
     ParserXBase &parser = *GetParent();
 
@@ -425,7 +425,7 @@ public:
   FunEnableOptimizer() : ICallback(cmFUNC, _T("enable_optimizer"), 1) 
   {}
 
-  virtual void Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int a_iArgc)
+  virtual void Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int /*a_iArgc*/)
   {
     ParserXBase &parser = *GetParent();
     parser.EnableOptimizer(a_pArg[0]->GetBool());
@@ -450,7 +450,7 @@ public:
   FunSelfTest() : ICallback(cmFUNC, _T("test"), 0) 
   {}
 
-  virtual void Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int a_iArgc)
+  virtual void Eval(ptr_val_type &ret, const ptr_val_type * /*a_pArg*/, int /*a_iArgc*/)
   {
     ParserXBase::EnableDebugDump(0, 0);
     ParserTester pt;
@@ -475,7 +475,7 @@ public:
   FunEnableDebugDump() : ICallback(cmFUNC, _T("dump"), 2) 
   {}
 
-  virtual void Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int a_iArgc)
+  virtual void Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int /*a_iArgc*/)
   {
     ParserXBase::EnableDebugDump(a_pArg[0]->GetBool(), a_pArg[1]->GetBool());
     *ret = 0;
@@ -892,7 +892,7 @@ void Calc()
 }
 
 //---------------------------------------------------------------------------
-int main(int argc, char* argv[])
+int main(int /*argc*/, char** /*argv*/)
 {
   SelfTest();
 

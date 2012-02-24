@@ -56,10 +56,9 @@ MUP_NAMESPACE_START
 
   //------------------------------------------------------------------------------
   /** \brief Returns the number of elements stored in the first parameter. */
-  void FunParserID::Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int a_iArgc)
+  void FunParserID::Eval(ptr_val_type &ret, const ptr_val_type * /*a_pArg*/, int /*a_iArgc*/)
   {
-    ParserXBase &parser = *GetParent();
-    string_type sVer = _T("muParserX V") + parser.GetVersion();
+    string_type sVer = _T("muParserX V") + GetParent()->GetVersion();
     *ret = sVer;
   }
 

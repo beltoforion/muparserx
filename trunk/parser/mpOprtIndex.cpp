@@ -43,7 +43,7 @@ MUP_NAMESPACE_START
   //
   //-----------------------------------------------------------------------------------------------
 
-  OprtIndex::OprtIndex(IPackage* pPackage)
+  OprtIndex::OprtIndex(IPackage* /*pPackage*/)
     :IOprtIndex(-1)
   {}
 
