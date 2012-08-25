@@ -123,65 +123,15 @@ By default the parser supports the following mathematical constants:
 = Sample expressions =
 The next table shows samples of expressions that can be evaluated using <b>muParserX</b>:
 
-<table border="1">
-  <tr>
-    <th>Expression</th> 
-    <th>Result</th> 
-    <th>Explanation</th>
-  </tr>
-  <tr>
-    <td>"hello"=="world"</td> 
-    <td>false</td> 
-    <td>Comparing strings</td>
-  </tr>
-  <tr>
-    <td>"hello "//"world"</td> 
-    <td>"hello world"</td> 
-    <td>String concatanation operator</td>
-  </tr>
-  <tr>
-    <td>sin(a+8i)</td> 
-    <td>...</td> 
-    <td>Support for a variety of predefined functions working with complex numbers.</td>
-  </tr>
-  <tr>
-    <td>va[3]+vb[5]</td> 
-    <td>...</td> 
-    <td>Support for array variables</td>
-  </tr>
-  <tr>
-    <td>va[3]=9</td> 
-    <td>...</td> 
-    <td>Assignment operator in combination with indexed access to a vector</td>
-  </tr>
-  <tr>
-    <td>toupper("hello"//"world")</td> 
-    <td>"HELLOWORLD"</td>  
-    <td>Transforming a concatenated string to uppercase.</td>
-  </tr>
-  <tr>
-    <td>#010010</td> 
-    <td>18</td> 
-    <td>Interpreting binary values</td>
-  </tr>
-  <tr>
-    <td>0x1eff</td> 
-    <td>7935</td>
-    <td>Interpreting hex values</td>
-  </tr>
-  <tr>
-    <td>#10>0x1eff</td> 
-    <td>false</td>  
-    <td>Comparing binary and hex values</td>
-  </tr>
-  <tr>
-    <td>1+2-3*4/5^6</td> 
-    <td>2.99923</td> 
-    <td>The standard operators</td>
-  </tr>
-  <tr>
-    <td>a = ((a&lt;b) ? 10 : -10)</td>
-    <td>10 or -10 depending on a and b</td>
-    <td>Ternary operator for if-then-else conditionals</td>
-  </tr>
-</table>
+||*Expression*     ||*Result*     ||*Explanation*||
+||"hello"=="world" ||false        ||Comparing strings||
+||"hello "//"world"||"hello world"||String concatanation operator||
+||sin(a+8i)        ||...          ||Support for a variety of predefined functions working with complex numbers.||
+||va{{{[}}}3{{{]}}}+vb{{{[}}}5{{{]}}}||...||Support for array variables||
+||va{{{[}}}3{{{]}}}=9||...||Assignment operator in combination with indexed access to a vector||
+||toupper("hello"//"world")||"HELLOWORLD"||Transforming a concatenated string to uppercase.||
+||#010010||18||Interpreting binary values||
+||0x1eff||7935||Interpreting hex values||
+||#10>0x1eff||false||Comparing binary and hex values||
+||1+2-3*4/5^6||2.99923||The standard operators||
+||a = ((a<b) ? 10 : -10)||10 or -10 depending on a and b||Ternary operator for if-then-else conditionals||
