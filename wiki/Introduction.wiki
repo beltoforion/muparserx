@@ -170,7 +170,7 @@ The next table shows samples of expressions that can be evaluated using <b>muPar
     <td>Interpreting hex values</td>
   </tr>
   <tr>
-    <td>#10>0x1eff</td> 
+    <td>#10&gt;0x1eff</td> 
     <td>false</td>  
     <td>Comparing binary and hex values</td>
   </tr>
