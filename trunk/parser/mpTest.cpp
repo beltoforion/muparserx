@@ -413,22 +413,27 @@ MUP_NAMESPACE_START
 
       // a complex number that can be mapped to an integer without rounding error will become one
       iVal = cmplx_type(10, 0);
-      if (  iVar.GetType()!='i')  iNumErr++;  
+	  int i = (int)iVal;
+      if (  iVar.GetType()!='i' || i!=10)  iNumErr++;  
 
       iVal = (float_type)10.1;
-      if (  iVar.GetType()!='f')  iNumErr++;
+	  float_type f = (float_type)iVal;
+      if (  iVar.GetType()!='f' || f!=10.1)  iNumErr++;
 
       iVal = cmplx_type(10, 1);
-      if (  iVar.GetType()!='c')  iNumErr++;
+	  cmplx_type c = (cmplx_type)iVal;
+      if (  iVar.GetType()!='c' || c!=cmplx_type(10, 1))  iNumErr++;
 
       iVal = _T("test");
       if (  iVar.GetType()!='s')  iNumErr++;
 
       iVal = string_type(_T("test"));
-      if (  iVar.GetType()!='s')  iNumErr++;
+	  string_type s = (string_type)iVal;
+	  if ( iVar.GetType()!='s' || s!="test")  iNumErr++;
 
       iVal = false;
-      if (  iVar.GetType()!='b')  iNumErr++;
+	  bool b = (bool)iVal;
+      if (  iVar.GetType()!='b' || b!=false)  iNumErr++;
     }
     catch(...)
     {

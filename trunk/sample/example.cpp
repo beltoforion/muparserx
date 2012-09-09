@@ -861,14 +861,14 @@ void Calc()
       console() << _T("ans = ") << ans << _T("\n");
 
       // Or if you need the specific type use this:
-      //switch (result.GetType())
-      //{
-      //case 's': cout << result.GetString() << " (string)" << "\n"; break;
-      //case 'i': cout << result.GetInt() << " (int)" << "\n"; break;
-      //case 'f': cout << result.GetFloat() << " (float)" << "\n"; break;
-      //case 'c': cout << result.GetFloat() << "+" << result.GetImag() << "i (complex)" << "\n"; break;
-      //case 'b': break;
-      //}
+      switch (ans.GetType())
+      {
+	  case 's': { std::string s = ans.GetString();           console() << s << " (string)"  << "\n"; } break;
+	  case 'i': { int i = ans.GetInteger();                  console() << i << " (int)"     << "\n"; } break;
+	  case 'f': { double f = ans.GetFloat();                 console() << f << " (float)"   << "\n"; } break;
+	  case 'c': { std::complex<double> c = ans.GetComplex(); console() << c << " (complex)" << "\n"; } break;
+      case 'b': break;
+      }
     }
     catch(ParserError &e)
     {

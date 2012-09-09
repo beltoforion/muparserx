@@ -61,6 +61,7 @@ MUP_NAMESPACE_START
   public:
 
     explicit Value(char_type cType = 'v');
+
     Value(int_type val);
     Value(bool_type val);
     Value(float_type val);
@@ -110,6 +111,13 @@ MUP_NAMESPACE_START
 
     virtual string_type AsciiDump() const;
     void BindToCache(ValueCache *pCache);
+	
+	// Conversion operators
+	operator cmplx_type();
+	operator int ();
+	operator string_type();
+	operator float_type();
+	operator bool();
 
   private:
 
