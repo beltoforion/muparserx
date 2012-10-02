@@ -36,11 +36,12 @@
   POSSIBILITY OF SUCH DAMAGE.
 */
 
-#include <vector>
+#include <algorithm>
 #include <cassert>
-#include <iostream>
 #include <stdexcept>
 #include <sstream>
+#include <iostream>
+#include <vector>
 #include "mpMatrixError.h"
 
 
@@ -392,7 +393,7 @@ MUP_NAMESPACE_START
         return *this;
 
       m_eStorageScheme = (m_eStorageScheme==mssROWS_FIRST) ? mssCOLS_FIRST : mssROWS_FIRST;
-      m_nRows ^= m_nCols ^= m_nRows ^= m_nCols;
+      std::swap(m_nRows, m_nCols);
 
       return *this;
     }

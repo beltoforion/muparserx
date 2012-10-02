@@ -139,28 +139,38 @@ MUP_NAMESPACE_START
                 int a_iPos = -1,
                 const IToken *a_pTok = 0) const;
 
+  protected:
+
+    void  CheckName(const string_type &a_sName, const string_type &a_CharSet) const;
+
+    fun_maptype  m_FunDef;           ///< Function definitions
+    oprt_pfx_maptype m_PostOprtDef;  ///< Postfix operator callbacks
+    oprt_ifx_maptype m_InfixOprtDef; ///< Infix operator callbacks.
+    oprt_bin_multimap m_OprtDef;     ///< Binary operator callbacks
+    val_maptype  m_valConst;         ///< Definition of parser constants
+    var_maptype  m_VarDef;           ///< user defind variables.
+
   private:
+
+    void  ReInit() const;
+    void  ClearExpr();
+    void  CreateRPN() const;
+    void  StackDump(const Stack<ptr_val_type> &a_stVal, 
+                     const Stack<ptr_tok_type> &a_stOprt) const;
 
     void Assign(const ParserXBase &a_Parser);
     void InitTokenReader();
-    void ReInit() const;
 
     void ApplyFunc(Stack<ptr_tok_type> &a_stOpt, Stack<ptr_val_type> &a_stVal, int a_iArgCount) const;
     void ApplyIfElse(Stack<ptr_tok_type> &a_stOpt, Stack<ptr_val_type> &a_stVal) const;
     void ApplyRemainingOprt(Stack<ptr_tok_type> &a_stOpt,
                                 Stack<ptr_val_type> &a_stVal) const;
-
     const IValue& ParseFromString() const; 
     const IValue& ParseFromRPN() const; 
 
-    void  ClearExpr();
-    void  CheckName(const string_type &a_sName, const string_type &a_CharSet) const;
-    void  CreateRPN() const;
-    void  StackDump( const Stack<ptr_val_type> &a_stVal, 
-                     const Stack<ptr_tok_type> &a_stOprt ) const;
-
     /** \brief Pointer to the parser function. 
     
+
       Eval() calls the function whose address is stored there.
     */
     mutable parse_function_type m_pParserEngine;
@@ -168,14 +178,7 @@ MUP_NAMESPACE_START
     /** \brief Managed pointer to the token reader object. */
     std::auto_ptr<TokenReader> m_pTokenReader; 
 
-    fun_maptype  m_FunDef;           ///< Function definitions
-    oprt_pfx_maptype m_PostOprtDef;  ///< Postfix operator callbacks
-    oprt_ifx_maptype m_InfixOprtDef; ///< Infix operator callbacks.
-    oprt_bin_multimap m_OprtDef;     ///< Binary operator callbacks
-    val_maptype  m_valConst;         ///< Definition of parser constants
     val_vec_type m_valDynVarShadow;  ///< Value objects referenced by variables created at parser runtime
-    var_maptype  m_VarDef;           ///< user defind variables.
-
     string_type m_sNameChars;        ///< Charset for names
     string_type m_sOprtChars;        ///< Charset for postfix/ binary operator tokens
     string_type m_sInfixOprtChars;   ///< Charset for infix operator tokens
@@ -185,15 +188,18 @@ MUP_NAMESPACE_START
       The parser supports expressions using with commas for seperating
       multiple expression. Each comma will increase this number.
       (i.e. "a=10,b=15,c=a*b")
+
     */
     mutable int m_nFinalResultIdx;          
 
     /** \brief A flag indicating querying of expression variables is underway.
       
+
       If this flag is set the parser is momentarily querying the expression 
       variables. In these cases undefined variable errors must be ignored cause 
       the whole point of querying the expression variables is for finding out 
       which variables mut be defined.
+
     */
     mutable bool m_bIsQueryingExprVar;    
 
@@ -202,6 +208,7 @@ MUP_NAMESPACE_START
     mutable RPN m_rpn;                  ///< reverse polish notation
     mutable val_vec_type m_vStackBuffer;
     mutable ValueCache m_cache;         ///< A cache for recycling value items instead of deleting them
+
   };
 } // namespace mu
 

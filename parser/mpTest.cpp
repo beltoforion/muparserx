@@ -420,8 +420,10 @@ MUP_NAMESPACE_START
 	  float_type f = (float_type)iVal;
       if (  iVar.GetType()!='f' || f!=10.1)  iNumErr++;
 
-      iVal = cmplx_type(10, 1);
-	  cmplx_type c = (cmplx_type)iVal;
+      iVal = cmplx_type(10.0, 1.0);
+	  //cmplx_type c = (cmplx_type)iVal;  does not compile on GCC 4.6.3
+	  cmplx_type c = iVal.GetComplex();
+
       if (  iVar.GetType()!='c' || c!=cmplx_type(10, 1))  iNumErr++;
 
       iVal = _T("test");
