@@ -838,7 +838,7 @@ void Calc()
 
       if (sLine==_T("dbg"))
       {
-        sLine  = _T("sum(3)/sum(3,4,5)");
+        sLine  = _T("1 == ??.??.???? ??:00:00.000");
         mup::console() << sLine << endl;
       }
 
