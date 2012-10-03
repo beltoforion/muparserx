@@ -971,9 +971,15 @@ MUP_NAMESPACE_START
     iNumErr += ThrowTest(_T("a : b"), ecMISPLACED_COLON, 2); 
     iNumErr += ThrowTest(_T("1 : 2"), ecMISPLACED_COLON, 2); 
     iNumErr += ThrowTest(_T("(true) ? 1 : 2 : 3"), ecMISPLACED_COLON); 
-    iNumErr += EqnTest(_T("true ? 128 : 255"), 128, true);
-    iNumErr += EqnTest(_T("1<2 ? 128 : 255"), 128, true);
-    iNumErr += EqnTest(_T("a<b ? 128 : 255"), 128, true);
+
+	iNumErr += ThrowTest(_T("1==?"),  ecUNEXPECTED_CONDITIONAL);  
+    iNumErr += ThrowTest(_T("1+?"),   ecUNEXPECTED_CONDITIONAL);  // bin oprt + ?
+	iNumErr += ThrowTest(_T("1{m}?"), ecUNEXPECTED_CONDITIONAL);  // postfix + ?
+	iNumErr += ThrowTest(_T("-?"),    ecUNEXPECTED_CONDITIONAL);  // infix + ?
+
+    iNumErr += EqnTest(_T("(true) ? 128 : 255"), 128, true);
+    iNumErr += EqnTest(_T("(1<2) ? 128 : 255"), 128, true);
+    iNumErr += EqnTest(_T("(a<b) ? 128 : 255"), 128, true);
     iNumErr += EqnTest(_T("((a>b) ? true : false) ? 1 : 2"), 2, true);
     iNumErr += EqnTest(_T("((a>b) ? true : false) ? 1 : sum((a>b) ? 1 : 2)"), 2, true);
     iNumErr += EqnTest(_T("((a>b) ? false : true) ? 1 : sum((a>b) ? 1 : 2)"), 1, true);

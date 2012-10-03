@@ -579,7 +579,7 @@ MUP_NAMESPACE_START
 
     int iArgCount = (pFun->GetArgc()>=0) ? pFun->GetArgc() : a_iArgCount;
     int iOffset = a_stVal.size() - iArgCount;
-    MUP_ASSERT(iOffset>=0);
+    MUP_VERIFY(iOffset>=0);
 
     // The paramater stack may be empty since functions may not
     // have a parameter. They do always have a return value though.
@@ -588,7 +588,7 @@ MUP_NAMESPACE_START
     if (iArgCount==0)
       a_stVal.push(ptr_val_type(new Value()));
 
-    MUP_ASSERT((std::size_t)iOffset<a_stVal.size());
+    MUP_VERIFY((std::size_t)iOffset<a_stVal.size());
     ptr_val_type *pArg = a_stVal.get_data() + iOffset;
     
     //if (pFun->GetArgc()==0)

@@ -472,7 +472,7 @@ public:
 class FunEnableDebugDump : public ICallback
 {
 public:
-  FunEnableDebugDump() : ICallback(cmFUNC, _T("dump"), 2) 
+  FunEnableDebugDump() : ICallback(cmFUNC, _T("debug"), 2) 
   {}
 
   virtual void Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int /*a_iArgc*/)
