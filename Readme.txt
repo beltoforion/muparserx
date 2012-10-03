@@ -24,10 +24,13 @@
 #                                                                       #
 #########################################################################
 
-V2.1.4 (20120909)
+V2.1.4 (20121003)
 -----------------
 Changes / Additions:
   - Added casting opertors to the Value class
+
+Bugfixes:
+  - Issue 8 fixed: 	Crash on invalid expression in Release 
 
 V2.1.3 (20120715)
 -----------------
