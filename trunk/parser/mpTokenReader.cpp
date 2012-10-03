@@ -623,7 +623,7 @@ MUP_NAMESPACE_START
         if (m_nSynFlags & noIFX)
           throw ecUNEXPECTED_OPERATOR;
 
-        m_nSynFlags = noPFX | noIFX | noOPT | noBC | noIC | noIO | noEND | noCOMMA | noNEWLINE; 
+        m_nSynFlags = noPFX | noIFX | noOPT | noBC | noIC | noIO | noEND | noCOMMA | noNEWLINE | noIF; 
         return true;
       }
       
@@ -713,7 +713,7 @@ MUP_NAMESPACE_START
         if (m_nSynFlags & noPFX)
           throw ecUNEXPECTED_OPERATOR;
 
-        m_nSynFlags = noVAL | noVAR | noFUN | noBO | noPFX | noIO;
+        m_nSynFlags = noVAL | noVAR | noFUN | noBO | noPFX | noIO  | noIF;;
         return true;
       }
       
@@ -772,7 +772,7 @@ MUP_NAMESPACE_START
           a_Tok = ptr_tok_type(item->second->Clone());
 
           m_nPos += (int)a_Tok->GetIdent().length(); 
-          m_nSynFlags  = noBC | noIO | noIC | noOPT | noCOMMA | noEND | noNEWLINE | noPFX;
+          m_nSynFlags  = noBC | noIO | noIC | noOPT | noCOMMA | noEND | noNEWLINE | noPFX | noIF;
           return true;
         }
       }

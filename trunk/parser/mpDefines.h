@@ -70,6 +70,21 @@
 /** \brief Closing bracket for the parser namespace macro. */
 #define MUP_NAMESPACE_END }
 
+/** \brief Verifies whether a given condition is met.
+	
+  If the condition is not met an exception is thrown otherwise nothing happens.
+  This macro is used for implementing asserts. Unlike MUP_ASSERT, MUP_VERIFY 
+  will not be removed in release builds.
+*/
+#define MUP_VERIFY(COND)                          \
+        if (!(COND))                              \
+        {                                         \
+        stringstream_type ss;                     \
+        ss << _T("Assertion \"") _T(#COND) _T("\" failed: ") \
+            << __FILE__ << _T(" line ")           \
+            << __LINE__ << _T(".");               \
+        throw ParserError( ss.str() );            \
+        }
 
 #if defined(_DEBUG)
   #define MUP_TOK_CAST(TYPE, POINTER)  dynamic_cast<TYPE>(POINTER);
@@ -80,20 +95,7 @@
           bool MSG=false;  \
           assert(MSG);
 
-  /** \brief An assertion that does not kill the program.
-
-      This macro is neutralised in UNICODE builds. It's
-      too difficult to translate.
-  */
-  #define MUP_ASSERT(COND)                         \
-          if (!(COND))                             \
-          {                                        \
-            stringstream_type ss;                  \
-            ss << _T("Assertion \"") _T(#COND) _T("\" failed: ") \
-               << __FILE__ << _T(" line ")         \
-               << __LINE__ << _T(".");             \
-            throw ParserError( ss.str() );         \
-          }
+  #define MUP_ASSERT MUP_VERIFY
   #define MUP_LEAKAGE_REPORT
 #else
   #define MUP_FAIL(MSG)
