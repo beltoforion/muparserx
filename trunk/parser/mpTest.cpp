@@ -300,6 +300,9 @@ MUP_NAMESPACE_START
     iNumErr += EqnTest(_T("-(4i+5)"),       cmplx_type(-5, -4), true, 0);
     iNumErr += EqnTest(_T("sqrt(-1)"),      cmplx_type(0, 1), true, 0);
     iNumErr += EqnTest(_T("(-1)^0.5"),      cmplx_type(0, 1), true, 0);
+    iNumErr += EqnTest(_T("(-3)^(4/3)"),    std::pow(cmplx_type(-3, 0), 
+                                                     cmplx_type(4.0/3, 0)), true, 0);
+
     iNumErr += EqnTest(_T("sqrt(i*i)"),     cmplx_type(0, 1), true, 0);
     iNumErr += EqnTest(_T("sqrt(f)"),       cmplx_type(0, 1), true, 1);
     iNumErr += EqnTest(_T("sqrt(2-3)"),     cmplx_type(0, 1), true, 0);
