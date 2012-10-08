@@ -831,7 +831,7 @@ void Calc()
     {
       console() << sPrompt;
 
-      string_type sLine;
+	  string_type sLine;
       std::getline(mup::console_in(), sLine);
       if (sLine.length()==0)
         continue;
