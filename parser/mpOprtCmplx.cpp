@@ -301,7 +301,7 @@ MUP_NAMESPACE_START
     //
     // Fix: If roots are calculated (exponents are below zero) or complex numbers are involved 
     //      the complex version of pow is used. The float version is used otherwise.
-    if (arg[0]->IsComplex() || arg[1]->IsComplex() || arg[1]->GetFloat()<1)
+    if (arg[0]->IsComplex() || arg[1]->IsComplex() || (arg[0]->GetFloat()<0 && !arg[1]->IsInteger()) )
     {
       cmplx_type res = std::pow(arg[0]->GetComplex(), arg[1]->GetComplex());
 
