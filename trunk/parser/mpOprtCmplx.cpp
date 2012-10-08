@@ -299,8 +299,8 @@ MUP_NAMESPACE_START
     // Problem: -2^3   will introduce small imaginary parts due to computational errors.
     //			-1^0.5 will introduce small real parts due to computational errors.
     //
-    // Fix: If roots are calculated (exponents are below zero) or complex numbers are involved 
-    //      the complex version of pow is used. The float version is used otherwise.
+    // Fix: If roots of negative values are calculated (exponents are non integer) or complex numbers 
+    //      are involved the complex version of pow is used. The float version is used otherwise.
     if (arg[0]->IsComplex() || arg[1]->IsComplex() || (arg[0]->GetFloat()<0 && !arg[1]->IsInteger()) )
     {
       cmplx_type res = std::pow(arg[0]->GetComplex(), arg[1]->GetComplex());
