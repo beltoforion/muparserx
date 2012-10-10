@@ -235,7 +235,7 @@ MUP_NAMESPACE_START
   */
   void TokenReader::SetExpr(const string_type &a_sExpr)
   {
-	m_sExpr = a_sExpr + string_type(_T(" "));
+    m_sExpr = a_sExpr; // + string_type(_T(" "));
     ReInit();
   }
 

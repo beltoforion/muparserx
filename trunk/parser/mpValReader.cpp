@@ -65,17 +65,22 @@ MUP_NAMESPACE_START
 
     stream >> fVal;
 
-	// todo: check against GCC 4.6 implement using stream.fail(), remove space
-	//		 that is always inserted at the end of an expression
-	// if(stream.fail())
-    //   return false;
-
-    iEnd = stream.tellg();   // Position after reading
-
-    if (iEnd==-1)
+    if (stream.fail())
       return false;
 
-    a_iPos += (int)iEnd;
+    if (stream.eof())
+    {
+        // This part sucks but tellg will return -1 if eof is set,
+        // so i need a special treatment for the case that the number
+        // just read here is the last part of the string
+        for (; a_szExpr[a_iPos]!=0; ++a_iPos);
+    }
+    else
+    {
+        iEnd = stream.tellg();   // Position after reading
+        assert(iEnd>0);
+        a_iPos += (int)iEnd;
+    }
     
     // Finally i have to check if the next sign is the "i" for a imaginary unit
     // if so this is an imaginary value
@@ -175,14 +180,25 @@ MUP_NAMESPACE_START
     stringstream_type::pos_type nPos(0);
     stringstream_type ss(a_szExpr + a_iPos + 2);
     ss >> std::hex >> iVal;
-    nPos = ss.tellg();
 
-    if (nPos==(stringstream_type::pos_type)0)
-      return 1;
+    if (ss.fail())
+        return false;
 
-    a_iPos += (int)(2 + nPos);
+    if (ss.eof())
+    {
+        // This part sucks but tellg will return -1 if eof is set,
+        // so i need a special treatment for those cases.
+        for (; a_szExpr[a_iPos]!=0; ++a_iPos);
+    }
+    else
+    {
+        nPos = ss.tellg();
+        assert(nPos>0);
+        a_iPos += (int)(2 + nPos);
+    }
+
     a_val = (int)iVal;
-    return 1;
+    return true;
   }
 
   //------------------------------------------------------------------------------
