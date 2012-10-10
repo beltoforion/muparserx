@@ -53,7 +53,7 @@ MUP_NAMESPACE_START
   { 
     MUP_ASSERT(a_iArgc==1);
 
-    if (a_pArg[0]->IsScalar())
+    if (a_pArg[0]->IsScalar() )
     {
       float_type re = a_pArg[0]->GetFloat();
       float_type im = a_pArg[0]->GetImag();
