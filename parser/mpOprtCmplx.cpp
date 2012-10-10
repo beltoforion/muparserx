@@ -34,7 +34,7 @@
 */
 #include "mpOprtCmplx.h"
 #include <iomanip>
-
+#include <limits>
 
 MUP_NAMESPACE_START
 
