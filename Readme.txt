@@ -24,14 +24,16 @@
 #                                                                       #
 #########################################################################
 
-V2.1.4 (20121003)
+V2.1.4 (20121010)
 -----------------
 Changes / Additions:
   - Added casting opertors to the Value class
+  - Added project for qt creator
 
 Bugfixes:
   - Issue 8 fixed: 	Crash on invalid expression in Release 
   - Issue 11 fixed:	Roots of negative numbers computed incorrectly
+  - fixed an issue caused by changed behaviour of tellg in GCC 4.6
 
 V2.1.3 (20120715)
 -----------------
