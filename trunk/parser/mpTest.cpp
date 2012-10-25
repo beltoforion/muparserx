@@ -645,6 +645,12 @@ MUP_NAMESPACE_START
     int  iNumErr = 0;
     *m_stream << _T("testing string functions...");
 
+    // escape sequences
+    iNumErr += EqnTest(_T("\"\\\"quoted_string\\\"\""), _T("\"quoted_string\""), true); // "\"quoted_string\"" -> "quoted_string"
+    iNumErr += EqnTest(_T("\"\\\"\\\"\""), _T("\"\""), true);                           // "\"\""              -> ""
+    iNumErr += EqnTest(_T("\"\\\\\""), _T("\\\\"), true);                               // "\\"                -> \\     (two backslash)
+
+    // String functions
     iNumErr += EqnTest(_T("strlen(\"12345\")"), 5, true);
     iNumErr += EqnTest(_T("strlen(toupper(\"abcde\"))"), 5, true);
     iNumErr += EqnTest(_T("sin(0)+(float)strlen(\"12345\")"), (float_type)5.0, true);
