@@ -132,6 +132,9 @@ MUP_NAMESPACE_START
       virtual ~StrValReader();
       virtual bool IsValue(const char_type *a_szExpr, int &a_iPos, Value &a_fVal);
       virtual IValueReader* Clone(TokenReader *pTokenReader) const;
+
+  private:
+      string_type Unescape(const char_type *szExpr, int &len);
   };
 
 MUP_NAMESPACE_END

@@ -863,10 +863,10 @@ void Calc()
       // Or if you need the specific type use this:
       switch (ans.GetType())
       {
-	  case 's': { std::string s = ans.GetString();           console() << s << " (string)"  << "\n"; } break;
-	  case 'i': { int i = ans.GetInteger();                  console() << i << " (int)"     << "\n"; } break;
-	  case 'f': { double f = ans.GetFloat();                 console() << f << " (float)"   << "\n"; } break;
-	  case 'c': { std::complex<double> c = ans.GetComplex(); console() << c << " (complex)" << "\n"; } break;
+      case 's': { std::string s = ans.GetString();           console() << s << " (string)"  << "\n"; } break;
+      case 'i': { int i = ans.GetInteger();                  console() << i << " (int)"     << "\n"; } break;
+      case 'f': { double f = ans.GetFloat();                 console() << f << " (float)"   << "\n"; } break;
+      case 'c': { std::complex<double> c = ans.GetComplex(); console() << c << " (complex)" << "\n"; } break;
       case 'b': break;
       }
     }

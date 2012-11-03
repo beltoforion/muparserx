@@ -106,8 +106,10 @@ MUP_NAMESPACE_START
       ecMISSING_SQR_BRACKET    = 44, ///< The index operator was not closed properly (i.e. "v[3")
       ecEVAL                   = 45, ///< Error while evaluating function / operator
       
+      ecUNKNOWN_ESCAPE_SEQUENCE = 46,
+
       // internal errors
-      ecINTERNAL_ERROR         = 46, ///< Internal error of any kind.
+      ecINTERNAL_ERROR         = 47, ///< Internal error of any kind.
 
       // The last two are special entries 
       ecCOUNT,                       ///< This is no error code, It just stores just the total number of error codes

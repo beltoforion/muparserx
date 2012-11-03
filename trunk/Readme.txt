@@ -24,6 +24,13 @@
 #                                                                       #
 #########################################################################
 
+V2.1.5 (20121102)
+-----------------
+
+Bugfixes:
+  - Issue 13: Unpredictable behaviour when using back slash character in strings; 
+              Fixed by adding support for more sequences ("\n", "\r", "\t", "\"", "\\")
+
 V2.1.4 (20121010)
 -----------------
 Changes / Additions:
