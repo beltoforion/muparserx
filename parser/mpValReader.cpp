@@ -271,33 +271,65 @@ MUP_NAMESPACE_START
   {}
 
   //------------------------------------------------------------------------------
+  string_type StrValReader::Unescape(const char_type *szExpr, int &nPos)
+  {
+    string_type out;
+    bool bEscape = false;
+
+    for (char_type c = szExpr[nPos]; c!=0; c = szExpr[++nPos])
+    {
+      switch(c)
+      {
+      case '\\':
+        if (!bEscape)
+        {
+          bEscape = true;
+          break;
+        }
+        // fall throught!
+
+      case '"':
+        if (!bEscape)
+        {
+          ++nPos;
+          return out;
+        }
+        // fall through!
+
+      default:
+        if (bEscape)
+        {
+          switch(c)
+          {
+          case 'n':  out += '\n'; break;
+          case 'r':  out += '\r'; break;
+          case 't':  out += '\t'; break;
+          case '"':  out += '\"'; break;
+          case '\\': out += '\\'; break;
+          default:
+                throw ParserError( ErrorContext(ecUNKNOWN_ESCAPE_SEQUENCE, nPos) );
+          }
+
+          bEscape = false;
+        }
+        else
+        {
+          out += c; 
+        }
+      }
+    }
+
+    throw ParserError( ErrorContext(ecUNTERMINATED_STRING, nPos) );
+  }
+
+  //------------------------------------------------------------------------------
   bool StrValReader::IsValue(const char_type *a_pszExpr, int &a_iPos, Value &a_Val)
   {
     const char_type *szExpr = a_pszExpr + a_iPos;
-
-    
     if (szExpr[0]!='"') 
       return false;
 
-    string_type sBuf(&szExpr[1]);
-    std::size_t iEnd(0), iSkip(0);
-
-    // parser over escaped '\"' end replace them with '"'
-    for(iEnd=sBuf.find(_T("\"")); iEnd!=string_type::npos; iEnd=sBuf.find(_T("\""), iEnd))
-    {
-      if (iEnd==0 || sBuf[iEnd-1]!='\\' || (sBuf[iEnd-2]=='\\' && sBuf[iEnd-1]=='\\') )
-          break;
-
-      sBuf.replace(iEnd-1, 2, _T("\""));
-      iSkip++;
-    }
-
-    if (iEnd==string_type::npos)
-      throw ParserError( ErrorContext(ecUNTERMINATED_STRING, a_iPos) );
-
-    string_type sTok(sBuf.begin(), sBuf.begin()+iEnd);
-    a_Val = sTok;
-    a_iPos += (int)(sTok.length() + 2 + iSkip);  // +2 wg Anführungszeichen; +iSkip für entfernte escape zeichen
+    a_Val = Unescape(a_pszExpr, ++a_iPos);
     return true;
   }
 

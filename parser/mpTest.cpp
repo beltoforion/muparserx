@@ -648,7 +648,7 @@ MUP_NAMESPACE_START
     // escape sequences
     iNumErr += EqnTest(_T("\"\\\"quoted_string\\\"\""), _T("\"quoted_string\""), true); // "\"quoted_string\"" -> "quoted_string"
     iNumErr += EqnTest(_T("\"\\\"\\\"\""), _T("\"\""), true);                           // "\"\""              -> ""
-    iNumErr += EqnTest(_T("\"\\\\\""), _T("\\\\"), true);                               // "\\"                -> \\     (two backslash)
+    iNumErr += EqnTest(_T("\"\\\\\""), _T("\\"), true);                                 // "\\"                -> \     (single backslash)
 
     // String functions
     iNumErr += EqnTest(_T("strlen(\"12345\")"), 5, true);

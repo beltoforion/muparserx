@@ -78,6 +78,7 @@ MUP_NAMESPACE_START
 
     m_vErrMsg[ecUNASSIGNABLE_TOKEN]      = _T("Undefined token \"$IDENT$\" found at position $POS$");
     m_vErrMsg[ecINTERNAL_ERROR]          = _T("Internal error");
+    m_vErrMsg[ecUNKNOWN_ESCAPE_SEQUENCE] = _T("Unknown escape sequence");
     m_vErrMsg[ecINVALID_NAME]            = _T("Invalid function-, variable- or constant name");
     m_vErrMsg[ecINVALID_FUN_PTR]         = _T("Invalid pointer to callback function");
     m_vErrMsg[ecINVALID_VAR_PTR]         = _T("Invalid pointer to variable");
