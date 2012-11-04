@@ -860,6 +860,7 @@ void Calc()
       //console() << _T("Result (type: '" << ans.GetType() <<  "'):\n");
       console() << _T("ans = ") << ans << _T("\n");
 
+/*
       // Or if you need the specific type use this:
       switch (ans.GetType())
       {
@@ -869,6 +870,7 @@ void Calc()
       case 'c': { std::complex<double> c = ans.GetComplex(); console() << c << " (complex)" << "\n"; } break;
       case 'b': break;
       }
+*/
     }
     catch(ParserError &e)
     {
