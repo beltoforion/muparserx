@@ -649,6 +649,9 @@ MUP_NAMESPACE_START
     iNumErr += ThrowTest(_T(",3"),           ecUNEXPECTED_COMMA);
     iNumErr += ThrowTest(_T("sin(,sin(8))"), ecUNEXPECTED_COMMA);
 
+    // unexpected variable
+    iNumErr += ThrowTest(_T("a xxx b"),  ecUNEXPECTED_VAR, 2); 
+
     iNumErr += ThrowTest(_T("sin(3)cos(3)"), ecUNEXPECTED_FUN);
     iNumErr += ThrowTest(_T("sin(3)3"),      ecUNEXPECTED_VAL);
     iNumErr += ThrowTest(_T("sin(3)+"),      ecUNEXPECTED_EOF);

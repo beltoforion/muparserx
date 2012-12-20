@@ -24,6 +24,13 @@
 #                                                                       #
 #########################################################################
 
+V2.1.5 (20121221; Mayan calendar doomsday edition)
+--------------------------------------------------
+
+Bugfixes:
+  - Issue 16: Wrong operator precedence.
+  - "Unexpected variable" could contain incorrect position information
+
 V2.1.5 (20121102)
 -----------------
 
