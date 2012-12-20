@@ -650,7 +650,7 @@ MUP_NAMESPACE_START
     iNumErr += ThrowTest(_T("sin(,sin(8))"), ecUNEXPECTED_COMMA);
 
     // unexpected variable
-    iNumErr += ThrowTest(_T("a xxx b"),  ecUNEXPECTED_VAR, 2); 
+    iNumErr += ThrowTest(_T("a _xxx_ b"),  ecUNASSIGNABLE_TOKEN, 2);   // if a variable factory is installed ecUNEXPECTED_VAR
 
     iNumErr += ThrowTest(_T("sin(3)cos(3)"), ecUNEXPECTED_FUN);
     iNumErr += ThrowTest(_T("sin(3)3"),      ecUNEXPECTED_VAL);
@@ -1423,7 +1423,7 @@ MUP_NAMESPACE_START
         *m_stream << _T("\n  ") 
                   << _T("Expression: \"") << a_sExpr 
                   << _T("\"  Code:")      << e.GetCode() 
-                  << _T("  Expected:")  << a_nErrc;
+                  << _T("  Expected:")    << a_nErrc;
       }
       
       // Check whether the error is reported at the correct expression position
