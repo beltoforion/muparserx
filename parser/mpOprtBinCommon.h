@@ -52,67 +52,27 @@
 
 MUP_NAMESPACE_START
 
-#define MUP_NAME_PROXY_get_float_type  GetFloat
-#define MUP_NAME_PROXY_get_string_type GetString
-#define MUP_NAME_PROXY_get_bool_type   GetBool
-#define MUP_NAME_PROXY_get_value_type  
-
-/** \brief MUP_BINARY_OPERATOR(CLASS, IDENT, PROT, TYPE, DESC, PRI, OP)
-    \param CLASS Name of the class to be defined
-    \param IDENT The string to be used as the operator identifier
-    \param PROT A string representing the operators prototype
-    \param TYPE The datatype used for the operation
-    \param DESC A string containing the operator description
-    \param PRI The operator precedence
-    \param OP The operation to perform
-
-    A macro for simplifying the process of creating binary operator 
-    callback classes. 
-*/
-#define MUP_BINARY_OPERATOR(CLASS, IDENT, TYPE, DESC, PRI, ASC, OP)        \
-  class CLASS : public IOprtBin                                            \
-  {                                                                        \
-  public:                                                                  \
-    CLASS() : IOprtBin((IDENT), (PRI), (ASC)) {}                           \
-                                                                           \
-    virtual void Eval(ptr_val_type& ret, const ptr_val_type *arg, int argc)\
-    {                                                                      \
-      assert(argc==2);                                                     \
-      TYPE a = arg[0]->MUP_NAME_PROXY_get_##TYPE();                        \
-      TYPE b = arg[1]->MUP_NAME_PROXY_get_##TYPE();                        \
-      *ret = OP;                                                           \
-    }                                                                      \
-                                                                           \
-    virtual const char_type* GetDesc() const { return (DESC); }            \
-    virtual IToken* Clone() const            { return new CLASS(); }       \
+  //-----------------------------------------------------------------------------------------------
+  class OprtStrAdd : public IOprtBin
+  {
+  public:
+    OprtStrAdd();
+    virtual void Eval(ptr_val_type& ret, const ptr_val_type *arg, int argc);
+    virtual const char_type* GetDesc() const;
+    virtual IToken* Clone() const;
   }; 
 
-  // for string values
-  MUP_BINARY_OPERATOR(OprtStrAdd, _T("//"), string_type, _T(""), 2, oaLEFT, a+b)
-  // logical operators
-  MUP_BINARY_OPERATOR(OprtBAnd, _T("and"),  bool_type, _T("less than"), 1, oaLEFT, a&&b)
-  MUP_BINARY_OPERATOR(OprtBOr,  _T("or"),  bool_type, _T("less than"), 1, oaLEFT, a||b)
-  MUP_BINARY_OPERATOR(OprtBXor, _T("xor"),  bool_type, _T("less than"), 1, oaLEFT, (bool_type)(a^b))
-
-//#undef MUP_NAME_PROXY_get_float_type
-//#undef MUP_NAME_PROXY_get_string_type
-//#undef MUP_NAME_PROXY_get_bool_type
-//#undef MUP_BINARY_OPERATOR
-
-  //------------------------------------------------------------------------------
+  //-----------------------------------------------------------------------------------------------
   /** \brief Callback object for testing if two values are equal.
       \ingroup binop
   */
   class OprtEQ : public IOprtBin    
   {
   public:
-    OprtEQ() : IOprtBin(_T("=="), 2, oaLEFT) {}
-    virtual void Eval(ptr_val_type& ret, const ptr_val_type *a_pArg, int)
-    { 
-      *ret = *a_pArg[0] == *a_pArg[1]; 
-    }
-    virtual const char_type* GetDesc() const { return _T("equals operator"); }
-    virtual IToken* Clone() const            { return new OprtEQ; }
+    OprtEQ();
+    virtual void Eval(ptr_val_type& ret, const ptr_val_type *a_pArg, int);
+    virtual const char_type* GetDesc() const;
+    virtual IToken* Clone() const;
   };
 
 
@@ -123,14 +83,10 @@ MUP_NAMESPACE_START
   class OprtNEQ : public IOprtBin    
   {
   public:
-    OprtNEQ() : IOprtBin(_T("!="), 2, oaLEFT) {}
-    virtual void Eval(ptr_val_type& ret, const ptr_val_type *a_pArg, int)
-    { 
-      *ret = *a_pArg[0] != *a_pArg[1]; 
-    }
-
-    virtual const char_type* GetDesc() const { return _T("neq operator"); }
-    virtual IToken* Clone() const            { return new OprtNEQ; }
+    OprtNEQ();
+    virtual void Eval(ptr_val_type& ret, const ptr_val_type *a_pArg, int);
+    virtual const char_type* GetDesc() const;
+    virtual IToken* Clone() const;
   };
 
   //------------------------------------------------------------------------------
@@ -140,14 +96,10 @@ MUP_NAMESPACE_START
   class OprtLT : public IOprtBin    
   {
   public:
-    OprtLT() : IOprtBin(_T("<"), 2, oaLEFT) {}
-    virtual void Eval(ptr_val_type& ret, const ptr_val_type *a_pArg, int)
-    { 
-       *ret = *a_pArg[0] < *a_pArg[1];
-    }
-
-    virtual const char_type* GetDesc() const { return _T("less operator"); }
-    virtual IToken* Clone() const            { return new OprtLT; }
+    OprtLT();
+    virtual void Eval(ptr_val_type& ret, const ptr_val_type *a_pArg, int);
+    virtual const char_type* GetDesc() const;
+    virtual IToken* Clone() const;
   };
 
   //------------------------------------------------------------------------------
@@ -157,14 +109,10 @@ MUP_NAMESPACE_START
   class OprtGT : public IOprtBin    
   {
   public:
-    OprtGT() : IOprtBin(_T(">"), 2, oaLEFT) {}
-    virtual void Eval(ptr_val_type& ret, const ptr_val_type *a_pArg, int)
-    { 
-       *ret = *a_pArg[0] > *a_pArg[1]; 
-    }
-
-    virtual const char_type* GetDesc() const { return _T("greater than"); }
-    virtual IToken* Clone() const            { return new OprtGT; }
+    OprtGT();
+    virtual void Eval(ptr_val_type& ret, const ptr_val_type *a_pArg, int);
+    virtual const char_type* GetDesc() const;
+    virtual IToken* Clone() const;
   };
 
   //------------------------------------------------------------------------------
@@ -174,14 +122,10 @@ MUP_NAMESPACE_START
   class OprtLE : public IOprtBin    
   {
   public:
-    OprtLE() : IOprtBin(_T("<="), 2, oaLEFT) {}
-    virtual void Eval(ptr_val_type& ret, const ptr_val_type *a_pArg, int)
-    { 
-      *ret = *a_pArg[0] <= *a_pArg[1];
-    }
-
-    virtual const char_type* GetDesc() const { return _T("less or equal operator"); }
-    virtual IToken* Clone() const            { return new OprtLE; }
+    OprtLE();
+    virtual void Eval(ptr_val_type& ret, const ptr_val_type *a_pArg, int);
+    virtual const char_type* GetDesc() const;
+    virtual IToken* Clone() const;
   };
 
   //------------------------------------------------------------------------------
@@ -191,14 +135,10 @@ MUP_NAMESPACE_START
   class OprtGE : public IOprtBin    
   {
   public:
-    OprtGE() : IOprtBin(_T(">="), 2, oaLEFT) {}
-    virtual void Eval(ptr_val_type& ret, const ptr_val_type *a_pArg, int)
-    { 
-       *ret = *a_pArg[0] >= *a_pArg[1]; 
-    }
-
-    virtual const char_type* GetDesc() const { return _T("greater or equal operator"); }
-    virtual IToken* Clone() const            { return new OprtGE; }
+    OprtGE();
+    virtual void Eval(ptr_val_type& ret, const ptr_val_type *a_pArg, int);
+    virtual const char_type* GetDesc() const;
+    virtual IToken* Clone() const;
   };
 
   //------------------------------------------------------------------------------
@@ -234,7 +174,7 @@ MUP_NAMESPACE_START
   class OprtLOr : public IOprtBin    
   {
   public:
-    OprtLOr();
+    OprtLOr(const char_type *szIdent = "||");
     virtual void Eval(ptr_val_type& ret, const ptr_val_type *a_pArg, int);
     virtual const char_type* GetDesc() const;
     virtual IToken* Clone() const;
@@ -247,7 +187,7 @@ MUP_NAMESPACE_START
   class OprtLAnd : public IOprtBin    
   {
   public:
-    OprtLAnd();
+    OprtLAnd(const char_type *szIdent = "&&");
     virtual void Eval(ptr_val_type& ret, const ptr_val_type *a_pArg, int);
     virtual const char_type* GetDesc() const;
     virtual IToken* Clone() const;

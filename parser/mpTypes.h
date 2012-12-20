@@ -261,23 +261,25 @@ MUP_NAMESPACE_START
 
     // binary operators
     prLOGIC_OR     =  1,
-    prLOGIC_AND    =  2,
-    prBIT_OR       =  3,
-    prBIT_AND      =  4, 
+//  prLOGIC_XOR    =  2,
+    prLOGIC_AND    =  3,
+    prBIT_OR       =  4,
+    prBIT_XOR      =  5,
+    prBIT_AND      =  6, 
 
-    prRELATIONAL1  =  5, ///< For "==", "!=" 
-    prRELATIONAL2  =  6, ///< Relational operators "<", "<=", ">", ">="
-    prSHIFT        =  7, ///< Shift operators "<<", ">>"
+    prRELATIONAL1  =  7, ///< For "==", "!=" 
+    prRELATIONAL2  =  8, ///< Relational operators "<", "<=", ">", ">="
+    prSHIFT        =  9, ///< Shift operators "<<", ">>"
     
-    prCOLON        =  8, ///< Colon operator
+    prCOLON        = 10, ///< Colon operator
 
-    prADD_SUB      =  9, ///< addition
-    prMUL_DIV      = 10, ///< multiplication/division
-    prPOW          = 11, ///< power operator priority (highest)
+    prADD_SUB      = 11, ///< addition
+    prMUL_DIV      = 12, ///< multiplication/division
+    prPOW          = 13, ///< power operator priority (highest)
 
     // infix operators
-    prINFIX        = 10, ///< Signs have a higher priority than ADD_SUB, but lower than power operator
-    prPOSTFIX      = 10  ///< Postfix operator priority (currently unused)
+    prINFIX        = 12, ///< Signs have a higher priority than ADD_SUB, but lower than power operator
+    prPOSTFIX      = 12  ///< Postfix operator priority (currently unused)
   };
 
 #if defined(_UNICODE)
