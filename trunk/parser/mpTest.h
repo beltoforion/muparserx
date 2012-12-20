@@ -43,8 +43,6 @@
 
 MUP_NAMESPACE_START
 
-MUP_BINARY_OPERATOR(DbgSillyAdd, _T("++"), float_type, _T(""), 3, oaLEFT, a+b)
-
     /** \brief Test cases for unit testing the parser framework.
 
       (C) 2011 Ingo Berg

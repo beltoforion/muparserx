@@ -53,6 +53,42 @@ using namespace std;
 
 MUP_NAMESPACE_START
 
+  //-----------------------------------------------------------------------------------------------
+  //
+  // class OprtStrAdd
+  //
+  //-----------------------------------------------------------------------------------------------
+
+  class DbgSillyAdd : public IOprtBin
+  {
+  public:
+
+    DbgSillyAdd() 
+      :IOprtBin(_T("++") ,(int)prADD_SUB, oaLEFT) 
+    {}
+  
+    //-----------------------------------------------------------------------------------------------
+    void Eval(ptr_val_type& ret, const ptr_val_type *arg, int argc)
+    {
+      assert(argc==2);
+      float_type a = arg[0]->GetFloat();
+      float_type b = arg[1]->GetFloat();
+      *ret = a+b;
+    }
+
+    //-----------------------------------------------------------------------------------------------
+    const char_type* GetDesc() const 
+    { 
+      return _T("internally used operator without special meaning for unit testing"); 
+    }
+
+    //-----------------------------------------------------------------------------------------------
+    IToken* Clone() const
+    { 
+      return new DbgSillyAdd(*this); 
+    }
+  };
+
   //------------------------------------------------------------------------------
   class FunTest0 : public ICallback
   {
@@ -865,6 +901,7 @@ MUP_NAMESPACE_START
   {
     int  iNumErr = 0;
     *m_stream << _T("testing binary operators...");
+    float_type a = 1,b = 2,buf=0;
 
     // standard aperators
     iNumErr += EqnTest(_T("1+7"),   (float_type)8.0, true);
@@ -902,7 +939,11 @@ MUP_NAMESPACE_START
     iNumErr += EqnTest(_T("(a<<3)+2"), 10, true);
     iNumErr += EqnTest(_T("(a<<4)+2"), 18, true);
     iNumErr += EqnTest(_T("(a<<5)+2"), 34, true);
-
+    // Issue 16: http://code.google.ctrueom/p/muparserx/issues/detail?id=16
+    iNumErr += EqnTest(_T("true  == true && false"),   true  ==  true && false,  true); 
+    iNumErr += EqnTest(_T("false == true && false"),   false ==  true && false,  true); 
+    iNumErr += EqnTest(_T("a==1.0 && a==1.0"),  a==1.0 && a==1.0,  true); 
+    
     // bool operators for comparing values
     iNumErr += EqnTest(_T("a<b"),  true,  true);
     iNumErr += EqnTest(_T("b>a"),  true,  true);
