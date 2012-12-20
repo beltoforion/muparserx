@@ -927,7 +927,7 @@ MUP_NAMESPACE_START
       err.Errc = ecUNEXPECTED_VAR;
       err.Ident = sTok;
       err.Expr = m_sExpr;
-      err.Pos = m_nPos - (int)sTok.length();
+      err.Pos = m_nPos;
       throw ParserError(err);
     }
 
