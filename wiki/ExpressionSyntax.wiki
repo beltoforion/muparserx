@@ -1,7 +1,7 @@
 #summary Overview over the expression syntax of muParserX
 = Value types =
 
-Internally muParserX is using a variant like datatype which can represent values (complex or not), strings and matrices. 
+Internally muparserx is using a variant style datatype which can represent values (complex or not), strings and matrices. 
 
 = String values =
 String values must be enclosed in quotation marks.
