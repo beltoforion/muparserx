@@ -22,7 +22,7 @@ muparserx can use the backslash character for escaping special characters. The f
 || \" || quote ||
 || \\ || backslash ||
 
-Creating a string containing two lines easily:
+By using the proper escape sequence creating a string containing two lines can be achieved easily:
 
 {{{
 "This is the first line\nThis is the second line"
