@@ -7,7 +7,7 @@ Internally muparserx is using a variant style datatype which can represent value
 
 = String values =
 
-String values can only be used if the parser was  initialized with the [http://code.google.com/p/muparserx/wiki/Using#Parser_initialization pckSTRING] flag. This is the case when using a default initialized parser instance. String values must be enclosed in quotation marks.
+String values can only be used if the parser was  initialized with the [http://code.google.com/p/muparserx/wiki/Using#Parser_initialization pckSTRING] flag. This is the case when using a default initialized parser instance. When used in a parser expression string values must be enclosed in quotation marks as shown in the folowing example:
 
 {{{
 "This is a text"
