@@ -4,6 +4,9 @@
 Internally muparserx is using a variant style datatype which can represent values (complex or not), strings and matrices. 
 
 = String values =
+
+String values can only be used if the parser was [http://code.google.com/p/muparserx/wiki/Using#Parser_initialization initialized with the pckSTRING flag] as is the case when using a default initialized parser instance. 
+
 String values must be enclosed in quotation marks.
 {{{
 "This is a text"
