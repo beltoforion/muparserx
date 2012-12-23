@@ -28,15 +28,15 @@ V2.1.6 (20121221; Mayan calendar doomsday edition)
 --------------------------------------------------
 
 Bugfixes:
-  - Issue 16: Wrong operator precedence.
-  - "Unexpected variable" could contain incorrect position information
+  - Issue 16: Wrong operator precedence. Some binary operators had incorrect precedence values.
+  - "Unexpected variable" errors could report incorrect expression positions
 
 V2.1.5 (20121102)
 -----------------
 
 Bugfixes:
-  - Issue 13: Unpredictable behaviour when using back slash character in strings; 
-              Fixed by adding support for more sequences ("\n", "\r", "\t", "\"", "\\")
+  - Issue 13: Unpredictable behaviour when using backslash character in strings; 
+              Fixed by adding support for more escape sequences ("\n", "\r", "\t", "\"", "\\")
 
 V2.1.4 (20121010)
 -----------------
@@ -45,14 +45,14 @@ Changes / Additions:
   - Added project for qt creator
 
 Bugfixes:
-  - Issue 8 fixed: 	Crash on invalid expression in Release 
-  - Issue 11 fixed:	Roots of negative numbers computed incorrectly
-  - fixed an issue caused by changed behaviour of tellg in GCC 4.6
+  - Issue 8: 	Crash on invalid expression in Release 
+  - Issue 11:	Roots of negative numbers computed incorrectly
+  - fixed a problem caused by changes in the behaviour of tellg in GCC 4.6
 
 V2.1.3 (20120715)
 -----------------
 Bugfixes:
-  - Issue 7 fixed: 	Memory leak in GetExprVar
+  - Issue 7: 	Memory leak in GetExprVar
 
 
 V2.1.2 (20120221)
@@ -69,30 +69,30 @@ V2.1.1 (20120201)
 Bugfixes:
   - Complex power operations could introduce small imaginary values in the result 
     even if both arguments were real numbers. 
-	(i.e. the result of -2^8 was something like "-8 + 9e-19i")
+    (i.e. the result of -2^8 was something like "-8 + 9e-19i")
 
 V2.1.0 (20111016)
 -----------------
 Bugfixes:
-  - Issue 1 fixed: Assertion when using a function with multiple arguments 
-                   in the same expression twice with different number of arguments.
-                   (Reference: http://code.google.com/p/muparserx/issues/detail?id=1)
-  - Issue 2 fixed: DblValReader::IsValue broken for numbers at the end of the string
+  - Issue 1: Assertion when using a function with multiple arguments 
+             in the same expression twice with different number of arguments.
+             (Reference: http://code.google.com/p/muparserx/issues/detail?id=1)
+  - Issue 2: DblValReader::IsValue broken for numbers at the end of the string
 
 V2.0.0 (20111009)
 -----------------
 
 Changes:
-- Fundamental datatype changed to a matrix type instead of a vector type
+- data type changed to a matrix type instead of a vector type
 - Multidimensional index operator added
   old:
 	"m[1][2] = 1"
   new:
 	"m[1,2] = 1"
 
-- type identifier for matrices is now 'm', formerly 'a' was used to 
-  indicate arrays. An arrays are now seen as subsets of matrices, there is no 
-  special type for arrays.
+- internal change: type identifier for matrices is now 'm', formerly 'a' was used to 
+  indicate arrays. An arrays are now seen as subsets of matrices, there is no special 
+  type for arrays.
 
 Bugfixes:
 - Matrix addition and subtraction work properly now.
