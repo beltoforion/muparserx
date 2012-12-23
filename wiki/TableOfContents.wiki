@@ -24,7 +24,6 @@
    * [http://code.google.com/p/muparserx/wiki/Extending#Defining_custom_operators Defining custom operators]
  * [http://code.google.com/p/muparserx/wiki/Benchmarks Benchmarks]
  * [http://code.google.com/p/muparserx/wiki/Background Background Information]
- * [http://code.google.com/p/muparserx/wiki/History History]
 
 == Support the project ==
 If you like he project you can support its further development 
