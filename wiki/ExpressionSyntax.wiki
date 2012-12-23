@@ -6,14 +6,28 @@ Internally muParserX is using a variant like datatype which can represent values
 = String values =
 String values must be enclosed in quotation marks.
 {{{
-a="Hello World"
+"This is a text"
+}}}
+
+muparserx can use the backslash character for escaping special characters. The following escape sequences are supported:
+
+|| Escape sequence || Description ||
+|| \n || newline ||
+|| \r || carriage return ||
+|| \t || tabulator  ||
+|| \" || quote ||
+|| \\ || backslash ||
+
+Creating a string containing two lines easily:
+
+{{{
+"This is the first line\nthis is the second line"
 }}}
 
 Concatenating strings can be done with the operator "//":
 {{{
-a="Hello "//"World"
+"Hello "//"World"
 }}}
-
 
 = Complex numbers =
 
