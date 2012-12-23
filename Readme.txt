@@ -9,7 +9,7 @@
 #  |__|_|  /____/|____|    (____  /__|  /____  >\___  >__| /___/\  \    #
 #        \/                     \/           \/     \/           \_/    #
 #                                                                       #
-#  Copyright (C) 2012 Ingo Berg                                         #
+#  Copyright (C) 2013 Ingo Berg                                         #
 #                                                                       #
 #  Web:     http://muparserx.beltoforion.de                             #
 #  SVN:     http://muparserx.googlecode.com/svn/trunk                   #
