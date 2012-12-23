@@ -882,7 +882,7 @@ void Calc()
         console() << sMarker;
       }
 
-      console() << e.GetMsg() << _T(" (Errc: ") << e.GetCode() << _T(")") << _T("\n\n");
+      console() << e.GetMsg() << _T(" (Errc: ") << std::dec << e.GetCode() << _T(")") << _T("\n\n");
 
       //if (e.GetContext().Ident.length()) 
       //  console() << _T("Ident.: ") << e.GetContext().Ident << _T("\n");
