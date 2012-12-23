@@ -75,7 +75,7 @@ The evaluation of a mathematical expression is a standard task required in many 
     <td align="center" ><img src="http://beltoforion.de/muparserx/ok.png" alt="ok"/></td>   
     <td align="center" ><img src="http://beltoforion.de/muparserx/ok.png" alt="ok"/></td>   
     <td align="center" ><img src="http://beltoforion.de/muparserx/fail.png"  alt="fail"/></td>
-    <td align="center"><a href="http://www.opensource.org/licenses/lgpl-3.0.html">LGPL V3</a></td>
+    <td align="center"><a href="http://opensource.org/licenses/BSD-3-Clause">BSD New</a></td>
     <td align="center">~ 1.600.000</td>
   </tr>
 </table>
