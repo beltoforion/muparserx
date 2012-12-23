@@ -30,17 +30,16 @@ Concatenating strings can be done with the operator "//":
 }}}
 
 = Complex numbers =
-
-When used in complex mode, the parser defines a constant representing the imaginary unit i. This constant can be used exactly like any other variable with the exception that you can omit the '*' between 'i' and values. For instance defining a complex variable a can simply be achieved by using:
+When [http://code.google.com/p/muparserx/wiki/Using#Parser_initialization used in complex mode], the parser defines a constant representing the imaginary unit i. This constant can be used exactly like any other variable with the exception that you can omit the {{{'*'}}} between 'i' and values. For instance defining a complex variable a can simply be achieved by using either the short:
 
 {{{
-a=6+9i
+6+9i
 }}}
 
-is equivalent to
+or the long version:
 
 {{{
-a=6+9*i
+6+9*i
 }}}
 
 = Matrices and arrays =
