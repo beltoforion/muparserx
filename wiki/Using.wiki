@@ -49,15 +49,15 @@ The parser functionality is organized in so called packages. A package consist o
 ParserX  p(pckALL_NON_COMPLEX);
 }}}
 
-The following bits and bit combinations can be used for activating or deactivating certain parser packages at construction time:
+Each parser package is encoded with a certain bit. The following values and value combinations can be used for activating or deactivating certain parser packages at construction time:
 
-    * pckCOMMON = 1; Installs common functionality such as binary operators and basic functions.
-    * pckUNIT = 2; Installs postfix operators for unit conversions.
-    * pckCOMPLEX = 4; Installs complex valued functions, operators and a constant for the imaginary unit i. The packages pckCOMPLEX and pckNON_COMPLEX are mutually exclusive.
-    * pckNON_COMPLEX = 8; Installs noncomplex functions and operators. The packages pckCOMPLEX and pckNON_COMPLEX are mutually exclusive.
-    * pckSTRING = 16; Installs functions for string manipulation and the binary string concetanation operator.
-    * pckALL_COMPLEX = pckCOMMON | pckCOMPLEX | pckSTRING | pckUNIT
-    * pckALL_NON_COMPLEX = pckCOMMON | pckNON_COMPLEX | pckSTRING | pckUNIT
+|| *Package enumerator* || *Numeric value* || *Description* ||
+|| pckCOMMON || 1 || Installs common functionality such as binary operators and basic functions. ||
+|| pckUNIT || 2 || Installs common functionality such as binary operators and basic functions. ||
+|| pckCOMPLEX || 4 || Installs complex valued functions, operators and a constant for the imaginary unit i. The packages pckCOMPLEX and pckNON_COMPLEX are mutually exclusive. ||
+|| pckNON_COMPLEX || 8 || Installs noncomplex functions and operators. The packages pckCOMPLEX and pckNON_COMPLEX are mutually exclusive. ||
+|| pckALL_COMPLEX || pckCOMMON | pckCOMPLEX | pckSTRING | pckUNIT || combines the flags of packages useable with complex numbers.||
+|| pckALL_NON_COMPLEX ||  pckCOMMON | pckNON_COMPLEX | pckSTRING | pckUNIT || Combines the flags of all packages useable with noncomple numbers. ||
 
 == Representing parser values ==
 muParserX defines a common interface for classes representing Values. This interface is implemented by the classes mup::Value and mup::Variable. 
