@@ -24,6 +24,13 @@
 #                                                                       #
 #########################################################################
 
+V2.1.7 (20121227)
+-----------------
+Changes:
+  - "zeros" function for creating matrices initialized with 0 added to the matrix package.
+
+Bugfixes:
+
 V2.1.6 (20121221; Mayan calendar doomsday edition)
 --------------------------------------------------
 

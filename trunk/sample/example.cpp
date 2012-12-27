@@ -1,5 +1,5 @@
 /** \example example.cpp
-    This is example code showing you how to use muParserX.
+    This is example code showing you how to use muparserx.
 
 <pre>
                __________                                 ____  ___
@@ -8,11 +8,11 @@
   |  Y Y  \  |  /    |     / __ \|  | \/\___ \\  ___/|  | \/     \ 
   |__|_|  /____/|____|    (____  /__|  /____  >\___  >__| /___/\  \
         \/                     \/           \/     \/           \_/
-                                       Copyright (C) 2012 Ingo Berg
+                                       Copyright (C) 2013 Ingo Berg
                                        All rights reserved.
 
-  muParserX - A C++ math parser library with array and string support
-  Copyright (c) 2012, Ingo Berg
+  muparserx - A C++ math parser library with array and string support
+  Copyright (c) 2013, Ingo Berg
   All rights reserved.
 
   Redistribution and use in source and binary forms, with or without 
@@ -39,9 +39,9 @@
 
 //---------------------------------------------------------------------------
 //
-//  muParserX 
+//  muparserx 
 //
-//  example.cpp - Demonstrates how to use muParserX
+//  example.cpp - Demonstrates how to use muparserx
 //
 //---------------------------------------------------------------------------
 
@@ -64,7 +64,7 @@
 #include <string>
 #include <iostream>
 
-//--- muParserX framework ---------------------------------------------------
+//--- muparserx framework ---------------------------------------------------
 #include "mpParser.h"
 #include "mpDefines.h"
 #include "mpTest.h"
@@ -90,7 +90,7 @@ struct DumpLeaks
 
 #endif
 
-const string_type sPrompt = _T("muParserX> ");
+const string_type sPrompt = _T("muparserx> ");
 
 //-------------------------------------------------------------------------------------------------
 // The following classes will be used to list muParserX variables, constants
@@ -624,7 +624,7 @@ void SelfTest()
 
 
   console() << _T("  Version ") << ParserXBase::GetVersion() << _T("\n");
-  console() << _T("  Copyright (C) 2012 Ingo Berg");
+  console() << _T("  Copyright (C) 2013 Ingo Berg");
   console() << _T("\n");
 
   console() << _T("-------------------------------------------------------------------------\n\n");

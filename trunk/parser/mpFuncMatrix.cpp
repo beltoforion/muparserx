@@ -8,11 +8,11 @@
   |  Y Y  \  |  /    |     / __ \|  | \/\___ \\  ___/|  | \/     \ 
   |__|_|  /____/|____|    (____  /__|  /____  >\___  >__| /___/\  \
         \/                     \/           \/     \/           \_/
-                                       Copyright (C) 2012 Ingo Berg
+                                       Copyright (C) 2013 Ingo Berg
                                        All rights reserved.
 
   muParserX - A C++ math parser library with array and string support
-  Copyright (c) 2012, Ingo Berg
+  Copyright (c) 2013, Ingo Berg
   All rights reserved.
 
   Redistribution and use in source and binary forms, with or without 
@@ -111,6 +111,69 @@ MUP_NAMESPACE_START
   IToken* FunMatrixOnes::Clone() const
   {
     return new FunMatrixOnes(*this);
+  }
+
+
+  //-----------------------------------------------------------------------
+  //
+  //  class FunMatrixZeros
+  //
+  //-----------------------------------------------------------------------
+
+  FunMatrixZeros::FunMatrixZeros(IPackage *package)
+    :ICallback(cmFUNC, _T("zeros"), -1, package)
+  {}
+
+  //-----------------------------------------------------------------------
+  FunMatrixZeros::~FunMatrixZeros()
+  {}
+
+  //-----------------------------------------------------------------------
+  void FunMatrixZeros::Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int argc)
+  {
+    switch(argc)
+    {
+    case 1: // Return a vector
+            {
+              int m = a_pArg[0]->GetInteger();
+              if (m==1)
+                *ret = 0;
+              else
+                *ret = matrix_type(a_pArg[0]->GetInteger(), 1, 0);
+            }
+            break;
+
+    case 2: // Return a matrix
+            {
+              int m = a_pArg[0]->GetInteger(),
+                  n = a_pArg[1]->GetInteger();
+
+              if (m==n && m==1)
+                *ret = 0;
+              else
+                *ret = matrix_type(a_pArg[0]->GetInteger(), a_pArg[1]->GetInteger(), 0);
+            }
+            break;
+    
+    default:
+            ErrorContext err;
+            err.Errc = ecINVALID_NUMBER_OF_PARAMETERS;
+            err.Arg = 2;
+            err.Ident = GetIdent();
+            throw ParserError(err);
+    }
+  }
+
+  //-----------------------------------------------------------------------
+  const char_type* FunMatrixZeros::GetDesc() const
+  {
+    return _T("zeros(x [, y]) - Returns a matrix whose elements are all 0.");
+  }
+
+  //-----------------------------------------------------------------------
+  IToken* FunMatrixZeros::Clone() const
+  {
+    return new FunMatrixZeros(*this);
   }
 
 MUP_NAMESPACE_END
