@@ -47,6 +47,18 @@ or the long version:
 }}}
 
 = Matrices and arrays =
+In order to use matices muparserx must be initialized with the [http://code.google.com/p/muparserx/wiki/Using#Parser_initialization pckMATRIX] flag. This flag will activate the transpose operator and the functions {{{ones}}} which can be used for creating new matrices on the fly.
+
+== Creating new matrices ==
+
+In order to create a new matrix muparser provides a function called ones. Calling this function will create a new m x n matrix filled the number one.
+
+{{{
+ones(2,2)
+}}}
+
+will yield a 2 x 2 matrix with a 1 in each cell.
+
 Matrix and array values are exactly treated like any other value. The only exception is that they support the index operator. The index operator can either be one or two dimensional, depending on the dimension of the parser variable. When using the index operator on matrices the index dimensions are seperated with a colon. The first index refers to the rows of the matrix, the second to the columns.
 {{{
 m[1,2]=1
