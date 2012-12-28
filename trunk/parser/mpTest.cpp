@@ -251,6 +251,23 @@ MUP_NAMESPACE_START
     va_times_vb_transp.At(1, 0) = 8;   va_times_vb_transp.At(1, 1) = 6;   va_times_vb_transp.At(1, 2) = 4;
     va_times_vb_transp.At(2, 0) = 12;  va_times_vb_transp.At(2, 1) = 9;   va_times_vb_transp.At(2, 2) = 6;
 
+    Value size_3x6(1, 2, 0); 
+    size_3x6.At(0, 0) = 3; 
+    size_3x6.At(0, 1) = 6;
+    
+    Value size_3x3(1, 2, 0); 
+    size_3x3.At(0, 0) = 3; 
+    size_3x3.At(0, 1) = 3;
+    
+    Value size_3x1(1, 2, 0); 
+    size_3x1.At(0, 0) = 3; 
+    size_3x1.At(0, 1) = 1;
+
+    Value size_1x3(1, 2, 0); 
+    size_1x3.At(0, 0) = 1; 
+    size_1x3.At(0, 1) = 3;
+
+
     // Check matrix dimension mismatch error
     iNumErr += ThrowTest(_T("\"hallo\"+m1"), ecEVAL); 
     iNumErr += ThrowTest(_T("m1+\"hallo\""), ecEVAL); 
@@ -289,6 +306,25 @@ MUP_NAMESPACE_START
     iNumErr += EqnTest(_T("ones(3,3)"),  ones_3x3, true); 
     iNumErr += EqnTest(_T("ones(3,1)"),  ones_3,   true); 
     iNumErr += EqnTest(_T("ones(3)"),    ones_3,   true); 
+
+    iNumErr += EqnTest(_T("size(ones(3,3))"),  size_3x3, true);  // check return value dimension
+    iNumErr += EqnTest(_T("size(ones(1,3))"),  size_1x3, true);  // check return value dimension
+    iNumErr += EqnTest(_T("size(ones(3,1))"),  size_3x1, true);  // check return value dimension
+    iNumErr += EqnTest(_T("size(ones(3))"),    size_3x3, true);  // check return value dimension
+
+    // zeros
+    iNumErr += EqnTest(_T("size(zeros(3,3))"), size_3x3, true);  // check return value dimension
+    iNumErr += EqnTest(_T("size(zeros(1,3))"), size_1x3, true);  // check return value dimension
+    iNumErr += EqnTest(_T("size(zeros(3,1))"), size_3x1, true);  // check return value dimension
+    iNumErr += EqnTest(_T("size(zeros(3))"),   size_3x3, true);  // check return value dimension
+
+    // eye
+    iNumErr += EqnTest(_T("size(eye(3,3))"),  size_3x3,  true);  // check return value dimension
+    iNumErr += EqnTest(_T("size(eye(1,3))"),  size_1x3,  true);  // check return value dimension
+    iNumErr += EqnTest(_T("size(eye(3,1))"),  size_3x1,  true);  // check return value dimension
+    iNumErr += EqnTest(_T("size(eye(3))"),    size_3x3,  true);  // check return value dimension
+
+    iNumErr += EqnTest(_T("size(eye(3,6))"),  size_3x6,      true);  // check return value dimension
 
     // transposition
     iNumErr += EqnTest(_T("va'*vb"),    16,   true); 
@@ -1637,8 +1673,11 @@ MUP_NAMESPACE_START
                     {
                       for (int i=0; i<v1.GetRows(); ++i)
                       {
-                        if (!Check(v1.At(i), v2.At(i)))
-                          return false;
+                        for (int j=0; j<v1.GetCols(); ++j)
+                        {
+                          if (!Check(v1.At(i,j), v2.At(i,j)))
+                            return false;
+                        }
                       }
 
                       return true;
