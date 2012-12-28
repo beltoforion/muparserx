@@ -88,7 +88,7 @@ MUP_NAMESPACE_START
               if (m==n && m==1)
                 *ret = 1.0;
               else
-                *ret = matrix_type(a_pArg[0]->GetInteger(), a_pArg[1]->GetInteger(), 1.0);
+                *ret = matrix_type(m, n, 1.0);
             }
             break;
     
@@ -151,7 +151,7 @@ MUP_NAMESPACE_START
               if (m==n && m==1)
                 *ret = 0;
               else
-                *ret = matrix_type(a_pArg[0]->GetInteger(), a_pArg[1]->GetInteger(), 0);
+                *ret = matrix_type(m, n, 0);
             }
             break;
     
@@ -176,4 +176,98 @@ MUP_NAMESPACE_START
     return new FunMatrixZeros(*this);
   }
 
+  //-----------------------------------------------------------------------
+  //
+  //  class FunMatrixEye
+  //
+  //-----------------------------------------------------------------------
+
+  FunMatrixEye::FunMatrixEye(IPackage *package)
+    :ICallback(cmFUNC, _T("eye"), -1, package)
+  {}
+
+  //-----------------------------------------------------------------------
+  FunMatrixEye::~FunMatrixEye()
+  {}
+
+  //-----------------------------------------------------------------------
+  void FunMatrixEye::Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int argc)
+  {
+    if (argc<0 || argc>2)
+    {
+      ErrorContext err;
+      err.Errc = ecINVALID_NUMBER_OF_PARAMETERS;
+      err.Arg = argc;
+      err.Ident = GetIdent();
+      throw ParserError(err);
+    }
+
+    int m = a_pArg[0]->GetInteger(),
+        n = (argc==1) ? m  : a_pArg[1]->GetInteger();
+
+    matrix_type eye(m, n, 0);
+
+    for (int i=0; i<std::min(m,n); ++i)
+    {
+      eye.At(i,i) = 1;
+    }
+
+    *ret = eye;
+  }
+
+  //-----------------------------------------------------------------------
+  const char_type* FunMatrixEye::GetDesc() const
+  {
+    return _T("eye(x, y) - returns a matrix with ones on its diagonal and zeros elsewhere.");
+  }
+
+  //-----------------------------------------------------------------------
+  IToken* FunMatrixEye::Clone() const
+  {
+    return new FunMatrixEye(*this);
+  }
+
+  //-----------------------------------------------------------------------
+  //
+  //  class FunMatrixSize
+  //
+  //-----------------------------------------------------------------------
+
+  FunMatrixSize::FunMatrixSize(IPackage *package)
+    :ICallback(cmFUNC, _T("size"), -1, package)
+  {}
+
+  //-----------------------------------------------------------------------
+  FunMatrixSize::~FunMatrixSize()
+  {}
+
+  //-----------------------------------------------------------------------
+  void FunMatrixSize::Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int argc)
+  {
+    if (argc!=1)
+    {
+      ErrorContext err;
+      err.Errc = ecINVALID_NUMBER_OF_PARAMETERS;
+      err.Arg = argc;
+      err.Ident = GetIdent();
+      throw ParserError(err);
+    }
+
+    matrix_type sz(1, 2, 0);
+    sz.At(0,0) = a_pArg[0]->GetRows();
+    sz.At(0,1) = a_pArg[0]->GetCols();
+    *ret = sz;
+  }
+
+  //-----------------------------------------------------------------------
+  const char_type* FunMatrixSize::GetDesc() const
+  {
+    return _T("size(x) - returns the matrix dimensions.");
+  }
+
+  //-----------------------------------------------------------------------
+  IToken* FunMatrixSize::Clone() const
+  {
+    return new FunMatrixSize(*this);
+  }
 MUP_NAMESPACE_END

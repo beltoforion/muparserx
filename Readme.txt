@@ -24,12 +24,15 @@
 #                                                                       #
 #########################################################################
 
-V2.1.7 (20121227)
+V2.1.7 (20121228)
 -----------------
 Changes:
-  - "zeros" function for creating matrices initialized with 0 added to the matrix package.
-
+  - added "zeros" function for creating matrices initialized with 0 added
+  - added "eye" function for creating idendity matrices
+  - added "size" function for determining matrix dimensions
+  
 Bugfixes:
+  - Column number of matrices was not reported correctly
 
 V2.1.6 (20121221; Mayan calendar doomsday edition)
 --------------------------------------------------

@@ -60,6 +60,8 @@ void PackageMatrix::AddToParser(ParserXBase *pParser)
   // Matrix functions
   pParser->DefineFun(new FunMatrixOnes());
   pParser->DefineFun(new FunMatrixZeros());
+  pParser->DefineFun(new FunMatrixEye());
+  pParser->DefineFun(new FunMatrixSize());
   
   // Matrix Operators
   pParser->DefinePostfixOprt(new OprtTranspose(this));

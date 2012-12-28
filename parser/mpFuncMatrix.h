@@ -61,7 +61,7 @@ MUP_NAMESPACE_START
 
   //-----------------------------------------------------------------------
   /** \brief Parser callback object for creating matrices consisting 
-             entirely of ones.
+             entirely of zeros.
       \ingroup functions
   */
   class FunMatrixZeros : public ICallback
@@ -69,6 +69,35 @@ MUP_NAMESPACE_START
   public:
     FunMatrixZeros(IPackage *pPackage = NULL);
     virtual ~FunMatrixZeros();
+    virtual void Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int a_iArgc);
+    virtual const char_type* GetDesc() const;
+    virtual IToken* Clone() const;
+  };
+
+  //-----------------------------------------------------------------------
+  /** \brief Parser callback object for creating unity matrices.
+      \ingroup functions
+  */
+  class FunMatrixEye : public ICallback
+  {
+  public:
+    FunMatrixEye(IPackage *pPackage = NULL);
+    virtual ~FunMatrixEye();
+    virtual void Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int a_iArgc);
+    virtual const char_type* GetDesc() const;
+    virtual IToken* Clone() const;
+  };
+
+
+  //-----------------------------------------------------------------------
+  /** \brief Determines the dimensions of a matrix.
+      \ingroup functions
+  */
+  class FunMatrixSize : public ICallback
+  {
+  public:
+    FunMatrixSize(IPackage *pPackage = NULL);
+    virtual ~FunMatrixSize();
     virtual void Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int a_iArgc);
     virtual const char_type* GetDesc() const;
     virtual IToken* Clone() const;
