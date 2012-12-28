@@ -67,7 +67,7 @@ void PackageMatrix::AddToParser(ParserXBase *pParser)
   pParser->DefinePostfixOprt(new OprtTranspose(this));
 
   // Colon operator
-  pParser->DefineOprt(new OprtColon());
+  //pParser->DefineOprt(new OprtColon());
 }
 
 //------------------------------------------------------------------------------

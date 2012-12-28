@@ -96,7 +96,7 @@
           assert(MSG);
 
   #define MUP_ASSERT MUP_VERIFY
-//  #define MUP_LEAKAGE_REPORT
+  #define MUP_LEAKAGE_REPORT
 #else
   #define MUP_FAIL(MSG)
   #define MUP_ASSERT(COND)

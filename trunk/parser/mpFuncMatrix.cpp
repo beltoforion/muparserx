@@ -68,37 +68,22 @@ MUP_NAMESPACE_START
   //-----------------------------------------------------------------------
   void FunMatrixOnes::Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int argc)
   {
-    switch(argc)
+    if (argc<0 || argc>2)
     {
-    case 1: // Return a vector
-            {
-              int m = a_pArg[0]->GetInteger();
-              if (m==1)
-                *ret = 1.0;
-              else
-                *ret = matrix_type(a_pArg[0]->GetInteger(), 1, 1.0);
-            }
-            break;
-
-    case 2: // Return a matrix
-            {
-              int m = a_pArg[0]->GetInteger(),
-                  n = a_pArg[1]->GetInteger();
-
-              if (m==n && m==1)
-                *ret = 1.0;
-              else
-                *ret = matrix_type(m, n, 1.0);
-            }
-            break;
-    
-    default:
-            ErrorContext err;
-            err.Errc = ecINVALID_NUMBER_OF_PARAMETERS;
-            err.Arg = 2;
-            err.Ident = GetIdent();
-            throw ParserError(err);
+      ErrorContext err;
+      err.Errc = ecINVALID_NUMBER_OF_PARAMETERS;
+      err.Arg = argc;
+      err.Ident = GetIdent();
+      throw ParserError(err);
     }
+
+    int m = a_pArg[0]->GetInteger(),
+        n = (argc==1) ? m  : a_pArg[1]->GetInteger();
+
+    if (m==n && n==1)
+      *ret = 1; // unboxing of 1x1 matrices
+    else
+      *ret = matrix_type(m,n,1);
   }
 
   //-----------------------------------------------------------------------
@@ -131,37 +116,22 @@ MUP_NAMESPACE_START
   //-----------------------------------------------------------------------
   void FunMatrixZeros::Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int argc)
   {
-    switch(argc)
+    if (argc<0 || argc>2)
     {
-    case 1: // Return a vector
-            {
-              int m = a_pArg[0]->GetInteger();
-              if (m==1)
-                *ret = 0;
-              else
-                *ret = matrix_type(a_pArg[0]->GetInteger(), 1, 0);
-            }
-            break;
-
-    case 2: // Return a matrix
-            {
-              int m = a_pArg[0]->GetInteger(),
-                  n = a_pArg[1]->GetInteger();
-
-              if (m==n && m==1)
-                *ret = 0;
-              else
-                *ret = matrix_type(m, n, 0);
-            }
-            break;
-    
-    default:
-            ErrorContext err;
-            err.Errc = ecINVALID_NUMBER_OF_PARAMETERS;
-            err.Arg = 2;
-            err.Ident = GetIdent();
-            throw ParserError(err);
+      ErrorContext err;
+      err.Errc = ecINVALID_NUMBER_OF_PARAMETERS;
+      err.Arg = argc;
+      err.Ident = GetIdent();
+      throw ParserError(err);
     }
+
+    int m = a_pArg[0]->GetInteger(),
+        n = (argc==1) ? m  : a_pArg[1]->GetInteger();
+
+    if (m==n && n==1)
+      *ret = 0;  // unboxing of 1x1 matrices
+    else
+      *ret = matrix_type(m,n,0);
   }
 
   //-----------------------------------------------------------------------
