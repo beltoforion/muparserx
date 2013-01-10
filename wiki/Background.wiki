@@ -11,6 +11,6 @@ In the meantime it turned out that I could use muParserX to test new features an
 
 muParserX has now a great framework and a lot of built in functions. Its a bit lacking when it comes to matrix features although this has improved a bit recently. There are however still a few things i would like to add int the future:
 
-- Array creation on the fly (i.e. "{ {1,2,3}; {3,4,5} }" to create a matrix)
-- Adding more scripting features (comments, functions,...)
-- Matrix index operators taking arrays as input. (This would allow something like "m[1:3]" for returning the elements 1 to three of a vector.
+* Array creation on the fly (i.e. "{ {1,2,3}; {3,4,5} }" to create a matrix)
+* Adding more scripting features (comments, functions,...)
+* Matrix index operators taking arrays as input. (This would allow something like "m[1:3]" for returning the elements 1 to three of a vector.
