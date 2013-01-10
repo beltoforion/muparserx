@@ -13,4 +13,4 @@ muParserX has now a great framework and a lot of built in functions. Its a bit l
 
  * Array creation on the fly (i.e. "{ {1,2,3}; {3,4,5} }" to create a matrix)
  * Adding more scripting features (comments, functions,...)
- * Matrix index operators taking arrays as input. (This would allow something like "m[1:3]" for returning the elements 1 to three of a vector.
+ * Matrix index operators taking arrays as input. This would allow something like "m[1:3]" for returning the elements 1 to three of a vector (similar to matlab).
