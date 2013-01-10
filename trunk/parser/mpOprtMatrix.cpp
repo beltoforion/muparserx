@@ -79,7 +79,7 @@ MUP_NAMESPACE_START
 //-----------------------------------------------------------
 
   OprtColon::OprtColon() 
-    :IOprtBin(_T(":"), (int)prCOLON, oaLEFT) 
+    :IOprtBin(_T("~"), (int)prCOLON, oaLEFT) 
   {}
 
   //-----------------------------------------------------------

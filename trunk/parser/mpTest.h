@@ -53,7 +53,6 @@ MUP_NAMESPACE_START
         static int c_iCount;
 
         int TestParserValue();
-        int TestNames();
         int TestErrorCodes();
         int TestStringFun();
         int TestVector();
@@ -64,9 +63,9 @@ MUP_NAMESPACE_START
         int TestMultiArg();
         int TestUndefVar();
         int TestIfElse();
-        int TestMultiLine();
         int TestMatrix();
         int TestComplex();
+        int TestScript();
 
         void Assessment(int a_iNumErr) const;
         void Abort() const;

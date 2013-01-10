@@ -838,7 +838,7 @@ void Calc()
 
       if (sLine==_T("dbg"))
       {
-        sLine  = _T("1 == ??.??.???? ??:00:00.000");
+        sLine  = _T("1\n");
         mup::console() << sLine << endl;
       }
 
@@ -857,7 +857,7 @@ void Calc()
 //      ans = parser.Eval();
 
       // Value supports C++ streaming like this:
-      //console() << _T("Result (type: '" << ans.GetType() <<  "'):\n");
+      console() << _T("Result (type: '" << ans.GetType() <<  "'):\n");
       console() << _T("ans = ") << ans << _T("\n");
 
 /*

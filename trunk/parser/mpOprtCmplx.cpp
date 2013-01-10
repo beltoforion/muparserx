@@ -306,9 +306,9 @@ MUP_NAMESPACE_START
       cmplx_type res = std::pow(arg[0]->GetComplex(), arg[1]->GetComplex());
 
       // remove obviousely bogus real/imaginary parts from the result
-      if (res.imag() < std::numeric_limits<mup::float_type>::epsilon())
+      if (std::abs(res.imag()) < std::numeric_limits<mup::float_type>::epsilon())
         res = res.real();
-      else if (res.real() < std::numeric_limits<mup::float_type>::epsilon())
+      else if (std::abs(res.real()) < std::numeric_limits<mup::float_type>::epsilon())
         res = cmplx_type(0, res.imag());
 
       *ret = res;

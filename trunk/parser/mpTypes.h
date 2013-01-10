@@ -181,11 +181,12 @@ MUP_NAMESPACE_START
     cmSCRIPT_ELSEIF     = 22,  ///< Reserved for future use
     cmSCRIPT_ENDIF      = 23,  ///< Reserved for future use
     cmSCRIPT_NEWLINE    = 24,  ///< Newline
-    cmSCRIPT_FUNCTION   = 25,  ///< Reserved for future use
+    cmSCRIPT_COMMENT    = 25,  ///< reserved for future use
+    cmSCRIPT_FUNCTION   = 26,  ///< Reserved for future use
 
     // misc codes
-    cmUNKNOWN           = 26,  ///< uninitialized item
-    cmCOUNT             = 27   ///< Dummy entry for counting the enum values
+    cmUNKNOWN           = 27,  ///< uninitialized item
+    cmCOUNT             = 28   ///< Dummy entry for counting the enum values
   }; // ECmdCode
 
 
