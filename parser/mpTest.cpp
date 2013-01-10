@@ -127,7 +127,6 @@ MUP_NAMESPACE_START
     AddTest(&ParserTester::TestErrorCodes);
     AddTest(&ParserTester::TestEqn);
     AddTest(&ParserTester::TestIfElse);
-    AddTest(&ParserTester::TestMultiLine);
     AddTest(&ParserTester::TestStringFun);
     AddTest(&ParserTester::TestMatrix);
     AddTest(&ParserTester::TestComplex);
@@ -136,7 +135,8 @@ MUP_NAMESPACE_START
     AddTest(&ParserTester::TestPostfix);
     AddTest(&ParserTester::TestInfix);
     AddTest(&ParserTester::TestMultiArg);
-    AddTest(&ParserTester::TestNames);
+    AddTest(&ParserTester::TestScript);
+
     ParserTester::c_iCount = 0;
   }
 
@@ -370,28 +370,33 @@ MUP_NAMESPACE_START
     iNumErr += EqnTest(_T("real(3.1)"),  (float_type)3.1, true, 0);
     iNumErr += EqnTest(_T("imag(2.1i)"), (float_type)2.1, true, 0);
     iNumErr += EqnTest(_T("-(4i+5)"),       cmplx_type(-5, -4), true, 0);
-    iNumErr += EqnTest(_T("sqrt(-1)"),      cmplx_type(0, 1), true, 0);
-    iNumErr += EqnTest(_T("(-1)^0.5"),      cmplx_type(0, 1), true, 0);
+    iNumErr += EqnTest(_T("sqrt(-1)"),      cmplx_type(0, 1),   true, 0);
+    iNumErr += EqnTest(_T("(-1)^0.5"),      cmplx_type(0, 1),   true, 0);
     iNumErr += EqnTest(_T("(-3)^(4/3)"),    std::pow(cmplx_type(-3, 0), 
                                                      cmplx_type(4.0/3, 0)), true, 0);
 
-    iNumErr += EqnTest(_T("sqrt(i*i)"),     cmplx_type(0, 1), true, 0);
-    iNumErr += EqnTest(_T("sqrt(f)"),       cmplx_type(0, 1), true, 1);
-    iNumErr += EqnTest(_T("sqrt(2-3)"),     cmplx_type(0, 1), true, 0);
-    iNumErr += EqnTest(_T("sqrt(a-b)"),     cmplx_type(0, 1), true, 2);
-    iNumErr += EqnTest(_T("sqrt((2-3))"),   cmplx_type(0, 1), true, 0);
-    iNumErr += EqnTest(_T("sqrt((a-b))"),   cmplx_type(0, 1), true, 2);
-    iNumErr += EqnTest(_T("sqrt(-(1))"),    cmplx_type(0, 1), true, 0);
-    iNumErr += EqnTest(_T("sqrt((-1))"),    cmplx_type(0, 1), true, 0);
-    iNumErr += EqnTest(_T("sqrt(-(-1))"),   cmplx_type(1, 0), true, 0);
-    iNumErr += EqnTest(_T("sqrt(1)"),       cmplx_type(1, 0), true, 0);
-    iNumErr += EqnTest(_T("a=1+2i"),        cmplx_type(1, 2), true, 1);
+    iNumErr += EqnTest(_T("sqrt(i*i)"),     cmplx_type(0, 1),   true, 0);
+    iNumErr += EqnTest(_T("sqrt(f)"),       cmplx_type(0, 1),   true, 1);
+    iNumErr += EqnTest(_T("sqrt(2-3)"),     cmplx_type(0, 1),   true, 0);
+    iNumErr += EqnTest(_T("sqrt(a-b)"),     cmplx_type(0, 1),   true, 2);
+    iNumErr += EqnTest(_T("sqrt((2-3))"),   cmplx_type(0, 1),   true, 0);
+    iNumErr += EqnTest(_T("sqrt((a-b))"),   cmplx_type(0, 1),   true, 2);
+    iNumErr += EqnTest(_T("sqrt(-(1))"),    cmplx_type(0, 1),   true, 0);
+    iNumErr += EqnTest(_T("sqrt((-1))"),    cmplx_type(0, 1),   true, 0);
+    iNumErr += EqnTest(_T("sqrt(-(-1))"),   cmplx_type(1, 0),   true, 0);
+    iNumErr += EqnTest(_T("sqrt(1)"),       cmplx_type(1, 0),   true, 0);
+    iNumErr += EqnTest(_T("a=1+2i"),        cmplx_type(1, 2),   true, 1);
     iNumErr += EqnTest(_T("-(1+2i)"),       cmplx_type(-1, -2), true, 0);
-    iNumErr += EqnTest(_T("-(-1-2i)"),      cmplx_type(1, 2), true, 0);
-    iNumErr += EqnTest(_T("a*i"),           cmplx_type(0, 1), true, 1);
+    iNumErr += EqnTest(_T("-(-1-2i)"),      cmplx_type(1, 2),   true, 0);
+    iNumErr += EqnTest(_T("a*i"),           cmplx_type(0, 1),   true, 1);
     iNumErr += EqnTest(_T("-(a+b*i)"),      cmplx_type(-1, -2), true, 2);
-    iNumErr += EqnTest(_T("-(-a-b*i)"),     cmplx_type(1, 2), true, 2);
+    iNumErr += EqnTest(_T("-(-a-b*i)"),     cmplx_type(1, 2),   true, 2);
     iNumErr += EqnTest(_T("(2+4i)*(8-6i)"), cmplx_type(40, 20), true, 0);
+
+    // Issue 17:  Wrong result on complex power.
+    iNumErr += EqnTest(_T("(-0.27 + 0.66*i)^2"), cmplx_type(-0.3627, -0.3564), true, 0);
+    iNumErr += EqnTest(_T("(-1+5i)^2"), cmplx_type(-24, -10), true, 0);
+
 
     // Test assignment operator with complex numbers. This needs to be written
     // in a bit of an obfuscated way in order to make the test work. EqnTest
@@ -940,7 +945,9 @@ MUP_NAMESPACE_START
   {
     int  iNumErr = 0;
     *m_stream << _T("testing binary operators...");
-    float_type a = 1,b = 2,buf=0;
+    float_type a = 1, 
+               b = 2,
+               buf = 0;
 
     // standard aperators
     iNumErr += EqnTest(_T("1+7"),   (float_type)8.0, true);
@@ -1013,34 +1020,6 @@ MUP_NAMESPACE_START
 
     // Problems with complex numbers
     iNumErr += EqnTest( _T("-2^3"), -8, true);   // When computed with the log/exp formula: -8 + 2.93e-15i 
-    Assessment(iNumErr);
-    return iNumErr;
-  }
-
-  //---------------------------------------------------------------------------
-  int ParserTester::TestMultiLine()
-  {
-    int  iNumErr = 0;
-    *m_stream << _T("testing multiline expressions...");
-
-    // Test error detection
-    iNumErr += ThrowTest(_T("sin(\n"), ecUNEXPECTED_NEWLINE);
-    iNumErr += ThrowTest(_T("1+\n"), ecUNEXPECTED_NEWLINE);
-    iNumErr += ThrowTest(_T("a,\n"), ecUNEXPECTED_NEWLINE);
-    iNumErr += ThrowTest(_T("a*\n"), ecUNEXPECTED_NEWLINE);
-    iNumErr += ThrowTest(_T("va[\n"), ecUNEXPECTED_NEWLINE);
-    iNumErr += ThrowTest(_T("(true) ? \n"), ecUNEXPECTED_NEWLINE);
-    iNumErr += ThrowTest(_T("(true) ? 10:\n"), ecUNEXPECTED_NEWLINE);
-
-    // Expressions spanning multiple lines
-    iNumErr += EqnTest(_T("a=1\n")
-                       _T("b=2\n") 
-                       _T("c=3\n") 
-                       _T("a+b+c") , 6, true);
-    iNumErr += EqnTest(_T("a=1,b=2\n") 
-                       _T("c=a+b\n") 
-                       _T("a+b+c") , 6, true);
-
     Assessment(iNumErr);
     return iNumErr;
   }
@@ -1194,14 +1173,14 @@ MUP_NAMESPACE_START
     iNumErr += EqnTest(_T("1+0xff+10"), 266, true);
 
     // ...
-    iNumErr += EqnTest(_T("exp(ln(7))"), (float_type)7.0, true);
-    iNumErr += EqnTest(_T("e^ln(7)"), (float_type)7.0, true);
-    iNumErr += EqnTest(_T("e^(ln(7))"), (float_type)7.0, true);
-    iNumErr += EqnTest(_T("(e^(ln(7)))"), (float_type)7.0, true);
-    iNumErr += EqnTest(_T("1-(e^(ln(7)))"), (float_type)-6.0, true);
-    iNumErr += EqnTest(_T("2*(e^(ln(7)))"), (float_type)14.0, true);
-    iNumErr += EqnTest(_T("10^log(5)"), (float_type)5.0, true);
-    iNumErr += EqnTest(_T("10^log10(5)"), (float_type)5.0, true);
+    iNumErr += EqnTest(_T("exp(ln(7))"), 7, true);
+    iNumErr += EqnTest(_T("e^ln(7)"), 7, true);
+    iNumErr += EqnTest(_T("e^(ln(7))"), 7, true);
+    iNumErr += EqnTest(_T("(e^(ln(7)))"), 7, true);
+    iNumErr += EqnTest(_T("1-(e^(ln(7)))"), -6, true);
+    iNumErr += EqnTest(_T("2*(e^(ln(7)))"), 14, true);
+    iNumErr += EqnTest(_T("10^log(5)"), 5, true);
+    iNumErr += EqnTest(_T("10^log10(5)"), 5, true);
     iNumErr += EqnTest(_T("2^log2(4)"), (float_type)4.0, true);
     iNumErr += EqnTest(_T("-(sin(0)+1)"), (float_type)-1.0, true);
     iNumErr += EqnTest(_T("-(2^1.1)"), (float_type)-2.14354692, true);
@@ -1238,108 +1217,44 @@ MUP_NAMESPACE_START
     return iNumErr;
   }
 
-
   //---------------------------------------------------------------------------
-  int ParserTester::TestNames()
+  int ParserTester::TestScript()
   {
-    int  iStat= 0;
+    int  iNumErr = 0;
+    *m_stream << _T("testing script features...");
 
-    *m_stream << "testing name restriction enforcement...";
-    
-    ParserX p;
+    // Test error detection
+    iNumErr += ThrowTest(_T("sin(\n"), ecUNEXPECTED_NEWLINE);
+    iNumErr += ThrowTest(_T("1+\n"),   ecUNEXPECTED_NEWLINE);
+    iNumErr += ThrowTest(_T("a,\n"),   ecUNEXPECTED_NEWLINE);
+    iNumErr += ThrowTest(_T("a*\n"),   ecUNEXPECTED_NEWLINE);
+    iNumErr += ThrowTest(_T("va[\n"),  ecUNEXPECTED_NEWLINE);
+    iNumErr += ThrowTest(_T("(true) ? \n"),    ecUNEXPECTED_NEWLINE);
+    iNumErr += ThrowTest(_T("(true) ? 10:\n"), ecUNEXPECTED_NEWLINE);
 
-#define PARSER_THROWCHECK(DOMAIN, FAIL, EXPR, ARG) \
-    iErr = 0;                                    \
-    ParserTester::c_iCount++;                    \
-    try                                          \
-    {                                            \
-      p.Define##DOMAIN(EXPR, ARG);               \
-    }                                            \
-    catch(Parser::exception_type&)               \
-    {                                            \
-      iErr = (FAIL==false) ? 0 : 1;              \
-    }                                            \
-    iStat += iErr;      
-    
-    // constant names
-//      PARSER_THROWCHECK(Const, false, "0a", 1)
-//      PARSER_THROWCHECK(Const, false, "9a", 1)
-//      PARSER_THROWCHECK(Const, false, "+a", 1)
-//      PARSER_THROWCHECK(Const, false, "-a", 1)
-//      PARSER_THROWCHECK(Const, false, "a-", 1)
-//      PARSER_THROWCHECK(Const, false, "a*", 1)
-//      PARSER_THROWCHECK(Const, false, "a?", 1)
-//      PARSER_THROWCHECK(Const, false, "a?", 1)
-//      PARSER_THROWCHECK(Const, false, "a?", 1)
-//      PARSER_THROWCHECK(Const, true, "a", 1)
-//      PARSER_THROWCHECK(Const, true, "a_min", 1)
-//      PARSER_THROWCHECK(Const, true, "a_min0", 1)
-//      PARSER_THROWCHECK(Const, true, "a_min9", 1)
-//      // variable names
-//      Parser::value_type a;
-//      p.ClearConst();
-//      PARSER_THROWCHECK(Var, false, "9a", &a)
-//      PARSER_THROWCHECK(Var, false, "0a", &a)
-//      PARSER_THROWCHECK(Var, false, "+a", &a)
-//      PARSER_THROWCHECK(Var, false, "-a", &a)
-//      PARSER_THROWCHECK(Var, false, "?a", &a)
-//      PARSER_THROWCHECK(Var, false, "!a", &a)
-//      PARSER_THROWCHECK(Var, false, "a+", &a)
-//      PARSER_THROWCHECK(Var, false, "a-", &a)
-//      PARSER_THROWCHECK(Var, false, "a*", &a)
-//      PARSER_THROWCHECK(Var, false, "a?", &a)
-//      PARSER_THROWCHECK(Var, true, "a", &a)
-//      PARSER_THROWCHECK(Var, true, "a_min", &a)
-//      PARSER_THROWCHECK(Var, true, "a_min0", &a)
-//      PARSER_THROWCHECK(Var, true, "a_min9", &a)
-//      PARSER_THROWCHECK(Var, false, "a_min9", 0)
-//      // Postfix operators
-//      // fail
-//      PARSER_THROWCHECK(PostfixOprt, false, "(k", f1of1)
-//      PARSER_THROWCHECK(PostfixOprt, false, "9+", f1of1)
-//      PARSER_THROWCHECK(PostfixOprt, false, "+", 0)
-//      // pass
-//      PARSER_THROWCHECK(PostfixOprt, true, "-a",  f1of1)
-//      PARSER_THROWCHECK(PostfixOprt, true, "?a",  f1of1)
-//      PARSER_THROWCHECK(PostfixOprt, true, "_",   f1of1)
-//      PARSER_THROWCHECK(PostfixOprt, true, "#",   f1of1)
-//      PARSER_THROWCHECK(PostfixOprt, true, "&&",  f1of1)
-//      PARSER_THROWCHECK(PostfixOprt, true, "||",  f1of1)
-//      PARSER_THROWCHECK(PostfixOprt, true, "&",   f1of1)
-//      PARSER_THROWCHECK(PostfixOprt, true, "|",   f1of1)
-//      PARSER_THROWCHECK(PostfixOprt, true, "++",  f1of1)
-//      PARSER_THROWCHECK(PostfixOprt, true, "--",  f1of1)
-//      PARSER_THROWCHECK(PostfixOprt, true, "?>",  f1of1)
-//      PARSER_THROWCHECK(PostfixOprt, true, "?<",  f1of1)
-//      PARSER_THROWCHECK(PostfixOprt, true, "**",  f1of1)
-//      PARSER_THROWCHECK(PostfixOprt, true, "xor", f1of1)
-//      PARSER_THROWCHECK(PostfixOprt, true, "and", f1of1)
-//      PARSER_THROWCHECK(PostfixOprt, true, "or",  f1of1)
-//      PARSER_THROWCHECK(PostfixOprt, true, "not", f1of1)
-//      PARSER_THROWCHECK(PostfixOprt, true, "!",   f1of1)
-//      // Binary operator
-//      // The following must fail with builtin operators activated
-//      // p.EnableBuiltInOp(true); -> this is the default
-//      PARSER_THROWCHECK(Oprt, false, "+",  f1of2)
-//      PARSER_THROWCHECK(Oprt, false, "-",  f1of2)
-//      PARSER_THROWCHECK(Oprt, false, "*",  f1of2)
-//      PARSER_THROWCHECK(Oprt, false, "/",  f1of2)
-//      // without activated built in operators it should work
-//      p.EnableBuiltInOprt(false);
-//      PARSER_THROWCHECK(Oprt, true, "+",  f1of2)
-//      PARSER_THROWCHECK(Oprt, true, "-",  f1of2)
-//      PARSER_THROWCHECK(Oprt, true, "*",  f1of2)
-//      PARSER_THROWCHECK(Oprt, true, "/",  f1of2)
-//
-#undef PARSER_THROWCHECK
+    // Expressions spanning multiple lines
+    iNumErr += EqnTest(_T("a=1\n")
+                       _T("b=2\n") 
+                       _T("c=3\n") 
+                       _T("a+b+c") , 6, true);
 
-    if (iStat==0) 
-      *m_stream << "passed" << endl;
-    else 
-      *m_stream << "\n  failed with " << iStat << " errors" << endl;
+    iNumErr += EqnTest(_T("a=1,b=2\n") 
+                       _T("c=a+b\n") 
+                       _T("a+b+c") , 6, true);
 
-    return iStat;
+    // Ending an expression with a newline
+    iNumErr += EqnTest(_T("1+2\n"), 3, true);
+
+    // Testing comments
+/* 20130107 Not yet...
+    iNumErr += EqnTest(_T("a=10 % this is a comment\n")
+                       _T("b=23 % this is another comment\n")
+                       _T("a+b"), 33, true);
+*/
+    Assessment(iNumErr);
+    return iNumErr;
   }
+
 
   //---------------------------------------------------------------------------
   void ParserTester::AddTest(testfun_type a_pFun)
@@ -1597,12 +1512,12 @@ MUP_NAMESPACE_START
       }
 
       // Check the three results
-      // 1.) Types must be identic
-      bool bStat = fVal[0].GetType()==fVal[1].GetType() &&
-                   fVal[0].GetType()==fVal[2].GetType() &&
-                   fVal[0].GetType()==fVal[3].GetType() &&
-                   fVal[0].GetType()==fVal[4].GetType();
-      char_type cType = fVal[1].GetType();
+      // 1.) computed results must have identic type
+      char_type cType = fVal[0].GetType();
+      bool bStat = cType==fVal[1].GetType() &&
+                   cType==fVal[2].GetType() &&
+                   cType==fVal[3].GetType() &&
+                   cType==fVal[4].GetType();
       if (!bStat) 
       {
        *m_stream << _T("\n  ") << a_str << _T(" :  inconsistent result type (") 
@@ -1611,6 +1526,12 @@ MUP_NAMESPACE_START
                  << fVal[2].GetType() << _T(", ") 
                  << fVal[3].GetType() << _T(", ") 
                  << fVal[4].GetType() << _T(")");
+        return 1;
+      }
+
+      if ( (cType=='c' || a_val.GetType()=='c') && cType!=a_val.GetType())
+      {
+       *m_stream << _T("\n  ") << a_str << _T(" :  Complex value sliced!");
         return 1;
       }
 
