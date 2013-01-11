@@ -174,7 +174,7 @@ MUP_NAMESPACE_START
   class OprtLOr : public IOprtBin    
   {
   public:
-    OprtLOr(const char_type *szIdent = "||");
+    OprtLOr(const char_type *szIdent = _T("||"));
     virtual void Eval(ptr_val_type& ret, const ptr_val_type *a_pArg, int);
     virtual const char_type* GetDesc() const;
     virtual IToken* Clone() const;
@@ -187,7 +187,7 @@ MUP_NAMESPACE_START
   class OprtLAnd : public IOprtBin    
   {
   public:
-    OprtLAnd(const char_type *szIdent = "&&");
+    OprtLAnd(const char_type *szIdent = _T("&&"));
     virtual void Eval(ptr_val_type& ret, const ptr_val_type *a_pArg, int);
     virtual const char_type* GetDesc() const;
     virtual IToken* Clone() const;

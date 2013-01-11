@@ -487,36 +487,44 @@ MUP_NAMESPACE_START
       
       // a double that can be mapped to an integer without rounding error will become one
       iVal = (float_type)10.0; 
-      if (  iVar.GetType()!='i')  iNumErr++;  
+      if (  iVar.GetType()!='i')  
+        iNumErr++;  
 
       iVal = 10;
-      if (  iVar.GetType()!='i')  iNumErr++;  
+      if (  iVar.GetType()!='i')  
+        iNumErr++;  
 
       // a complex number that can be mapped to an integer without rounding error will become one
       iVal = cmplx_type(10, 0);
-	  int i = (int)iVal;
-      if (  iVar.GetType()!='i' || i!=10)  iNumErr++;  
+      int i = (int)iVal;
+      if (  iVar.GetType()!='i' || i!=10)  
+        iNumErr++;  
 
       iVal = (float_type)10.1;
-	  float_type f = (float_type)iVal;
-      if (  iVar.GetType()!='f' || f!=10.1)  iNumErr++;
+      float_type f = (float_type)iVal;
+      if ( iVar.GetType()!='f' || f!=10.1)  
+        iNumErr++;
 
       iVal = cmplx_type(10.0, 1.0);
-	  //cmplx_type c = (cmplx_type)iVal;  does not compile on GCC 4.6.3
-	  cmplx_type c = iVal.GetComplex();
+      //cmplx_type c = (cmplx_type)iVal;  does not compile on GCC 4.6.3
+      cmplx_type c = iVal.GetComplex();
 
-      if (  iVar.GetType()!='c' || c!=cmplx_type(10, 1))  iNumErr++;
+      if (  iVar.GetType()!='c' || c!=cmplx_type(10, 1))  
+        iNumErr++;
 
       iVal = _T("test");
-      if (  iVar.GetType()!='s')  iNumErr++;
+      if (  iVar.GetType()!='s')  
+        iNumErr++;
 
       iVal = string_type(_T("test"));
-	  string_type s = (string_type)iVal;
-	  if ( iVar.GetType()!='s' || s!="test")  iNumErr++;
+      string_type s = (string_type)iVal;
+      if ( iVar.GetType()!='s' || s!=_T("test"))  
+        iNumErr++;
 
       iVal = false;
-	  bool b = (bool)iVal;
-      if (  iVar.GetType()!='b' || b!=false)  iNumErr++;
+      bool b = (bool)iVal;
+      if (  iVar.GetType()!='b' || b!=false)  
+        iNumErr++;
     }
     catch(...)
     {

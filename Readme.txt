@@ -24,7 +24,7 @@
 #                                                                       #
 #########################################################################
 
-V2.1.7 (20121228)
+V2.1.7 (20130111)
 -----------------
 Changes:
   - added "zeros" function for creating matrices initialized with 0 added
@@ -33,6 +33,8 @@ Changes:
   
 Bugfixes:
   - Column number of matrices was not reported correctly
+  - Issue 17 fixed:
+  - Fixed issues related to compiling with UNICODE defined
 
 V2.1.6 (20121221; Mayan calendar doomsday edition)
 --------------------------------------------------
