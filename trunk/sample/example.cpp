@@ -490,9 +490,10 @@ public:
 
       *ret = 0;
   }
+
   virtual const char_type* GetDesc() const
   {
-    return _T("dump(bDumpRPN, bDumpStack) - Enable dumping of RPN and stack content.");
+    return _T("debug(bDumpRPN, bDumpStack) - Enable dumping of RPN and stack content.");
   }
   
   virtual IToken* Clone() const
