@@ -24,24 +24,25 @@
 #                                                                       #
 #########################################################################
 
-V2.1.7 (20130111)
+V2.1.7 (20130113)
 -----------------
 Changes:
-  - added "zeros" function for creating matrices initialized with 0 added
+  - added "zeros" function for creating matrices initialized to all zero added
   - added "eye" function for creating idendity matrices
   - added "size" function for determining matrix dimensions
   
 Bugfixes:
-  - Column number of matrices was not reported correctly
-  - Issue 17 fixed:
-  - Fixed issues related to compiling with UNICODE defined
+  - Issue 17: Wrong result on complex power
+  - untracked issue: compiling with UNICODE did not work
+  - untracked issue: Column number of matrices was not reported correctly
+  - untracked issue: expressions ending with newline could not be evaluated
 
 V2.1.6 (20121221; Mayan calendar doomsday edition)
 --------------------------------------------------
 
 Bugfixes:
   - Issue 16: Wrong operator precedence. Some binary operators had incorrect precedence values.
-  - "Unexpected variable" errors could report incorrect expression positions
+  - untracked issue: "Unexpected variable" errors could report incorrect expression positions
 
 V2.1.5 (20121102)
 -----------------
@@ -59,7 +60,7 @@ Changes / Additions:
 Bugfixes:
   - Issue 8: 	Crash on invalid expression in Release 
   - Issue 11:	Roots of negative numbers computed incorrectly
-  - fixed a problem caused by changes in the behaviour of tellg in GCC 4.6
+  - untracked issue: Fixed a problem caused by changes in the behaviour of tellg in GCC 4.6
 
 V2.1.3 (20120715)
 -----------------
