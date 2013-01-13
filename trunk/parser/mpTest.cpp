@@ -1251,7 +1251,10 @@ MUP_NAMESPACE_START
                        _T("a+b+c") , 6, true);
 
     // Ending an expression with a newline
+    iNumErr += EqnTest(_T("3\n"), 3, true);
     iNumErr += EqnTest(_T("1+2\n"), 3, true);
+    iNumErr += EqnTest(_T("\n1+2\n"), 3, true);
+    iNumErr += EqnTest(_T("\n1+2\n\na+b"), 3, true);
 
     // Testing comments
 /* 20130107 Not yet...

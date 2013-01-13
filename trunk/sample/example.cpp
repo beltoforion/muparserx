@@ -478,7 +478,17 @@ public:
   virtual void Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int /*a_iArgc*/)
   {
     ParserXBase::EnableDebugDump(a_pArg[0]->GetBool(), a_pArg[1]->GetBool());
-    *ret = 0;
+    if (a_pArg[0]->GetBool())
+      console() << _T("Bytecode output activated.\n");
+    else
+      console() << _T("Bytecode output deactivated.\n");
+
+    if (a_pArg[1]->GetBool())
+      console() << _T("Stack output activated.\n");
+    else
+      console() << _T("Stack output deactivated.\n");
+
+      *ret = 0;
   }
   virtual const char_type* GetDesc() const
   {
@@ -821,9 +831,9 @@ void Calc()
  
   parser.EnableAutoCreateVar(true);
 
-//#ifdef _DEBUG
+#ifdef _DEBUG
 //  ParserXBase::EnableDebugDump(1, 0);
-//#endif
+#endif
 
   for(;;)
   {
@@ -831,7 +841,7 @@ void Calc()
     {
       console() << sPrompt;
 
-	  string_type sLine;
+      string_type sLine;
       std::getline(mup::console_in(), sLine);
       if (sLine.length()==0)
         continue;

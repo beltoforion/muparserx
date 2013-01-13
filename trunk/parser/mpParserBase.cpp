@@ -987,7 +987,7 @@ MUP_NAMESPACE_START
     }
 
     m_nFinalResultIdx = stArgCount.top()-1;
-    MUP_ASSERT(stVal.size());
+//    MUP_ASSERT(stVal.size());
   }
 
   //---------------------------------------------------------------------------
