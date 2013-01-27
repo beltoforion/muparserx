@@ -178,20 +178,6 @@ MUP_NAMESPACE_START
 
   //---------------------------------------------------------------------------------------------
   Value operator*(const IValue& lhs, const IValue& rhs);
-
-/*
-  //---------------------------------------------------------------------------------------------
-  IValue operator+(const IValue& lhs, const IValue& rhs)
-  {
-    return Value(lhs) += rhs;
-  }
-
-  //---------------------------------------------------------------------------------------------
-  IValue operator-(const IValue& lhs, const IValue& rhs)
-  {
-    return Value(lhs) -= rhs;
-  }
-*/
 }  // namespace mu
 
 #endif

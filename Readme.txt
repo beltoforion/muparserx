@@ -24,17 +24,20 @@
 #                                                                       #
 #########################################################################
 
-V2.1.7 (20130113)
+V2.1.7 (20130128)
 -----------------
 Changes:
   - added "zeros" function for creating matrices initialized to all zero added
   - added "eye" function for creating idendity matrices
   - added "size" function for determining matrix dimensions
+  - floating point data type can now be selected with the "MUP_FLOAT_TYPE" macro
+    in mpDefines.h
   
 Bugfixes:
   - Issue 17: Wrong result on complex power
+  - Issue 20: Library crash when " " is calculated
   - untracked issue: compiling with UNICODE did not work
-  - untracked issue: Column number of matrices was not reported correctly
+  - untracked issue: Column number of matrices were not reported correctly
   - untracked issue: expressions ending with newline could not be evaluated
 
 V2.1.6 (20121221; Mayan calendar doomsday edition)
