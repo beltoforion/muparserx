@@ -632,6 +632,9 @@ MUP_NAMESPACE_START
 
     iNumErr += ThrowTest(_T("sin(1,2)"), ecTOO_MANY_PARAMS);
 
+    // Invalid expression
+    iNumErr += ThrowTest(_T(" "), ecEVAL);
+
     // Invalid function argument types
     iNumErr += ThrowTest(_T("sin(\"test\")"),        ecEVAL, 0);
     iNumErr += ThrowTest(_T("max(1, \"test\")"),     ecEVAL, 0);
@@ -885,13 +888,13 @@ MUP_NAMESPACE_START
     //iNumErr += ThrowTest(_T("9==va"),      ecEVAL);
 
     Value v(3, 0);
-    v.At(0) = 5.0, v.At(1) = 5.0, v.At(2) = 5.0;      
+    v.At(0) = (float_type)5.0, v.At(1) = (float_type)5.0, v.At(2) = (float_type)5.0;      
     iNumErr += EqnTest(_T("va+vb"), v, true);
 
-    v.At(0) = 5.0, v.At(1) = 5.0, v.At(2) = 6.0;      
+    v.At(0) = (float_type)5.0, v.At(1) = (float_type)5.0, v.At(2) = (float_type)6.0;      
     iNumErr += EqnTest(_T("va+vb"), v, false);
 
-    v.At(0) = -1.0, v.At(1) = -2.0, v.At(2) = -3.0;
+    v.At(0) = (float_type)-1.0, v.At(1) = (float_type)-2.0, v.At(2) = (float_type)-3.0;
     iNumErr += EqnTest(_T("-va"), v, true);
 
     iNumErr += EqnTest(_T("sizeof(va+vb)"), 3, true);
@@ -953,9 +956,7 @@ MUP_NAMESPACE_START
   {
     int  iNumErr = 0;
     *m_stream << _T("testing binary operators...");
-    float_type a = 1, 
-               b = 2,
-               buf = 0;
+    float_type a = 1;
 
     // standard aperators
     iNumErr += EqnTest(_T("1+7"),   (float_type)8.0, true);
@@ -1019,8 +1020,8 @@ MUP_NAMESPACE_START
     iNumErr += EqnTest(_T("sqrt(a)>=sin(8)"), true, true);
     iNumErr += EqnTest(_T("sqrt(a)==sin(8)"), false, true);
     iNumErr += EqnTest(_T("sqrt(a)!=sin(8)"), true, true);
-    iNumErr += EqnTest(_T("sqrt(a)+1.01"), 2.01, true);
-    iNumErr += EqnTest(_T("sqrt(a)-1.01"), -0.01, true);
+    iNumErr += EqnTest(_T("sqrt(a)+1.01"), (float_type)2.01, true);
+    iNumErr += EqnTest(_T("sqrt(a)-1.01"), (float_type)-0.01, true);
 
     // interaction with sign operator
     iNumErr += EqnTest( _T("3-(-a)"), 4, true);

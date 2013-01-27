@@ -72,7 +72,7 @@ MUP_NAMESPACE_START
       Value v(a_pArg[0]->GetRows(), 0);
       for (int i=0; i<a_pArg[0]->GetRows(); ++i)
       {
-        v.At(i) = a_pArg[0]->At(i).GetComplex() * -1.0;
+        v.At(i) = a_pArg[0]->At(i).GetComplex() * (float_type)-1.0;
       }
       *ret = v;
     }

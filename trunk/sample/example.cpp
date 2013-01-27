@@ -323,7 +323,7 @@ public:
     printf("%s", sMode.c_str());
     printf("\"Eqn no.\", \"number\", \"result\", \"time in ms\", \"eval per second\", \"expr\"\n");
 
-    double avg_eval_per_sec = 0;
+    float_type avg_eval_per_sec = 0;
     int ct=0;
     for (int i=0; sExpr[i]; ++i)
     {
@@ -340,7 +340,7 @@ public:
         val = parser.Eval();
       }
 
-      double diff = StopTimer();
+      float_type diff = StopTimer();
       
       float_type eval_per_sec = (float_type)iCount*1000.0/diff;
       avg_eval_per_sec += eval_per_sec;
@@ -621,9 +621,8 @@ public:
 }; // class FunDerive
 */
 
-
 //---------------------------------------------------------------------------
-void SelfTest()
+void Splash()
 {
   console() << _T("-------------------------------------------------------------------------\n\n");
   console() << _T("               __________                                 ____  ___\n");
@@ -639,22 +638,27 @@ void SelfTest()
   console() << _T("\n");
 
   console() << _T("-------------------------------------------------------------------------\n\n");
-  console() << _T( "Configuration:\n\n");
+  console() << _T( "Build configuration:\n\n");
 
 #if defined(_DEBUG)
-  console() << _T( "- DEBUG build\n");
+  console() << _T("- DEBUG build\n");
 #else
-  console() << _T( "- RELEASE build\n");
+  console() << _T("- RELEASE build\n");
 #endif
 
-  console() << _T( "- ") << sizeof(void*)*8 << _T(" bit\n");
-
+  console() << _T("- ") << sizeof(void*)*8 << _T(" bit\n");
+  console() << _T("- Floating point type is ") << typeid(float_type).name() << _T("\n");
 #if defined(_UNICODE)
-  console() << _T( "- UNICODE build\n");
+  console() << _T("- UNICODE build\n");
 #else  
-  console() << _T( "- ASCII build\n");
+  console() << _T("- ASCII build\n");
 #endif
+  console() << _T("\n");
+}
 
+//---------------------------------------------------------------------------
+void SelfTest()
+{
   console() << _T("-------------------------------------------------------------------------\n\n");
   console() << _T( "Running test suite:\n\n");
 
@@ -907,6 +911,7 @@ void Calc()
 //---------------------------------------------------------------------------
 int main(int /*argc*/, char** /*argv*/)
 {
+  Splash();
   SelfTest();
 
   try

@@ -90,7 +90,7 @@ MUP_NAMESPACE_START
   // parser type definitions
 
   /** \brief Parser datatype for floating point value. */
-  typedef /*long*/ double float_type;
+  typedef MUP_FLOAT_TYPE float_type;
 
   /** \brief Parser datatype for integer valuse. */
   typedef int int_type;

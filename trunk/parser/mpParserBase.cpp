@@ -1020,6 +1020,15 @@ MUP_NAMESPACE_START
   const IValue& ParserXBase::ParseFromRPN() const
   {
     ptr_val_type *pStack = &m_vStackBuffer[0];
+    if (m_rpn.GetSize()==0)
+    {
+      ErrorContext err;
+      err.Expr = m_pTokenReader->GetExpr();
+      err.Errc = ecEVAL;
+      err.Hint = _T("Expression is empty");
+      throw ParserError(err);
+    }
+
     const ptr_tok_type *pRPN = &(m_rpn.GetData()[0]);
 
     int sidx = -1;
@@ -1066,33 +1075,6 @@ MUP_NAMESPACE_START
               ptr_val_type &idx = pStack[sidx];     // Pointer to the first index
               ptr_val_type &val = pStack[--sidx];   // Pointer to the variable or value beeing indexed
               pIdxOprt->At(val, &idx, nArgs);
-
-
-
-
-/*
-
-              // apply the index operator
-              ptr_val_type &idx = pStack[sidx--];
-              ptr_val_type &val = pStack[sidx];
-              MUP_ASSERT(val->GetCode()==cmVAR);
-             
-              int i;
-              try
-              {
-                i = idx->GetInteger();
-                if (i<0)
-                  Error(ecINDEX_OUT_OF_BOUNDS, pTok->GetExprPos(), val.Get());
-              }
-              catch(ParserError &exc)
-              {
-                if (exc.GetCode()==ecTYPE_CONFLICT)
-                  Error(ecTYPE_CONFLICT_IDX, pTok->GetExprPos(), val.Get());
-                else 
-                  throw;
-              }
-              val.Reset(new Variable( &(val->At(i)) ) );
-*/
             }
             continue;
 
