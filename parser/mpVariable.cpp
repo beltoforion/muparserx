@@ -52,7 +52,7 @@ MUP_NAMESPACE_START
     Such variable objects must be bound later in order to be of any use.
   */
   Variable::Variable(IValue *pVal)
-    :IValue(cmVAR)
+    :IValue(cmVAL)
     ,m_pVal(pVal)
   {
     AddFlags(IToken::flVOLATILE);
@@ -60,7 +60,7 @@ MUP_NAMESPACE_START
 
   //-----------------------------------------------------------------------------------------------
   Variable::Variable(const Variable &obj)
-    :IValue(cmVAR)
+    :IValue(cmVAL)
   {
     Assign(obj);
     AddFlags(IToken::flVOLATILE);
@@ -280,8 +280,8 @@ MUP_NAMESPACE_START
     m_pVal = pValue;
   }
 
-  //-----------------------------------------------------------------------------------------------
-  bool Variable::IsVolatile() const
+  //---------------------------------------------------------------------------
+  bool Variable::IsVariable() const
   {
     return true;
   }

@@ -66,7 +66,6 @@ MUP_NAMESPACE_START
 
       virtual void Eval(ptr_val_type& ret, const ptr_val_type *arg, int argc) = 0;
       virtual const char_type* GetDesc() const = 0;
-      virtual bool IsVolatile() const;
       virtual string_type AsciiDump() const;
         
       int GetArgc() const;

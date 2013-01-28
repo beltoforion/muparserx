@@ -756,10 +756,9 @@ MUP_NAMESPACE_START
   }
 
   //---------------------------------------------------------------------------
-  bool Value::IsVolatile() const
+  bool Value::IsVariable() const
   {
-    return IsFlagSet(IValue::flVOLATILE);
-//    return true;
+    return false;
   }
 
   //---------------------------------------------------------------------------

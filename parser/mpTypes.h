@@ -162,31 +162,30 @@ MUP_NAMESPACE_START
     cmELSE              =  6,  ///< Ternary if then else operator 
     cmENDIF             =  7,  ///< Ternary if then else operator 
     cmJMP               =  8,  ///< Reserved for future use
-    cmVAR               =  9,  ///< variable item
-    cmVAL               = 10,  ///< value item
-    cmANY               = 11,  ///< Reserved for futur use: matrix row/column placeholder m[1,:] or m[:,1]
-    cmFUNC              = 12,  ///< Code for a function item
-    cmOPRT_BIN          = 13,  ///< Binary operator
-    cmOPRT_INFIX        = 14,  ///< Infix operator
-    cmOPRT_POSTFIX      = 15,  ///< Postfix operator
-    cmEOE               = 16,  ///< End of expression
+    cmVAL               =  9,  ///< value item
+    cmANY               = 10,  ///< Reserved for futur use: matrix row/column placeholder m[1,:] or m[:,1]
+    cmFUNC              = 11,  ///< Code for a function item
+    cmOPRT_BIN          = 12,  ///< Binary operator
+    cmOPRT_INFIX        = 13,  ///< Infix operator
+    cmOPRT_POSTFIX      = 14,  ///< Postfix operator
+    cmEOE               = 15,  ///< End of expression
 
     // The following codes are reserved in case i will ever turn this
     // into a scripting language
-    cmSCRIPT_GOTO       = 17,  ///< Reserved for future use
-    cmSCRIPT_LABEL      = 18,  ///< Reserved for future use
-    cmSCRIPT_FOR        = 19,  ///< Reserved for future use
-    cmSCRIPT_IF         = 20,  ///< Reserved for future use
-    cmSCRIPT_ELSE       = 21,  ///< Reserved for future use
-    cmSCRIPT_ELSEIF     = 22,  ///< Reserved for future use
-    cmSCRIPT_ENDIF      = 23,  ///< Reserved for future use
-    cmSCRIPT_NEWLINE    = 24,  ///< Newline
-    cmSCRIPT_COMMENT    = 25,  ///< reserved for future use
-    cmSCRIPT_FUNCTION   = 26,  ///< Reserved for future use
+    cmSCRIPT_GOTO       = 16,  ///< Reserved for future use
+    cmSCRIPT_LABEL      = 17,  ///< Reserved for future use
+    cmSCRIPT_FOR        = 18,  ///< Reserved for future use
+    cmSCRIPT_IF         = 19,  ///< Reserved for future use
+    cmSCRIPT_ELSE       = 20,  ///< Reserved for future use
+    cmSCRIPT_ELSEIF     = 21,  ///< Reserved for future use
+    cmSCRIPT_ENDIF      = 22,  ///< Reserved for future use
+    cmSCRIPT_NEWLINE    = 23,  ///< Newline
+    cmSCRIPT_COMMENT    = 24,  ///< reserved for future use
+    cmSCRIPT_FUNCTION   = 25,  ///< Reserved for future use
 
     // misc codes
-    cmUNKNOWN           = 27,  ///< uninitialized item
-    cmCOUNT             = 28   ///< Dummy entry for counting the enum values
+    cmUNKNOWN           = 26,  ///< uninitialized item
+    cmCOUNT             = 27   ///< Dummy entry for counting the enum values
   }; // ECmdCode
 
 

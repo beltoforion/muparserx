@@ -356,7 +356,7 @@ public:
       #endif
     }
 
-    avg_eval_per_sec /= (float_type)ct;
+    avg_eval_per_sec /= (double)ct;
 
     fprintf(pFile, "# Eval per s: %ld", (long)avg_eval_per_sec);
 
@@ -648,16 +648,23 @@ void Splash()
   console() << _T("- RELEASE build\n");
 #endif
 
-  console() << _T("- ") << sizeof(void*)*8 << _T(" bit\n");
-  console() << _T("- Floating point type is \"") << typeid(float_type).name()
-                                               << _T("\" (") << std::numeric_limits<float_type>::digits10 << _T(" Digits)")
-                                               << _T("\n");
-  
 #if defined(_UNICODE)
   console() << _T("- UNICODE build\n");
 #else  
   console() << _T("- ASCII build\n");
 #endif
+
+#if defined (__GNUC__)
+  console() << _T("- compiled with GCC Version ") << __GNUC__ << "." << __GNUC_MINOR__ << "." << __GNUC_PATCHLEVEL__ << _T("\n");
+#elif defined(_MSC_VER)
+  console() << _T("- compiled with MSC Version ") << _MSC_VER << _T("\n");
+#endif
+
+  console() << _T("- ") << sizeof(void*)*8 << _T(" bit\n");
+  console() << _T("- Floating point type is \"") << typeid(float_type).name()
+                                               << _T("\" (") << std::numeric_limits<float_type>::digits10 << _T(" Digits)")
+                                               << _T("\n");
+  
   console() << _T("\n");
 }
 

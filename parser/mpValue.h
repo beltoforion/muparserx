@@ -105,7 +105,8 @@ MUP_NAMESPACE_START
     virtual int GetRows() const;
     virtual int GetCols() const;
 
-    virtual bool IsVolatile() const;
+    virtual bool IsVariable() const;
+
     virtual IToken* Clone() const;
     virtual Value* AsValue();
 

@@ -89,11 +89,10 @@ MUP_NAMESPACE_START
     virtual int GetRows() const;
     virtual int GetCols() const;
 
-    virtual bool IsVolatile() const;
+    virtual bool IsVariable() const;
     virtual IToken* Clone() const;
     virtual Value* AsValue();
 
-    //void Set(Value &val);
     void SetFloat(float_type a_fVal);
     void SetString(const string_type &a_sVal);
     void SetBool(bool a_bVal);
