@@ -71,7 +71,7 @@
 #define MUP_NAMESPACE_END }
 
 /** \brief Floating point type used by the parser. */
-#define MUP_FLOAT_TYPE double
+#define MUP_FLOAT_TYPE long double
 
 /** \brief Verifies whether a given condition is met.
 	
