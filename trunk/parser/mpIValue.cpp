@@ -93,14 +93,14 @@ MUP_NAMESPACE_START
   IValue::IValue(ECmdCode a_iCode)
     :IToken(a_iCode)
   {
-    assert(a_iCode==cmVAL || a_iCode==cmVAR);
+    assert(a_iCode==cmVAL);
   }
 
   //---------------------------------------------------------------------------
   IValue::IValue(ECmdCode a_iCode, const string_type &a_sIdent)
     :IToken(a_iCode, a_sIdent)
   {
-    assert(a_iCode==cmVAL || a_iCode==cmVAR);
+    assert(a_iCode==cmVAL);
   }
 
   //---------------------------------------------------------------------------

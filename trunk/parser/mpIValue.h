@@ -96,7 +96,6 @@ MUP_NAMESPACE_START
     virtual int GetRows() const = 0;
     virtual int GetCols() const = 0;
 
-    virtual bool IsVolatile() const = 0;
     virtual string_type ToString() const;
   
     //---------------------------------------------------------------------------
@@ -113,6 +112,9 @@ MUP_NAMESPACE_START
     {
       return (IsMatrix()) ? GetArray().GetDim() : 0;
     }
+
+    //---------------------------------------------------------------------------
+    virtual bool  IsVariable() const = 0;
 
     //---------------------------------------------------------------------------
     /** \brief Returns true if the type is either floating point or interger. 

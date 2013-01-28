@@ -708,7 +708,6 @@ MUP_NAMESPACE_START
       ECmdCode eCmd = pTok->GetCode();
       switch (eCmd)
       {
-      case  cmVAR:
       case  cmVAL:
             {
               IValue *pVal = pTok->AsIValue();
@@ -1045,23 +1044,24 @@ MUP_NAMESPACE_START
            m_nFinalResultIdx = 0;
            continue;
 
-      case cmVAR:
-           {
-             sidx++;
-             assert(sidx<(int)m_vStackBuffer.size());
-             pStack[sidx].Reset(static_cast<IValue*>(pTok));
-           }
-           continue;
-
       case cmVAL:
            {
+             IValue *pVal = static_cast<IValue*>(pTok);
+
              sidx++;
              assert(sidx<(int)m_vStackBuffer.size());
-             ptr_val_type &val = pStack[sidx];
-             if (val->GetCode()==cmVAR)
-               val.Reset(m_cache.CreateFromCache());
+             if (pVal->IsVariable())
+             {
+              pStack[sidx].Reset(pVal);
+             }
+             else
+             {
+               ptr_val_type &val = pStack[sidx];
+               if (val->IsVariable())
+                 val.Reset(m_cache.CreateFromCache());
 
-             *val = *(static_cast<IValue*>(pTok));
+               *val = *(static_cast<IValue*>(pTok));
+             }
            }
            continue;
 
@@ -1091,7 +1091,7 @@ MUP_NAMESPACE_START
              ptr_val_type &val = pStack[sidx];
              try
              {
-               if (val->GetCode()==cmVAR)
+               if (val->IsVariable())
                {
                  ptr_val_type buf(m_cache.CreateFromCache());
                  pFun->Eval(buf, &val, nArgs);
