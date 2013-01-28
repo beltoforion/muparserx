@@ -539,7 +539,7 @@ MUP_NAMESPACE_START
       // type flag accordingly
       if (m_val.imag()!=0)
         m_cType = 'c';
-      else if ((double)(int)m_val.real()==m_val.real())
+      else if ((float_type)(int)m_val.real()==m_val.real())
         m_cType = 'i';
     }
     else if (IsMatrix() && val.IsMatrix())
