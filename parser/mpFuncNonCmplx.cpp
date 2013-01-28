@@ -78,30 +78,30 @@ MUP_NAMESPACE_START
     }
 
     // trigonometric functions
-    MUP_UNARY_FUNC(FunTan,   "sin",   sin,   "sine function")
-    MUP_UNARY_FUNC(FunCos,   "cos",   cos,   "cosine function")
-    MUP_UNARY_FUNC(FunSin,   "tan",   tan,   "tangens function")
+    MUP_UNARY_FUNC(FunTan,   "sin",   std::sin,   "sine function")
+    MUP_UNARY_FUNC(FunCos,   "cos",   std::cos,   "cosine function")
+    MUP_UNARY_FUNC(FunSin,   "tan",   std::tan,   "tangens function")
     // arcus functions
-    MUP_UNARY_FUNC(FunASin,  "asin",  asin,  "arcus sine")
-    MUP_UNARY_FUNC(FunACos,  "acos",  acos,  "arcus cosine")
-    MUP_UNARY_FUNC(FunATan,  "atan",  atan,  "arcus tangens")
+    MUP_UNARY_FUNC(FunASin,  "asin",  std::asin,  "arcus sine")
+    MUP_UNARY_FUNC(FunACos,  "acos",  std::acos,  "arcus cosine")
+    MUP_UNARY_FUNC(FunATan,  "atan",  std::atan,  "arcus tangens")
     // hyperbolic functions
-    MUP_UNARY_FUNC(FunSinH,  "sinh",  sinh,  "hyperbolic sine")
-    MUP_UNARY_FUNC(FunCosH,  "cosh",  cosh,  "hyperbolic cosine")
-    MUP_UNARY_FUNC(FunTanH,  "tanh",  tanh,  "hyperbolic tangens")
+    MUP_UNARY_FUNC(FunSinH,  "sinh",  std::sinh,  "hyperbolic sine")
+    MUP_UNARY_FUNC(FunCosH,  "cosh",  std::cosh,  "hyperbolic cosine")
+    MUP_UNARY_FUNC(FunTanH,  "tanh",  std::tanh,  "hyperbolic tangens")
     // hyperbolic arcus functions
     MUP_UNARY_FUNC(FunASinH,  "asinh",  asinh,  "hyperbolic arcus sine")
     MUP_UNARY_FUNC(FunACosH,  "acosh",  acosh,  "hyperbolic arcus cosine")
     MUP_UNARY_FUNC(FunATanH,  "atanh",  atanh,  "hyperbolic arcus tangens")
     // logarithm functions
-    MUP_UNARY_FUNC(FunLog,   "log",   log10, "Logarithm base 10")
-    MUP_UNARY_FUNC(FunLog10, "log10", log10, "Logarithm base 10")
+    MUP_UNARY_FUNC(FunLog,   "log",   std::log10, "Logarithm base 10")
+    MUP_UNARY_FUNC(FunLog10, "log10", std::log10, "Logarithm base 10")
     MUP_UNARY_FUNC(FunLog2,  "log2",  log2,  "Logarithm base 2")
-    MUP_UNARY_FUNC(FunLn,    "ln",    log,   "Natural logarithm")
+    MUP_UNARY_FUNC(FunLn,    "ln",    std::log,   "Natural logarithm")
     // square root
-    MUP_UNARY_FUNC(FunSqrt,  "sqrt",  sqrt,  "sqrt(x) - square root of x")
-    MUP_UNARY_FUNC(FunExp,   "exp",   exp,   "exp(x) - e to the power of x")
-    MUP_UNARY_FUNC(FunAbs,   "abs",   fabs,  "abs(x) - absolute value of x")
+    MUP_UNARY_FUNC(FunSqrt,  "sqrt",  std::sqrt,  "sqrt(x) - square root of x")
+    MUP_UNARY_FUNC(FunExp,   "exp",   std::exp,   "exp(x) - e to the power of x")
+    MUP_UNARY_FUNC(FunAbs,   "abs",   std::fabs,  "abs(x) - absolute value of x")
 #undef MUP_UNARY_FUNC
 
 MUP_NAMESPACE_END

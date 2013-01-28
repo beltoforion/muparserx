@@ -347,16 +347,16 @@ MUP_NAMESPACE_START
     {
       switch (ib)
       {
-      case 1: *ret = a; return;
-      case 2: *ret = a*a; return;
-      case 3: *ret = a*a*a; return;
-      case 4: *ret = a*a*a*a; return;
-      case 5: *ret = a*a*a*a*a; return;
-      default: *ret = pow(a, ib); return;
+      case 1:  *ret = a; return;
+      case 2:  *ret = a*a; return;
+      case 3:  *ret = a*a*a; return;
+      case 4:  *ret = a*a*a*a; return;
+      case 5:  *ret = a*a*a*a*a; return;
+      default: *ret = std::pow(a, ib); return;
       }
     }
     else
-      *ret = pow(a, b);
+      *ret = std::pow(a, b);
   }
 
   //-----------------------------------------------------------
