@@ -633,6 +633,7 @@ MUP_NAMESPACE_START
     iNumErr += ThrowTest(_T("sin(1,2)"), ecTOO_MANY_PARAMS);
 
     // Invalid expression
+    // Issue 20: http://code.google.com/p/muparserx/issues/detail?id=20
     iNumErr += ThrowTest(_T(" "), ecEVAL);
 
     // Invalid function argument types

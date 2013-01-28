@@ -112,12 +112,12 @@ MUP_NAMESPACE_START
     virtual string_type AsciiDump() const;
     void BindToCache(ValueCache *pCache);
 	
-	// Conversion operators
-	operator cmplx_type();
-	operator int ();
-	operator string_type();
-	operator float_type();
-	operator bool();
+    // Conversion operators
+    operator cmplx_type();
+    operator int ();
+    operator string_type();
+    operator float_type();
+    operator bool();
 
   private:
 

@@ -647,7 +647,10 @@ void Splash()
 #endif
 
   console() << _T("- ") << sizeof(void*)*8 << _T(" bit\n");
-  console() << _T("- Floating point type is ") << typeid(float_type).name() << _T("\n");
+  console() << _T("- Floating point type is ") << typeid(float_type).name() 
+                                               << _T(" (") << std::numeric_limits<float_type>::digits10 << _T(" Digits)")
+                                               << _T("\n");
+  
 #if defined(_UNICODE)
   console() << _T("- UNICODE build\n");
 #else  
@@ -879,10 +882,10 @@ void Calc()
       // Or if you need the specific type use this:
       switch (ans.GetType())
       {
-      case 's': { std::string s = ans.GetString();           console() << s << " (string)"  << "\n"; } break;
-      case 'i': { int i = ans.GetInteger();                  console() << i << " (int)"     << "\n"; } break;
-      case 'f': { double f = ans.GetFloat();                 console() << f << " (float)"   << "\n"; } break;
-      case 'c': { std::complex<double> c = ans.GetComplex(); console() << c << " (complex)" << "\n"; } break;
+      case 's': { std::string s = ans.GetString();               console() << s << " (string)"  << "\n"; } break;
+      case 'i': { int i = ans.GetInteger();                      console() << i << " (int)"     << "\n"; } break;
+      case 'f': { float_type f = ans.GetFloat();                 console() << f << " (float)"   << "\n"; } break;
+      case 'c': { std::complex<float_type> c = ans.GetComplex(); console() << c << " (complex)" << "\n"; } break;
       case 'b': break;
       }
 */

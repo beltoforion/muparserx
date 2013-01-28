@@ -40,6 +40,8 @@
 
 //--- Standard includes ------------------------------------------------------
 #include <cassert>
+#include <iostream>
+#include <iomanip>
 
 //--- muParserX framework -----------------------------------------------------
 #include "mpValue.h"
@@ -176,7 +178,7 @@ MUP_NAMESPACE_START
               break;
             
     case 'i':  
-    case 'f':  ss << GetFloat(); break;
+    case 'f':  ss << std::setprecision(std::numeric_limits<float_type>::digits10) << GetFloat(); break;
     case 's':  ss << _T("\"") << GetString() << _T("\""); break;
     case 'b':  ss << ((GetBool()==true) ? _T("true"):_T("false")); break;
     case 'v':  ss << _T("void"); break;
