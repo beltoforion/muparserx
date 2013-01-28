@@ -42,6 +42,7 @@
 #include <cassert>
 #include <iostream>
 #include <iomanip>
+#include <limits>
 
 //--- muParserX framework -----------------------------------------------------
 #include "mpValue.h"

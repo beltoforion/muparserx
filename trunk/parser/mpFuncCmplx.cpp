@@ -218,12 +218,12 @@ MUP_NAMESPACE_START
   {
     if (a_pArg[0]->IsNonComplexScalar())
     {
-      *ret = cos(a_pArg[0]->GetFloat());
+      *ret = std::cos(a_pArg[0]->GetFloat());
     }
     else
     {
       cmplx_type v(a_pArg[0]->GetFloat(), a_pArg[0]->GetImag());
-      *ret = cos(v);
+      *ret = std::cos(v);
     }
   }
 
@@ -254,12 +254,12 @@ MUP_NAMESPACE_START
   {
     if (a_pArg[0]->IsNonComplexScalar())
     {
-      *ret = sin(a_pArg[0]->GetFloat());
+      *ret = std::sin(a_pArg[0]->GetFloat());
     }
     else
     {
       cmplx_type v(a_pArg[0]->GetFloat(), a_pArg[0]->GetImag());
-      *ret = sin(v);
+      *ret = std::sin(v);
     }
   }
 
@@ -348,12 +348,12 @@ MUP_NAMESPACE_START
   {
     if (a_pArg[0]->IsNonComplexScalar())
     {
-      *ret = tan(a_pArg[0]->GetFloat());
+      *ret = std::tan(a_pArg[0]->GetFloat());
     }
     else
     {
       cmplx_type v(a_pArg[0]->GetFloat(), a_pArg[0]->GetImag());
-      *ret = tan(v);
+      *ret = std::tan(v);
     }
   }
 
@@ -557,7 +557,7 @@ MUP_NAMESPACE_START
   void FunCmplxLog2::Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int)
   {
     std::complex<float_type> v(a_pArg[0]->GetFloat(), a_pArg[0]->GetImag());
-    *ret = log(v) * (float_type)1.0/log((float_type)2.0);
+    *ret = std::log(v) * (float_type)1.0/std::log((float_type)2.0);
   }
 
   //-----------------------------------------------------------------------

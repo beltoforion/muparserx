@@ -63,6 +63,8 @@
 #include <cmath>
 #include <string>
 #include <iostream>
+#include <limits>
+#include <typeinfo>
 
 //--- muparserx framework ---------------------------------------------------
 #include "mpParser.h"
@@ -323,7 +325,7 @@ public:
     printf("%s", sMode.c_str());
     printf("\"Eqn no.\", \"number\", \"result\", \"time in ms\", \"eval per second\", \"expr\"\n");
 
-    float_type avg_eval_per_sec = 0;
+    double avg_eval_per_sec = 0;
     int ct=0;
     for (int i=0; sExpr[i]; ++i)
     {
@@ -340,17 +342,17 @@ public:
         val = parser.Eval();
       }
 
-      float_type diff = StopTimer();
+      double diff = StopTimer();
       
-      float_type eval_per_sec = (float_type)iCount*1000.0/diff;
+      double eval_per_sec = (double)iCount*1000.0/diff;
       avg_eval_per_sec += eval_per_sec;
 
       #if !defined _UNICODE
-      fprintf(pFile, "Eqn_%d, %d, %lf, %lf, %lf, %s\n", i, iCount, val.GetFloat(), diff, eval_per_sec, sExpr[i]);
-      printf("Eqn_%d, %d, %lf, %lf, %lf, %s\n"        , i, iCount, val.GetFloat(), diff, eval_per_sec, sExpr[i]);
+      fprintf(pFile, "Eqn_%d, %d, %lf, %lf, %lf, %s\n", i, iCount, (double)val.GetFloat(), diff, eval_per_sec, sExpr[i]);
+      printf("Eqn_%d, %d, %lf, %lf, %lf, %s\n"        , i, iCount, (double)val.GetFloat(), diff, eval_per_sec, sExpr[i]);
       #else
-      fwprintf(pFile, _T("Eqn_%d, %d, %lf, %lf, %lf, %s\n"), i, iCount, val.GetFloat(), diff, eval_per_sec, sExpr[i]);
-      wprintf(_T("Eqn_%d, %d, %lf, %lf, %lf, %s\n")        , i, iCount, val.GetFloat(), diff, eval_per_sec, sExpr[i]);
+      fwprintf(pFile, _T("Eqn_%d, %d, %lf, %lf, %lf, %s\n"), i, iCount, (double)val.GetFloat(), diff, eval_per_sec, sExpr[i]);
+      wprintf(_T("Eqn_%d, %d, %lf, %lf, %lf, %s\n")        , i, iCount, (double)val.GetFloat(), diff, eval_per_sec, sExpr[i]);
       #endif
     }
 
@@ -647,8 +649,8 @@ void Splash()
 #endif
 
   console() << _T("- ") << sizeof(void*)*8 << _T(" bit\n");
-  console() << _T("- Floating point type is ") << typeid(float_type).name() 
-                                               << _T(" (") << std::numeric_limits<float_type>::digits10 << _T(" Digits)")
+  console() << _T("- Floating point type is \"") << typeid(float_type).name()
+                                               << _T("\" (") << std::numeric_limits<float_type>::digits10 << _T(" Digits)")
                                                << _T("\n");
   
 #if defined(_UNICODE)

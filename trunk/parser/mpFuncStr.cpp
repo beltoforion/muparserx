@@ -123,7 +123,8 @@ MUP_NAMESPACE_START
   {
     assert(a_iArgc==1);
     string_type in;
-    float_type out;
+    double out;   // <- Ich will hier wirklich double, auch wenn der Type long double
+                  // ist. sscanf und long double geht nicht mit GCC!
 
     in = a_pArg[0]->GetString();
     
@@ -133,7 +134,7 @@ MUP_NAMESPACE_START
     swscanf(in.c_str(), _T("%lf"), &out);
 #endif
 
-    *ret = out;
+    *ret = (float_type)out;
   }
 
   //------------------------------------------------------------------------------
