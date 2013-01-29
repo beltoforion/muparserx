@@ -95,8 +95,8 @@ MUP_NAMESPACE_START
     m_vErrMsg[ecMISSING_PARENS]          = _T("Missing parenthesis");
     m_vErrMsg[ecMISSING_ELSE_CLAUSE]     = _T("If-then-else operator is missing an else clause");
     m_vErrMsg[ecMISPLACED_COLON]         = _T("Misplaced colon at position $POS$");
-    m_vErrMsg[ecTOO_MANY_PARAMS]         = _T("Too many parameters for function \"$IDENT$\"");
-    m_vErrMsg[ecTOO_FEW_PARAMS]          = _T("Too few parameters for function \"$IDENT$\"");
+    m_vErrMsg[ecTOO_MANY_PARAMS]         = _T("Too many parameters to function \"$IDENT$\"");
+    m_vErrMsg[ecTOO_FEW_PARAMS]          = _T("Too few parameters to function \"$IDENT$\"");
     m_vErrMsg[ecDIV_BY_ZERO]             = _T("Divide by zero");
     m_vErrMsg[ecDOMAIN_ERROR]            = _T("Domain error");
     m_vErrMsg[ecNAME_CONFLICT]           = _T("Name conflict");

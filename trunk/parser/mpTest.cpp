@@ -98,7 +98,6 @@ MUP_NAMESPACE_START
 
     virtual void Eval(ptr_val_type &ret, const ptr_val_type * /*a_pArg*/, int /*a_iArgc*/)
     {
-      // ParserXBase &parser = *GetParent();
       *ret = 0;
     }
 
@@ -833,6 +832,11 @@ MUP_NAMESPACE_START
   {
     int iNumErr = 0;
     *m_stream << _T("testing multiarg functions...");
+
+    // Multiarg functions being called without any parameters
+    iNumErr += ThrowTest(_T("min()"), ecEVAL);
+    iNumErr += ThrowTest(_T("max()"), ecEVAL);
+    iNumErr += ThrowTest(_T("sum()"), ecEVAL);
 
     // application
     iNumErr += EqnTest(_T("max(1,8,9,(int)6)"), (float_type)9.0, true);
