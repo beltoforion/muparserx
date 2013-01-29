@@ -591,11 +591,6 @@ MUP_NAMESPACE_START
     MUP_VERIFY((std::size_t)iOffset<a_stVal.size());
     ptr_val_type *pArg = a_stVal.get_data() + iOffset;
     
-    //if (pFun->GetArgc()==0)
-    //  a_stVal.push(ptr_val_type(new Value()));
-
-    //ptr_val_type *pArg = a_stVal.get_data() + iOffset;
-
     try
     {
       // Make sure to pass on a volatile flag to the function result
@@ -1105,7 +1100,7 @@ MUP_NAMESPACE_START
                ErrorContext err;
                err.Expr = m_pTokenReader->GetExpr();
                err.Ident = pFun->GetIdent();
-               err.Errc = ecEVAL;
+               err.Errc = /*exc.GetCode(); //*/  ecEVAL;
                err.Pos = pFun->GetExprPos();
                err.Hint = exc.GetMsg();
                throw ParserError(err);

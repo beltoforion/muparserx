@@ -86,6 +86,9 @@ MUP_NAMESPACE_START
   //------------------------------------------------------------------------------
   void FunMax::Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int a_iArgc)
   {
+    if (a_iArgc < 1)
+        throw ParserError(ErrorContext(ecTOO_FEW_PARAMS, GetExprPos(), GetIdent()));
+
     float_type max(-1e30), val(0);
     for (int i=0; i<a_iArgc; ++i)
     {
@@ -139,6 +142,9 @@ MUP_NAMESPACE_START
   */
   void FunMin::Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int a_iArgc)
   {
+    if (a_iArgc < 1)
+        throw ParserError(ErrorContext(ecTOO_FEW_PARAMS, GetExprPos(), GetIdent()));
+
     float_type min(1e30), val(min);
 
     for (int i=0; i<a_iArgc; ++i)
@@ -192,6 +198,9 @@ MUP_NAMESPACE_START
   */
   void FunSum::Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int a_iArgc)
   {
+    if (a_iArgc < 1)
+        throw ParserError(ErrorContext(ecTOO_FEW_PARAMS, GetExprPos(), GetIdent()));
+
     float_type sum(0);
 
     for (int i=0; i<a_iArgc; ++i)
