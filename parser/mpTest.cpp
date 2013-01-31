@@ -834,9 +834,9 @@ MUP_NAMESPACE_START
     *m_stream << _T("testing multiarg functions...");
 
     // Multiarg functions being called without any parameters
-    iNumErr += ThrowTest(_T("min()"), ecEVAL);
-    iNumErr += ThrowTest(_T("max()"), ecEVAL);
-    iNumErr += ThrowTest(_T("sum()"), ecEVAL);
+    iNumErr += ThrowTest(_T("min()"), ecTOO_FEW_PARAMS);
+    iNumErr += ThrowTest(_T("max()"), ecTOO_FEW_PARAMS);
+    iNumErr += ThrowTest(_T("sum()"), ecTOO_FEW_PARAMS);
 
     // application
     iNumErr += EqnTest(_T("max(1,8,9,(int)6)"), (float_type)9.0, true);

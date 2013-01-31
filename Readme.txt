@@ -36,7 +36,7 @@ Changes:
 Bugfixes:
   - Issue 17: Wrong result on complex power
   - Issue 20: Library crash when " " is calculated
-  - Issue 23: min, max and sum function return values when called without parameters
+  - Issue 23: min, max and sum functions return values when called without parameters
   - untracked issue: compiling with UNICODE did not work
   - untracked issue: Column number of matrices were not reported correctly
   - untracked issue: expressions ending with newline could not be evaluated

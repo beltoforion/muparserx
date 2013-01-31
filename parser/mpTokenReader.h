@@ -122,7 +122,6 @@ MUP_NAMESPACE_START
     
     void AddValueReader(IValueReader *a_pReader);
     void AddSynFlags(int flag);
-    //void SetVarCreator(facfun_type a_pFactory);
     int GetPos() const;
     const string_type& GetExpr() const;
     const var_maptype& GetUsedVar() const;
