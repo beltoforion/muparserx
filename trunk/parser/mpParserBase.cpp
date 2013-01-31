@@ -1097,10 +1097,19 @@ MUP_NAMESPACE_START
              }
              catch(ParserError &exc)
              {
+               // <ibg 20130131> Not too happy about that:
+               // Multiarg functions may throw ecTOO_FEW_PARAMS from eval. I don't 
+               // want this to be converted to ecEVAL because fixed argument functions
+               // already throw ecTOO_FEW_PARAMS in case of missing parameters and two 
+               // different error codes would be inconsistent. 
+               if (exc.GetCode()==ecTOO_FEW_PARAMS)
+                 throw;
+               // </ibg>
+
                ErrorContext err;
                err.Expr = m_pTokenReader->GetExpr();
                err.Ident = pFun->GetIdent();
-               err.Errc = /*exc.GetCode(); //*/  ecEVAL;
+               err.Errc = ecEVAL;
                err.Pos = pFun->GetExprPos();
                err.Hint = exc.GetMsg();
                throw ParserError(err);
