@@ -784,6 +784,9 @@ MUP_NAMESPACE_START
     // some incorrect results
     iNumErr += EqnTest(_T("1000{m}"), (float_type)0.1, false);
     iNumErr += EqnTest(_T("(a){m}"), (float_type)2.0, false);
+    iNumErr += EqnTest(_T("5!"), 120, true);
+    iNumErr += ThrowTest(_T("-5!"), ecVALUE_BAD);
+    iNumErr += ThrowTest(_T("123456!"), ecOVERFLOW);
 
     Assessment(iNumErr);
     return iNumErr;
