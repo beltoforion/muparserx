@@ -26,7 +26,7 @@ MUP_NAMESPACE_START
       float_type input_long = static_cast<float_type>(input);
 
       if (input < 0) {
-	  throw ParserError(ErrorContext(ecVALUE_BAD, GetExprPos(),
+	  throw ParserError(ErrorContext(ecDOMAIN_ERROR, GetExprPos(),
 					 GetIdent(), arg_1->GetType(), 'i', 1));
       }
 
