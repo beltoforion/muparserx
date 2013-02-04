@@ -162,8 +162,8 @@ MUP_NAMESPACE_START
       string_type Ident; ///> The identifier of the token that caused the error.
       string_type Hint;  ///> Additional message
       EErrorCodes Errc;  ///> The error code
-      char_type Type1;   ///> For type conflicts only! This is the type that was expected.
-      char_type Type2;   ///> For type conflicts only! This is the type that was actually found.
+      char_type Type1;   ///> For type conflicts only! This is the type that was actually found.
+      char_type Type2;   ///> For type conflicts only! This is the type that was expected.
       int Arg;           ///> The number of arguments that were expected.
       int Pos;           ///> Position inside the expression where the error occured.
     };
