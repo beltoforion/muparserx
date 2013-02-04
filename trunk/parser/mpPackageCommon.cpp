@@ -39,6 +39,7 @@
 #include "mpFuncCommon.h"
 #include "mpOprtBinCommon.h"
 #include "mpOprtBinAssign.h"
+#include "mpOprtPostfixCommon.h"
 #include "mpValReader.h"
 
 /** \brief Pi (what else?). */
@@ -120,6 +121,9 @@ void PackageCommon::AddToParser(ParserXBase *pParser)
   // infix operators
   pParser->DefineInfixOprt(new OprtCastToFloat);
   pParser->DefineInfixOprt(new OprtCastToInt);
+
+  // postfix operators
+  pParser->DefinePostfixOprt(new OprtFact);
 }
 
 //------------------------------------------------------------------------------

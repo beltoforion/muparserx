@@ -107,6 +107,7 @@
     <ClCompile Include="..\..\parser\mpFuncStr.cpp" />
     <ClCompile Include="..\..\parser\mpOprtBinAssign.cpp" />
     <ClCompile Include="..\..\parser\mpOprtBinCommon.cpp" />
+		<ClCompile Include="..\..\parser\mpOprtPostfixCommon.cpp" />
     <ClCompile Include="..\..\parser\mpOprtCmplx.cpp" />
     <ClCompile Include="..\..\parser\mpOprtIndex.cpp" />
     <ClCompile Include="..\..\parser\mpOprtMatrix.cpp" />
@@ -144,6 +145,7 @@
     <ClInclude Include="..\..\parser\mpFuncStr.h" />
     <ClInclude Include="..\..\parser\mpOprtBinAssign.h" />
     <ClInclude Include="..\..\parser\mpOprtBinCommon.h" />
+		<ClInclude Include="..\..\parser\mpOprtPostfixCommon.h" />
     <ClInclude Include="..\..\parser\mpOprtCmplx.h" />
     <ClInclude Include="..\..\parser\mpOprtIndex.h" />
     <ClInclude Include="..\..\parser\mpOprtMatrix.h" />
