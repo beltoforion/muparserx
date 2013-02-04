@@ -38,6 +38,7 @@ SOURCES += \
     ../../parser/mpOprtMatrix.cpp \
     ../../parser/mpOprtIndex.cpp \
     ../../parser/mpOprtCmplx.cpp \
+    ../../parser/mpOprtPostfixCommon.cpp \
     ../../parser/mpOprtBinCommon.cpp \
     ../../parser/mpOprtBinAssign.cpp \
     ../../parser/mpIValue.cpp \
@@ -83,6 +84,7 @@ HEADERS += \
     ../../parser/mpOprtMatrix.h \
     ../../parser/mpOprtIndex.h \
     ../../parser/mpOprtCmplx.h \
+    ../../parser/mpOprtPostfixCommon.h \
     ../../parser/mpOprtBinCommon.h \
     ../../parser/mpOprtBinAssign.h \
     ../../parser/mpMatrixError.h \

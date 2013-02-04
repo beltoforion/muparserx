@@ -362,7 +362,7 @@ MUP_NAMESPACE_START
   //-----------------------------------------------------------
   const char_type* OprtPow::GetDesc() const 
   { 
-    return _T("x^y - Raises x to the power of y"); 
+    return _T("x^y - Raises x to the power of y.");
   }
 
   //-----------------------------------------------------------
