@@ -98,7 +98,7 @@ MUP_NAMESPACE_START
     m_vErrMsg[ecTOO_MANY_PARAMS]         = _T("Too many parameters passed to function \"$IDENT$\".");
     m_vErrMsg[ecTOO_FEW_PARAMS]          = _T("Too few parameters passed to function \"$IDENT$\".");
     m_vErrMsg[ecDIV_BY_ZERO]             = _T("Division by zero occurred.");
-    m_vErrMsg[ecDOMAIN_ERROR]            = _T("Domain error.");
+    m_vErrMsg[ecDOMAIN_ERROR]            = _T("The value passed as argument to function/operator \"$IDENT$\" is not part of its domain.");
     m_vErrMsg[ecNAME_CONFLICT]           = _T("Name conflict.");
     m_vErrMsg[ecOPT_PRI]                 = _T("Invalid value for operator priority (must be greater or equal to zero).");
     m_vErrMsg[ecBUILTIN_OVERLOAD]        = _T("Binary operator identifier conflicts with a built in operator.");
@@ -124,6 +124,7 @@ MUP_NAMESPACE_START
     m_vErrMsg[ecEVAL]                    = _T("Can't evaluate function/operator \"$IDENT$\": $HINT$.");
     m_vErrMsg[ecINVALID_PARAMETER]       = _T("Parameter $ARG$ of function \"$IDENT$\" is invalid.");
     m_vErrMsg[ecINVALID_NUMBER_OF_PARAMETERS] = _T("Invalid number of function arguments.");
+    m_vErrMsg[ecOVERFLOW]                = _T("Possible arithmetic overflow occurred in function/operator \"$IDENT$\".");
 
     #if defined(_DEBUG)
       for (int i=0; i<ecCOUNT; ++i)

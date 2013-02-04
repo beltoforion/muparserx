@@ -94,7 +94,7 @@ MUP_NAMESPACE_START
       ecASSIGNEMENT_TO_VALUE   = 35, ///< Assignment to operator (3=4 instead of a=4)
 
       // 
-      ecDOMAIN_ERROR           = 36, ///< catch division by zero, sqrt(-1), log(0) (currently unused)
+      ecDOMAIN_ERROR           = 36, ///< Trying to use func/oprtr with out-of-domain input args
       ecDIV_BY_ZERO            = 37, ///< Division by zero (currently unused)
       ecGENERIC                = 38, ///< Generic error
 
@@ -105,11 +105,13 @@ MUP_NAMESPACE_START
       ecINDEX_DIMENSION        = 43,
       ecMISSING_SQR_BRACKET    = 44, ///< The index operator was not closed properly (i.e. "v[3")
       ecEVAL                   = 45, ///< Error while evaluating function / operator
-      
-      ecUNKNOWN_ESCAPE_SEQUENCE = 46,
+      ecOVERFLOW               = 46, ///< Overflow (possibly) occurred
+
+
+      ecUNKNOWN_ESCAPE_SEQUENCE = 47,
 
       // internal errors
-      ecINTERNAL_ERROR         = 47, ///< Internal error of any kind.
+      ecINTERNAL_ERROR         = 48, ///< Internal error of any kind.
 
       // The last two are special entries 
       ecCOUNT,                       ///< This is no error code, It just stores just the total number of error codes
