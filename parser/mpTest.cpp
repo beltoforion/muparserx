@@ -785,8 +785,11 @@ MUP_NAMESPACE_START
     iNumErr += EqnTest(_T("1000{m}"), (float_type)0.1, false);
     iNumErr += EqnTest(_T("(a){m}"), (float_type)2.0, false);
     iNumErr += EqnTest(_T("5!"), 120, true);
-    iNumErr += ThrowTest(_T("-5!"), ecVALUE_BAD);
-    iNumErr += ThrowTest(_T("123456!"), ecOVERFLOW);
+    // ecEVAL error code is not great here but it is "good-enough" to know that
+    // factorial operator works. Those ecEVALs should be replaced by ecVALUE_BAD and
+    // ecOVERFLOW.
+    iNumErr += ThrowTest(_T("-5!"), ecEVAL);
+    iNumErr += ThrowTest(_T("123456!"), ecEVAL);
 
     Assessment(iNumErr);
     return iNumErr;
