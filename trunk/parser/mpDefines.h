@@ -73,6 +73,8 @@
 /** \brief Floating point type used by the parser. */
 #define MUP_FLOAT_TYPE long double
 
+#define MUP_INT_TYPE int
+
 /** \brief Verifies whether a given condition is met.
 	
   If the condition is not met an exception is thrown otherwise nothing happens.

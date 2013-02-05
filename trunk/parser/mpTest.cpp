@@ -784,12 +784,10 @@ MUP_NAMESPACE_START
     // some incorrect results
     iNumErr += EqnTest(_T("1000{m}"), (float_type)0.1, false);
     iNumErr += EqnTest(_T("(a){m}"), (float_type)2.0, false);
+    // factorial operator
     iNumErr += EqnTest(_T("5!"), 120, true);
-    // ecEVAL error code is not great here but it is "good-enough" to know that
-    // factorial operator works. Those ecEVALs should be replaced by ecVALUE_BAD and
-    // ecOVERFLOW.
-    iNumErr += ThrowTest(_T("-5!"), ecEVAL);
-    iNumErr += ThrowTest(_T("123456!"), ecEVAL);
+    iNumErr += ThrowTest(_T("-5!"), ecDOMAIN_ERROR);
+    iNumErr += ThrowTest(_T("123456!"), ecOVERFLOW);
 
     Assessment(iNumErr);
     return iNumErr;
@@ -1005,8 +1003,9 @@ MUP_NAMESPACE_START
     iNumErr += EqnTest(_T("(a<<3)+2"), 10, true);
     iNumErr += EqnTest(_T("(a<<4)+2"), 18, true);
     iNumErr += EqnTest(_T("(a<<5)+2"), 34, true);
-    iNumErr += ThrowTest(_T("55<<2222222"), ecEVAL);
-    // Issue 16: http://code.google.ctrueom/p/muparserx/issues/detail?id=16
+    // Issue 25: http://code.google.com/p/muparserx/issues/detail?id=25
+    iNumErr += ThrowTest(_T("55<<2222222"), ecOVERFLOW);
+    // Issue 16: http://code.google.com/p/muparserx/issues/detail?id=16
     iNumErr += EqnTest(_T("true  == true && false"),   true  ==  true && false,  true); 
     iNumErr += EqnTest(_T("false == true && false"),   false ==  true && false,  true); 
     iNumErr += EqnTest(_T("a==1.0 && a==1.0"),  a==1.0 && a==1.0,  true); 
