@@ -1,3 +1,4 @@
+#include <limits>
 #include "mpOprtPostfixCommon.h"
 
 MUP_NAMESPACE_START
