@@ -34,6 +34,17 @@
 */
 #include "mpOprtBinCommon.h"
 
+#define OVERFLOW_CHECK_SHIFT(a, b) \
+    int bits = 0; \
+    int c = abs(a); \
+    while (c != 0) { \
+	++bits; \
+	c >>= 1; \
+    }; \
+    if ((int_type(sizeof(int_type)*8)- bits) < int_type(b)) { \
+	throw ParserError(ErrorContext(ecOVERFLOW, -1, GetIdent())); \
+    }
+
 MUP_NAMESPACE_START
 
   //-----------------------------------------------------------------------------------------------
@@ -412,6 +423,21 @@ MUP_NAMESPACE_START
     
     if (b!=(int_type)b)
       throw ParserError( ErrorContext(ecTYPE_CONFLICT_FUN, -1, a_pArg[1]->GetIdent(), a_pArg[1]->GetType(), 'i', 2) ); 
+
+    /*
+    int bits = 0;
+    int c = abs(a);
+    while (c != 0) {
+	++bits;
+	c >>= 1;
+    };
+
+    if ((int_type(sizeof(int_type)*8)- bits) < int_type(b)) {
+	throw ParserError(ErrorContext(ecOVERFLOW));
+    }
+    */
+
+    OVERFLOW_CHECK_SHIFT(a, b)
 
 
     *ret = (int_type)a << (int_type)(b); 
