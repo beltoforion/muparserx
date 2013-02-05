@@ -101,7 +101,7 @@ MUP_NAMESPACE_START
     m_vTokens             = obj.m_vTokens;
 
     // Reader klassen klonen 
-    DeleteValReader();
+    DeleteValReader(); 
     std::size_t i, iSize = obj.m_vValueReader.size();
     for (i=0; i<iSize; ++i)
     {
