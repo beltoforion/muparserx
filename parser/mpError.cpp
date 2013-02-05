@@ -121,7 +121,7 @@ MUP_NAMESPACE_START
     m_vErrMsg[ecINDEX_DIMENSION]         = _T("Index operator dimension error.");
     m_vErrMsg[ecMISSING_SQR_BRACKET]     = _T("Missing \"]\".");
     m_vErrMsg[ecASSIGNEMENT_TO_VALUE]    = _T("Assignment operator \"$IDENT$\" can't be used in this context.");
-    m_vErrMsg[ecEVAL]                    = _T("Can't evaluate function/operator \"$IDENT$\": $HINT$.");
+    m_vErrMsg[ecEVAL]                    = _T("Can't evaluate function/operator \"$IDENT$\": $HINT$");
     m_vErrMsg[ecINVALID_PARAMETER]       = _T("Parameter $ARG$ of function \"$IDENT$\" is invalid.");
     m_vErrMsg[ecINVALID_NUMBER_OF_PARAMETERS] = _T("Invalid number of function arguments.");
     m_vErrMsg[ecOVERFLOW]                = _T("Possible arithmetic overflow occurred in function/operator \"$IDENT$\".");
