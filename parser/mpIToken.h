@@ -48,7 +48,7 @@ MUP_NAMESPACE_START
       \author (C) 2010 Ingo Berg 
 
       Tokens can either be Functions, operators, values, variables or necessary 
-      base tokens like brackets. ´The IToken baseclass implements reference 
+      base tokens like brackets. Â´The IToken baseclass implements reference 
       counting. Only TokenPtr<...> templates may be used as pointers to tokens.
   */
   class IToken

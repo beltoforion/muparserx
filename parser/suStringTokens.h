@@ -56,10 +56,10 @@ struct TokenNotFound : public std::runtime_error
 //
 //  Zweck:  Klasse zum Zerlegen eines durch beliebige Trennungszeichen
 //          (Tokens) geteilten Strings. Die Teilstrings werden in einem
-//          vector abgelegt und können über ihren Index, oder eine
+//          vector abgelegt und kÃ¶nnen Ã¼ber ihren Index, oder eine
 //          Suchfunktion angesprochen werden.
 //
-//  Einschränkungen:  Die Klasse ist als Template geschrieben. Der Template
+//  EinschrÃ¤nkungen:  Die Klasse ist als Template geschrieben. Der Template
 //                    Parameter entspricht dem Typ des Ausgangsstringes.
 //
 //---------------------------------------------------------------------------
@@ -127,9 +127,9 @@ public:
     }
 
     //---------------------------------------------------------------------------
-    // Zweck:  Rückgabe des Tokens, das an idx'ter Stelle gefunden wurde.
+    // Zweck:  RÃ¼ckgabe des Tokens, das an idx'ter Stelle gefunden wurde.
     //         wird ein Index angegeben, der nicht der Tokenanzahl
-    //         entspricht, so wird eine Exception ausgelöst.
+    //         entspricht, so wird eine Exception ausgelÃ¶st.
     const TData& operator[](unsigned int idx) const
     {
       try

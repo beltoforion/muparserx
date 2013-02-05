@@ -518,7 +518,7 @@ MUP_NAMESPACE_START
   bool TokenReader::IsNewline(ptr_tok_type &a_Tok)
   {
     // nicht nach:  bionop, infixop, argumentseparator, 
-    // erlaubt nach:   Werten, variablen, schlieﬂenden klammern, schliessendem index
+    // erlaubt nach:   Werten, variablen, schlie√üenden klammern, schliessendem index
     bool bRet(false);
     try
     {
