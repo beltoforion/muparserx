@@ -89,7 +89,7 @@ MUP_NAMESPACE_START
   }
 
   //------------------------------------------------------------------------------
-  /** \brief Returns the m´number of arguments required by this callback. 
+  /** \brief Returns the mÂ´number of arguments required by this callback. 
       \return Number of arguments or -1 if the number of arguments is variable.  
   */
   int ICallback::GetArgc() const

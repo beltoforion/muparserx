@@ -833,8 +833,8 @@ MUP_NAMESPACE_START
             {
               ApplyRemainingOprt(stOpt, stVal);
 
-              // Value stack plätten
-              // Stack der RPN um die Anzahl im stack enthaltener Werte zurück setzen
+              // Value stack plÃ¤tten
+              // Stack der RPN um die Anzahl im stack enthaltener Werte zurÃ¼ck setzen
               int n = stVal.size();
               m_rpn.AddNewline(pTok, n);
               stVal.clear();
