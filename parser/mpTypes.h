@@ -93,7 +93,7 @@ MUP_NAMESPACE_START
   typedef MUP_FLOAT_TYPE float_type;
 
   /** \brief Parser datatype for integer valuse. */
-  typedef int int_type;
+  typedef MUP_INT_TYPE int_type;
 
   /** \brief The basic type used for representing complex numbers. */
   typedef std::complex<float_type> cmplx_type;

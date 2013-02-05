@@ -109,7 +109,7 @@ public:
   virtual void Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int /*a_iArgc*/)
   {
     console() << a_pArg[0].Get()->ToString() << _T("\n");
-    *ret = 0;
+    *ret = (float_type)0.0;
   }
 
   virtual const char_type* GetDesc() const
@@ -132,8 +132,7 @@ public:
 
   virtual void Eval(ptr_val_type &ret, const ptr_val_type * /*a_pArg*/, int /*a_iArgc*/)
   {
-    // ParserXBase &parser = *GetParent(); 
-    *ret = 0;
+    *ret = (float_type)0.0;
   }
 
   virtual const char_type* GetDesc() const
@@ -182,7 +181,7 @@ public:
       }
     }
 
-    *ret = (int)vmap.size();
+    *ret = (int_type)vmap.size();
   }
 
   virtual const char_type* GetDesc() const
@@ -224,7 +223,7 @@ public:
         console() << _T("  ") << item->first << _T(" =  ") << (Value&)(*(item->second)) << _T("\n");
     }
 
-    *ret = (int)cmap.size();
+    *ret = (int_type)cmap.size();
   }
 
   virtual const char_type* GetDesc() const
@@ -405,7 +404,7 @@ public:
       }
     }
 
-    *ret = (int)fmap.size();
+    *ret = (int_type)fmap.size();
   }
 
   virtual const char_type* GetDesc() const
@@ -457,8 +456,9 @@ public:
     ParserXBase::EnableDebugDump(0, 0);
     ParserTester pt;
     pt.Run();
-    *ret = 0;
+    *ret = (float_type)0.0;
   }
+
   virtual const char_type* GetDesc() const
   {
     return _T("test() - Runs the unit test of muparserx.");
@@ -490,7 +490,7 @@ public:
     else
       console() << _T("Stack output deactivated.\n");
 
-      *ret = 0;
+      *ret = (float_type)0.0;
   }
 
   virtual const char_type* GetDesc() const
@@ -626,19 +626,16 @@ public:
 //---------------------------------------------------------------------------
 void Splash()
 {
-  console() << _T("-------------------------------------------------------------------------\n\n");
+  console() << _T("-------------------------------------------------------------------------\n");
   console() << _T("               __________                                 ____  ___\n");
   console() << _T("    _____  __ _\\______   \\_____ _______  ______ __________\\   \\/  /\n");
   console() << _T("   /     \\|  |  \\     ___/\\__  \\\\_  __ \\/  ___// __ \\_  __ \\     / \n");
   console() << _T("  |  Y Y  \\  |  /    |     / __ \\|  | \\/\\___ \\\\  ___/|  | \\/     \\ \n");
   console() << _T("  |__|_|  /____/|____|    (____  /__|  /____  >\\___  >__| /___/\\  \\\n");
   console() << _T("        \\/                     \\/           \\/     \\/           \\_/\n");
-
-
   console() << _T("  Version ") << ParserXBase::GetVersion() << _T("\n");
   console() << _T("  Copyright (C) 2013 Ingo Berg");
-  console() << _T("\n");
-
+  console() << _T("\n\n");
   console() << _T("-------------------------------------------------------------------------\n\n");
   console() << _T( "Build configuration:\n\n");
 

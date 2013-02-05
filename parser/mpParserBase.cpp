@@ -1098,11 +1098,12 @@ MUP_NAMESPACE_START
              catch(ParserError &exc)
              {
                // <ibg 20130131> Not too happy about that:
-               // Multiarg functions may throw ecTOO_FEW_PARAMS from eval. I don't 
-               // want this to be converted to ecEVAL because fixed argument functions
-               // already throw ecTOO_FEW_PARAMS in case of missing parameters and two 
-               // different error codes would be inconsistent. 
-               if (exc.GetCode()==ecTOO_FEW_PARAMS)
+               // Multiarg functions may throw specific error codes when evaluating. 
+               // These codes would be converted to ecEVAL here. I omit the conversion
+               // for certain handpicked errors. (The reason this catch block exists is
+               // that not all exceptions contain proper metadata when thrown out of
+               // a function.)
+               if (exc.GetCode()==ecTOO_FEW_PARAMS || exc.GetCode()==ecDOMAIN_ERROR || exc.GetCode()==ecOVERFLOW)
                  throw;
                // </ibg>
 
