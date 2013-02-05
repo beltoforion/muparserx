@@ -62,7 +62,7 @@
 #endif
 
 /** \brief A macro containing the version of muParserX. */
-#define MUP_PARSER_VERSION _T("2.1.7 (20130130)")
+#define MUP_PARSER_VERSION _T("2.1.7 (20130205)")
 
 /** \brief A macro for setting the parser namespace. */
 #define MUP_NAMESPACE_START namespace mup {
@@ -73,7 +73,7 @@
 /** \brief Floating point type used by the parser. */
 #define MUP_FLOAT_TYPE long double
 
-#define MUP_INT_TYPE int
+#define MUP_INT_TYPE int 
 
 /** \brief Verifies whether a given condition is met.
 	
