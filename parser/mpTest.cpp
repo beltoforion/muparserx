@@ -1005,6 +1005,7 @@ MUP_NAMESPACE_START
     iNumErr += EqnTest(_T("(a<<3)+2"), 10, true);
     iNumErr += EqnTest(_T("(a<<4)+2"), 18, true);
     iNumErr += EqnTest(_T("(a<<5)+2"), 34, true);
+    iNumErr += ThrowTest(_T("55<<2222222"), ecEVAL);
     // Issue 16: http://code.google.ctrueom/p/muparserx/issues/detail?id=16
     iNumErr += EqnTest(_T("true  == true && false"),   true  ==  true && false,  true); 
     iNumErr += EqnTest(_T("false == true && false"),   false ==  true && false,  true); 

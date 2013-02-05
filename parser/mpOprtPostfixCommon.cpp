@@ -24,11 +24,11 @@ MUP_NAMESPACE_START
 
 
       int input = arg_1->GetInteger();
-      float_type input_long = static_cast<float_type>(input);
+      float_type input_long = float_type(input);
 
       if (input < 0) {
 	  throw ParserError(ErrorContext(ecDOMAIN_ERROR, GetExprPos(),
-					 GetIdent(), arg_1->GetType(), 'i', 1));
+					 GetIdent()));
       }
 
       float_type result = 1;
