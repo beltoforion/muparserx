@@ -401,25 +401,28 @@ MUP_NAMESPACE_START
     assert(num==2);
 
     if (!a_pArg[0]->IsScalar())
-      throw ParserError(ErrorContext(ecTYPE_CONFLICT_FUN, -1, GetIdent(), a_pArg[0]->GetType(), 'i', 1));
+      throw ParserError(ErrorContext(ecTYPE_CONFLICT_FUN, GetExprPos(), GetIdent(), a_pArg[0]->GetType(), 'i', 1));
     
     if (!a_pArg[1]->IsScalar())
-      throw ParserError(ErrorContext(ecTYPE_CONFLICT_FUN, -1, GetIdent(), a_pArg[1]->GetType(), 'i', 2));
+      throw ParserError(ErrorContext(ecTYPE_CONFLICT_FUN, GetExprPos(), GetIdent(), a_pArg[1]->GetType(), 'i', 2));
 
     float_type a = a_pArg[0]->GetFloat(),
                b = a_pArg[1]->GetFloat();
 
     if (a!=(int_type)a)
-      throw ParserError( ErrorContext(ecTYPE_CONFLICT_FUN, -1, a_pArg[0]->GetIdent(), a_pArg[0]->GetType(), 'i', 1) ); 
+      throw ParserError( ErrorContext(ecTYPE_CONFLICT_FUN, GetExprPos(), a_pArg[0]->GetIdent(), a_pArg[0]->GetType(), 'i', 1) ); 
     
     if (b!=(int_type)b)
-      throw ParserError( ErrorContext(ecTYPE_CONFLICT_FUN, -1, a_pArg[1]->GetIdent(), a_pArg[1]->GetType(), 'i', 2) ); 
+      throw ParserError( ErrorContext(ecTYPE_CONFLICT_FUN, GetExprPos(), a_pArg[1]->GetIdent(), a_pArg[1]->GetType(), 'i', 2) ); 
 
     float_type result = a*std::pow(2, b);
     int numDigits = std::numeric_limits<float_type>::digits10;
 
     if (std::fabs(result) >= std::fabs(std::pow(10.0, numDigits)))
-      throw ParserError(ErrorContext(ecOVERFLOW));
+      throw ParserError(ErrorContext(ecOVERFLOW, GetExprPos(), GetIdent()));
+
+    if (std::fabs(result)<1)
+      result = 0;
 
     *ret = result;
   }
