@@ -1003,6 +1003,10 @@ MUP_NAMESPACE_START
     iNumErr += EqnTest(_T("(a<<3)+2"), 10, true);
     iNumErr += EqnTest(_T("(a<<4)+2"), 18, true);
     iNumErr += EqnTest(_T("(a<<5)+2"), 34, true);
+    iNumErr += EqnTest(_T("1<<31"),  (float_type)2147483648, true);
+    iNumErr += EqnTest(_T("-1<<31"), (float_type)-2147483648.0, true);
+    iNumErr += EqnTest(_T("1<<45"), (float_type)35184372088832.0, true);
+    iNumErr += EqnTest(_T("-1<<45"), (float_type)-35184372088832.0, true);
     // Issue 25: http://code.google.com/p/muparserx/issues/detail?id=25
     iNumErr += ThrowTest(_T("55<<2222222"), ecOVERFLOW);
     // Issue 16: http://code.google.com/p/muparserx/issues/detail?id=16
