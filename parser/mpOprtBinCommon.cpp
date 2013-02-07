@@ -429,7 +429,10 @@ MUP_NAMESPACE_START
     *ret = result;
     */
 
-    *ret = std::floor(std::fabs(result));
+    if (result>0)
+      *ret = std::floor(result);
+    else
+      *ret = std::ceil(result);
   }
 
   //-----------------------------------------------------------------------------------------------
