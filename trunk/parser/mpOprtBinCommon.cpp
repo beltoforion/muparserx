@@ -34,6 +34,7 @@
 */
 #include "mpOprtBinCommon.h"
 #include <cmath>
+#include <limits>
 
 
 MUP_NAMESPACE_START
@@ -421,10 +422,14 @@ MUP_NAMESPACE_START
     if (std::fabs(result) >= std::fabs(std::pow(10.0, numDigits)))
       throw ParserError(ErrorContext(ecOVERFLOW, GetExprPos(), GetIdent()));
 
+    /*
     if (std::fabs(result)<1)
       result = 0;
 
     *ret = result;
+    */
+
+    *ret = std::floor(std::fabs(result));
   }
 
   //-----------------------------------------------------------------------------------------------
