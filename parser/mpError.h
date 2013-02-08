@@ -43,6 +43,7 @@
 #include <memory>
 
 #include "mpTypes.h"
+#include "mpParserMessageProvider.h"
 
 
 MUP_NAMESPACE_START
@@ -118,24 +119,23 @@ MUP_NAMESPACE_START
       ecUNDEFINED              = -1  ///< Undefined message, placeholder to detect unassigned error messages
     };
 
-    //---------------------------------------------------------------------------
-    class ParserErrorMsg
+    //---------------------------------------------------------------------------------------------
+    class ParserErrorMsg 
     {
     public:
-        typedef ParserErrorMsg self_type;
-
       ~ParserErrorMsg();
 
-        static const ParserErrorMsg& Instance();
-        string_type operator[](unsigned a_iIdx) const;
+       static const ParserMessageProviderBase& Instance();
+       static void Reset(ParserMessageProviderBase *pProvider);
+
+       string_type operator[](unsigned a_iIdx) const;
 
     private:
-        std::vector<string_type>  m_vErrMsg;
-        static const self_type m_Instance;
 
-        ParserErrorMsg& operator=(const ParserErrorMsg &);
-        ParserErrorMsg(const ParserErrorMsg&);
-        ParserErrorMsg();
+       static std::auto_ptr<ParserMessageProviderBase> m_pInstance;
+       ParserErrorMsg& operator=(const ParserErrorMsg &);
+       ParserErrorMsg(const ParserErrorMsg&);
+       ParserErrorMsg();
     };
 
     //---------------------------------------------------------------------------
@@ -209,7 +209,7 @@ MUP_NAMESPACE_START
     private:
         ErrorContext m_Err;  ///< Error context data
         string_type m_sMsg;  ///< The message string with all wildcards still in place.
-        const ParserErrorMsg &m_ErrMsg;
+        const ParserMessageProviderBase &m_ErrMsg;
     };		
 } // namespace mu
 
