@@ -920,6 +920,12 @@ void Calc()
 //---------------------------------------------------------------------------
 int main(int /*argc*/, char** /*argv*/)
 {
+#if defined(_UNICODE)
+  // Internationalization requires UNICODE as translations do contain non ASCII 
+  // Characters.
+  ParserX::ResetErrorMessageProvider(new mup::ParserMessageProviderGerman);
+#endif
+
   Splash();
   SelfTest();
 

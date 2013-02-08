@@ -72,7 +72,6 @@ MUP_NAMESPACE_START
 
     private:
 
-      void CheckPrototype(const string_type &a_szProt);
       int m_nPrec;
       EOprtAsct m_eAsc;
     }; // class IOperator

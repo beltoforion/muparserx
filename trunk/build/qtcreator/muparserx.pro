@@ -2,6 +2,7 @@ TEMPLATE = app
 TARGET = example
 CONFIG += console
 CONFIG -= qt
+DEFINES += _UNICODE
 
 CONFIG(debug, debug|release) {
     DESTDIR = ./debug
@@ -28,6 +29,7 @@ SOURCES += \
     ../../parser/mpRPN.cpp \
     ../../parser/mpParserBase.cpp \
     ../../parser/mpParser.cpp \
+    ../../parser/mpParserMessageProvider.cpp \
     ../../parser/mpPackageUnit.cpp \
     ../../parser/mpPackageStr.cpp \
     ../../parser/mpPackageNonCmplx.cpp \
@@ -74,6 +76,7 @@ HEADERS += \
     ../../parser/mpRPN.h \
     ../../parser/mpParserBase.h \
     ../../parser/mpParser.h \
+    ../../parser/mpParserMessageProvider.h \
     ../../parser/mpPackageUnit.h \
     ../../parser/mpPackageStr.h \
     ../../parser/mpPackageNonCmplx.h \

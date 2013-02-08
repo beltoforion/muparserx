@@ -41,6 +41,7 @@
 MUP_NAMESPACE_START
 
   class ParserXBase;
+  class ParserMessageProviderBase;
 
   class ICallback;
   class IToken;
@@ -50,7 +51,6 @@ MUP_NAMESPACE_START
   class IOprtIndex;
   class Value;
   class ValueCache;
-
   template<typename T>
   class TokenPtr;
 

@@ -83,22 +83,6 @@ MUP_NAMESPACE_START
     return m_eAsc;
   }
 
-  //------------------------------------------------------------------------------
-  /** \brief Verify the operator prototype.
-
-    Binary operators have the additional constraint that return type and the types
-    of both arguments must be the same. So adding to floats can not produce a string
-    and adding a number to a string is impossible.
-  */
-  void IOprtBin::CheckPrototype(const string_type &a_sProt)
-  {
-    if (a_sProt.length()!=4)
-      throw ParserError( ErrorContext(ecAPI_INVALID_PROTOTYPE, -1, GetIdent() ) ); 
-
-    //if (a_sProt[0]!=a_sProt[2] || a_sProt[0]!=a_sProt[3])
-    //  throw ParserError( ErrorContext(ecAPI_INVALID_PROTOTYPE, -1, GetIdent() ) ); 
-  }
-
   //---------------------------------------------------------------------------
   IPrecedence* IOprtBin::AsIPrecedence()
   {

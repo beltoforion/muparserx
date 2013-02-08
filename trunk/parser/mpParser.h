@@ -57,6 +57,8 @@ MUP_NAMESPACE_START
   {
   public:
     ParserX(EPackages ePackages = pckALL_COMPLEX);
+
+    static void ResetErrorMessageProvider(ParserMessageProviderBase *pProvider);
   };
 } // namespace mu
 

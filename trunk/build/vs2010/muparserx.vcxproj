@@ -98,6 +98,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\parser\mpParserMessageProvider.cpp" />
     <ClCompile Include="..\..\sample\example.cpp" />
     <ClCompile Include="..\..\sample\timer.cpp" />
     <ClCompile Include="..\..\parser\mpFuncCmplx.cpp" />
@@ -107,7 +108,7 @@
     <ClCompile Include="..\..\parser\mpFuncStr.cpp" />
     <ClCompile Include="..\..\parser\mpOprtBinAssign.cpp" />
     <ClCompile Include="..\..\parser\mpOprtBinCommon.cpp" />
-		<ClCompile Include="..\..\parser\mpOprtPostfixCommon.cpp" />
+    <ClCompile Include="..\..\parser\mpOprtPostfixCommon.cpp" />
     <ClCompile Include="..\..\parser\mpOprtCmplx.cpp" />
     <ClCompile Include="..\..\parser\mpOprtIndex.cpp" />
     <ClCompile Include="..\..\parser\mpOprtMatrix.cpp" />
@@ -145,11 +146,12 @@
     <ClInclude Include="..\..\parser\mpFuncStr.h" />
     <ClInclude Include="..\..\parser\mpOprtBinAssign.h" />
     <ClInclude Include="..\..\parser\mpOprtBinCommon.h" />
-		<ClInclude Include="..\..\parser\mpOprtPostfixCommon.h" />
+    <ClInclude Include="..\..\parser\mpOprtPostfixCommon.h" />
     <ClInclude Include="..\..\parser\mpOprtCmplx.h" />
     <ClInclude Include="..\..\parser\mpOprtIndex.h" />
     <ClInclude Include="..\..\parser\mpOprtMatrix.h" />
     <ClInclude Include="..\..\parser\mpOprtNonCmplx.h" />
+    <ClInclude Include="..\..\parser\mpParserMessageProvider.h" />
     <ClInclude Include="..\..\parser\suSortPred.h" />
     <ClInclude Include="..\..\parser\utGeneric.h" />
     <ClInclude Include="..\..\parser\mpDefines.h" />

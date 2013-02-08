@@ -85,4 +85,11 @@ MUP_NAMESPACE_START
     if (ePackages & pckMATRIX)
       AddPackage(PackageMatrix::Instance());
   }
+
+  //------------------------------------------------------------------------------
+  void ParserX::ResetErrorMessageProvider(ParserMessageProviderBase *pProvider)
+  {
+    ParserErrorMsg::Reset(pProvider);
+  }
+
 } // namespace mu
