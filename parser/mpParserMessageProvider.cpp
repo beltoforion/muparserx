@@ -105,6 +105,8 @@ MUP_NAMESPACE_START
   ParserMessageProviderGerman::ParserMessageProviderGerman()
     :ParserMessageProviderBase()
   {
+      //std::locale::global(std::locale("Germany_german"));
+
     m_vErrMsg.resize(ecCOUNT);
 
     m_vErrMsg[ecUNASSIGNABLE_TOKEN]      = _T("Unbekanntes Token \"$IDENT$\" an Position $POS$ gefunden.");
