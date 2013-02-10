@@ -236,7 +236,6 @@ MUP_NAMESPACE_START
     if (!row.IsInteger() || !col.IsInteger())
     {
       ErrorContext errc(ecTYPE_CONFLICT_IDX, GetExprPos());
-      errc.Hint = _T("Array index must be an integer value.");
       errc.Type1 = (!row.IsInteger()) ? row.GetType() : col.GetType();
       errc.Type2 = 'i';
       throw ParserError(errc);

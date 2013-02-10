@@ -270,15 +270,15 @@ MUP_NAMESPACE_START
     // Check matrix dimension mismatch error
     iNumErr += ThrowTest(_T("\"hallo\"+m1"), ecEVAL); 
     iNumErr += ThrowTest(_T("m1+\"hallo\""), ecEVAL); 
-    iNumErr += ThrowTest(_T("va+m1"), ecEVAL); 
-    iNumErr += ThrowTest(_T("m1+va"), ecEVAL); 
-    iNumErr += ThrowTest(_T("va-m1"), ecEVAL); 
-    iNumErr += ThrowTest(_T("m1-va"), ecEVAL); 
-    iNumErr += ThrowTest(_T("va*m1"), ecEVAL);            // matrix dimension mismatch
+    iNumErr += ThrowTest(_T("va+m1"), ecMATRIX_DIMENSION_MISMATCH); 
+    iNumErr += ThrowTest(_T("m1+va"), ecMATRIX_DIMENSION_MISMATCH); 
+    iNumErr += ThrowTest(_T("va-m1"), ecMATRIX_DIMENSION_MISMATCH); 
+    iNumErr += ThrowTest(_T("m1-va"), ecMATRIX_DIMENSION_MISMATCH); 
+    iNumErr += ThrowTest(_T("va*m1"), ecMATRIX_DIMENSION_MISMATCH);
+    iNumErr += ThrowTest(_T("va+eye(2)"), ecMATRIX_DIMENSION_MISMATCH);
     iNumErr += ThrowTest(_T("m1[1]"),     ecINDEX_DIMENSION);
     iNumErr += ThrowTest(_T("m1[1,2,3]"), ecINDEX_DIMENSION);
     iNumErr += ThrowTest(_T("va[1,2]"),   ecINDEX_DIMENSION);
-
     iNumErr += ThrowTest(_T("a+m1"), ecEVAL); 
     iNumErr += ThrowTest(_T("m1+a"), ecEVAL); 
     iNumErr += ThrowTest(_T("a-m1"), ecEVAL); 
@@ -633,7 +633,7 @@ MUP_NAMESPACE_START
 
     // Invalid expression
     // Issue 20: http://code.google.com/p/muparserx/issues/detail?id=20
-    iNumErr += ThrowTest(_T(" "), ecEVAL);
+    iNumErr += ThrowTest(_T(" "), ecUNEXPECTED_EOF);
 
     // Invalid function argument types
     iNumErr += ThrowTest(_T("sin(\"test\")"),        ecEVAL, 0);
@@ -876,12 +876,12 @@ MUP_NAMESPACE_START
     // Vector operations
     iNumErr += ThrowTest(_T("10+2*va"),    ecEVAL);   // fail: number + vector
     iNumErr += ThrowTest(_T("10+va*2"),    ecEVAL);   // fail: number + vector
-    iNumErr += ThrowTest(_T("va+vc"),      ecEVAL);   // fail: vectors of different size
-    iNumErr += ThrowTest(_T("va-vc"),      ecEVAL);   // fail: vectors of different size
-    iNumErr += ThrowTest(_T("va*vc"),      ecEVAL);   // fail: vectors of different size
-    iNumErr += ThrowTest(_T("va*vb"),      ecEVAL);   // fail: matrix dimension mismatch
-    iNumErr += ThrowTest(_T("va*va"),      ecEVAL);   // fail: matrix dimension mismatch
-    iNumErr += ThrowTest(_T("(va*vb)*b"),  ecEVAL);   // fail: matrix dimension mismatch
+    iNumErr += ThrowTest(_T("va+vc"),      ecMATRIX_DIMENSION_MISMATCH);   // fail: vectors of different size
+    iNumErr += ThrowTest(_T("va-vc"),      ecMATRIX_DIMENSION_MISMATCH);   // fail: vectors of different size
+    iNumErr += ThrowTest(_T("va*vc"),      ecMATRIX_DIMENSION_MISMATCH);   // fail: vectors of different size
+    iNumErr += ThrowTest(_T("va*vb"),      ecMATRIX_DIMENSION_MISMATCH);   // fail: matrix dimension mismatch
+    iNumErr += ThrowTest(_T("va*va"),      ecMATRIX_DIMENSION_MISMATCH);   // fail: matrix dimension mismatch
+    iNumErr += ThrowTest(_T("(va*vb)*b"),  ecMATRIX_DIMENSION_MISMATCH);   // fail: matrix dimension mismatch
     iNumErr += ThrowTest(_T("va[1.23]"),   ecTYPE_CONFLICT_IDX, 7);   // fail: float value used as index
     iNumErr += ThrowTest(_T("va[sin(8)]"), ecTYPE_CONFLICT_IDX, 9);   // fail: float value used as index
     iNumErr += ThrowTest(_T("va[-1]"),     ecINDEX_OUT_OF_BOUNDS); // fail: negative value used as an index

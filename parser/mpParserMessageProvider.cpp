@@ -14,7 +14,6 @@ MUP_NAMESPACE_START
 
   ParserMessageProviderBase::ParserMessageProviderBase()
     :m_vErrMsg(0)
-    ,m_vHints(0)
   {}
 
   //-----------------------------------------------------------------------------------------------
@@ -30,19 +29,13 @@ MUP_NAMESPACE_START
       if (!m_vErrMsg[i].length())
         throw std::runtime_error("Incomplete translation (at least one error code missing)");
     }
-
-    InitHints();
-    for (int i=0; i<hiCOUNT; ++i)
-    {
-      if (!m_vHints[i].length())
-        throw std::runtime_error("Incomplete translation (at least one hint is missing code missing)");
-    }
   }
 
   //---------------------------------------------------------------------------------------------
-  string_type ParserMessageProviderBase::operator[](unsigned a_iIdx) const
+  string_type ParserMessageProviderBase::GetErrorMsg(EErrorCodes eError) const
   {
-    return (a_iIdx<m_vErrMsg.size()) ? m_vErrMsg[a_iIdx] : string_type();
+    int nError = (int)eError;
+    return (nError<(int)m_vErrMsg.size()) ? m_vErrMsg[nError] : string_type();
   }
 
   //-----------------------------------------------------------------------------------------------
@@ -98,9 +91,6 @@ MUP_NAMESPACE_START
     m_vErrMsg[ecARRAY_SIZE_MISMATCH]     = _T("Array size mismatch.");
     m_vErrMsg[ecNOT_AN_ARRAY]            = _T("Using the index operator on the scalar variable \"$IDENT$\" is not allowed.");
     m_vErrMsg[ecUNEXPECTED_SQR_BRACKET]  = _T("Unexpected \"]\".");
-    m_vErrMsg[ecAPI_INVALID_PROTOTYPE]   = _T("Invalid prototype (use something like: \"f:fff\").");
-    m_vErrMsg[ecAPI_NOT_AN_ARRAY]        = _T("Not an array.");
-    m_vErrMsg[ecAPI_INVALID_DIMENSION]   = _T("Invalid matrix dimensions.");
     m_vErrMsg[ecINDEX_OUT_OF_BOUNDS]     = _T("Index to variable \"$IDENT$\" is out of bounds.");
     m_vErrMsg[ecINDEX_DIMENSION]         = _T("Index operator dimension error.");
     m_vErrMsg[ecMISSING_SQR_BRACKET]     = _T("Missing \"]\".");
@@ -108,15 +98,9 @@ MUP_NAMESPACE_START
     m_vErrMsg[ecEVAL]                    = _T("Can't evaluate function/operator \"$IDENT$\": $HINT$");
     m_vErrMsg[ecINVALID_PARAMETER]       = _T("Parameter $ARG$ of function \"$IDENT$\" is invalid.");
     m_vErrMsg[ecINVALID_NUMBER_OF_PARAMETERS] = _T("Invalid number of function arguments.");
-    m_vErrMsg[ecOVERFLOW]                = _T("Possible arithmetic overflow occurred in function/operator \"$IDENT$\".");
+    m_vErrMsg[ecOVERFLOW]                     = _T("Possible arithmetic overflow occurred in function/operator \"$IDENT$\".");
+    m_vErrMsg[ecMATRIX_DIMENSION_MISMATCH]    = _T("Matrix dimension error.");
   }
-
-  //-----------------------------------------------------------------------------------------------
-  void ParserMessageProviderEnglish::InitHints()
-  {
-    m_vHints.resize(hiCOUNT);
-  }
-
 
 #if defined(_UNICODE)
 
@@ -166,16 +150,13 @@ MUP_NAMESPACE_START
     m_vErrMsg[ecVAL_EXPECTED]            = _T("Numerische Funktionen können nicht mit nichtnumerischen Parametern aufgerufen werden.");
     m_vErrMsg[ecTYPE_CONFLICT]           = _T("Der Wert \"$IDENT$\" ist vom Typ '$TYPE1$' und es gibt keine passende Typkonversion in den erwarteten Typ '$TYPE2$'.");
     m_vErrMsg[ecTYPE_CONFLICT_FUN]       = _T("Das Argument $ARG$ der Funktion oder des Operators \"$IDENT$\" ist vom Typ '$TYPE1$', erwartet wurde Typ '$TYPE2$'.");
-    m_vErrMsg[ecTYPE_CONFLICT_IDX]       = _T("Der Index der Variable \"$IDENT$\" muss ein positiver Ganzzahlwert. Werte vom Typ '$TYPE1$' können nicht verwendet werden.");
+    m_vErrMsg[ecTYPE_CONFLICT_IDX]       = _T("Der Index der Variable \"$IDENT$\" muss ein positiver Ganzzahlwert sein. Der übergebene Indexwert ist vom Typ '$TYPE1$'.");
     m_vErrMsg[ecGENERIC]                 = _T("Allgemeiner Parser Fehler.");
     m_vErrMsg[ecINVALID_TYPE]            = _T("Ungültiger Funktionsargumenttyp.");
     m_vErrMsg[ecINVALID_TYPECAST]        = _T("Umwandlungen vom Typ '$TYPE1$' in den Typ '$TYPE2$' werden nicht unterstützt!");
     m_vErrMsg[ecARRAY_SIZE_MISMATCH]     = _T("Feldgrößen stimmen nicht überein.");
     m_vErrMsg[ecNOT_AN_ARRAY]            = _T("Der Indexoperator kann nicht auf die Skalarvariable \"$IDENT$\" angewandt werden.");
     m_vErrMsg[ecUNEXPECTED_SQR_BRACKET]  = _T("Unerwartetes \"]\".");
-    m_vErrMsg[ecAPI_INVALID_PROTOTYPE]   = _T("Ungültiger Funktionsprototyp.");
-    m_vErrMsg[ecAPI_NOT_AN_ARRAY]        = _T("Operation kann nur auf Felder angewendet werden.");
-    m_vErrMsg[ecAPI_INVALID_DIMENSION]   = _T("Ungültige Matrixdimensionen.");
     m_vErrMsg[ecINDEX_OUT_OF_BOUNDS]     = _T("Indexüberschreitung bei Variablenzugriff auf \"$IDENT$\".");
     m_vErrMsg[ecINDEX_DIMENSION]         = _T("Die Operation kann nicht auf Felder angewandt werden, deren Größe unterschiedlich ist.");
     m_vErrMsg[ecMISSING_SQR_BRACKET]     = _T("Fehlendes \"]\".");
@@ -183,13 +164,8 @@ MUP_NAMESPACE_START
     m_vErrMsg[ecEVAL]                    = _T("Die Funktion bzw. der Operator \"$IDENT$\" kann nicht berechnet werden: $HINT$");
     m_vErrMsg[ecINVALID_PARAMETER]       = _T("Der Parameter $ARG$ der Funktion \"$IDENT$\" is ungültig.");
     m_vErrMsg[ecINVALID_NUMBER_OF_PARAMETERS] = _T("Unzulässige Zahl an Funktionsparametern.");
-    m_vErrMsg[ecOVERFLOW]                = _T("Ein arithmetische Überlauf wurde in Funktion/Operator \"$IDENT$\" entdeckt.");
-  }
-
-  //-----------------------------------------------------------------------------------------------
-  void ParserMessageProviderGerman::InitHints()
-  {
-    m_vHints.resize(hiCOUNT);
+    m_vErrMsg[ecOVERFLOW]                     = _T("Ein arithmetische Überlauf wurde in Funktion/Operator \"$IDENT$\" entdeckt.");
+    m_vErrMsg[ecMATRIX_DIMENSION_MISMATCH]    = _T("Matrixdimensionen stimmen nicht überein, Operation \"$IDENT$\" kann nicht ausgeführt werden.");
   }
 #endif // _UNICODE
 

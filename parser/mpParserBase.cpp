@@ -1017,10 +1017,11 @@ MUP_NAMESPACE_START
     ptr_val_type *pStack = &m_vStackBuffer[0];
     if (m_rpn.GetSize()==0)
     {
+      // Passiert bei leeren strings oder solchen, die nur Leerzeichen enthalten
       ErrorContext err;
       err.Expr = m_pTokenReader->GetExpr();
-      err.Errc = ecEVAL;
-      err.Hint = _T("Expression is empty");
+      err.Errc = ecUNEXPECTED_EOF;
+      err.Pos  = 0;
       throw ParserError(err);
     }
 
@@ -1121,9 +1122,8 @@ MUP_NAMESPACE_START
                ErrorContext err;
                err.Expr = m_pTokenReader->GetExpr();
                err.Ident = pFun->GetIdent();
-               err.Errc = ecEVAL;
+               err.Errc = ecMATRIX_DIMENSION_MISMATCH;
                err.Pos = pFun->GetExprPos();
-               err.Hint = _T("Matrix dimension mismatch");
                throw ParserError(err);
              }
            }

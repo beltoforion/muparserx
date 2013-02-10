@@ -20,7 +20,7 @@ MUP_NAMESPACE_START
     ParserMessageProviderBase();
 
     void Init();
-    string_type operator[](unsigned a_iIdx) const;
+    string_type GetErrorMsg(EErrorCodes errc) const;
 
   private:
     // Disable CC and assignment operator for this class and derivatives
@@ -29,11 +29,9 @@ MUP_NAMESPACE_START
 
   protected:
     std::vector<string_type>  m_vErrMsg;
-    std::vector<string_type>  m_vHints;
     
     virtual ~ParserMessageProviderBase();
     virtual void InitErrorMessages() = 0;
-    virtual void InitHints() = 0;
   };
 
   //-----------------------------------------------------------------------------------------------
@@ -45,7 +43,6 @@ MUP_NAMESPACE_START
 
   protected:
     virtual void InitErrorMessages();
-    virtual void InitHints();
   };
 
   //-----------------------------------------------------------------------------------------------
@@ -57,7 +54,6 @@ MUP_NAMESPACE_START
 
   protected:
     virtual void InitErrorMessages();
-    virtual void InitHints();
   };
 
 MUP_NAMESPACE_END

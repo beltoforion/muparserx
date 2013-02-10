@@ -24,7 +24,7 @@
 #                                                                       #
 #########################################################################
 
-V2.1.7 (20130128)
+V2.1.7 (20130210)
 -----------------
 Changes:
   - added "zeros" function for creating matrices initialized to all zero added
@@ -32,11 +32,13 @@ Changes:
   - added "size" function for determining matrix dimensions
   - floating point data type can now be selected with the "MUP_FLOAT_TYPE" macro
     in mpDefines.h
+  - API for customizing error messages added; German translations added
   
 Bugfixes:
   - Issue 17: Wrong result on complex power
   - Issue 20: Library crash when " " is calculated
   - Issue 23: min, max and sum functions return values when called without parameters
+  - Issue 26: misc bugfixes for "<<" and ">>" operators.
   - untracked issue: compiling with UNICODE did not work
   - untracked issue: Column number of matrices were not reported correctly
   - untracked issue: expressions ending with newline could not be evaluated
