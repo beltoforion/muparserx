@@ -1,4 +1,4 @@
-﻿/** \example example.cpp
+/** \example example.cpp
     This is example code showing you how to use muparserx.
 
 <pre>
@@ -511,7 +511,44 @@ public:
   }
 }; // class FunEnableDebugDump
 
+#if defined(_UNICODE)
+//-------------------------------------------------------------------------------------------------
+class FunLang : public ICallback
+{
+public:
+  FunLang() : ICallback(cmFUNC, _T("lang"), 1) 
+  {}
 
+  virtual void Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int /*a_iArgc*/)
+  {
+    string_type sID = a_pArg[0]->GetString();
+    if (sID==_T("de"))
+    {
+      ParserX::ResetErrorMessageProvider(new mup::ParserMessageProviderGerman);
+    }
+    else if (sID==_T("en"))
+    {
+      ParserX::ResetErrorMessageProvider(new mup::ParserMessageProviderEnglish);
+    }
+    else
+    {
+      console() << _T("Invalid language ID\n");
+    }
+
+    *ret = (float_type)0.0;
+  }
+
+  virtual const char_type* GetDesc() const
+  {
+    return _T("lang(sLang) - Set the language of error messages (i.e. \"de\" or \"en\").");
+  }
+  
+  virtual IToken* Clone() const
+  {
+    return new FunLang(*this);
+  }
+}; // class FunLang
+#endif // #if defined(_UNICODE)
 
 /*
 //-------------------------------------------------------------------------------------------------
@@ -601,33 +638,6 @@ public:
     return new FunDefine(*this);
   }
 }; // class FunDefine
-
-//---------------------------------------------------------------------------
-class FunDerive : public ICallback
-{
-public:
-  FunDerive() : ICallback(cmFUNC, _T("derive")) 
-  {}
-
-  virtual void Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int a_iArgc)
-  {
-    *ret = 0;
-  }
-
-  virtual const char_type* GetDesc() const
-  {
-    return _T("...");
-  }
-
-  void Compile(const string_type &sArg)
-  {
-  }
-
-  virtual IToken* Clone() const
-  {
-    return new FunDerive(*this);
-  }
-}; // class FunDerive
 */
 
 //---------------------------------------------------------------------------
@@ -849,6 +859,10 @@ void Calc()
   parser.DefineFun(new FunEnableDebugDump);
   parser.DefineFun(new FunTest0);
   parser.DefineFun(new FunPrint);
+
+#if defined(_UNICODE)
+  parser.DefineFun(new FunLang);
+#endif
  
   parser.EnableAutoCreateVar(true);
 
@@ -864,8 +878,6 @@ void Calc()
 
       string_type sLine;
       std::getline(mup::console_in(), sLine);
-      if (sLine.length()==0)
-        continue;
 
       if (sLine==_T("dbg"))
       {
@@ -939,9 +951,9 @@ int main(int /*argc*/, char** /*argv*/)
       throw std::runtime_error("Can't set \"stdout\" to UTF-8");
   #endif
 
-  // Internationalization requires UNICODE as translations do contain non ASCII 
-  // Characters.
-  ParserX::ResetErrorMessageProvider(new mup::ParserMessageProviderGerman);
+  //// Internationalization requires UNICODE as translations do contain non ASCII 
+  //// Characters.
+  //ParserX::ResetErrorMessageProvider(new mup::ParserMessageProviderGerman);
 #endif
 
   try

@@ -47,6 +47,7 @@ MUP_NAMESPACE_START
     if (!m_pInstance.get())
     {
       m_pInstance.reset(new ParserMessageProviderEnglish);
+      m_pInstance->Init();
     }
 
     return *m_pInstance;
@@ -63,12 +64,12 @@ MUP_NAMESPACE_START
   }
 
   //------------------------------------------------------------------------------
-  string_type ParserErrorMsg::operator[](unsigned a_iIdx) const
+  string_type ParserErrorMsg::GetErrorMsg(EErrorCodes eError) const
   {
     if (!m_pInstance.get())
       return string_type();
     else
-      return m_pInstance->operator[](a_iIdx);
+      return m_pInstance->GetErrorMsg(eError);
   }
 
 
@@ -142,7 +143,7 @@ MUP_NAMESPACE_START
     ,m_sMsg()
     ,m_ErrMsg(ParserErrorMsg::Instance())
   {
-    m_sMsg = m_ErrMsg[a_Err.Errc];
+    m_sMsg = m_ErrMsg.GetErrorMsg(a_Err.Errc);
   }
 
   //------------------------------------------------------------------------------
