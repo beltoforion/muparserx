@@ -698,8 +698,9 @@ MUP_NAMESPACE_START
       pTok = m_pTokenReader->ReadNextToken();
 
 #if defined(MUP_DUMP_TOKENS)
-      cout << pTok->AsciiDump() << endl;
+      console() << pTok->AsciiDump() << endl;
 #endif
+
       ECmdCode eCmd = pTok->GetCode();
       switch (eCmd)
       {
