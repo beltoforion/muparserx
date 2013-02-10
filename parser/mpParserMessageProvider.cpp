@@ -14,6 +14,7 @@ MUP_NAMESPACE_START
 
   ParserMessageProviderBase::ParserMessageProviderBase()
     :m_vErrMsg(0)
+    ,m_vHints(0)
   {}
 
   //-----------------------------------------------------------------------------------------------
@@ -21,19 +22,41 @@ MUP_NAMESPACE_START
   {}
 
   //-----------------------------------------------------------------------------------------------
+  void ParserMessageProviderBase::Init()
+  {
+    InitErrorMessages();
+    for (int i=0; i<ecCOUNT; ++i)
+    {
+      if (!m_vErrMsg[i].length())
+        throw std::runtime_error("Incomplete translation (at least one error code missing)");
+    }
+
+    InitHints();
+    for (int i=0; i<hiCOUNT; ++i)
+    {
+      if (!m_vHints[i].length())
+        throw std::runtime_error("Incomplete translation (at least one hint is missing code missing)");
+    }
+  }
+
+  //---------------------------------------------------------------------------------------------
   string_type ParserMessageProviderBase::operator[](unsigned a_iIdx) const
   {
     return (a_iIdx<m_vErrMsg.size()) ? m_vErrMsg[a_iIdx] : string_type();
   }
 
-  //-------------------------------------------------------------------------------------------------
+  //-----------------------------------------------------------------------------------------------
   //
   // class ParserMessageProviderEnglish - English Parser Messages (default)
   //
-  //-------------------------------------------------------------------------------------------------
+  //-----------------------------------------------------------------------------------------------
 
   ParserMessageProviderEnglish::ParserMessageProviderEnglish()
     :ParserMessageProviderBase()
+  {}
+
+  //-----------------------------------------------------------------------------------------------
+  void ParserMessageProviderEnglish::InitErrorMessages()
   {
     m_vErrMsg.resize(ecCOUNT);
 
@@ -86,13 +109,14 @@ MUP_NAMESPACE_START
     m_vErrMsg[ecINVALID_PARAMETER]       = _T("Parameter $ARG$ of function \"$IDENT$\" is invalid.");
     m_vErrMsg[ecINVALID_NUMBER_OF_PARAMETERS] = _T("Invalid number of function arguments.");
     m_vErrMsg[ecOVERFLOW]                = _T("Possible arithmetic overflow occurred in function/operator \"$IDENT$\".");
-
-    #if defined(_DEBUG)
-      for (int i=0; i<ecCOUNT; ++i)
-        if (!m_vErrMsg[i].length())
-          assert(false);
-    #endif
   }
+
+  //-----------------------------------------------------------------------------------------------
+  void ParserMessageProviderEnglish::InitHints()
+  {
+    m_vHints.resize(hiCOUNT);
+  }
+
 
 #if defined(_UNICODE)
 
@@ -104,6 +128,10 @@ MUP_NAMESPACE_START
 
   ParserMessageProviderGerman::ParserMessageProviderGerman()
     :ParserMessageProviderBase()
+  {}
+
+  //-----------------------------------------------------------------------------------------------
+  void ParserMessageProviderGerman::InitErrorMessages()
   {
     m_vErrMsg.resize(ecCOUNT);
 
@@ -126,11 +154,11 @@ MUP_NAMESPACE_START
     m_vErrMsg[ecMISSING_PARENS]          = _T("Fehlende Klammer.");
     m_vErrMsg[ecMISSING_ELSE_CLAUSE]     = _T("\"If-then-else\" Operator ohne \"else\" Zweig verwendet.");
     m_vErrMsg[ecMISPLACED_COLON]         = _T("Komma an unerwarteter Position $POS$ gefunden.");
-    m_vErrMsg[ecTOO_MANY_PARAMS]         = _T("Zu viele Funktionsparameter für Funktion \"$IDENT$\".");
-    m_vErrMsg[ecTOO_FEW_PARAMS]          = _T("Zu wenige Funktionsparameter für Funktion \"$IDENT$\".");
+    m_vErrMsg[ecTOO_MANY_PARAMS]         = _T("Der Funktion \"$IDENT$\" wurden zu viele Argumente übergeben.");
+    m_vErrMsg[ecTOO_FEW_PARAMS]          = _T("Der Funktion \"$IDENT$\" wurden nicht genug Argumente übergeben.");
     m_vErrMsg[ecDIV_BY_ZERO]             = _T("Division durch Null.");
     m_vErrMsg[ecDOMAIN_ERROR]            = _T("Der Parameter der Funktion \"$IDENT$\" hat einen Wert, der nicht Teil des Definitionsbereiches der Funktion ist.");
-    m_vErrMsg[ecNAME_CONFLICT]           = _T("Namenskonflikt.");
+    m_vErrMsg[ecNAME_CONFLICT]           = _T("Namenskonflikt");
     m_vErrMsg[ecOPT_PRI]                 = _T("Ungültige Operatorpriorität (muss größer oder gleich Null sein).");
     m_vErrMsg[ecBUILTIN_OVERLOAD]        = _T("Die Überladung für diesen Binäroperator steht im Widerspruch zu intern vorhanden operatoren.");
     m_vErrMsg[ecUNTERMINATED_STRING]     = _T("Die Zeichenkette an Position $POS$ wird nicht beendet.");
@@ -156,14 +184,13 @@ MUP_NAMESPACE_START
     m_vErrMsg[ecINVALID_PARAMETER]       = _T("Der Parameter $ARG$ der Funktion \"$IDENT$\" is ungültig.");
     m_vErrMsg[ecINVALID_NUMBER_OF_PARAMETERS] = _T("Unzulässige Zahl an Funktionsparametern.");
     m_vErrMsg[ecOVERFLOW]                = _T("Ein arithmetische Überlauf wurde in Funktion/Operator \"$IDENT$\" entdeckt.");
-
-    #if defined(_DEBUG)
-      for (int i=0; i<ecCOUNT; ++i)
-        if (!m_vErrMsg[i].length())
-          assert(false);
-    #endif
   }
 
+  //-----------------------------------------------------------------------------------------------
+  void ParserMessageProviderGerman::InitHints()
+  {
+    m_vHints.resize(hiCOUNT);
+  }
 #endif // _UNICODE
 
 MUP_NAMESPACE_END
