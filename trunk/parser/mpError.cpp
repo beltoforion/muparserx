@@ -58,6 +58,7 @@ MUP_NAMESPACE_START
     if (pProvider!=NULL)
     {
       m_pInstance.reset(pProvider);
+      m_pInstance->Init();
     }
   }
 

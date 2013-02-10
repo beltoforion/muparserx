@@ -14,11 +14,12 @@ MUP_NAMESPACE_START
   /** \brief Base class for Parser Message providing classes. */
   class ParserMessageProviderBase
   {
+  friend class std::auto_ptr<ParserMessageProviderBase>;
+
   public:
-
     ParserMessageProviderBase();
-    virtual ~ParserMessageProviderBase();
 
+    void Init();
     string_type operator[](unsigned a_iIdx) const;
 
   private:
@@ -28,24 +29,35 @@ MUP_NAMESPACE_START
 
   protected:
     std::vector<string_type>  m_vErrMsg;
+    std::vector<string_type>  m_vHints;
+    
+    virtual ~ParserMessageProviderBase();
+    virtual void InitErrorMessages() = 0;
+    virtual void InitHints() = 0;
   };
 
   //-----------------------------------------------------------------------------------------------
+  /** \brief English versions of parser messages. */
   class ParserMessageProviderEnglish : public ParserMessageProviderBase
   {
-  friend class std::auto_ptr<ParserMessageProviderEnglish>;
-
   public:
     ParserMessageProviderEnglish();
+
+  protected:
+    virtual void InitErrorMessages();
+    virtual void InitHints();
   };
 
   //-----------------------------------------------------------------------------------------------
+  /** \brief German versions of parser messages. */
   class ParserMessageProviderGerman : public ParserMessageProviderBase
   {
-  friend class std::auto_ptr<ParserMessageProviderGerman>;
-
   public:
     ParserMessageProviderGerman();
+
+  protected:
+    virtual void InitErrorMessages();
+    virtual void InitHints();
   };
 
 MUP_NAMESPACE_END
