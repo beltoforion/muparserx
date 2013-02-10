@@ -1,4 +1,4 @@
-/** \example example.cpp
+﻿/** \example example.cpp
     This is example code showing you how to use muparserx.
 
 <pre>
@@ -46,14 +46,21 @@
 //---------------------------------------------------------------------------
 
 /** \brief This macro will enable mathematical constants like M_PI. */
-#define _USE_MATH_DEFINES		
+#define _USE_MATH_DEFINES 
 
 //--- Standard include ------------------------------------------------------
-#if defined(_WIN32) && defined(_DEBUG)
-  #define _CRTDBG_MAP_ALLOC
-  #include <stdlib.h>
-  #include <crtdbg.h>
-  #define CREATE_LEAKAGE_REPORT
+#if defined(_WIN32) 
+  // Memory leak dumping
+  #if defined(_DEBUG)
+    #define _CRTDBG_MAP_ALLOC
+    #include <stdlib.h>
+    #include <crtdbg.h>
+    #define CREATE_LEAKAGE_REPORT
+  #endif
+
+  // Needed for windows console UTF-8 support
+  #include <fcntl.h>
+  #include <io.h>
 #endif
 
 #include <cstdlib>
@@ -61,17 +68,17 @@
 #include <ctime>
 #include <cstdio>
 #include <cmath>
-#include <string>
 #include <iostream>
 #include <limits>
+#include <string>
 #include <typeinfo>
 
-//--- muparserx framework ---------------------------------------------------
+//--- muparserx framework -------------------------------------------------------------------------
 #include "mpParser.h"
 #include "mpDefines.h"
 #include "mpTest.h"
 
-//--- other includes --------------------------------------------------------
+//--- other includes ------------------------------------------------------------------------------
 #include "timer.h"
 
 using namespace std;
@@ -920,14 +927,22 @@ void Calc()
 //---------------------------------------------------------------------------
 int main(int /*argc*/, char** /*argv*/)
 {
+  Splash();
+  SelfTest();
+
 #if defined(_UNICODE)
+
+  #if _MSC_VER
+    // Set console to utf-8 mode, if this is not done language specific
+    // characters will be rendered incorrectly
+    if (_setmode(_fileno(stdout), _O_U8TEXT)==-1)
+      throw std::runtime_error("Can't set \"stdout\" to UTF-8");
+  #endif
+
   // Internationalization requires UNICODE as translations do contain non ASCII 
   // Characters.
   ParserX::ResetErrorMessageProvider(new mup::ParserMessageProviderGerman);
 #endif
-
-  Splash();
-  SelfTest();
 
   try
   {

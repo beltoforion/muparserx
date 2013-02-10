@@ -2,7 +2,6 @@ TEMPLATE = app
 TARGET = example
 CONFIG += console
 CONFIG -= qt
-DEFINES += _UNICODE
 
 CONFIG(debug, debug|release) {
     DESTDIR = ./debug

@@ -152,6 +152,7 @@
     <ClInclude Include="..\..\parser\mpOprtMatrix.h" />
     <ClInclude Include="..\..\parser\mpOprtNonCmplx.h" />
     <ClInclude Include="..\..\parser\mpParserMessageProvider.h" />
+    <ClInclude Include="..\..\parser\mpPlatformFixes.h" />
     <ClInclude Include="..\..\parser\suSortPred.h" />
     <ClInclude Include="..\..\parser\utGeneric.h" />
     <ClInclude Include="..\..\parser\mpDefines.h" />
