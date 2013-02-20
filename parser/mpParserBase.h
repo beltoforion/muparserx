@@ -98,6 +98,7 @@ MUP_NAMESPACE_START
     void RemovePackage(IPackage *p);
 
     void DefineFun(ICallback *a_pCallback);
+
     void DefineConst(const string_type &a_sName, const Value &a_Val);
     void DefineVar(const string_type &a_sName, const Variable &a_fVar);
     
