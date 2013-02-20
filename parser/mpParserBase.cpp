@@ -405,8 +405,20 @@ void ParserXBase::SetExpr(const string_type &a_sExpr)
   */
 void ParserXBase::DefinePostfixOprt(IOprtPostfix *a_pOprt)
 {
-    m_PostOprtDef[a_pOprt->GetIdent()] = ptr_tok_type(a_pOprt);
-    ReInit();
+    if (m_PostOprtDef.find(a_pOprt->GetIdent()) == m_PostOprtDef.end()) {
+	// Operator is not added yet, add it.
+	a_pOprt->SetParent(this);
+	m_PostOprtDef[a_pOprt->GetIdent()] = ptr_tok_type(a_pOprt);
+	ReInit();
+    }
+    else {
+	// Operator with this name is already added.
+	// Operator is now deleted.
+	string_type func_name = a_pOprt->GetIdent();
+	delete a_pOprt;
+
+	throw ParserError(ErrorContext(ecFUNOPRT_DEFINED, 0, func_name));
+    }
 }
 
 //---------------------------------------------------------------------------
@@ -416,8 +428,20 @@ void ParserXBase::DefinePostfixOprt(IOprtPostfix *a_pOprt)
   */
 void ParserXBase::DefineInfixOprt(IOprtInfix *a_pOprt)
 {
-    m_InfixOprtDef[a_pOprt->GetIdent()] = ptr_tok_type(a_pOprt);
-    ReInit();
+    if (m_InfixOprtDef.find(a_pOprt->GetIdent()) == m_InfixOprtDef.end()) {
+	// Function is not added yet, add it.
+	a_pOprt->SetParent(this);
+	m_InfixOprtDef[a_pOprt->GetIdent()] = ptr_tok_type(a_pOprt);
+	ReInit();
+    }
+    else {
+	// Function with this name is already added.
+	// Function is now deleted.
+	string_type func_name = a_pOprt->GetIdent();
+	delete a_pOprt;
+
+	throw ParserError(ErrorContext(ecFUNOPRT_DEFINED, 0, func_name));
+    }
 }
 
 //---------------------------------------------------------------------------
@@ -473,8 +497,20 @@ void ParserXBase::DefineConst(const string_type &a_sName, const Value &a_Val)
   */
 void ParserXBase::DefineFun(ICallback *a_pFunc)
 {
-    a_pFunc->SetParent(this);
-    m_FunDef[ a_pFunc->GetIdent() ] = ptr_tok_type(a_pFunc);
+    if (m_FunDef.find(a_pFunc->GetIdent()) == m_FunDef.end()) {
+	// Function is not added yet, add it.
+	a_pFunc->SetParent(this);
+	m_FunDef[ a_pFunc->GetIdent() ] = ptr_tok_type(a_pFunc);
+	ReInit(); // TODO: Not sure if this is needed.
+    }
+    else {
+	// Function with this name is already added.
+	// Function is now deleted.
+	string_type func_name = a_pFunc->GetIdent();
+	delete a_pFunc;
+
+	throw ParserError(ErrorContext(ecFUNOPRT_DEFINED, 0, func_name));
+    }
 }
 
 //---------------------------------------------------------------------------
@@ -483,8 +519,20 @@ void ParserXBase::DefineFun(ICallback *a_pFunc)
   */
 void ParserXBase::DefineOprt(IOprtBin *a_pCallback)
 {
-    a_pCallback->SetParent(this);
-    m_OprtDef.insert(make_pair(a_pCallback->GetIdent(), ptr_tok_type(a_pCallback)));
+    if (m_OprtDef.find(a_pCallback->GetIdent()) == m_OprtDef.end()) {
+	// Operator is not added yet, add it.
+	a_pCallback->SetParent(this);
+	m_OprtDef.insert(make_pair(a_pCallback->GetIdent(), ptr_tok_type(a_pCallback)));
+	ReInit(); // TODO: Not sure if this is needed.
+    }
+    else {
+	// Operator with this name is already added.
+	// Operator is now deleted.
+	string_type oprt_name = a_pCallback->GetIdent();
+	delete a_pCallback;
+
+	throw ParserError(ErrorContext(ecFUNOPRT_DEFINED, 0, oprt_name));
+    }
 }
 
 //---------------------------------------------------------------------------
