@@ -100,6 +100,8 @@ MUP_NAMESPACE_START
     m_vErrMsg[ecINVALID_NUMBER_OF_PARAMETERS] = _T("Invalid number of function arguments.");
     m_vErrMsg[ecOVERFLOW]                     = _T("Possible arithmetic overflow occurred in function/operator \"$IDENT$\".");
     m_vErrMsg[ecMATRIX_DIMENSION_MISMATCH]    = _T("Matrix dimension error.");
+    m_vErrMsg[ecVARIABLE_DEFINED]   = _T("Variable \"$IDENT$\" is already defined.");
+    m_vErrMsg[ecCONSTANT_DEFINED]   = _T("Constant \"$IDENT$\" is already defined.");
   }
 
 #if defined(_UNICODE)
@@ -166,6 +168,8 @@ MUP_NAMESPACE_START
     m_vErrMsg[ecINVALID_NUMBER_OF_PARAMETERS] = _T("Unzulässige Zahl an Funktionsparametern.");
     m_vErrMsg[ecOVERFLOW]                     = _T("Ein arithmetische Überlauf wurde in Funktion/Operator \"$IDENT$\" entdeckt.");
     m_vErrMsg[ecMATRIX_DIMENSION_MISMATCH]    = _T("Matrixdimensionen stimmen nicht überein, Operation \"$IDENT$\" kann nicht ausgeführt werden.");
+    m_vErrMsg[ecVARIABLE_DEFINED]   = _T("Variable \"$IDENT$\" is already defined.");
+    m_vErrMsg[ecCONSTANT_DEFINED]   = _T("Constant \"$IDENT$\" is already defined.");
   }
 #endif // _UNICODE
 
