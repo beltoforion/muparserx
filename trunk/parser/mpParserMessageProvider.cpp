@@ -102,6 +102,7 @@ MUP_NAMESPACE_START
     m_vErrMsg[ecMATRIX_DIMENSION_MISMATCH]    = _T("Matrix dimension error.");
     m_vErrMsg[ecVARIABLE_DEFINED]   = _T("Variable \"$IDENT$\" is already defined.");
     m_vErrMsg[ecCONSTANT_DEFINED]   = _T("Constant \"$IDENT$\" is already defined.");
+    m_vErrMsg[ecFUNOPRT_DEFINED]    = _T("Function/operator \"$IDENT$\" is already defined.");
   }
 
 #if defined(_UNICODE)
@@ -170,6 +171,7 @@ MUP_NAMESPACE_START
     m_vErrMsg[ecMATRIX_DIMENSION_MISMATCH]    = _T("Matrixdimensionen stimmen nicht überein, Operation \"$IDENT$\" kann nicht ausgeführt werden.");
     m_vErrMsg[ecVARIABLE_DEFINED]   = _T("Variable \"$IDENT$\" is already defined.");
     m_vErrMsg[ecCONSTANT_DEFINED]   = _T("Constant \"$IDENT$\" is already defined.");
+    m_vErrMsg[ecFUNOPRT_DEFINED]    = _T("Function/operator \"$IDENT$\" is already defined.");
   }
 #endif // _UNICODE
 

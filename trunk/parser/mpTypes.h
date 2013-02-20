@@ -347,11 +347,12 @@ enum EErrorCodes
     ecUNKNOWN_ESCAPE_SEQUENCE = 45,
 
     // already-defined item errors
-    ecVARIABLE_DEFINED = 46,
-    ecCONSTANT_DEFINED = 47,
+    ecVARIABLE_DEFINED = 46, ///< Variable is already defined
+    ecCONSTANT_DEFINED = 47, ///< Constant is already defined
+    ecFUNOPRT_DEFINED = 48, ///< Function/operator is already defined
 
     // internal errors
-    ecINTERNAL_ERROR         = 48, ///< Internal error of any kind.
+    ecINTERNAL_ERROR         = 49, ///< Internal error of any kind.
 
     // The last two are special entries
     ecCOUNT,                       ///< This is no error code, It just stores just the total number of error codes
