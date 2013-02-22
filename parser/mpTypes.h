@@ -62,6 +62,7 @@ class IOprtPostfix;
 class IOprtInfix;
 class IFunction;
 class IToken;
+class ICallback;
 class IValue;
 class ParserXBase;
 class Value;
@@ -74,6 +75,9 @@ class TokenPtr;
 
 /** \brief Type of a managed pointer storing parser tokens. */
 typedef TokenPtr<IToken>   ptr_tok_type;
+
+/** \brief Type of a managed pointer storing callback tokens. */
+typedef TokenPtr<ICallback>   ptr_cal_type;
 
 /** \brief Type of a managed pointer storing value tokens. */
 typedef TokenPtr<IValue>   ptr_val_type;
