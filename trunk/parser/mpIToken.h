@@ -62,6 +62,7 @@ MUP_NAMESPACE_START
   friend class TokenPtr<IFunction>;
   friend class TokenPtr<Value>;
   friend class TokenPtr<Variable>;
+  friend class TokenPtr<ICallback>;
 
   public:
 
@@ -152,7 +153,7 @@ MUP_NAMESPACE_START
       typedef T* token_type;
 
       //---------------------------------------------------------------------------
-      explicit TokenPtr(token_type p = 0)
+      TokenPtr(token_type p = 0)
         :m_pTok(p)
       {
         if (m_pTok)

@@ -97,14 +97,14 @@ MUP_NAMESPACE_START
     void AddPackage(IPackage *p);
     void RemovePackage(IPackage *p);
 
-    void DefineFun(ICallback *a_pCallback);
+    void DefineFun(const ptr_cal_type &a_pFunc);
     void DefineConst(const string_type &a_sName, const Value &a_Val);
     void DefineVar(const string_type &a_sName, const Variable &a_fVar);
     
     // adding operators
-    void DefineOprt(IOprtBin *a_pCallback);
-    void DefinePostfixOprt(IOprtPostfix *a_pCallback);
-    void DefineInfixOprt(IOprtInfix *a_pCallback);
+    void DefineOprt(const ptr_cal_type &a_Oprt);
+    void DefinePostfixOprt(const ptr_cal_type &a_pOprt);
+    void DefineInfixOprt(const ptr_cal_type &a_iOprt);
 
     // Clear user defined variables, constants or functions
     void ClearVar();

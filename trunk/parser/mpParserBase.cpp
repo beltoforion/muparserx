@@ -403,21 +403,16 @@ void ParserXBase::SetExpr(const string_type &a_sExpr)
       \param a_pOprt Pointer to a unary postfix operator object. The parser will
 		     become the new owner of this object hence will destroy it.
   */
-void ParserXBase::DefinePostfixOprt(IOprtPostfix *a_pOprt)
+void ParserXBase::DefinePostfixOprt(const ptr_cal_type &a_pOprt)
 {
-    if (m_PostOprtDef.find(a_pOprt->GetIdent()) == m_PostOprtDef.end()) {
+    if (m_PostOprtDef.find(a_pOprt.Get()->GetIdent()) == m_PostOprtDef.end()) {
 	// Operator is not added yet, add it.
-	a_pOprt->SetParent(this);
-	m_PostOprtDef[a_pOprt->GetIdent()] = ptr_tok_type(a_pOprt);
+	a_pOprt.Get()->SetParent(this);
+	m_PostOprtDef[a_pOprt.Get()->GetIdent()] = ptr_tok_type(a_pOprt.Get());
 	ReInit();
     }
     else {
-	// Operator with this name is already added.
-	// Operator is now deleted.
-	string_type func_name = a_pOprt->GetIdent();
-	delete a_pOprt;
-
-	throw ParserError(ErrorContext(ecFUNOPRT_DEFINED, 0, func_name));
+	throw ParserError(ErrorContext(ecFUNOPRT_DEFINED, 0, a_pOprt.Get()->GetIdent()));
     }
 }
 
@@ -426,21 +421,16 @@ void ParserXBase::DefinePostfixOprt(IOprtPostfix *a_pOprt)
       \param a_pOprt Pointer to a unary postfix operator object. The parser will
 	     become the new owner of this object hence will destroy it.
   */
-void ParserXBase::DefineInfixOprt(IOprtInfix *a_pOprt)
+void ParserXBase::DefineInfixOprt(const ptr_cal_type &a_iOprt)
 {
-    if (m_InfixOprtDef.find(a_pOprt->GetIdent()) == m_InfixOprtDef.end()) {
+    if (m_InfixOprtDef.find(a_iOprt.Get()->GetIdent()) == m_InfixOprtDef.end()) {
 	// Function is not added yet, add it.
-	a_pOprt->SetParent(this);
-	m_InfixOprtDef[a_pOprt->GetIdent()] = ptr_tok_type(a_pOprt);
+	a_iOprt.Get()->SetParent(this);
+	m_InfixOprtDef[a_iOprt.Get()->GetIdent()] = ptr_tok_type(a_iOprt.Get());
 	ReInit();
     }
     else {
-	// Function with this name is already added.
-	// Function is now deleted.
-	string_type func_name = a_pOprt->GetIdent();
-	delete a_pOprt;
-
-	throw ParserError(ErrorContext(ecFUNOPRT_DEFINED, 0, func_name));
+	throw ParserError(ErrorContext(ecFUNOPRT_DEFINED, 0, a_iOprt.Get()->GetIdent()));
     }
 }
 
@@ -495,43 +485,34 @@ void ParserXBase::DefineConst(const string_type &a_sName, const Value &a_Val)
 
     The parser takes ownership over the callback object.
   */
-void ParserXBase::DefineFun(ICallback *a_pFunc)
+void ParserXBase::DefineFun(const ptr_cal_type &a_pFunc)
 {
-    if (m_FunDef.find(a_pFunc->GetIdent()) == m_FunDef.end()) {
+    if (m_FunDef.find(a_pFunc.Get()->GetIdent()) == m_FunDef.end()) {
 	// Function is not added yet, add it.
-	a_pFunc->SetParent(this);
-	m_FunDef[ a_pFunc->GetIdent() ] = ptr_tok_type(a_pFunc);
+	a_pFunc.Get()->SetParent(this);
+	m_FunDef[a_pFunc.Get()->GetIdent()] = ptr_tok_type(a_pFunc.Get());
 	ReInit(); // TODO: Not sure if this is needed.
     }
     else {
-	// Function with this name is already added.
-	// Function is now deleted.
-	string_type func_name = a_pFunc->GetIdent();
-	delete a_pFunc;
-
-	throw ParserError(ErrorContext(ecFUNOPRT_DEFINED, 0, func_name));
+	throw ParserError(ErrorContext(ecFUNOPRT_DEFINED, 0, a_pFunc.Get()->GetIdent()));
     }
 }
 
 //---------------------------------------------------------------------------
-/** \brief Define a binara operator.
+/** \brief Define a binary operator.
       \param a_pCallback Pointer to the callback object
   */
-void ParserXBase::DefineOprt(IOprtBin *a_pCallback)
+void ParserXBase::DefineOprt(const ptr_cal_type &a_Oprt)
 {
-    if (m_OprtDef.find(a_pCallback->GetIdent()) == m_OprtDef.end()) {
+    if (m_OprtDef.find(a_Oprt.Get()->GetIdent()) == m_OprtDef.end()) {
 	// Operator is not added yet, add it.
-	a_pCallback->SetParent(this);
-	m_OprtDef.insert(make_pair(a_pCallback->GetIdent(), ptr_tok_type(a_pCallback)));
+	a_Oprt.Get()->SetParent(this);
+	m_OprtDef.insert(make_pair(a_Oprt.Get()->GetIdent(),
+				   ptr_tok_type(a_Oprt.Get())));
 	ReInit(); // TODO: Not sure if this is needed.
     }
     else {
-	// Operator with this name is already added.
-	// Operator is now deleted.
-	string_type oprt_name = a_pCallback->GetIdent();
-	delete a_pCallback;
-
-	throw ParserError(ErrorContext(ecFUNOPRT_DEFINED, 0, oprt_name));
+	throw ParserError(ErrorContext(ecFUNOPRT_DEFINED, 0, a_Oprt.Get()->GetIdent()));
     }
 }
 
