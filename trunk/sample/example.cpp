@@ -897,23 +897,37 @@ void Calc()
       // The returned result is of type Value, value is a Variant like
       // type that can be either a boolean an integer or a floating point value
       ans = parser.Eval();
-//      ans = parser.Eval();
+      int nNumResults = parser.GetNumResults();
 
-      // Value supports C++ streaming like this:
-      console() << _T("Result (type: '" << ans.GetType() <<  "'):\n");
-      console() << _T("ans = ") << ans << _T("\n");
-
-/*
-      // Or if you need the specific type use this:
-      switch (ans.GetType())
+      if (nNumResults==1)
       {
-      case 's': { std::string s = ans.GetString();               console() << s << " (string)"  << "\n"; } break;
-      case 'i': { int i = ans.GetInteger();                      console() << i << " (int)"     << "\n"; } break;
-      case 'f': { float_type f = ans.GetFloat();                 console() << f << " (float)"   << "\n"; } break;
-      case 'c': { std::complex<float_type> c = ans.GetComplex(); console() << c << " (complex)" << "\n"; } break;
-      case 'b': break;
-      }
+      // Value supports C++ streaming like this:
+      console() << _T("Number or results: ") << parser.GetNumResults() << _T("\n");
+      console() << _T("Result (type: '") << ans.GetType() <<  _T("'):\n");
+      console() << _T("ans = ") << ans << _T("\n");
+/*
+        // Or if you need the specific type use this:
+        switch (ans.GetType())
+        {
+        case 's': { std::string s = ans.GetString();               console() << s << " (string)"  << "\n"; } break;
+        case 'i': { int i = ans.GetInteger();                      console() << i << " (int)"     << "\n"; } break;
+        case 'f': { float_type f = ans.GetFloat();                 console() << f << " (float)"   << "\n"; } break;
+        case 'c': { std::complex<float_type> c = ans.GetComplex(); console() << c << " (complex)" << "\n"; } break;
+        case 'b': break;
+        }
 */
+      }
+      else
+      {
+        // This piece of code demonstrates how to query multiple results
+        // an equation consisting of comma separated subexpressions
+        // will yield multiple return values (i.e.: "sin(8),2,3").
+        ptr_val_type* results = parser.Eval(nNumResults);
+        for (int i=0; i<nNumResults; ++i)
+        {
+          console() << _T("ans[") << i << _T("] = ") << *(results[i]) << _T("\n");
+        }
+      }
     }
     catch(ParserError &e)
     {
