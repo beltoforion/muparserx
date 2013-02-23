@@ -104,9 +104,9 @@ MUP_NAMESPACE_START
     void DefineVar(const string_type &a_sName, const Variable &a_fVar);
     
     // adding operators
-    void DefineOprt(const ptr_cal_type &a_Oprt);
-    void DefinePostfixOprt(const ptr_cal_type &a_pOprt);
-    void DefineInfixOprt(const ptr_cal_type &a_iOprt);
+    void DefineOprt(const TokenPtr<IOprtBin> &a_Oprt);
+    void DefinePostfixOprt(const TokenPtr<IOprtPostfix> &a_pOprt);
+    void DefineInfixOprt(const TokenPtr<IOprtInfix> &a_iOprt);
 
     // Clear user defined variables, constants or functions
     void ClearVar();
