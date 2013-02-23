@@ -59,6 +59,8 @@ MUP_NAMESPACE_START
   friend class TokenPtr<IToken>;
   friend class TokenPtr<IValue>;
   friend class TokenPtr<IOprtBin>;
+  friend class TokenPtr<IOprtInfix>;
+  friend class TokenPtr<IOprtPostfix>;
   friend class TokenPtr<IFunction>;
   friend class TokenPtr<Value>;
   friend class TokenPtr<Variable>;

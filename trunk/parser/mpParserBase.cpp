@@ -417,7 +417,7 @@ MUP_NAMESPACE_START
         \param a_pOprt Pointer to a unary postfix operator object. The parser will
 		       become the new owner of this object hence will destroy it.
     */
-  void ParserXBase::DefinePostfixOprt(const ptr_cal_type &a_pOprt)
+  void ParserXBase::DefinePostfixOprt(const TokenPtr<IOprtPostfix> &a_pOprt)
   {
     if (m_PostOprtDef.find(a_pOprt.Get()->GetIdent()) != m_PostOprtDef.end()) 
       throw ParserError(ErrorContext(ecFUNOPRT_DEFINED, 0, a_pOprt.Get()->GetIdent()));
@@ -433,7 +433,7 @@ MUP_NAMESPACE_START
         \param a_pOprt Pointer to a unary postfix operator object. The parser will
 	       become the new owner of this object hence will destroy it.
     */
-  void ParserXBase::DefineInfixOprt(const ptr_cal_type &a_iOprt)
+  void ParserXBase::DefineInfixOprt(const TokenPtr<IOprtInfix> &a_iOprt)
   {
     if (m_InfixOprtDef.find(a_iOprt.Get()->GetIdent()) != m_InfixOprtDef.end())
 	  throw ParserError(ErrorContext(ecFUNOPRT_DEFINED, 0, a_iOprt.Get()->GetIdent()));
@@ -506,7 +506,7 @@ MUP_NAMESPACE_START
   /** \brief Define a binary operator.
         \param a_pCallback Pointer to the callback object
     */
-  void ParserXBase::DefineOprt(const ptr_cal_type &a_Oprt)
+  void ParserXBase::DefineOprt(const TokenPtr<IOprtBin> &a_Oprt)
   {
     if (m_OprtDef.find(a_Oprt.Get()->GetIdent()) != m_OprtDef.end()) 
       throw ParserError(ErrorContext(ecFUNOPRT_DEFINED, 0, a_Oprt.Get()->GetIdent()));
