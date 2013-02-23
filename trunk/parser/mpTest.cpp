@@ -788,7 +788,7 @@ MUP_NAMESPACE_START
     iNumErr += EqnTest(_T("5!"), 120, true);
     iNumErr += ThrowTest(_T("-5!"), ecDOMAIN_ERROR);
     iNumErr += ThrowTest(_T("123456!"), ecOVERFLOW);
-
+    
     Assessment(iNumErr);
     return iNumErr;
   }
@@ -1182,6 +1182,9 @@ MUP_NAMESPACE_START
   {
     int  iNumErr = 0;
     *m_stream << _T("testing sample equations...");
+
+    iNumErr += ThrowTest(_T("1e1234"), ecOVERFLOW);
+    iNumErr += ThrowTest(_T("-1e1234"), ecOVERFLOW);
 
     iNumErr += EqnTest(_T("-2--8"), (float_type)6.0, true);
     iNumErr += EqnTest(_T("2*(a=9)*3"), 54, true);
