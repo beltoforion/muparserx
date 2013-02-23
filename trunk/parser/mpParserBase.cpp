@@ -413,10 +413,10 @@ MUP_NAMESPACE_START
 
   //---------------------------------------------------------------------------
   /** \brief Add a user defined operator.
-        \post Will reset the Parser to string parsing mode.
-        \param a_pOprt Pointer to a unary postfix operator object. The parser will
-		       become the new owner of this object hence will destroy it.
-    */
+      \post Will reset the Parser to string parsing mode.
+      \param a_pOprt Pointer to a unary postfix operator object. The parser will
+             become the new owner of this object hence will destroy it.
+  */
   void ParserXBase::DefinePostfixOprt(const TokenPtr<IOprtPostfix> &a_pOprt)
   {
     if (m_PostOprtDef.find(a_pOprt.Get()->GetIdent()) != m_PostOprtDef.end()) 
@@ -430,9 +430,9 @@ MUP_NAMESPACE_START
 
   //---------------------------------------------------------------------------
   /** \brief Add a user defined operator.
-        \param a_pOprt Pointer to a unary postfix operator object. The parser will
-	       become the new owner of this object hence will destroy it.
-    */
+      \param a_pOprt Pointer to a unary postfix operator object. The parser will
+             become the new owner of this object hence will destroy it.
+  */
   void ParserXBase::DefineInfixOprt(const TokenPtr<IOprtInfix> &a_iOprt)
   {
     if (m_InfixOprtDef.find(a_iOprt.Get()->GetIdent()) != m_InfixOprtDef.end())
@@ -446,9 +446,9 @@ MUP_NAMESPACE_START
 
   //---------------------------------------------------------------------------
   /** \brief Add a user defined variable.
-        \param a_sName The variable name
-        \param a_Var The variable to be added to muParserX
-    */
+      \param a_sName The variable name
+      \param a_Var The variable to be added to muParserX
+  */
   void ParserXBase::DefineVar(const string_type &a_sName, const Variable &a_Var)
   {
     CheckName(a_sName, ValidNameChars());
