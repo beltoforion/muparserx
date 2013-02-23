@@ -90,6 +90,8 @@ MUP_NAMESPACE_START
     virtual ~ParserXBase();
     
     const IValue& Eval() const;
+    ptr_val_type* Eval(int &nNumResults);
+    int GetNumResults() const;
 
     void SetExpr(const string_type &a_sExpr);
     void AddValueReader(IValueReader *a_pReader);
