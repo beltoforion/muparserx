@@ -24,7 +24,7 @@
 #                                                                       #
 #########################################################################
 
-V2.1.7 (20130210)
+V2.1.7 (20130224)
 -----------------
 Changes:
   - added "zeros" function for creating matrices initialized to all zero added
@@ -33,12 +33,16 @@ Changes:
   - floating point data type can now be selected with the "MUP_FLOAT_TYPE" macro
     in mpDefines.h
   - API for customizing error messages added; German translations added
-  
+  - Querying multiple results of comma separated expressions added
+  - DefineVar / DefineFun / DefineInfixOprt / DefineOprt thrown an exception when there is
+    already a token with that name defined
+
 Bugfixes:
   - Issue 17: Wrong result on complex power
   - Issue 20: Library crash when " " is calculated
   - Issue 23: min, max and sum functions return values when called without parameters
   - Issue 26: misc bugfixes for "<<" and ">>" operators.
+  - Issue 27: Querying multiple results of comma separated expressions did not work
   - untracked issue: compiling with UNICODE did not work
   - untracked issue: Column number of matrices were not reported correctly
   - untracked issue: expressions ending with newline could not be evaluated
