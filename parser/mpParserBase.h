@@ -73,7 +73,6 @@ MUP_NAMESPACE_START
 
   private:
 
-    //typedef Value (ParserXBase::*parse_function_type)() const;  
     typedef const IValue& (ParserXBase::*parse_function_type)() const;  
     static const char_type *c_DefaultOprt[]; 
     static bool s_bDumpStack;
