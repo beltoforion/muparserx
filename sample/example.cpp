@@ -674,6 +674,7 @@ void Splash()
   console() << _T("- compiled with MSC Version ") << _MSC_VER << _T("\n");
 #endif
 
+  console() << _T("- IEEE 754 (IEC 559) is ") << ((std::numeric_limits<float_type>::is_iec559) ? _T("available") : _T(" NOT AVAILABLE")) << _T("\n");
   console() << _T("- ") << sizeof(void*)*8 << _T(" bit\n");
   console() << _T("- Floating point type is \"") << typeid(float_type).name()
                                                << _T("\" (") << std::numeric_limits<float_type>::digits10 << _T(" Digits)")
