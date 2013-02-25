@@ -901,10 +901,10 @@ void Calc()
 
       if (nNumResults==1)
       {
-      // Value supports C++ streaming like this:
-      console() << _T("Number or results: ") << parser.GetNumResults() << _T("\n");
-      console() << _T("Result (type: '") << ans.GetType() <<  _T("'):\n");
-      console() << _T("ans = ") << ans << _T("\n");
+        // Value supports C++ streaming like this:
+        console() << _T("Number or results: ") << parser.GetNumResults() << _T("\n");
+        console() << _T("Result (type: '") << ans.GetType() <<  _T("'):\n");
+        console() << _T("ans = ") << ans << _T("\n");
 /*
         // Or if you need the specific type use this:
         switch (ans.GetType())
