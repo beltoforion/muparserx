@@ -34,7 +34,7 @@ Changes:
     in mpDefines.h
   - API for customizing error messages added; German translations added
   - Querying multiple results of comma separated expressions added
-  - DefineVar / DefineFun / DefineInfixOprt / DefineOprt thrown an exception when there is
+  - DefineVar / DefineFun / DefineInfixOprt / DefineOprt throws an exception if there is
     already a token with that name defined
 
 Bugfixes:
