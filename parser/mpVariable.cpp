@@ -49,7 +49,8 @@ MUP_NAMESPACE_START
       \param pVal Pointer of the value to bind to this variable.
 
     It is possible to create an empty variable object by setting pVal to null.
-    Such variable objects must be bound later in order to be of any use.
+    Such variable objects must be bound later in order to be of any use. The parser
+    does NOT assume ownership over the pointer!
   */
   Variable::Variable(IValue *pVal)
     :IValue(cmVAL)

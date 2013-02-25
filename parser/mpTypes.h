@@ -77,7 +77,7 @@ class TokenPtr;
 typedef TokenPtr<IToken>   ptr_tok_type;
 
 /** \brief Type of a managed pointer storing callback tokens. */
-typedef TokenPtr<ICallback>   ptr_cal_type;
+typedef TokenPtr<ICallback> ptr_cal_type;
 
 /** \brief Type of a managed pointer storing value tokens. */
 typedef TokenPtr<IValue>   ptr_val_type;
@@ -136,10 +136,9 @@ typedef std::map<string_type, ptr_tok_type> val_maptype;
 typedef std::map<string_type, ptr_tok_type> fun_maptype;
 
 /** \brief Type of a container that binds Callback object pointer
-	     to operator identifiers. */
+	     to operator identifiers. 
+*/
 typedef std::map<string_type, ptr_tok_type, su::pred::SortByLength<string_type> > oprt_bin_maptype;
-
-typedef std::multimap<string_type, ptr_tok_type, su::pred::SortByLength<string_type> > oprt_bin_multimap;
 
 /** \brief Type of a map for storing postfix operators by their name. */
 typedef std::map<string_type, ptr_tok_type> oprt_pfx_maptype;
@@ -353,7 +352,7 @@ enum EErrorCodes
     // already-defined item errors
     ecVARIABLE_DEFINED = 46, ///< Variable is already defined
     ecCONSTANT_DEFINED = 47, ///< Constant is already defined
-    ecFUNOPRT_DEFINED = 48, ///< Function/operator is already defined
+    ecFUNOPRT_DEFINED = 48,  ///< Function/operator is already defined
 
     // internal errors
     ecINTERNAL_ERROR         = 49, ///< Internal error of any kind.

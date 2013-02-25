@@ -787,7 +787,12 @@ MUP_NAMESPACE_START
     // factorial operator
     iNumErr += EqnTest(_T("5!"), 120, true);
     iNumErr += ThrowTest(_T("-5!"), ecDOMAIN_ERROR);
-    iNumErr += ThrowTest(_T("123456!"), ecOVERFLOW);
+
+    // Special tests for systems not supporting IEEE 754
+    if (!std::numeric_limits<float_type>::is_iec559)
+    {
+      iNumErr += ThrowTest(_T("123456!"), ecOVERFLOW);
+    }
     
     Assessment(iNumErr);
     return iNumErr;
@@ -1470,8 +1475,6 @@ MUP_NAMESPACE_START
       p1->DefineVar( _T("m2"), Variable(&m2) );
 
       // Add constants
-      p1->DefineConst(_T("pi"), (float_type)MUP_CONST_PI);
-      p1->DefineConst(_T("e"),  (float_type)MUP_CONST_E);
       p1->DefineConst(_T("const"),  1);
       p1->DefineConst(_T("const1"), 2);
       p1->DefineConst(_T("const2"), 3);

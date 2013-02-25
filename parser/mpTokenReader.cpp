@@ -364,8 +364,8 @@ MUP_NAMESPACE_START
     m_pOprtDef            = &a_pParent->m_OprtDef;
     m_pInfixOprtDef       = &a_pParent->m_InfixOprtDef;
     m_pPostOprtDef        = &a_pParent->m_PostOprtDef;
-    m_pVarDef             = &a_pParent->m_VarDef;
-    m_pConstDef           = &a_pParent->m_valConst;
+    m_pVarDef             = &a_pParent->m_varDef;
+    m_pConstDef           = &a_pParent->m_valDef;
     m_pDynVarShadowValues = &a_pParent->m_valDynVarShadow;
   }
 
@@ -739,7 +739,7 @@ MUP_NAMESPACE_START
     if (iEnd==m_nPos)
       return false;
 
-    oprt_bin_multimap::reverse_iterator item;
+    oprt_bin_maptype::reverse_iterator item;
     try
     {
       // Note:

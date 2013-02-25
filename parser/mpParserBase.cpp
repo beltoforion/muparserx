@@ -108,8 +108,8 @@ MUP_NAMESPACE_START
     ,m_PostOprtDef()
     ,m_InfixOprtDef()
     ,m_OprtDef()
-    ,m_valConst()
-    ,m_VarDef()
+    ,m_valDef()
+    ,m_varDef()
 	,m_pParserEngine(&ParserXBase::ParseFromString)
     ,m_pTokenReader()
     ,m_valDynVarShadow()
@@ -136,8 +136,8 @@ MUP_NAMESPACE_START
     ,m_PostOprtDef()
     ,m_InfixOprtDef()
     ,m_OprtDef()
-    ,m_valConst()
-    ,m_VarDef()
+    ,m_valDef()
+    ,m_varDef()
 	,m_pParserEngine(&ParserXBase::ParseFromString)
     ,m_pTokenReader()
     ,m_valDynVarShadow()
@@ -203,9 +203,9 @@ MUP_NAMESPACE_START
     m_FunDef          = ref.m_FunDef;
     m_PostOprtDef     = ref.m_PostOprtDef;
     m_InfixOprtDef    = ref.m_InfixOprtDef;
-    m_valConst        = ref.m_valConst;
+    m_valDef          = ref.m_valDef;
     m_valDynVarShadow = ref.m_valDynVarShadow;
-    m_VarDef          = ref.m_VarDef;             // Copy user defined variables
+    m_varDef          = ref.m_varDef;             // Copy user defined variables
     m_nFinalResultIdx = ref.m_nFinalResultIdx;
 
     // Copy charsets
@@ -367,11 +367,6 @@ MUP_NAMESPACE_START
   }
 
   //---------------------------------------------------------------------------
-  void ParserXBase::RemovePackage(IPackage * /*p*/)
-  {
-  }
-
-  //---------------------------------------------------------------------------
   /** \brief Add a value reader object to muParserX. 
       \param a_pReader Pointer to the value reader object.
   */
@@ -412,39 +407,6 @@ MUP_NAMESPACE_START
   }
 
   //---------------------------------------------------------------------------
-  /** \brief Add a user defined operator.
-      \post Will reset the Parser to string parsing mode.
-      \param a_pOprt Pointer to a unary postfix operator object. The parser will
-             become the new owner of this object hence will destroy it.
-  */
-  void ParserXBase::DefinePostfixOprt(const TokenPtr<IOprtPostfix> &a_pOprt)
-  {
-    if (m_PostOprtDef.find(a_pOprt.Get()->GetIdent()) != m_PostOprtDef.end()) 
-      throw ParserError(ErrorContext(ecFUNOPRT_DEFINED, 0, a_pOprt.Get()->GetIdent()));
-      
-    // Operator is not added yet, add it.
-    a_pOprt.Get()->SetParent(this);
-    m_PostOprtDef[a_pOprt.Get()->GetIdent()] = ptr_tok_type(a_pOprt.Get());
-    ReInit();
-  }
-
-  //---------------------------------------------------------------------------
-  /** \brief Add a user defined operator.
-      \param a_pOprt Pointer to a unary postfix operator object. The parser will
-             become the new owner of this object hence will destroy it.
-  */
-  void ParserXBase::DefineInfixOprt(const TokenPtr<IOprtInfix> &a_iOprt)
-  {
-    if (m_InfixOprtDef.find(a_iOprt.Get()->GetIdent()) != m_InfixOprtDef.end())
-	  throw ParserError(ErrorContext(ecFUNOPRT_DEFINED, 0, a_iOprt.Get()->GetIdent()));
-
-	// Function is not added yet, add it.
-	a_iOprt.Get()->SetParent(this);
-	m_InfixOprtDef[a_iOprt.Get()->GetIdent()] = ptr_tok_type(a_iOprt.Get());
-	ReInit();
-  }
-
-  //---------------------------------------------------------------------------
   /** \brief Add a user defined variable.
       \param a_sName The variable name
       \param a_Var The variable to be added to muParserX
@@ -453,12 +415,10 @@ MUP_NAMESPACE_START
   {
     CheckName(a_sName, ValidNameChars());
 
-    if (m_VarDef.find(a_sName) != m_VarDef.end()) 
+    if (IsVarDefined(a_sName)) 
       throw ParserError(ErrorContext(ecVARIABLE_DEFINED, 0, a_sName));
       
-    // Variable is not added yet, add it.
-    m_VarDef[a_sName] = ptr_tok_type( a_Var.Clone() );
-    ReInit();
+    m_varDef[a_sName] = ptr_tok_type(a_Var.Clone());
   }
 
 
@@ -470,17 +430,15 @@ MUP_NAMESPACE_START
       Parser constants are handed over by const reference as opposed to variables
       which are handed over by reference. Consequently the parser can not change
       their value.
-    */
-  void ParserXBase::DefineConst(const string_type &a_sName, const Value &a_Val)
+  */
+  void ParserXBase::DefineConst(const string_type &ident, const Value &val)
   {
-      if (m_VarDef.find(a_sName) != m_VarDef.end())
-        throw ParserError(ErrorContext(ecCONSTANT_DEFINED, 0, a_sName));
-      
-      CheckName(a_sName, ValidNameChars());
+    CheckName(ident, ValidNameChars());
 
-	  // Constant is not added yet, add it.
-	  m_valConst[a_sName] = ptr_tok_type( a_Val.Clone() );
-	  ReInit();
+    if (IsConstDefined(ident))
+      throw ParserError(ErrorContext(ecCONSTANT_DEFINED, 0, ident));
+      
+	m_valDef[ident] = ptr_tok_type(val.Clone());
   }
 
   //---------------------------------------------------------------------------
@@ -490,39 +448,143 @@ MUP_NAMESPACE_START
         \sa GetFunDef, functions
 
       The parser takes ownership over the callback object.
-    */
-  void ParserXBase::DefineFun(const ptr_cal_type &a_pFunc)
+  */
+  void ParserXBase::DefineFun(const ptr_cal_type &fun)
   {
-    if (m_FunDef.find(a_pFunc.Get()->GetIdent()) != m_FunDef.end()) 
-	  throw ParserError(ErrorContext(ecFUNOPRT_DEFINED, 0, a_pFunc.Get()->GetIdent()));
+    if (IsFunDefined(fun->GetIdent()))
+	  throw ParserError(ErrorContext(ecFUNOPRT_DEFINED, 0, fun->GetIdent()));
 
-	// Function is not added yet, add it.
-	a_pFunc.Get()->SetParent(this);
-	m_FunDef[a_pFunc.Get()->GetIdent()] = ptr_tok_type(a_pFunc.Get());
-	ReInit();
+	fun->SetParent(this);
+	m_FunDef[fun->GetIdent()] = ptr_tok_type(fun->Clone());
   }
 
   //---------------------------------------------------------------------------
   /** \brief Define a binary operator.
         \param a_pCallback Pointer to the callback object
-    */
-  void ParserXBase::DefineOprt(const TokenPtr<IOprtBin> &a_Oprt)
+  */
+  void ParserXBase::DefineOprt(const TokenPtr<IOprtBin> &oprt)
   {
-    if (m_OprtDef.find(a_Oprt.Get()->GetIdent()) != m_OprtDef.end()) 
-      throw ParserError(ErrorContext(ecFUNOPRT_DEFINED, 0, a_Oprt.Get()->GetIdent()));
+    if (IsOprtDefined(oprt->GetIdent())) 
+      throw ParserError(ErrorContext(ecFUNOPRT_DEFINED, 0, oprt->GetIdent()));
 
+    oprt->SetParent(this);
+    m_OprtDef[oprt->GetIdent()] = ptr_tok_type(oprt->Clone());
+  }
+
+  //---------------------------------------------------------------------------
+  /** \brief Add a user defined operator.
+      \post Will reset the Parser to string parsing mode.
+      \param a_pOprt Pointer to a unary postfix operator object. The parser will
+             become the new owner of this object hence will destroy it.
+  */
+  void ParserXBase::DefinePostfixOprt(const TokenPtr<IOprtPostfix> &oprt)
+  {
+    if (IsPostfixOprtDefined(oprt->GetIdent()))
+      throw ParserError(ErrorContext(ecFUNOPRT_DEFINED, 0, oprt->GetIdent()));
+      
     // Operator is not added yet, add it.
-    a_Oprt.Get()->SetParent(this);
-    m_OprtDef.insert(make_pair(a_Oprt.Get()->GetIdent(),
-		                       ptr_tok_type(a_Oprt.Get())));
+    oprt->SetParent(this);
+    m_PostOprtDef[oprt->GetIdent()] = ptr_tok_type(oprt->Clone());
+  }
+
+  //---------------------------------------------------------------------------
+  /** \brief Add a user defined operator.
+      \param a_pOprt Pointer to a unary postfix operator object. The parser will
+             become the new owner of this object hence will destroy it.
+  */
+  void ParserXBase::DefineInfixOprt(const TokenPtr<IOprtInfix> &oprt)
+  {
+    if (IsInfixOprtDefined(oprt->GetIdent()))
+	  throw ParserError(ErrorContext(ecFUNOPRT_DEFINED, 0, oprt->GetIdent()));
+
+	// Function is not added yet, add it.
+	oprt->SetParent(this);
+	m_InfixOprtDef[oprt->GetIdent()] = ptr_tok_type(oprt->Clone());
+  }
+
+  //---------------------------------------------------------------------------
+  void ParserXBase::RemoveVar(const string_type &ident) 
+  {
+    m_varDef.erase(ident);
     ReInit();
+  }
+
+  //---------------------------------------------------------------------------
+  void ParserXBase::RemoveConst(const string_type &ident) 
+  {
+    m_valDef.erase(ident);
+    ReInit();
+  }
+
+  //---------------------------------------------------------------------------
+  void ParserXBase::RemoveFun(const string_type &ident) 
+  {
+    m_FunDef.erase(ident);
+    ReInit();
+  }
+
+  //---------------------------------------------------------------------------
+  void ParserXBase::RemoveOprt(const string_type &ident) 
+  {
+    m_OprtDef.erase(ident);
+    ReInit();
+  }
+
+  //---------------------------------------------------------------------------
+  void ParserXBase::RemovePostfixOprt(const string_type &ident) 
+  {
+    m_PostOprtDef.erase(ident);
+    ReInit();
+  }
+
+  //---------------------------------------------------------------------------
+  void ParserXBase::RemoveInfixOprt(const string_type &ident) 
+  {
+    m_InfixOprtDef.erase(ident);
+    ReInit();
+  }
+
+  //---------------------------------------------------------------------------
+  bool ParserXBase::IsVarDefined(const string_type &ident) const
+  {
+    return m_varDef.find(ident)!=m_varDef.end();
+  }
+
+  //---------------------------------------------------------------------------
+  bool ParserXBase::IsConstDefined(const string_type &ident) const
+  {
+    return m_valDef.find(ident)!=m_valDef.end();
+  }
+
+  //---------------------------------------------------------------------------
+  bool ParserXBase::IsFunDefined(const string_type &ident) const
+  {
+    return m_FunDef.find(ident)!=m_FunDef.end();
+  }
+
+  //---------------------------------------------------------------------------
+  bool ParserXBase::IsOprtDefined(const string_type &ident) const
+  {
+    return m_OprtDef.find(ident)!=m_OprtDef.end();
+  }
+
+  //---------------------------------------------------------------------------
+  bool ParserXBase::IsPostfixOprtDefined(const string_type &ident) const
+  {
+    return m_PostOprtDef.find(ident)!=m_PostOprtDef.end();
+  }
+
+  //---------------------------------------------------------------------------
+  bool ParserXBase::IsInfixOprtDefined(const string_type &ident) const
+  {
+    return m_InfixOprtDef.find(ident)!=m_InfixOprtDef.end();
   }
 
   //---------------------------------------------------------------------------
   /** \brief Return a map containing the used variables only. */
   const var_maptype& ParserXBase::GetExprVar() const
   {
-    utils::scoped_setter<bool> guard2(m_bIsQueryingExprVar, true);
+    utils::scoped_setter<bool> guard(m_bIsQueryingExprVar, true);
 
     // Create RPN,  but do not compute the result or switch to RPN
     // parsing mode. The expression may contain yet to be defined variables.
@@ -534,14 +596,14 @@ MUP_NAMESPACE_START
   /** \brief Return a map containing the used variables only. */
   const var_maptype& ParserXBase::GetVar() const
   {
-    return m_VarDef;
+    return m_varDef;
   }
 
   //---------------------------------------------------------------------------
   /** \brief Return a map containing all parser constants. */
   const val_maptype& ParserXBase::GetConst() const
   {
-    return m_valConst;
+    return m_valDef;
   }
 
   //---------------------------------------------------------------------------
@@ -1214,27 +1276,9 @@ MUP_NAMESPACE_START
   */
   void ParserXBase::ClearVar()
   {
-    m_VarDef.clear();
+    m_varDef.clear();
     m_valDynVarShadow.clear();
     ReInit();
-  }
-
-  //------------------------------------------------------------------------------
-  /** \brief Remove a variable from internal storage.
-      \param a_strVarName Name of the variable to be removed.
-      \throw nothrow
-
-    Removes a variable if it exists. If the Variable does not exist 
-    nothing will be done.
-  */
-  void ParserXBase::RemoveVar(const string_type &a_strVarName)
-  {
-    var_maptype::iterator item = m_VarDef.find(a_strVarName);
-    if (item!=m_VarDef.end())
-    {
-      m_VarDef.erase(item);
-      ReInit();
-    }
   }
 
   //------------------------------------------------------------------------------
@@ -1267,7 +1311,7 @@ MUP_NAMESPACE_START
   */
   void ParserXBase::ClearConst()
   {
-    m_valConst.clear();
+    m_valDef.clear();
     ReInit();
   }
 
