@@ -103,7 +103,7 @@ MUP_NAMESPACE_START
     ECmdCode m_eLastTokCode;
 
     mutable fun_maptype  *m_pFunDef;
-    mutable oprt_bin_multimap *m_pOprtDef;
+    mutable oprt_bin_maptype *m_pOprtDef;
     mutable oprt_ifx_maptype *m_pInfixOprtDef;
     mutable oprt_pfx_maptype *m_pPostOprtDef;
     mutable val_maptype  *m_pConstDef;

@@ -16,32 +16,39 @@ MUP_NAMESPACE_START
   //-----------------------------------------------------------
   void OprtFact::Eval(ptr_val_type& ret, const ptr_val_type *arg, int)
   {
-      IValue *arg_1 = arg[0].Get();
-      if (!arg_1->IsNonComplexScalar()) {
-	  throw ParserError(ErrorContext(ecTYPE_CONFLICT_FUN, GetExprPos(),
-					 GetIdent(), arg_1->GetType(), 'i', 1));
+    if (!arg[0]->IsInteger())
+      throw ParserError(ErrorContext(ecTYPE_CONFLICT_FUN, GetExprPos(), GetIdent(), arg[0]->GetType(), 'i', 1));
+
+    int input = arg[0]->GetInteger();
+    float_type input_long = float_type(input);
+
+    if (input < 0) {
+    throw ParserError(ErrorContext(ecDOMAIN_ERROR, GetExprPos(),
+				    GetIdent()));
+    }
+
+    float_type result = 1;
+    for (float_type i = 1.0; i <= input_long; i += 1.0) 
+    {
+      result *= i;
+
+      // <ibg 20130225/> Only throw exceptions if IEEE 754 is not supported. The 
+      //                 Prefered way of dealing with overflows is relying on: 
+      //
+      //                      http://en.wikipedia.org/wiki/IEEE_754-1985 
+      //
+      //                 If the compiler does not support IEEE 754, chances are 
+      //                 you are running on a pretty fucked up system.
+      //
+      if ( !std::numeric_limits<float_type>::is_iec559 && 
+           (result>std::numeric_limits<float_type>::max() || result < 1.0) )
+      {
+        throw ParserError(ErrorContext(ecOVERFLOW, GetExprPos(), GetIdent()));
       }
+      // </ibg>
+    }
 
-
-      int input = arg_1->GetInteger();
-      float_type input_long = float_type(input);
-
-      if (input < 0) {
-	  throw ParserError(ErrorContext(ecDOMAIN_ERROR, GetExprPos(),
-					 GetIdent()));
-      }
-
-      float_type result = 1;
-      for (float_type i = 1.0; i <= input_long; i += 1.0) {
-	  result *= i;
-
-	  if ((result > std::numeric_limits<float_type>::max()) | (result < 1.0)) {
-	      throw ParserError(ErrorContext(ecOVERFLOW, GetExprPos(),
-					     GetIdent()));
-	  }
-      }
-
-      *ret = result;
+    *ret = result;
   }
 
   //-----------------------------------------------------------

@@ -97,16 +97,27 @@ MUP_NAMESPACE_START
     void AddValueReader(IValueReader *a_pReader);
 
     void AddPackage(IPackage *p);
-    void RemovePackage(IPackage *p);
 
-    void DefineFun(const ptr_cal_type &a_pFunc);
-    void DefineConst(const string_type &a_sName, const Value &a_Val);
-    void DefineVar(const string_type &a_sName, const Variable &a_fVar);
-    
-    // adding operators
-    void DefineOprt(const TokenPtr<IOprtBin> &a_Oprt);
-    void DefinePostfixOprt(const TokenPtr<IOprtPostfix> &a_pOprt);
-    void DefineInfixOprt(const TokenPtr<IOprtInfix> &a_iOprt);
+    void DefineConst(const string_type &ident, const Value &val);
+    void DefineVar(const string_type &ident, const Variable &var);
+    void DefineFun(const ptr_cal_type &fun);
+    void DefineOprt(const TokenPtr<IOprtBin> &oprt);
+    void DefinePostfixOprt(const TokenPtr<IOprtPostfix> &oprt);
+    void DefineInfixOprt(const TokenPtr<IOprtInfix> &oprt);
+
+    bool IsVarDefined(const string_type &ident) const;
+    bool IsConstDefined(const string_type &ident) const;
+    bool IsFunDefined(const string_type &ident) const;
+    bool IsOprtDefined(const string_type &ident) const;
+    bool IsPostfixOprtDefined(const string_type &ident) const;
+    bool IsInfixOprtDefined(const string_type &ident) const;
+
+    void RemoveVar(const string_type &ident) ;
+    void RemoveConst(const string_type &ident);
+    void RemoveFun(const string_type &ident);
+    void RemoveOprt(const string_type &ident);
+    void RemovePostfixOprt(const string_type &ident);
+    void RemoveInfixOprt(const string_type &ident);
 
     // Clear user defined variables, constants or functions
     void ClearVar();
@@ -117,7 +128,6 @@ MUP_NAMESPACE_START
     void ClearOprt();
     void DumpRPN() const;
 
-    void RemoveVar(const string_type &a_sVarName);
     const var_maptype& GetExprVar() const;
     const var_maptype& GetVar() const;
     const val_maptype& GetConst() const;
@@ -148,9 +158,9 @@ MUP_NAMESPACE_START
     fun_maptype  m_FunDef;           ///< Function definitions
     oprt_pfx_maptype m_PostOprtDef;  ///< Postfix operator callbacks
     oprt_ifx_maptype m_InfixOprtDef; ///< Infix operator callbacks.
-    oprt_bin_multimap m_OprtDef;     ///< Binary operator callbacks
-    val_maptype  m_valConst;         ///< Definition of parser constants
-    var_maptype  m_VarDef;           ///< user defind variables.
+    oprt_bin_maptype m_OprtDef;      ///< Binary operator callbacks
+    val_maptype  m_valDef;         ///< Definition of parser constants
+    var_maptype  m_varDef;           ///< user defind variables.
 
   private:
 
