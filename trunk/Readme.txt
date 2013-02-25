@@ -26,16 +26,23 @@
 
 V2.1.7 (20130224)
 -----------------
+
+API Changes:
+  - Functions defining variables, constants, operators or functions will now throw an exception
+    if a a token with a similar identifier already exists. Their API changed to take a managed
+    pointer instead of a raw pointer.
+  - Hooks for customizing error messages added; German translations added
+  - Functions for undefining variables, constants, functions and operators added
+  - Functions for querying the presence of variables, constants, functions and operators added
+
 Changes:
   - added "zeros" function for creating matrices initialized to all zero added
   - added "eye" function for creating idendity matrices
   - added "size" function for determining matrix dimensions
+  - factorial operator added
   - floating point data type can now be selected with the "MUP_FLOAT_TYPE" macro
     in mpDefines.h
-  - API for customizing error messages added; German translations added
   - Querying multiple results of comma separated expressions added
-  - DefineVar / DefineFun / DefineInfixOprt / DefineOprt throws an exception if there is
-    already a token with that name defined
 
 Bugfixes:
   - Issue 17: Wrong result on complex power
