@@ -56,7 +56,7 @@ MUP_NAMESPACE_START
   class ParserX : public ParserXBase
   {
   public:
-    ParserX(EPackages ePackages = pckALL_COMPLEX);
+    ParserX(unsigned ePackages = pckALL_COMPLEX);
 
     static void ResetErrorMessageProvider(ParserMessageProviderBase *pProvider);
   };
