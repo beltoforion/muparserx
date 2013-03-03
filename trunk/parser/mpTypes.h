@@ -209,7 +209,7 @@ enum EPackages
     pckSTRING          = 1 << 4,
     pckMATRIX          = 1 << 5,
     pckALL_COMPLEX     = pckCOMMON | pckCOMPLEX | pckSTRING | pckUNIT | pckMATRIX,
-    pckALL_NON_COMPLEX = pckCOMMON | pckNON_COMPLEX | pckSTRING | pckUNIT | pckMATRIX,
+    pckALL_NON_COMPLEX = pckCOMMON | pckNON_COMPLEX | pckSTRING | pckUNIT | pckMATRIX
 };
 
 //------------------------------------------------------------------------------
