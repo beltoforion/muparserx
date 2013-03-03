@@ -60,7 +60,7 @@ MUP_NAMESPACE_START
     Call ParserXBase class constructor and initiate function, operator 
     and constant initialization.
   */
-  ParserX::ParserX(EPackages ePackages)
+  ParserX::ParserX(unsigned ePackages)
     :ParserXBase()
   {
     DefineNameChars(_T("0123456789_abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"));
