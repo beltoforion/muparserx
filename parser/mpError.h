@@ -61,7 +61,7 @@ MUP_NAMESPACE_START
 
   private:
 
-      static std::auto_ptr<ParserMessageProviderBase> m_pInstance;
+      static std::unique_ptr<ParserMessageProviderBase> m_pInstance;
       ParserErrorMsg& operator=(const ParserErrorMsg &);
       ParserErrorMsg(const ParserErrorMsg&);
       ParserErrorMsg();

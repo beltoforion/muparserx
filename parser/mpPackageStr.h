@@ -48,7 +48,7 @@ MUP_NAMESPACE_START
 /** \brief Package for installing unit postfix operators into muParserX. */
 class PackageStr : public IPackage
 {
-friend class std::auto_ptr<PackageStr>;
+friend class std::unique_ptr<PackageStr>;
 
 public:
   
@@ -59,7 +59,7 @@ public:
 
 private:
 
-  static std::auto_ptr<PackageStr> s_pInstance;
+  static std::unique_ptr<PackageStr> s_pInstance;
 };
 
 MUP_NAMESPACE_END

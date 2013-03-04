@@ -174,7 +174,7 @@ MUP_NAMESPACE_START
   */
   TokenReader* TokenReader::Clone(ParserXBase *a_pParent) const
   {
-    std::auto_ptr<TokenReader> ptr(new TokenReader(*this));
+    std::unique_ptr<TokenReader> ptr(new TokenReader(*this));
     ptr->SetParent(a_pParent);
     return ptr.release();
   }

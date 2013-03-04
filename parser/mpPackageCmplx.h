@@ -47,7 +47,7 @@ MUP_NAMESPACE_START
 /** \brief Package for installing complex functions and operators. */
 class PackageCmplx: public IPackage
 {
-friend class std::auto_ptr<PackageCmplx>;
+friend class std::unique_ptr<PackageCmplx>;
 
 public:
   
@@ -58,7 +58,7 @@ public:
 
 private:
 
-  static std::auto_ptr<PackageCmplx> s_pInstance;
+  static std::unique_ptr<PackageCmplx> s_pInstance;
 };
 
 MUP_NAMESPACE_END

@@ -49,7 +49,7 @@ MUP_NAMESPACE_START
 */
 class PackageCommon: public IPackage
 {
-friend class std::auto_ptr<PackageCommon>;
+friend class std::unique_ptr<PackageCommon>;
 
 public:
   
@@ -60,7 +60,7 @@ public:
 
 private:
 
-  static std::auto_ptr<PackageCommon> s_pInstance;
+  static std::unique_ptr<PackageCommon> s_pInstance;
 };
 
 MUP_NAMESPACE_END

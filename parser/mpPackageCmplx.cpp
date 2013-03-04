@@ -42,7 +42,7 @@
 MUP_NAMESPACE_START
 
 //------------------------------------------------------------------------------
-std::auto_ptr<PackageCmplx> PackageCmplx::s_pInstance;
+std::unique_ptr<PackageCmplx> PackageCmplx::s_pInstance;
 
 //------------------------------------------------------------------------------
 IPackage* PackageCmplx::Instance()

@@ -187,7 +187,7 @@ MUP_NAMESPACE_START
     mutable parse_function_type m_pParserEngine;
 
     /** \brief Managed pointer to the token reader object. */
-    std::auto_ptr<TokenReader> m_pTokenReader; 
+    std::unique_ptr<TokenReader> m_pTokenReader;
 
     val_vec_type m_valDynVarShadow;  ///< Value objects referenced by variables created at parser runtime
     string_type m_sNameChars;        ///< Charset for names

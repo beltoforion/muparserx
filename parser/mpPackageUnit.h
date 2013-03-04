@@ -65,7 +65,7 @@ MUP_POSTFIX_DEF(OprtGiga)
 /** \brief Package for installing unit postfix operators into muParserX. */
 class PackageUnit : public IPackage
 {
-friend class std::auto_ptr<PackageUnit>;
+friend class std::unique_ptr<PackageUnit>;
 
 public:
   
@@ -76,7 +76,7 @@ public:
 
 private:
 
-  static std::auto_ptr<PackageUnit> s_pInstance;
+  static std::unique_ptr<PackageUnit> s_pInstance;
 };
 
 MUP_NAMESPACE_END

@@ -84,7 +84,7 @@ MUP_NAMESPACE_START
 #undef MUP_POSTFIX_IMLP
 
 //------------------------------------------------------------------------------
-std::auto_ptr<PackageUnit> PackageUnit::s_pInstance;
+std::unique_ptr<PackageUnit> PackageUnit::s_pInstance;
 
 //------------------------------------------------------------------------------
 IPackage* PackageUnit::Instance()
