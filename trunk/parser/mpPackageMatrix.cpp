@@ -41,7 +41,7 @@
 MUP_NAMESPACE_START
 
 //------------------------------------------------------------------------------
-std::auto_ptr<PackageMatrix> PackageMatrix::s_pInstance;
+std::unique_ptr<PackageMatrix> PackageMatrix::s_pInstance;
 
 //------------------------------------------------------------------------------
 IPackage* PackageMatrix::Instance()

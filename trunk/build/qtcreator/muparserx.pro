@@ -3,6 +3,8 @@ TARGET = example
 CONFIG += console
 CONFIG -= qt
 
+QMAKE_CXXFLAGS += -std=c++11
+
 CONFIG(debug, debug|release) {
     DESTDIR = ./debug
     OBJECTS_DIR = ./debug/obj

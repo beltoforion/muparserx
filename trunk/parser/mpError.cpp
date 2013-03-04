@@ -39,7 +39,7 @@
 
 MUP_NAMESPACE_START
 
-  std::auto_ptr<ParserMessageProviderBase> ParserErrorMsg::m_pInstance;
+  std::unique_ptr<ParserMessageProviderBase> ParserErrorMsg::m_pInstance;
 
   //------------------------------------------------------------------------------
   const ParserMessageProviderBase& ParserErrorMsg::Instance()

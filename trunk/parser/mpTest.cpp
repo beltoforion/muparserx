@@ -1447,7 +1447,7 @@ MUP_NAMESPACE_START
       // p1 is a pointer since I'm going to delete it in order to test if
       // parsers after copy construction still refer to members of the deleted object.
       // !! If this is the case this function will crash !!
-      std::auto_ptr<ParserX> p1(new ParserX()); 
+      std::unique_ptr<ParserX> p1(new ParserX()); 
 
       // Add variables
       Value vVarVal[] = { 1, 2, 3, -2, -1};

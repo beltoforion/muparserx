@@ -53,7 +53,7 @@
 MUP_NAMESPACE_START
 
 //------------------------------------------------------------------------------
-std::auto_ptr<PackageCommon> PackageCommon::s_pInstance;
+std::unique_ptr<PackageCommon> PackageCommon::s_pInstance;
 
 //------------------------------------------------------------------------------
 IPackage* PackageCommon::Instance()

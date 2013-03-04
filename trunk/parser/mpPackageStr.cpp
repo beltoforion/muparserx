@@ -42,7 +42,7 @@
 MUP_NAMESPACE_START
 
 //------------------------------------------------------------------------------
-std::auto_ptr<PackageStr> PackageStr::s_pInstance;
+std::unique_ptr<PackageStr> PackageStr::s_pInstance;
 
 //------------------------------------------------------------------------------
 IPackage* PackageStr::Instance()

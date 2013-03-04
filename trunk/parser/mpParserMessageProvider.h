@@ -14,10 +14,11 @@ MUP_NAMESPACE_START
   /** \brief Base class for Parser Message providing classes. */
   class ParserMessageProviderBase
   {
-  friend class std::auto_ptr<ParserMessageProviderBase>;
+  friend class std::unique_ptr<ParserMessageProviderBase>;
 
   public:
     ParserMessageProviderBase();
+    virtual ~ParserMessageProviderBase();
 
     void Init();
     string_type GetErrorMsg(EErrorCodes errc) const;
@@ -29,8 +30,7 @@ MUP_NAMESPACE_START
 
   protected:
     std::vector<string_type>  m_vErrMsg;
-    
-    virtual ~ParserMessageProviderBase();
+
     virtual void InitErrorMessages() = 0;
   };
 

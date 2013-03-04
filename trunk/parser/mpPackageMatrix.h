@@ -47,7 +47,7 @@ MUP_NAMESPACE_START
 /** \brief Package for installing complex functions and operators. */
 class PackageMatrix : public IPackage
 {
-friend class std::auto_ptr<PackageMatrix>;
+friend class std::unique_ptr<PackageMatrix>;
 
 public:
   
@@ -58,7 +58,7 @@ public:
 
 private:
 
-  static std::auto_ptr<PackageMatrix> s_pInstance;
+  static std::unique_ptr<PackageMatrix> s_pInstance;
 };
 
 MUP_NAMESPACE_END
