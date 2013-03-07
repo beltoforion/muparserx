@@ -415,8 +415,11 @@ MUP_NAMESPACE_START
   {
     CheckName(a_sName, ValidNameChars());
 
-    if (IsVarDefined(a_sName)) 
+    if (IsVarDefined(a_sName))
       throw ParserError(ErrorContext(ecVARIABLE_DEFINED, 0, a_sName));
+
+    if (IsConstDefined(a_sName))
+      throw ParserError(ErrorContext(ecCONSTANT_DEFINED, 0, a_sName));
       
     m_varDef[a_sName] = ptr_tok_type(a_Var.Clone());
   }
@@ -434,6 +437,9 @@ MUP_NAMESPACE_START
   void ParserXBase::DefineConst(const string_type &ident, const Value &val)
   {
     CheckName(ident, ValidNameChars());
+
+    if (IsVarDefined(ident))
+      throw ParserError(ErrorContext(ecVARIABLE_DEFINED, 0, ident));
 
     if (IsConstDefined(ident))
       throw ParserError(ErrorContext(ecCONSTANT_DEFINED, 0, ident));

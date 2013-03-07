@@ -48,6 +48,9 @@
 /** \brief This macro will enable mathematical constants like M_PI. */
 #define _USE_MATH_DEFINES 
 
+/** \brief Needed to ensure successfull compilation on Unicode systems with MinGW. */
+#undef __STRICT_ANSI__
+
 //--- Standard include ------------------------------------------------------
 #if defined(_WIN32) 
   // Memory leak dumping
