@@ -49,17 +49,6 @@
 #include "mpIfThenElse.h"
 #include "mpScriptTokens.h"
 
-#define CHECK_FOR_EXISTENCE(ident, error_code) \
-  if (IsVarDefined(ident) || \
-  IsConstDefined(ident) || \
-  IsFunDefined(ident) || \
-  IsOprtDefined(ident) || \
-  IsPostfixOprtDefined(ident) || \
-  IsInfixOprtDefined(ident)) \
-  throw ParserError(ErrorContext(error_code, 0, ident));
-
-
-
 using namespace std;
 
 
@@ -426,9 +415,21 @@ void ParserXBase::DefineVar(const string_type &ident, const Variable &var)
 {
   CheckName(ident, ValidNameChars());
 
-  CHECK_FOR_EXISTENCE(ident, ecVARIABLE_DEFINED);
+  CheckForEntityExistence(ident, ecVARIABLE_DEFINED);
 
   m_varDef[ident] = ptr_tok_type(var.Clone());
+}
+
+
+void ParserXBase::CheckForEntityExistence(const string_type & ident, EErrorCodes error_code)
+{
+  if (IsVarDefined(ident) ||
+      IsConstDefined(ident) ||
+      IsFunDefined(ident) ||
+      IsOprtDefined(ident) ||
+      IsPostfixOprtDefined(ident) ||
+      IsInfixOprtDefined(ident))
+    throw ParserError(ErrorContext(error_code, 0, ident));
 }
 
 
@@ -445,7 +446,7 @@ void ParserXBase::DefineConst(const string_type &ident, const Value &val)
 {
   CheckName(ident, ValidNameChars());
 
-  CHECK_FOR_EXISTENCE(ident, ecCONSTANT_DEFINED);
+  CheckForEntityExistence(ident, ecCONSTANT_DEFINED);
 
   m_valDef[ident] = ptr_tok_type(val.Clone());
 }
