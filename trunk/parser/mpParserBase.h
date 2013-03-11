@@ -150,9 +150,10 @@ MUP_NAMESPACE_START
                 int a_iPos = -1,
                 const IToken *a_pTok = 0) const;
 
-  protected:
-
+    // Allow clients to check syntacticaly correctnes of name against character set.
     void  CheckName(const string_type &a_sName, const string_type &a_CharSet) const;
+
+  protected:
 
     fun_maptype  m_FunDef;           ///< Function definitions
     oprt_pfx_maptype m_PostOprtDef;  ///< Postfix operator callbacks
