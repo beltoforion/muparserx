@@ -170,6 +170,10 @@ MUP_NAMESPACE_START
     void  StackDump(const Stack<ptr_val_type> &a_stVal, 
                      const Stack<ptr_tok_type> &a_stOprt) const;
 
+    // Used by by DefineVar and DefineConst methods
+    // for better checking of var/const/oprt/fun existence.
+    void CheckForEntityExistence(const string_type & ident, EErrorCodes error_code);
+
     void Assign(const ParserXBase &a_Parser);
     void InitTokenReader();
 
