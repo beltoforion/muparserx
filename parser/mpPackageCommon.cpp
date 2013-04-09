@@ -124,6 +124,7 @@ void PackageCommon::AddToParser(ParserXBase *pParser)
 
   // postfix operators
   pParser->DefinePostfixOprt(new OprtFact);
+  pParser->DefinePostfixOprt(new OprtPercentage);
 }
 
 //------------------------------------------------------------------------------
