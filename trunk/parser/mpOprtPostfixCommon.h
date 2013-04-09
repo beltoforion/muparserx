@@ -31,6 +31,21 @@ MUP_NAMESPACE_START
     virtual const char_type* GetDesc() const;
     virtual IToken* Clone() const;
   };
+
+  //------------------------------------------------------------------------------
+  /** \brief Returns percentage of given number.
+      \ingroup postop
+  */
+  class OprtPercentage : public IOprtPostfix
+  {
+    public:
+
+      OprtPercentage();
+
+      virtual void Eval(ptr_val_type& ret, const ptr_val_type *arg, int);
+      virtual const char_type* GetDesc() const;
+      virtual IToken* Clone() const;
+  };
 }  // namespace mu
 
 #endif
