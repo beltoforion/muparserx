@@ -67,6 +67,19 @@ MUP_NAMESPACE_START
   };
 
   //------------------------------------------------------------------------------
+  /** \brief Convert a string to lower case letters.
+      \ingroup functions
+  */
+  class FunStrToLower : public ICallback
+  {
+  public:
+    FunStrToLower();
+    virtual void Eval(ptr_val_type& ret, const ptr_val_type *a_pArg, int a_iArgc);
+    virtual const char_type* GetDesc() const;
+    virtual IToken* Clone() const;
+  };
+
+  //------------------------------------------------------------------------------
   /** \brief Parse string to a floating point value. 
       \ingroup functions  
   */

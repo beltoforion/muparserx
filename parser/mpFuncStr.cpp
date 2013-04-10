@@ -110,6 +110,39 @@ MUP_NAMESPACE_START
 
   //------------------------------------------------------------------------------
   //
+  // ToLower function
+  //
+  //------------------------------------------------------------------------------
+
+  FunStrToLower::FunStrToLower()
+    :ICallback(cmFUNC, _T("tolower"), 1)
+  {}
+
+  //------------------------------------------------------------------------------
+  void FunStrToLower::Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int)
+  {
+    using namespace std;
+
+    string_type str = a_pArg[0]->GetString();
+    std::transform(str.begin(), str.end(), str.begin(), ::tolower);
+
+    *ret = str;
+  }
+
+  //------------------------------------------------------------------------------
+  const char_type* FunStrToLower::GetDesc() const
+  {
+    return _T("tolower(s) - Converts the string s to lowercase characters.");
+  }
+
+  //------------------------------------------------------------------------------
+  IToken* FunStrToLower::Clone() const
+  {
+    return new FunStrToLower(*this);
+  }
+
+  //------------------------------------------------------------------------------
+  //
   // String to double conversion
   //
   //------------------------------------------------------------------------------
