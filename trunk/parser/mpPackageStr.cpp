@@ -64,6 +64,7 @@ void PackageStr::AddToParser(ParserXBase *pParser)
   pParser->DefineFun(new FunStrLen());
   pParser->DefineFun(new FunStrToDbl());
   pParser->DefineFun(new FunStrToUpper());
+  pParser->DefineFun(new FunStrToLower());
 
   // Operators
   pParser->DefineOprt(new OprtStrAdd);
