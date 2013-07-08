@@ -54,9 +54,9 @@ friend class std::unique_ptr<PackageCommon>;
 public:
   
   static IPackage* Instance();
-  virtual void AddToParser(ParserXBase *pParser);
-  virtual string_type GetDesc() const;
-  virtual string_type GetPrefix() const;
+  virtual void AddToParser(ParserXBase *pParser) override;
+  virtual string_type GetDesc() const override;
+  virtual string_type GetPrefix() const override;
 
 private:
 

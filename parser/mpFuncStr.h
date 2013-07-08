@@ -48,9 +48,9 @@ MUP_NAMESPACE_START
   {
   public:
     FunStrLen();
-    virtual void Eval(ptr_val_type& ret, const ptr_val_type *a_pArg, int a_iArgc);
-    virtual const char_type* GetDesc() const;
-    virtual IToken* Clone() const;
+    virtual void Eval(ptr_val_type& ret, const ptr_val_type *a_pArg, int a_iArgc) override;
+    virtual const char_type* GetDesc() const override;
+    virtual IToken* Clone() const override;
   };
 
   //------------------------------------------------------------------------------
@@ -61,9 +61,9 @@ MUP_NAMESPACE_START
   {
   public:
     FunStrToUpper();
-    virtual void Eval(ptr_val_type& ret, const ptr_val_type *a_pArg, int a_iArgc);
-    virtual const char_type* GetDesc() const;
-    virtual IToken* Clone() const;
+    virtual void Eval(ptr_val_type& ret, const ptr_val_type *a_pArg, int a_iArgc) override;
+    virtual const char_type* GetDesc() const override;
+    virtual IToken* Clone() const override;
   };
 
   //------------------------------------------------------------------------------
@@ -74,9 +74,9 @@ MUP_NAMESPACE_START
   {
   public:
     FunStrToLower();
-    virtual void Eval(ptr_val_type& ret, const ptr_val_type *a_pArg, int a_iArgc);
-    virtual const char_type* GetDesc() const;
-    virtual IToken* Clone() const;
+    virtual void Eval(ptr_val_type& ret, const ptr_val_type *a_pArg, int a_iArgc) override;
+    virtual const char_type* GetDesc() const override;
+    virtual IToken* Clone() const override;
   };
 
   //------------------------------------------------------------------------------
@@ -87,9 +87,9 @@ MUP_NAMESPACE_START
   {
   public:
     FunStrToDbl ();
-    virtual void Eval(ptr_val_type& ret, const ptr_val_type *a_pArg, int a_iArgc);
-    virtual const char_type* GetDesc() const;
-    virtual IToken* Clone() const;
+    virtual void Eval(ptr_val_type& ret, const ptr_val_type *a_pArg, int a_iArgc) override;
+    virtual const char_type* GetDesc() const override;
+    virtual IToken* Clone() const override;
   }; // class FunStrToDbl
 }  // namespace mu
 

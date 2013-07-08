@@ -46,7 +46,7 @@ std::unique_ptr<PackageMatrix> PackageMatrix::s_pInstance;
 //------------------------------------------------------------------------------
 IPackage* PackageMatrix::Instance()
 {
-  if (s_pInstance.get()==NULL)
+  if (s_pInstance.get()==nullptr)
   {
     s_pInstance.reset(new PackageMatrix);
   }

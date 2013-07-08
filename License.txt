@@ -9,16 +9,20 @@
 #  |__|_|  /____/|____|    (____  /__|  /____  >\___  >__| /___/\  \    #
 #        \/                     \/           \/     \/           \_/    #
 #                                                                       #
-#  Copyright (C) 2012 Ingo Berg                                         #
+#  Copyright (C) 2013 Ingo Berg                                         #
 #                                                                       #
 #  Web:     http://muparserx.beltoforion.de                             #
 #  SVN:     http://muparserx.googlecode.com/svn/trunk                   #
 #  e-mail:  muparserx@beltoforion.de                                    #
 #                                                                       #
-#     This software is distributed under the terms of the               #
-#     BSD - Clause 2 "Simplified" or "FreeBSD" Licence (BSD-2-Clause)   #
+#  The code contains contributions made by the following people:        #
+#       	Martin Rotter                                           #
+#                                                                       #
+#  This software is distributed under the terms of the                  #
+#  BSD - Clause 2 "Simplified" or "FreeBSD" Licence (BSD-2-Clause)      #
 #                                                                       #
 #########################################################################
+
 
 Copyright (c) 2012, Ingo Berg
 All rights reserved.

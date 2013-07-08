@@ -58,7 +58,7 @@ std::unique_ptr<PackageCommon> PackageCommon::s_pInstance;
 //------------------------------------------------------------------------------
 IPackage* PackageCommon::Instance()
 {
-  if (s_pInstance.get()==NULL)
+  if (s_pInstance.get()==nullptr)
   {
     s_pInstance.reset(new PackageCommon);
   }
@@ -124,7 +124,10 @@ void PackageCommon::AddToParser(ParserXBase *pParser)
 
   // postfix operators
   pParser->DefinePostfixOprt(new OprtFact);
-  pParser->DefinePostfixOprt(new OprtPercentage);
+// <ibg 20130708> commented: "%" is a reserved sign for either the 
+//                modulo operator or comment lines. 
+//  pParser->DefinePostfixOprt(new OprtPercentage);
+// </ibg>
 }
 
 //------------------------------------------------------------------------------

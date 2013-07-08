@@ -258,7 +258,7 @@ public:
   virtual void Eval(ptr_val_type &ret, const ptr_val_type * /*a_pArg*/, int /*a_iArgc*/)
   {
     char outstr[200];
-    time_t t = time(NULL);
+    time_t t = time(nullptr);
 
     #ifdef _DEBUG
     strftime(outstr, sizeof(outstr), "Result_%Y%m%d_%H%M%S_dbg.txt", localtime(&t));

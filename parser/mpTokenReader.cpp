@@ -114,7 +114,7 @@ MUP_NAMESPACE_START
         
       Create a Token reader and bind it to a parser object. 
 
-      \pre [assert] a_pParser may not be NULL
+      \pre [assert] a_pParser may not be nullptr
       \post #m_pParser==a_pParser
       \param a_pParent Parent parser object of the token reader.
   */
@@ -128,13 +128,13 @@ MUP_NAMESPACE_START
     ,m_nSynFlags(0)
     ,m_vTokens()
     ,m_eLastTokCode(cmUNKNOWN)
-    ,m_pFunDef(NULL)
-    ,m_pOprtDef(NULL)
-    ,m_pInfixOprtDef(NULL)
-    ,m_pPostOprtDef(NULL)
-    ,m_pConstDef(NULL)
-    ,m_pDynVarShadowValues(NULL)
-    ,m_pVarDef(NULL)
+    ,m_pFunDef(nullptr)
+    ,m_pOprtDef(nullptr)
+    ,m_pInfixOprtDef(nullptr)
+    ,m_pPostOprtDef(nullptr)
+    ,m_pConstDef(nullptr)
+    ,m_pDynVarShadowValues(nullptr)
+    ,m_pVarDef(nullptr)
     ,m_vValueReader()
     ,m_UsedVar()
     ,m_fZero(0)
@@ -857,7 +857,7 @@ MUP_NAMESPACE_START
     try
     {
       iEnd = ExtractToken(m_pParser->ValidNameChars(), sTok, m_nPos);
-      if (iEnd==m_nPos)
+      if (iEnd==m_nPos || (sTok.size()>0 && sTok[0]>= _T('0') && sTok[0]<= _T('9')) )
         return false;
 
       // Check for variables
@@ -918,7 +918,7 @@ MUP_NAMESPACE_START
   {
     string_type sTok;
     int iEnd = ExtractToken(m_pParser->ValidNameChars(), sTok, m_nPos);
-    if (iEnd==m_nPos)
+    if (iEnd==m_nPos || (sTok.size()>0 && sTok[0]>= _T('0') && sTok[0]<= _T('9')) )
       return false;
 
     if (m_nSynFlags & noVAR)
@@ -940,7 +940,7 @@ MUP_NAMESPACE_START
       (*m_pVarDef)[sTok] = a_Tok;                    // add new variable to the variable list
     }
     else
-      a_Tok = ptr_tok_type(new Variable(NULL));      // bind variable to empty variable
+      a_Tok = ptr_tok_type(new Variable(nullptr));      // bind variable to empty variable
 
     a_Tok->SetIdent(sTok);
     m_UsedVar[sTok] = a_Tok;     // add new variable to used-var-list

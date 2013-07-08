@@ -851,7 +851,7 @@ void ParserXBase::CreateRPN() const
         // by default an opening bracket sets parameter count to 1
         // in preparation of arguments to come. If the last token
         // was an opening bracket we know better...
-        if (pTokPrev.Get()!=NULL && pTokPrev->GetCode()==cmIO)
+        if (pTokPrev.Get()!=nullptr && pTokPrev->GetCode()==cmIO)
           --stArgCount.top();
 
         ApplyRemainingOprt(stOpt, stVal);
@@ -872,7 +872,7 @@ void ParserXBase::CreateRPN() const
           stOpt.pop(); // Take opening bracket from stack
 
           IOprtIndex *pOprtIndex = pTok->AsIOprtIndex();
-          MUP_ASSERT(pOprtIndex!=NULL);
+          MUP_ASSERT(pOprtIndex!=nullptr);
 
           pOprtIndex->SetNumArgsPresent(iArgc);
           m_rpn.Add(pTok);
@@ -897,7 +897,7 @@ void ParserXBase::CreateRPN() const
         // by default an opening bracket sets parameter count to 1
         // in preparation of arguments to come. If the last token
         // was an opening bracket we know better...
-        if (pTokPrev.Get()!=NULL && pTokPrev->GetCode()==cmBO)
+        if (pTokPrev.Get()!=nullptr && pTokPrev->GetCode()==cmBO)
           --stArgCount.top();
 
         ApplyRemainingOprt(stOpt, stVal);
@@ -1404,7 +1404,7 @@ void ParserXBase::StackDump(const Stack<ptr_val_type> &a_stVal,
   while ( !stVal.empty() )
   {
     ptr_val_type val = stVal.pop();
-    console() << _T("  ") << *(val.Get()) << _T(" ") << ((val->AsValue()!=NULL) ? _T("(Val)") : _T("(Var)"));
+    console() << _T("  ") << *(val.Get()) << _T(" ") << ((val->AsValue()!=nullptr) ? _T("(Val)") : _T("(Var)"));
   }
 
   if (stOprt.empty())

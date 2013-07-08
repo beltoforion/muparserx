@@ -46,7 +46,7 @@ MUP_NAMESPACE_START
   //------------------------------------------------------------------------------
   ValueCache::ValueCache(int size)
     :m_nIdx(-1)
-    ,m_vCache(size, (mup::Value*)0) // hint to myself: don't use NULL gcc will go postal...
+    ,m_vCache(size, (mup::Value*)0) // hint to myself: don't use nullptr gcc will go postal...
   {}
 
   //------------------------------------------------------------------------------
@@ -61,7 +61,7 @@ MUP_NAMESPACE_START
     for (std::size_t i=0; i<m_vCache.size(); ++i)
     {
       delete m_vCache[i];
-      m_vCache[i] = NULL;
+      m_vCache[i] = nullptr;
     }
 
     m_nIdx = -1;
@@ -71,7 +71,7 @@ MUP_NAMESPACE_START
   void ValueCache::ReleaseToCache(Value *pValue) 
   {
 //    std::cout << "dbg: " << ct << " ptr: " << this << " void ValueCache::ReleaseToCache(Value *pValue) \n";
-    if (pValue==NULL)
+    if (pValue==nullptr)
       return;
 
     assert(pValue->GetRef()==0);
@@ -90,11 +90,11 @@ MUP_NAMESPACE_START
   //------------------------------------------------------------------------------
   Value* ValueCache::CreateFromCache() 
   {
-    Value *pValue = NULL;
+    Value *pValue = nullptr;
     if (m_nIdx>=0)
     {
       pValue = m_vCache[m_nIdx];
-      m_vCache[m_nIdx] = NULL;
+      m_vCache[m_nIdx] = nullptr;
       m_nIdx--;
     }
     else

@@ -56,7 +56,7 @@ MUP_NAMESPACE_START
   //------------------------------------------------------------------------------
   void ParserErrorMsg::Reset(ParserMessageProviderBase *pProvider)
   {
-    if (pProvider!=NULL)
+    if (pProvider!=nullptr)
     {
       m_pInstance.reset(pProvider);
       m_pInstance->Init();

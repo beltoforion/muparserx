@@ -48,11 +48,11 @@ MUP_NAMESPACE_START
   Value::Value(char_type cType)
     :IValue(cmVAL)
     ,m_val(0,0)
-    ,m_psVal(NULL)
-    ,m_pvVal(NULL)
+    ,m_psVal(nullptr)
+    ,m_pvVal(nullptr)
     ,m_cType(cType)
     ,m_iFlags(flNONE)
-    ,m_pCache(NULL)
+    ,m_pCache(nullptr)
   {
     // strings and arrays must allocate their memory
     switch (cType)
@@ -66,22 +66,22 @@ MUP_NAMESPACE_START
   Value::Value(int_type a_iVal)
     :IValue(cmVAL)
     ,m_val((float_type)a_iVal, 0)
-    ,m_psVal(NULL)
-    ,m_pvVal(NULL)
+    ,m_psVal(nullptr)
+    ,m_pvVal(nullptr)
     ,m_cType('i')
     ,m_iFlags(flNONE)
-    ,m_pCache(NULL)
+    ,m_pCache(nullptr)
   {}
 
   //---------------------------------------------------------------------------
   Value::Value(bool_type a_bVal)
     :IValue(cmVAL)
     ,m_val((float_type)a_bVal, 0)
-    ,m_psVal(NULL)
-    ,m_pvVal(NULL)
+    ,m_psVal(nullptr)
+    ,m_pvVal(nullptr)
     ,m_cType('b')
     ,m_iFlags(flNONE)
-    ,m_pCache(NULL)
+    ,m_pCache(nullptr)
   {}
 
   //---------------------------------------------------------------------------
@@ -89,21 +89,21 @@ MUP_NAMESPACE_START
     :IValue(cmVAL)
     ,m_val()
     ,m_psVal(new string_type(a_sVal))
-    ,m_pvVal(NULL)
+    ,m_pvVal(nullptr)
     ,m_cType('s')
     ,m_iFlags(flNONE)
-    ,m_pCache(NULL)
+    ,m_pCache(nullptr)
   {}
 
   //---------------------------------------------------------------------------
   Value::Value(int_type array_size, float_type v)
     :IValue(cmVAL)
     ,m_val()
-    ,m_psVal(NULL)
+    ,m_psVal(nullptr)
     ,m_pvVal(new matrix_type(array_size, Value(v)))
     ,m_cType('m')
     ,m_iFlags(flNONE)
-    ,m_pCache(NULL)
+    ,m_pCache(nullptr)
   {}
 
   //---------------------------------------------------------------------------
@@ -112,11 +112,11 @@ MUP_NAMESPACE_START
   Value::Value(int_type m, int_type n, float_type v)
     :IValue(cmVAL)
     ,m_val()
-    ,m_psVal(NULL)
+    ,m_psVal(nullptr)
     ,m_pvVal(new matrix_type(m, n, Value(v)))
     ,m_cType('m')
     ,m_iFlags(flNONE)
-    ,m_pCache(NULL)
+    ,m_pCache(nullptr)
   {}
 
   //---------------------------------------------------------------------------
@@ -124,21 +124,21 @@ MUP_NAMESPACE_START
     :IValue(cmVAL)
     ,m_val()
     ,m_psVal(new string_type(a_szVal))
-    ,m_pvVal(NULL)
+    ,m_pvVal(nullptr)
     ,m_cType('s')
     ,m_iFlags(flNONE)
-    ,m_pCache(NULL)
+    ,m_pCache(nullptr)
   {}
 
   //---------------------------------------------------------------------------
   Value::Value(const cmplx_type &v)
     :IValue(cmVAL)
     ,m_val(v)
-    ,m_psVal(NULL)
-    ,m_pvVal(NULL)
+    ,m_psVal(nullptr)
+    ,m_pvVal(nullptr)
     ,m_cType('c')
     ,m_iFlags(flNONE)
-    ,m_pCache(NULL)
+    ,m_pCache(nullptr)
   {
     if ( (m_val.real()==(int_type)m_val.real()) && (m_val.imag()==0) )
       m_cType = 'i';
@@ -150,30 +150,30 @@ MUP_NAMESPACE_START
   Value::Value(float_type val)
     :IValue(cmVAL)
     ,m_val(val, 0)
-    ,m_psVal(NULL)
-    ,m_pvVal(NULL)
+    ,m_psVal(nullptr)
+    ,m_pvVal(nullptr)
     ,m_cType((val==(int_type)val) ? 'i' : 'f')
     ,m_iFlags(flNONE)
-    ,m_pCache(NULL)
+    ,m_pCache(nullptr)
   {}
 
   //---------------------------------------------------------------------------
   Value::Value(const matrix_type &val)
     :IValue(cmVAL)
     ,m_val()
-    ,m_psVal(NULL)
+    ,m_psVal(nullptr)
     ,m_pvVal(new matrix_type(val))
     ,m_cType('m')
     ,m_iFlags(flNONE)
-    ,m_pCache(NULL)
+    ,m_pCache(nullptr)
   {}
 
   //---------------------------------------------------------------------------
   Value::Value(const Value &a_Val)
     :IValue(cmVAL)
-    ,m_psVal(NULL)
-    ,m_pvVal(NULL)
-    ,m_pCache(NULL)
+    ,m_psVal(nullptr)
+    ,m_pvVal(nullptr)
+    ,m_pCache(nullptr)
   {
     Assign(a_Val);
   }
@@ -181,9 +181,9 @@ MUP_NAMESPACE_START
   //---------------------------------------------------------------------------
   Value::Value(const IValue &a_Val)
     :IValue(cmVAL)
-    ,m_psVal(NULL)
-    ,m_pvVal(NULL)
-    ,m_pCache(NULL)
+    ,m_psVal(nullptr)
+    ,m_pvVal(nullptr)
+    ,m_pCache(nullptr)
   {
     Reset();
 
@@ -305,13 +305,13 @@ MUP_NAMESPACE_START
     else
     {
       delete m_psVal;
-      m_psVal = NULL;
+      m_psVal = nullptr;
     }
 
     // allocate room for a vector
     if (ref.m_pvVal)
     {
-      if (m_pvVal==NULL)
+      if (m_pvVal==nullptr)
         m_pvVal = new matrix_type(*ref.m_pvVal);
       else
        *m_pvVal = *ref.m_pvVal;
@@ -319,7 +319,7 @@ MUP_NAMESPACE_START
     else
     {
       delete m_pvVal;
-      m_pvVal = NULL;
+      m_pvVal = nullptr;
     }
 
     // Do NOT access ref beyound this point! If you do, "unboxing" of
@@ -337,10 +337,10 @@ MUP_NAMESPACE_START
     m_val = cmplx_type(0,0);
 
     delete m_psVal;
-    m_psVal = NULL;
+    m_psVal = nullptr;
 		
     delete m_pvVal;
-    m_pvVal = NULL;
+    m_pvVal = nullptr;
 
     m_cType = 'f';
     m_iFlags = flNONE;
@@ -352,10 +352,10 @@ MUP_NAMESPACE_START
     m_val = cmplx_type((float_type)val,0);
 
     delete m_psVal;
-    m_psVal = NULL;
+    m_psVal = nullptr;
 
     delete m_pvVal;
-    m_pvVal = NULL;
+    m_pvVal = nullptr;
 
     m_cType = 'b';
     m_iFlags = flNONE;
@@ -368,10 +368,10 @@ MUP_NAMESPACE_START
     m_val = cmplx_type(a_iVal,0);
 
     delete m_psVal;
-    m_psVal = NULL;
+    m_psVal = nullptr;
 
     delete m_pvVal;
-    m_pvVal = NULL;
+    m_pvVal = nullptr;
 
     m_cType = 'i';
     m_iFlags = flNONE;
@@ -384,10 +384,10 @@ MUP_NAMESPACE_START
     m_val = cmplx_type(val, 0);
 
     delete m_psVal;
-    m_psVal = NULL;
+    m_psVal = nullptr;
 
     delete m_pvVal;
-    m_pvVal = NULL;
+    m_pvVal = nullptr;
 
     m_cType = (val==(int_type)val) ? 'i' : 'f';
     m_iFlags = flNONE;
@@ -405,7 +405,7 @@ MUP_NAMESPACE_START
      *m_psVal = a_sVal;
 
     delete m_pvVal;
-    m_pvVal = NULL;
+    m_pvVal = nullptr;
 
     m_cType = 's';
     m_iFlags = flNONE;
@@ -423,7 +423,7 @@ MUP_NAMESPACE_START
      *m_psVal = a_szVal;
 
     delete m_pvVal;
-    m_pvVal = NULL;
+    m_pvVal = nullptr;
 
     m_cType = 's';
     m_iFlags = flNONE;
@@ -436,9 +436,9 @@ MUP_NAMESPACE_START
     m_val = cmplx_type(0,0);
 
     delete m_psVal;
-    m_psVal = NULL;
+    m_psVal = nullptr;
 		
-    if (m_pvVal==NULL)
+    if (m_pvVal==nullptr)
       m_pvVal = new matrix_type(a_vVal);
     else
       *m_pvVal = a_vVal;
@@ -455,10 +455,10 @@ MUP_NAMESPACE_START
     m_val = val;
 
     delete m_psVal;
-    m_psVal = NULL;
+    m_psVal = nullptr;
 
     delete m_pvVal;
-    m_pvVal = NULL;
+    m_pvVal = nullptr;
 
     m_cType = (m_val.imag()==0) ? ( (m_val.real()==(int)m_val.real()) ? 'i' : 'f' ) : 'c';
     m_iFlags = flNONE;
@@ -698,7 +698,7 @@ MUP_NAMESPACE_START
   const string_type& Value::GetString() const
   {
     CheckType('s');
-    assert(m_psVal!=NULL);
+    assert(m_psVal!=nullptr);
     return *m_psVal;
   }
 
@@ -713,7 +713,7 @@ MUP_NAMESPACE_START
   const matrix_type& Value::GetArray() const
   {
     CheckType('m');
-    assert(m_pvVal!=NULL);
+    assert(m_pvVal!=nullptr);
     return *m_pvVal;
   }
 
@@ -776,7 +776,7 @@ MUP_NAMESPACE_START
     case 'f': ss << m_val.real(); break;
     case 'm': ss << _T("(matrix)"); break;
     case 's': 
-              assert(m_psVal!=NULL);
+              assert(m_psVal!=nullptr);
               ss << _T("\"") << m_psVal << _T("\""); break;
     }
 

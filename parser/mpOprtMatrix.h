@@ -52,10 +52,10 @@ MUP_NAMESPACE_START
   class OprtTranspose : public IOprtPostfix
   {
   public:
-    OprtTranspose(IPackage* pPackage=NULL);
-    virtual void Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int a_iArgc);
-    virtual const char_type* GetDesc() const;
-    virtual IToken* Clone() const;
+    OprtTranspose(IPackage* pPackage=nullptr);
+    virtual void Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int a_iArgc) override;
+    virtual const char_type* GetDesc() const override;
+    virtual IToken* Clone() const override;
   }; 
 
   //-----------------------------------------------------------------------------------------------
@@ -63,9 +63,9 @@ MUP_NAMESPACE_START
   {
   public:
     OprtColon();
-    virtual void Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int a_iArgc);
-    virtual const char_type* GetDesc() const;
-    virtual IToken* Clone() const;
+    virtual void Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int a_iArgc) override;
+    virtual const char_type* GetDesc() const override;
+    virtual IToken* Clone() const override;
   }; 
 MUP_NAMESPACE_END
 
