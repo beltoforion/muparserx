@@ -94,21 +94,21 @@ MUP_NAMESPACE_START
     virtual IValue& operator-=(const IValue &val);
     virtual IValue& operator*=(const IValue &val);
 
-    virtual char_type GetType() const;
-    virtual int_type GetInteger() const;
-    virtual float_type GetFloat() const;
-    virtual float_type GetImag() const;
-    virtual bool GetBool() const;
-    virtual const cmplx_type& GetComplex() const;
-    virtual const string_type& GetString() const;
-    virtual const matrix_type& GetArray() const;
-    virtual int GetRows() const;
-    virtual int GetCols() const;
+    virtual char_type GetType() const override;
+    virtual int_type GetInteger() const override;
+    virtual float_type GetFloat() const override;
+    virtual float_type GetImag() const override;
+    virtual bool GetBool() const override;
+    virtual const cmplx_type& GetComplex() const override;
+    virtual const string_type& GetString() const override;
+    virtual const matrix_type& GetArray() const override;
+    virtual int GetRows() const override;
+    virtual int GetCols() const override;
 
     virtual bool IsVariable() const;
 
     virtual IToken* Clone() const;
-    virtual Value* AsValue();
+    virtual Value* AsValue() override;
 
     virtual string_type AsciiDump() const;
     void BindToCache(ValueCache *pCache);

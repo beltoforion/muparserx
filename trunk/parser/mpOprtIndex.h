@@ -58,10 +58,10 @@ MUP_NAMESPACE_START
   class OprtIndex : public IOprtIndex
   {
   public:
-    OprtIndex(IPackage* pPackage=NULL);
-    virtual void At(ptr_val_type& ret, const ptr_val_type *arg, int argc);
+    OprtIndex(IPackage* pPackage=nullptr);
+    virtual void At(ptr_val_type& ret, const ptr_val_type *arg, int argc) override;
     virtual const char_type* GetDesc() const;
-    virtual IToken* Clone() const;
+    virtual IToken* Clone() const override;
   }; 
 
 MUP_NAMESPACE_END

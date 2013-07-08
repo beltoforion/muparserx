@@ -47,7 +47,7 @@ std::unique_ptr<PackageStr> PackageStr::s_pInstance;
 //------------------------------------------------------------------------------
 IPackage* PackageStr::Instance()
 {
-  if (s_pInstance.get()==NULL)
+  if (s_pInstance.get()==nullptr)
   {
     s_pInstance.reset(new PackageStr);
   }

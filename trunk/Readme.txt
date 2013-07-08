@@ -15,8 +15,14 @@
 #  SVN:     http://muparserx.googlecode.com/svn/trunk                   #
 #  e-mail:  muparserx@beltoforion.de                                    #
 #                                                                       #
+#  The code contains contributions made by the following people:        #
+#       	Martin Rotter                                           #
+#                                                                       #
+#  This software is distributed under the terms of the                  #
+#  BSD - Clause 2 "Simplified" or "FreeBSD" Licence (BSD-2-Clause)      #
 #                                                                       #
 #########################################################################
+
 
 #########################################################################
 #                                                                       #

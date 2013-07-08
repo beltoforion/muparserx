@@ -59,8 +59,8 @@ MUP_NAMESPACE_START
   public:    
       DblValReader();
       virtual ~DblValReader();
-      virtual bool IsValue(const char_type *a_szExpr, int &a_iPos, Value &a_fVal);
-      virtual IValueReader* Clone(TokenReader *pTokenReader) const;
+      virtual bool IsValue(const char_type *a_szExpr, int &a_iPos, Value &a_fVal) override;
+      virtual IValueReader* Clone(TokenReader *pTokenReader) const override;
   };
 
   //------------------------------------------------------------------------------
@@ -77,8 +77,8 @@ MUP_NAMESPACE_START
   public:    
       BoolValReader();
       virtual ~BoolValReader();
-      virtual bool IsValue(const char_type *a_szExpr, int &a_iPos, Value &a_fVal);
-      virtual IValueReader* Clone(TokenReader *pTokenReader) const;
+      virtual bool IsValue(const char_type *a_szExpr, int &a_iPos, Value &a_fVal) override;
+      virtual IValueReader* Clone(TokenReader *pTokenReader) const override;
   };
 
   //------------------------------------------------------------------------------
@@ -94,8 +94,8 @@ MUP_NAMESPACE_START
   {
   public:    
       HexValReader();
-      virtual bool IsValue(const char_type *a_szExpr, int &a_iPos, Value &a_fVal);
-      virtual IValueReader* Clone(TokenReader *pTokenReader) const;
+      virtual bool IsValue(const char_type *a_szExpr, int &a_iPos, Value &a_fVal) override;
+      virtual IValueReader* Clone(TokenReader *pTokenReader) const override;
   };
 
   //------------------------------------------------------------------------------
@@ -112,8 +112,8 @@ MUP_NAMESPACE_START
   public:    
       BinValReader();
       virtual ~BinValReader();
-      virtual bool IsValue(const char_type *a_szExpr, int &a_iPos, Value &a_fVal);
-      virtual IValueReader* Clone(TokenReader *pTokenReader) const;
+      virtual bool IsValue(const char_type *a_szExpr, int &a_iPos, Value &a_fVal) override;
+      virtual IValueReader* Clone(TokenReader *pTokenReader) const override;
   };
 
   //------------------------------------------------------------------------------
@@ -130,8 +130,8 @@ MUP_NAMESPACE_START
   public:    
       StrValReader();
       virtual ~StrValReader();
-      virtual bool IsValue(const char_type *a_szExpr, int &a_iPos, Value &a_fVal);
-      virtual IValueReader* Clone(TokenReader *pTokenReader) const;
+      virtual bool IsValue(const char_type *a_szExpr, int &a_iPos, Value &a_fVal) override;
+      virtual IValueReader* Clone(TokenReader *pTokenReader) const override;
 
   private:
       string_type Unescape(const char_type *szExpr, int &len);

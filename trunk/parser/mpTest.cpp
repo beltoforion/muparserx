@@ -1189,8 +1189,8 @@ MUP_NAMESPACE_START
     int  iNumErr = 0;
     *m_stream << _T("testing sample equations...");
 
-    iNumErr += ThrowTest(_T("1e1234"), ecOVERFLOW);
-    iNumErr += ThrowTest(_T("-1e1234"), ecOVERFLOW);
+    iNumErr += ThrowTest(_T("1e1234"), ecUNASSIGNABLE_TOKEN);
+    iNumErr += ThrowTest(_T("-1e1234"), ecUNASSIGNABLE_TOKEN);
 
     iNumErr += EqnTest(_T("-2--8"), (float_type)6.0, true);
     iNumErr += EqnTest(_T("2*(a=9)*3"), 54, true);

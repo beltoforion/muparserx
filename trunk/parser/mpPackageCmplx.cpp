@@ -47,7 +47,7 @@ std::unique_ptr<PackageCmplx> PackageCmplx::s_pInstance;
 //------------------------------------------------------------------------------
 IPackage* PackageCmplx::Instance()
 {
-  if (s_pInstance.get()==NULL)
+  if (s_pInstance.get()==nullptr)
   {
     s_pInstance.reset(new PackageCmplx);
   }
