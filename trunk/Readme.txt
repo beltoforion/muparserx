@@ -1,7 +1,5 @@
 #########################################################################
 #                                                                       #
-#                                                                       #
-#                                                                       #
 #               __________                                 ____  ___    #
 #    _____  __ _\______   \_____ _______  ______ __________\   \/  /    #
 #   /     \|  |  \     ___/\__  \\_  __ \/  ___// __ \_  __ \     /     #
@@ -30,10 +28,13 @@
 #                                                                       #
 #########################################################################
 
-V2.1.7 (20130224)
------------------
+V3.0.0 (20130224; prerelease)
+-----------------------------
+
+Warning: This code requires a C++11 capable compiler!
 
 API Changes:
+  - C++11 features introduced in the code
   - Functions defining variables, constants, operators or functions will now throw an exception
     if a a token with a similar identifier already exists. Their API changed to take a managed
     pointer instead of a raw pointer.
