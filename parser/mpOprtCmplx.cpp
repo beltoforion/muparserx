@@ -89,7 +89,7 @@ MUP_NAMESPACE_START
   //-----------------------------------------------------------------------------------------------
   const char_type* OprtSignCmplx::GetDesc() const 
   { 
-    return _T("unit multiplicator 1e-9"); 
+    return _T("negative sign operator"); 
   }
 
   //-----------------------------------------------------------------------------------------------

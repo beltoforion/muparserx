@@ -81,6 +81,7 @@ void PackageNonCmplx::AddToParser(ParserXBase *pParser)
 
   // Operator callbacks
   pParser->DefineInfixOprt(new OprtSign());
+  pParser->DefineInfixOprt(new OprtSignPos());
   pParser->DefineOprt(new OprtAdd());
   pParser->DefineOprt(new OprtSub());
   pParser->DefineOprt(new OprtMul());

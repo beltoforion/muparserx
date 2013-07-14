@@ -65,6 +65,19 @@ MUP_NAMESPACE_START
     virtual IToken* Clone() const override;
   }; // class OprtSign
 
+  //---------------------------------------------------------------------------
+  /** \brief Callback for the positive sign operator for noncomplex values.
+      \ingroup infix
+  */
+  class OprtSignPos : public IOprtInfix
+  {
+  public:
+    OprtSignPos();
+    virtual void Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int a_iArgc) override;
+    virtual const char_type* GetDesc() const override;
+    virtual IToken* Clone() const override;
+  }; // class OprtSignPos
+
   //------------------------------------------------------------------------------
   /** \brief Parser callback for implementing an addition of two noncomplex values.
       \ingroup binop
