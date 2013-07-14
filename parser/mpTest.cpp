@@ -803,7 +803,9 @@ MUP_NAMESPACE_START
   int ParserTester::TestInfix()
   {
     int iNumErr = 0;
-    *m_stream << _T("testing parser reader implementations...");
+    *m_stream << _T("testing infix operators...");
+    
+    float_type a = 1.11;
 
     iNumErr += EqnTest(_T("-1"),    (float_type)-1.0, true);
     iNumErr += EqnTest(_T("-(-1)"),  (float_type)1.0, true);
@@ -825,13 +827,10 @@ MUP_NAMESPACE_START
     iNumErr += EqnTest(_T("2++4"), (float_type)6.0, true);
     iNumErr += EqnTest(_T("--1"), (float_type)1.0, true);
 
-    // Postfix / infix priorities
-    //iNumErr += EqnTest("~2#", 12, true);
-    //iNumErr += EqnTest("~f1of1(2)#", 12, true);
-    //iNumErr += EqnTest("~(b)#", 12, true);
-    //iNumErr += EqnTest("(~b)#", 12, true);
-    //iNumErr += EqnTest("~(2#)", 8, true);
-    //iNumErr += EqnTest("~(f1of1(2)#)", 8, true);
+    // sign precedence
+    iNumErr += EqnTest(_T("-a^2^3-a^8"), -std::pow(a, std::pow(2.0,3.0))-std::pow(a,8),  true); 
+    iNumErr += EqnTest(_T("-3^2"), -9,  true); 
+
 
     Assessment(iNumErr);
     return iNumErr;
