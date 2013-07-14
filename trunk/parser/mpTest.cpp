@@ -1214,7 +1214,7 @@ MUP_NAMESPACE_START
     iNumErr += EqnTest(_T("(e^(ln(7)))"), 7, true);
     iNumErr += EqnTest(_T("1-(e^(ln(7)))"), -6, true);
     iNumErr += EqnTest(_T("2*(e^(ln(7)))"), 14, true);
-    iNumErr += EqnTest(_T("10^log(5)"), 5, true);
+    iNumErr += EqnTest(_T("10^log10(5)"), 5, true);
     iNumErr += EqnTest(_T("10^log10(5)"), 5, true);
     iNumErr += EqnTest(_T("2^log2(4)"), (float_type)4.0, true);
     iNumErr += EqnTest(_T("-(sin(0)+1)"), (float_type)-1.0, true);

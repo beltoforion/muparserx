@@ -77,13 +77,63 @@ MUP_NAMESPACE_START
   //------------------------------------------------------------------------------
   const char_type* OprtSign::GetDesc() const 
   { 
-    return _T("unit multiplicator 1e-9"); 
+    return _T("-x - negative sign operator"); 
   }
 
   //------------------------------------------------------------------------------
   IToken* OprtSign::Clone() const 
   { 
     return new OprtSign(*this); 
+  }
+
+  //------------------------------------------------------------------------------
+  //
+  //  Sign operator
+  //
+  //------------------------------------------------------------------------------
+
+  OprtSignPos::OprtSignPos()
+    :IOprtInfix( _T("+"))
+  {}
+
+  //------------------------------------------------------------------------------
+  void OprtSignPos::Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int a_iArgc)  
+  { 
+    MUP_ASSERT(a_iArgc==1);
+
+    if (a_pArg[0]->IsScalar())
+    {
+      *ret = a_pArg[0]->GetFloat();
+    }
+    else if (a_pArg[0]->GetType()=='m')
+    {
+      Value v(a_pArg[0]->GetRows(), 0);
+      for (int i=0; i<a_pArg[0]->GetRows(); ++i)
+      {
+        v.At(i) = a_pArg[0]->At(i).GetFloat();
+      }
+      *ret = v;
+    }
+    else
+    {
+        ErrorContext err;
+        err.Errc = ecINVALID_TYPE;
+        err.Type1 = a_pArg[0]->GetType();
+        err.Type2 = 's';
+        throw ParserError(err);
+    }
+  }
+
+  //------------------------------------------------------------------------------
+  const char_type* OprtSignPos::GetDesc() const 
+  { 
+    return _T("+x - positive sign operator"); 
+  }
+
+  //------------------------------------------------------------------------------
+  IToken* OprtSignPos::Clone() const 
+  { 
+    return new OprtSignPos(*this); 
   }
 
 //-----------------------------------------------------------
