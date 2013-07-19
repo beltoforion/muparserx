@@ -828,9 +828,9 @@ MUP_NAMESPACE_START
     iNumErr += EqnTest(_T("--1"), (float_type)1.0, true);
 
     // sign precedence
-    iNumErr += EqnTest(_T("-a^2^3-a^8"), -std::pow(a, std::pow(2.0,3.0))-std::pow(a,8),  true); 
+    // Issue 14: https://code.google.com/p/muparserx/issues/detail?id=14
     iNumErr += EqnTest(_T("-3^2"), -9,  true); 
-
+    iNumErr += EqnTest(_T("-a^2^3-a^8"), -std::pow(a, std::pow(2.0,3.0))-std::pow(a,8),  true); 
 
     Assessment(iNumErr);
     return iNumErr;
