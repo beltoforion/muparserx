@@ -787,7 +787,8 @@ MUP_NAMESPACE_START
     iNumErr += EqnTest(_T("(a){m}"), (float_type)2.0, false);
     // factorial operator
     iNumErr += EqnTest(_T("5!"), 120, true);
-    iNumErr += ThrowTest(_T("-5!"), ecDOMAIN_ERROR);
+    iNumErr += EqnTest(_T("-5!"), -120, true);
+    iNumErr += ThrowTest(_T("(-5)!"), ecDOMAIN_ERROR);
 
     // Special tests for systems not supporting IEEE 754
     if (!std::numeric_limits<float_type>::is_iec559)
@@ -805,7 +806,8 @@ MUP_NAMESPACE_START
     int iNumErr = 0;
     *m_stream << _T("testing infix operators...");
     
-    float_type a = 1.11;
+    float_type a = 1;
+    float_type b = 2;
 
     iNumErr += EqnTest(_T("-1"),    (float_type)-1.0, true);
     iNumErr += EqnTest(_T("-(-1)"),  (float_type)1.0, true);
@@ -830,7 +832,7 @@ MUP_NAMESPACE_START
     // sign precedence
     // Issue 14: https://code.google.com/p/muparserx/issues/detail?id=14
     iNumErr += EqnTest(_T("-3^2"), -9,  true); 
-    iNumErr += EqnTest(_T("-a^2^3-a^8"), -std::pow(a, std::pow(2.0,3.0))-std::pow(a,8),  true); 
+    iNumErr += EqnTest(_T("-b^2^3-b^8"), -std::pow(b, std::pow(2.0,3.0))-std::pow(b,8),  true); 
 
     Assessment(iNumErr);
     return iNumErr;

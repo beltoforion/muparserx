@@ -663,8 +663,8 @@ void ParserXBase::ApplyRemainingOprt(Stack<ptr_tok_type> &stOpt,
 
     switch(op->GetCode())
     {
+      case  cmOPRT_INFIX:
       case  cmOPRT_BIN:
-        MUP_ASSERT(stOpt.top()->GetCode()==cmOPRT_BIN);
         ApplyFunc(stOpt, stVal, 2);
         break;
 
@@ -776,9 +776,9 @@ void ParserXBase::ApplyIfElse(Stack<ptr_tok_type> &a_stOpt,
     ptr_tok_type opElse = a_stOpt.pop();
     ptr_tok_type opIf = a_stOpt.pop();
     MUP_ASSERT(opElse->GetCode()==cmELSE)
-        MUP_ASSERT(opIf->GetCode()==cmIF)
+    MUP_ASSERT(opIf->GetCode()==cmIF)
 
-        m_rpn.Add(ptr_tok_type(new TokenIfThenElse(cmENDIF)));
+    m_rpn.Add(ptr_tok_type(new TokenIfThenElse(cmENDIF)));
   }
 }
 
@@ -809,7 +809,7 @@ void ParserXBase::CreateRPN() const
   // such as in "a=10,b=20,c=c+a"
   stArgCount.push(1);
 
-  for(bool bLoop=true; bLoop;)
+  for(;;)
   {
     pTokPrev = pTok;
     pTok = m_pTokenReader->ReadNextToken();
@@ -822,266 +822,270 @@ void ParserXBase::CreateRPN() const
     switch (eCmd)
     {
       case  cmVAL:
-      {
-        IValue *pVal = pTok->AsIValue();
-        if (stFunc.empty() && pVal->GetType()=='n')
-        {
-          ErrorContext err;
-          err.Errc  = ecUNEXPECTED_PARENS;
-          err.Ident = _T(")");
-          err.Pos   = pTok->GetExprPos();
-          throw ParserError(err);
-        }
+            {
+              IValue *pVal = pTok->AsIValue();
+              if (stFunc.empty() && pVal->GetType()=='n')
+              {
+                ErrorContext err;
+                err.Errc  = ecUNEXPECTED_PARENS;
+                err.Ident = _T(")");
+                err.Pos   = pTok->GetExprPos();
+                throw ParserError(err);
+              }
 
-        stVal.push( ptr_val_type(pVal) );
+              stVal.push( ptr_val_type(pVal) );
 
-        // Arrays can't be added directly to the reverse polish notation
-        // since there may be an index operator following next...
-        m_rpn.Add(pTok);
+              // Arrays can't be added directly to the reverse polish notation
+              // since there may be an index operator following next...
+              m_rpn.Add(pTok);
 
-        // Apply infix operator if existant
-        if (stOpt.size() && stOpt.top()->GetCode()==cmOPRT_INFIX)
-          ApplyFunc(stOpt, stVal, 1);
-      }
-        break;
+              //// Apply infix operator if existant
+              //if (stOpt.size() && stOpt.top()->GetCode()==cmOPRT_INFIX)
+              //  ApplyFunc(stOpt, stVal, 1);
+            }
+            break;
 
       case  cmIC:
-      {
-        // The argument count for parameterless functions is zero
-        // by default an opening bracket sets parameter count to 1
-        // in preparation of arguments to come. If the last token
-        // was an opening bracket we know better...
-        if (pTokPrev.Get()!=nullptr && pTokPrev->GetCode()==cmIO)
-          --stArgCount.top();
+            {
+              // The argument count for parameterless functions is zero
+              // by default an opening bracket sets parameter count to 1
+              // in preparation of arguments to come. If the last token
+              // was an opening bracket we know better...
+              if (pTokPrev.Get()!=nullptr && pTokPrev->GetCode()==cmIO)
+                --stArgCount.top();
 
-        ApplyRemainingOprt(stOpt, stVal);
+              ApplyRemainingOprt(stOpt, stVal);
 
-        // if opt is "]" and opta is "[" the bracket content has been evaluated.
-        // Now its time to check if there is either a function or a sign pending.
-        // - Neither the opening nor the closing bracket will be pushed back to
-        //   the operator stack
-        // - Check if a function is standing in front of the opening bracket,
-        //   if so evaluate it afterwards to apply an infix operator.
-        if ( stOpt.size() && stOpt.top()->GetCode()==cmIO )
-        {
-          //
-          // Find out how many dimensions were used in the index operator.
-          //
-          std::size_t iArgc = stArgCount.pop();
+              // if opt is "]" and opta is "[" the bracket content has been evaluated.
+              // Now its time to check if there is either a function or a sign pending.
+              // - Neither the opening nor the closing bracket will be pushed back to
+              //   the operator stack
+              // - Check if a function is standing in front of the opening bracket,
+              //   if so evaluate it afterwards to apply an infix operator.
+              if ( stOpt.size() && stOpt.top()->GetCode()==cmIO )
+              {
+                //
+                // Find out how many dimensions were used in the index operator.
+                //
+                std::size_t iArgc = stArgCount.pop();
 
-          stOpt.pop(); // Take opening bracket from stack
+                stOpt.pop(); // Take opening bracket from stack
 
-          IOprtIndex *pOprtIndex = pTok->AsIOprtIndex();
-          MUP_ASSERT(pOprtIndex!=nullptr);
+                IOprtIndex *pOprtIndex = pTok->AsIOprtIndex();
+                MUP_ASSERT(pOprtIndex!=nullptr);
 
-          pOprtIndex->SetNumArgsPresent(iArgc);
-          m_rpn.Add(pTok);
+                pOprtIndex->SetNumArgsPresent(iArgc);
+                m_rpn.Add(pTok);
 
-          // Pop the index values from the stack
-          MUP_ASSERT(stVal.size()>=iArgc+1);
-          for (std::size_t i=0; i<iArgc; ++i)
-            stVal.pop();
+                // Pop the index values from the stack
+                MUP_ASSERT(stVal.size()>=iArgc+1);
+                for (std::size_t i=0; i<iArgc; ++i)
+                  stVal.pop();
 
-          // Now i would need to pop the topmost value from the stack, apply the index
-          // opertor and push the result back to the stack. But here we are just creating the
-          // RPN and are working with dummy values anyway so i just mark the topmost value as
-          // volatile and leave it were it is. The real index logic is in the RPN evaluator...
-          stVal.top()->AddFlags(IToken::flVOLATILE);
-        } // if opening index bracket is on top of operator stack
-      }
-        break;
+                // Now i would need to pop the topmost value from the stack, apply the index
+                // opertor and push the result back to the stack. But here we are just creating the
+                // RPN and are working with dummy values anyway so i just mark the topmost value as
+                // volatile and leave it were it is. The real index logic is in the RPN evaluator...
+                stVal.top()->AddFlags(IToken::flVOLATILE);
+              } // if opening index bracket is on top of operator stack
+            }
+            break;
 
       case  cmBC:
-      {
-        // The argument count for parameterless functions is zero
-        // by default an opening bracket sets parameter count to 1
-        // in preparation of arguments to come. If the last token
-        // was an opening bracket we know better...
-        if (pTokPrev.Get()!=nullptr && pTokPrev->GetCode()==cmBO)
-          --stArgCount.top();
+            {
+              // The argument count for parameterless functions is zero
+              // by default an opening bracket sets parameter count to 1
+              // in preparation of arguments to come. If the last token
+              // was an opening bracket we know better...
+              if (pTokPrev.Get()!=nullptr && pTokPrev->GetCode()==cmBO)
+                --stArgCount.top();
 
-        ApplyRemainingOprt(stOpt, stVal);
+              ApplyRemainingOprt(stOpt, stVal);
 
-        // if opt is ")" and opta is "(" the bracket content has been evaluated.
-        // Now its time to check if there is either a function or a sign pending.
-        // - Neither the opening nor the closing bracket will be pushed back to
-        //   the operator stack
-        // - Check if a function is standing in front of the opening bracket,
-        //   if so evaluate it afterwards to apply an infix operator.
-        if ( stOpt.size() && stOpt.top()->GetCode()==cmBO )
-        {
-          //
-          // Here is the stuff to evaluate a function token
-          //
-          int iArgc = stArgCount.pop();
+              // if opt is ")" and opta is "(" the bracket content has been evaluated.
+              // Now its time to check if there is either a function or a sign pending.
+              // - Neither the opening nor the closing bracket will be pushed back to
+              //   the operator stack
+              // - Check if a function is standing in front of the opening bracket,
+              //   if so evaluate it afterwards to apply an infix operator.
+              if ( stOpt.size() && stOpt.top()->GetCode()==cmBO )
+              {
+                //
+                // Here is the stuff to evaluate a function token
+                //
+                int iArgc = stArgCount.pop();
 
-          stOpt.pop(); // Take opening bracket from stack
-          if ( stOpt.empty() )
+                stOpt.pop(); // Take opening bracket from stack
+                if ( stOpt.empty() )
+                  break;
+
+                if ( (stOpt.top()->GetCode()!=cmFUNC) && (stOpt.top()->GetCode()!=cmOPRT_INFIX) )
+                  break;
+
+                ICallback *pFun = stOpt.top()->AsICallback();
+                stFunc.pop();
+
+                if (pFun->GetArgc()!=-1 && iArgc > pFun->GetArgc())
+                  Error(ecTOO_MANY_PARAMS, pTok->GetExprPos(), pFun);
+
+                if (iArgc < pFun->GetArgc())
+                  Error(ecTOO_FEW_PARAMS, pTok->GetExprPos(), pFun);
+
+                //// Evaluate the function
+                //ApplyFunc(stOpt, stVal, iArgc);
+
+                // Apply an infix operator, if present
+                if (stOpt.size() && 
+                    stOpt.top()->GetCode()!=cmOPRT_INFIX && 
+                    stOpt.top()->GetCode()!=cmOPRT_BIN)
+                {
+                  ApplyFunc(stOpt, stVal, iArgc);
+                }
+              }
+            }
             break;
-
-          if ( (stOpt.top()->GetCode()!=cmFUNC) && (stOpt.top()->GetCode()!=cmOPRT_INFIX) )
-            break;
-
-          ICallback *pFun = stOpt.top()->AsICallback();
-          stFunc.pop();
-
-          if (pFun->GetArgc()!=-1 && iArgc > pFun->GetArgc())
-            Error(ecTOO_MANY_PARAMS, pTok->GetExprPos(), pFun);
-
-          if (iArgc < pFun->GetArgc())
-            Error(ecTOO_FEW_PARAMS, pTok->GetExprPos(), pFun);
-
-          // Evaluate the function
-          ApplyFunc(stOpt, stVal, iArgc);
-
-          // Apply an infix operator, if present
-          if (stOpt.size() && stOpt.top()->GetCode()==cmOPRT_INFIX)
-            ApplyFunc(stOpt, stVal, 1);
-        }
-      }
-        break;
 
       case  cmELSE:
-        ApplyRemainingOprt(stOpt, stVal);
-        m_rpn.Add(pTok);
-        stOpt.push(pTok);
-        break;
+            ApplyRemainingOprt(stOpt, stVal);
+            m_rpn.Add(pTok);
+            stOpt.push(pTok);
+            break;
 
       case  cmSCRIPT_NEWLINE:
-      {
-        ApplyRemainingOprt(stOpt, stVal);
+            {
+              ApplyRemainingOprt(stOpt, stVal);
 
-        // Value stack plätten
-        // Stack der RPN um die Anzahl im stack enthaltener Werte zurück setzen
-        int n = stVal.size();
-        m_rpn.AddNewline(pTok, n);
-        stVal.clear();
-        stOpt.clear();
-      }
-        break;
+              // Value stack plätten
+              // Stack der RPN um die Anzahl im stack enthaltener Werte zurück setzen
+              int n = stVal.size();
+              m_rpn.AddNewline(pTok, n);
+              stVal.clear();
+              stOpt.clear();
+            }
+            break;
 
       case  cmARG_SEP:
-        if (stArgCount.empty())
-          Error(ecUNEXPECTED_COMMA, m_pTokenReader->GetPos());
+            if (stArgCount.empty())
+              Error(ecUNEXPECTED_COMMA, m_pTokenReader->GetPos());
 
-        ++stArgCount.top();
+            ++stArgCount.top();
 
-        //if (stVal.size()) // increase argument counter
-        //  stArgCount.top()++;
+            //if (stVal.size()) // increase argument counter
+            //  stArgCount.top()++;
 
-        ApplyRemainingOprt(stOpt, stVal);
-        break;
+            ApplyRemainingOprt(stOpt, stVal);
+            break;
 
       case  cmEOE:
-        ApplyRemainingOprt(stOpt, stVal);
-        m_rpn.Finalize();
-        break;
+            ApplyRemainingOprt(stOpt, stVal);
+            m_rpn.Finalize();
+            break;
 
       case  cmIF:
       case  cmOPRT_BIN:
-      {
-        while ( stOpt.size() &&
-                stOpt.top()->GetCode() != cmBO &&
-                stOpt.top()->GetCode() != cmIO &&
-                stOpt.top()->GetCode() != cmELSE &&
-                stOpt.top()->GetCode() != cmIF)
-        {
-          IToken *pOprt1 = stOpt.top().Get();
-          IToken *pOprt2 = pTok.Get();
-          MUP_ASSERT(pOprt1 && pOprt2);
-          MUP_ASSERT(pOprt1->AsIPrecedence() && pOprt2->AsIPrecedence());
-
-          int nPrec1 = pOprt1->AsIPrecedence()->GetPri(),
-              nPrec2 = pOprt2->AsIPrecedence()->GetPri();
-
-          if (pOprt1->GetCode()==pOprt2->GetCode())
-          {
-            // Deal with operator associativity
-            EOprtAsct eOprtAsct = pOprt1->AsIPrecedence()->GetAssociativity();
-            if ( (eOprtAsct==oaRIGHT && (nPrec1 <= nPrec2)) ||
-                 (eOprtAsct==oaLEFT  && (nPrec1 <  nPrec2)) )
             {
-              break;
+              while ( stOpt.size() &&
+                      stOpt.top()->GetCode() != cmBO &&
+                      stOpt.top()->GetCode() != cmIO &&
+                      stOpt.top()->GetCode() != cmELSE &&
+                      stOpt.top()->GetCode() != cmIF)
+              {
+                IToken *pOprt1 = stOpt.top().Get();
+                IToken *pOprt2 = pTok.Get();
+                MUP_ASSERT(pOprt1 && pOprt2);
+                MUP_ASSERT(pOprt1->AsIPrecedence() && pOprt2->AsIPrecedence());
+
+                int nPrec1 = pOprt1->AsIPrecedence()->GetPri(),
+                    nPrec2 = pOprt2->AsIPrecedence()->GetPri();
+
+                if (pOprt1->GetCode()==pOprt2->GetCode())
+                {
+                  // Deal with operator associativity
+                  EOprtAsct eOprtAsct = pOprt1->AsIPrecedence()->GetAssociativity();
+                  if ( (eOprtAsct==oaRIGHT && (nPrec1 <= nPrec2)) ||
+                       (eOprtAsct==oaLEFT  && (nPrec1 <  nPrec2)) )
+                  {
+                    break;
+                  }
+                }
+                else if (nPrec1 < nPrec2)
+                {
+                  break;
+                }
+
+                // apply the operator now
+                // (binary operators are identic to functions with two arguments)
+                ApplyFunc(stOpt, stVal, 2);
+              } // while ( ... )
+
+              if (pTok->GetCode()==cmIF)
+                m_rpn.Add(pTok);
+
+              stOpt.push(pTok);
             }
-          }
-          else if (nPrec1 < nPrec2)
-          {
             break;
-          }
 
-          // apply the operator now
-          // (binary operators are identic to functions with two arguments)
-          ApplyFunc(stOpt, stVal, 2);
-        } // while ( ... )
-
-        if (pTok->GetCode()==cmIF)
-          m_rpn.Add(pTok);
-
-        stOpt.push(pTok);
-      }
-        break;
-
-        //
-        //  Postfix Operators
-        //
+      //
+      //  Postfix Operators
+      //
       case  cmOPRT_POSTFIX:
-      {
-        MUP_ASSERT(stVal.size());
+            {
+              MUP_ASSERT(stVal.size());
 
-        ptr_val_type &pVal(stVal.top());
-        try
-        {
-          // place a dummy return value into the value stack, do not
-          // evaluate pOprt (this is important for lazy evaluation!)
-          // The only place where evaluation takes place is the RPN
-          // engine!
-          pVal = ptr_val_type(new Value());
-          m_rpn.Add(pTok);
-        }
-        catch(ParserError &)
-        {
-          if (!m_bIsQueryingExprVar)
-            throw;
-        }
-      }
-        break;
+              ptr_val_type &pVal(stVal.top());
+              try
+              {
+                // place a dummy return value into the value stack, do not
+                // evaluate pOprt (this is important for lazy evaluation!)
+                // The only place where evaluation takes place is the RPN
+                // engine!
+                pVal = ptr_val_type(new Value());
+                m_rpn.Add(pTok);
+              }
+              catch(ParserError &)
+              {
+                if (!m_bIsQueryingExprVar)
+                  throw;
+              }
+            }
+            break;
 
       case  cmIO:
       case  cmBO:
-        stOpt.push(pTok);
-        stArgCount.push(1);
-        break;
+            stOpt.push(pTok);
+            stArgCount.push(1);
+            break;
 
         //
         // Functions
         //
       case  cmOPRT_INFIX:
       case  cmFUNC:
-      {
-        ICallback *pFunc = pTok->AsICallback();
-        MUP_ASSERT(pFunc);
+            {
+              ICallback *pFunc = pTok->AsICallback();
+              MUP_ASSERT(pFunc);
 
-        // Check if this function is a argument to another function
-        // if so check if the the return type fits.
-        if (!stFunc.empty() && stFunc.top()->GetCode()==cmFUNC)
-        {
-          MUP_ASSERT(stArgCount.size());
-          int iArgc = (int)stArgCount.top() /*+ 1*/;
+              // Check if this function is a argument to another function
+              // if so check if the the return type fits.
+              if (!stFunc.empty() && stFunc.top()->GetCode()==cmFUNC)
+              {
+                MUP_ASSERT(stArgCount.size());
+                int iArgc = (int)stArgCount.top() /*+ 1*/;
 
-          ICallback *pOuterFunc = stFunc.top();
-          if (pOuterFunc->GetArgc()!=-1 && iArgc>pOuterFunc->GetArgc())
-            Error(ecTOO_MANY_PARAMS, m_pTokenReader->GetPos());
+                ICallback *pOuterFunc = stFunc.top();
+                if (pOuterFunc->GetArgc()!=-1 && iArgc>pOuterFunc->GetArgc())
+                  Error(ecTOO_MANY_PARAMS, m_pTokenReader->GetPos());
 
-          MUP_ASSERT(pOuterFunc->GetArgc()==-1 || iArgc<=pOuterFunc->GetArgc());
-        }
+                MUP_ASSERT(pOuterFunc->GetArgc()==-1 || iArgc<=pOuterFunc->GetArgc());
+              }
 
-        stOpt.push(pTok);
-        stFunc.push(pFunc); // to collect runtime type information
-      }
-        break;
+              stOpt.push(pTok);
+              stFunc.push(pFunc); // to collect runtime type information
+            }
+            break;
 
       default:
-        Error(ecINTERNAL_ERROR);
+            Error(ecINTERNAL_ERROR);
     } // switch Code
 
     if (ParserXBase::s_bDumpStack)
@@ -1090,7 +1094,7 @@ void ParserXBase::CreateRPN() const
     }
 
     if ( pTok->GetCode() == cmEOE )
-      bLoop = false;
+      break;
   } // for (all tokens)
 
   if (ParserXBase::s_bDumpRPN)

@@ -123,8 +123,10 @@ MUP_NAMESPACE_START
   //
   //------------------------------------------------------------------------------
 
-  IOprtInfix::IOprtInfix(const char_type *a_szIdent)
+  IOprtInfix::IOprtInfix(const char_type *a_szIdent, int nPrec)
     :ICallback(cmOPRT_INFIX, a_szIdent, 1)
+    ,IPrecedence()
+    ,m_nPrec(nPrec)
   {}
 
   //------------------------------------------------------------------------------
@@ -143,6 +145,24 @@ MUP_NAMESPACE_START
     ss << _T("]");
 
     return ss.str();
+  }
+
+  //---------------------------------------------------------------------------
+  IPrecedence* IOprtInfix::AsIPrecedence()
+  {
+    return this;
+  }
+
+  //------------------------------------------------------------------------------
+  int IOprtInfix::GetPri() const
+  {
+    return m_nPrec;
+  }
+
+  //------------------------------------------------------------------------------
+  EOprtAsct IOprtInfix::GetAssociativity() const
+  {
+    return oaNONE;
   }
 
   //------------------------------------------------------------------------------
