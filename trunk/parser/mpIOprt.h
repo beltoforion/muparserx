@@ -61,17 +61,15 @@ MUP_NAMESPACE_START
       virtual ~IOprtBin();
       virtual string_type AsciiDump() const;
 
-      virtual int GetPri() const;
-      virtual EOprtAsct GetAssociativity() const;
-
       //------------------------------------------
       // IPrecedence implementation
       //------------------------------------------
 
       virtual IPrecedence* AsIPrecedence();
+      virtual EOprtAsct GetAssociativity() const;
+      virtual int GetPri() const;
 
     private:
-
       int m_nPrec;
       EOprtAsct m_eAsc;
     }; // class IOperator
@@ -94,12 +92,24 @@ MUP_NAMESPACE_START
     /** \brief Interface for unary infix operators.
         \ingroup infix
     */
-    class IOprtInfix : public ICallback
+    class IOprtInfix : public ICallback,
+                       public IPrecedence
     {
     public:
-        IOprtInfix(const char_type *a_szIdent);
-        virtual ~IOprtInfix();
-        virtual string_type AsciiDump() const;
+      IOprtInfix(const char_type *a_szIdent, int nPrec);
+      virtual ~IOprtInfix();
+      virtual string_type AsciiDump() const;
+
+      //------------------------------------------
+      // IPrecedence implementation
+      //------------------------------------------
+
+      virtual IPrecedence* AsIPrecedence();
+      virtual int GetPri() const;
+      virtual EOprtAsct GetAssociativity() const;
+
+    private:
+      int m_nPrec;
     }; // class IOperator
 
     //------------------------------------------------------------------------------

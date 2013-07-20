@@ -52,6 +52,7 @@ Changes:
   - Querying multiple results of comma separated expressions added
 
 Bugfixes:
+  - Issue 14: Precedence of Unary Operators
   - Issue 17: Wrong result on complex power
   - Issue 20: Library crash when " " is calculated
   - Issue 23: min, max and sum functions return values when called without parameters
