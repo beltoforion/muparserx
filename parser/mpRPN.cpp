@@ -33,6 +33,9 @@
   POSSIBILITY OF SUCH DAMAGE.
 */
 
+#include <iostream>
+#include <iomanip>
+
 #include "mpRPN.h"
 #include "mpIToken.h"
 #include "mpICallback.h"
@@ -179,7 +182,9 @@ MUP_NAMESPACE_START
     for (std::size_t i=0; i<m_vRPN.size(); ++i)
     {
       ptr_tok_type pTok = m_vRPN[i];
-      console() << i << " : " << pTok->GetExprPos() << " : " << pTok->AsciiDump() << "\n";
+      console() << std::setw(2) << i << " : "
+                << std::setw(2) << pTok->GetExprPos() << " : " 
+                << pTok->AsciiDump() << std::endl;
     }
   }
 

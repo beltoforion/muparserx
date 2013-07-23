@@ -76,6 +76,7 @@ MUP_NAMESPACE_START
 
     int ExtractToken(const char_type *a_szCharSet, string_type &a_sTok, int a_iPos) const;
 
+    void SkipCommentsAndWhitespaces();
     bool IsBuiltIn(ptr_tok_type &t);
     bool IsEOF(ptr_tok_type &t);
     bool IsNewline(ptr_tok_type &a_Tok);

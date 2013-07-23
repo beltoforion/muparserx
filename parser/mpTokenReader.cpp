@@ -271,17 +271,41 @@ MUP_NAMESPACE_START
   }
 
   //---------------------------------------------------------------------------
+  void TokenReader::SkipCommentsAndWhitespaces()
+  {
+    bool bSkip = true;
+    while (m_nPos<(int)m_sExpr.length() && bSkip)
+    {
+      switch(m_sExpr[m_nPos])
+      {
+      // skip comments
+      case  '#':
+            {
+              std::size_t i = m_sExpr.find_first_of('\n', m_nPos+1);
+              m_nPos = (i!=string_type::npos) ? i : m_sExpr.length();
+            }
+            break;
+      
+      // skip whitespaces
+      case ' ':
+            ++m_nPos;
+            break;
+      
+      default:
+            bSkip = false;
+      } // switch 
+    } // while comment or whitespace
+  }
+
+  //---------------------------------------------------------------------------
   /** \brief Read the next token from the string. */ 
   ptr_tok_type TokenReader::ReadNextToken()
   {
     assert(m_pParser);
-    const char_type *szFormula = m_sExpr.c_str();
 
-    while (szFormula[m_nPos]==' ') 
-      ++m_nPos;
+    SkipCommentsAndWhitespaces();
 
     int token_pos = m_nPos;
-
     ptr_tok_type pTok;
 
     // Check for end of expression

@@ -89,8 +89,6 @@ MUP_NAMESPACE_START
     virtual ~ParserXBase();
     
     const IValue& Eval() const;
-    ptr_val_type* Eval(int &nNumResults);
-    int GetNumResults() const;
 
     void SetExpr(const string_type &a_sExpr);
     void AddValueReader(IValueReader *a_pReader);
@@ -159,7 +157,7 @@ MUP_NAMESPACE_START
     oprt_pfx_maptype m_PostOprtDef;  ///< Postfix operator callbacks
     oprt_ifx_maptype m_InfixOprtDef; ///< Infix operator callbacks.
     oprt_bin_maptype m_OprtDef;      ///< Binary operator callbacks
-    val_maptype  m_valDef;         ///< Definition of parser constants
+    val_maptype  m_valDef;           ///< Definition of parser constants
     var_maptype  m_varDef;           ///< user defind variables.
 
   private:
@@ -167,8 +165,7 @@ MUP_NAMESPACE_START
     void  ReInit() const;
     void  ClearExpr();
     void  CreateRPN() const;
-    void  StackDump(const Stack<ptr_val_type> &a_stVal, 
-                     const Stack<ptr_tok_type> &a_stOprt) const;
+    void  StackDump(const Stack<ptr_tok_type> &a_stOprt) const;
 
     // Used by by DefineVar and DefineConst methods
     // for better checking of var/const/oprt/fun existence.
@@ -177,10 +174,9 @@ MUP_NAMESPACE_START
     void Assign(const ParserXBase &a_Parser);
     void InitTokenReader();
 
-    void ApplyFunc(Stack<ptr_tok_type> &a_stOpt, Stack<ptr_val_type> &a_stVal, int a_iArgCount) const;
-    void ApplyIfElse(Stack<ptr_tok_type> &a_stOpt, Stack<ptr_val_type> &a_stVal) const;
-    void ApplyRemainingOprt(Stack<ptr_tok_type> &a_stOpt,
-                                Stack<ptr_val_type> &a_stVal) const;
+    void ApplyFunc(Stack<ptr_tok_type> &a_stOpt, int a_iArgCount) const;
+    void ApplyIfElse(Stack<ptr_tok_type> &a_stOpt) const;
+    void ApplyRemainingOprt(Stack<ptr_tok_type> &a_stOpt) const;
     const IValue& ParseFromString() const; 
     const IValue& ParseFromRPN() const; 
 
@@ -198,6 +194,7 @@ MUP_NAMESPACE_START
     string_type m_sNameChars;        ///< Charset for names
     string_type m_sOprtChars;        ///< Charset for postfix/ binary operator tokens
     string_type m_sInfixOprtChars;   ///< Charset for infix operator tokens
+    mutable int m_nPos;
 
     /** \brief Index of the final result in the stack array. 
     

@@ -397,18 +397,7 @@ MUP_NAMESPACE_START
     iNumErr += EqnTest(_T("(-0.27 + 0.66*i)^2"), cmplx_type(-0.3627, -0.3564), true, 0);
     iNumErr += EqnTest(_T("(-1+5i)^2"), cmplx_type(-24, -10), true, 0);
 
-
-    // Test assignment operator with complex numbers. This needs to be written
-    // in a bit of an obfuscated way in order to make the test work. EqnTest
-    // computes the expression multiple times which would assign the variable
-    // multiple times with different values. This would cause false positives
-    // in the fail count. The result of the test expression is assigned to the
-    // variable c, the original variable is then reset and finally the value
-    // in c is used as the expression result...
-    iNumErr += EqnTest(_T("c=(a+=1+2i), a=1, c"), cmplx_type(2, 2), true, 2);
-    iNumErr += EqnTest(_T("c=(a-=1+2i), a=1, c"), cmplx_type(0, -2), true, 2);
-    iNumErr += EqnTest(_T("c=(b*=1+2i), b=2, c"), cmplx_type(2, 4), true, 2);
-    iNumErr += EqnTest(_T("c=(b/=1+2i), b=2, c"), cmplx_type((float_type)0.4, (float_type)-0.8), true, 2);
+    iNumErr += EqnTest(_T("c=(a=1+2i)"), cmplx_type(1, 2), true, 2);
 
     Assessment(iNumErr);
     return iNumErr;
@@ -1162,23 +1151,15 @@ MUP_NAMESPACE_START
     iNumErr += EqnTest(_T("true ? false ? 128 : 255 : true ? 32 : 64"), 255, true);
 
     // assignment operators
-    iNumErr += EqnTest(_T("a= false ? 128 : 255, a"), 255, true);
-    iNumErr += EqnTest(_T("a=((a>b)&&(a<b)) ? 128 : 255, a"), 255, true);
-    iNumErr += EqnTest(_T("c=(a<b)&&(a<b) ? 128 : 255, c"), 128, true);
-    iNumErr += EqnTest(_T("false ? a=a+1 : 666, a"), 1, true);
-    iNumErr += EqnTest(_T("true?a=10:a=20, a"), 10, true);
-    iNumErr += EqnTest(_T("false?a=10:a=20, a"), 20, true);
-    iNumErr += EqnTest(_T("false?a=sum(3,4):10, a"), 1, true);  // a should not change its value due to lazy calculation
+    iNumErr += EqnTest(_T("a= false ? 128 : 255"), 255, true);
+    iNumErr += EqnTest(_T("a=((a>b)&&(a<b)) ? 128 : 255"), 255, true);
+    iNumErr += EqnTest(_T("c=(a<b)&&(a<b) ? 128 : 255"), 128, true);
 
-    iNumErr += EqnTest(_T("a=true?b=true?3:4:5, a"), 3, true);
-    iNumErr += EqnTest(_T("a=true?b=true?3:4:5, b"), 3, true);
-    iNumErr += EqnTest(_T("a=false?b=true?3:4:5, a"), 5, true);
-    iNumErr += EqnTest(_T("a=false?b=true?3:4:5, b"), 2, true);
+    iNumErr += EqnTest(_T("a=true?b=true?3:4:5"), 3, true);
+    iNumErr += EqnTest(_T("a=false?b=true?3:4:5"), 5, true);
 
-    iNumErr += EqnTest(_T("a=true?5:b=true?3:4, a"), 5, true);
-    iNumErr += EqnTest(_T("a=true?5:b=true?3:4, b"), 2, true);
-    iNumErr += EqnTest(_T("a=false?5:b=true?3:4, a"), 3, true);
-    iNumErr += EqnTest(_T("a=false?5:b=true?3:4, b"), 3, true);
+    iNumErr += EqnTest(_T("a=true?5:b=true?3:4"), 5, true);
+    iNumErr += EqnTest(_T("a=false?5:b=true?3:4"), 3, true);
 
     Assessment(iNumErr);
     return iNumErr;
@@ -1262,7 +1243,6 @@ MUP_NAMESPACE_START
     // Test error detection
     iNumErr += ThrowTest(_T("sin(\n"), ecUNEXPECTED_NEWLINE);
     iNumErr += ThrowTest(_T("1+\n"),   ecUNEXPECTED_NEWLINE);
-    iNumErr += ThrowTest(_T("a,\n"),   ecUNEXPECTED_NEWLINE);
     iNumErr += ThrowTest(_T("a*\n"),   ecUNEXPECTED_NEWLINE);
     iNumErr += ThrowTest(_T("va[\n"),  ecUNEXPECTED_NEWLINE);
     iNumErr += ThrowTest(_T("(true) ? \n"),    ecUNEXPECTED_NEWLINE);
@@ -1272,10 +1252,6 @@ MUP_NAMESPACE_START
     iNumErr += EqnTest(_T("a=1\n")
                        _T("b=2\n") 
                        _T("c=3\n") 
-                       _T("a+b+c") , 6, true);
-
-    iNumErr += EqnTest(_T("a=1,b=2\n") 
-                       _T("c=a+b\n") 
                        _T("a+b+c") , 6, true);
 
     // Ending an expression with a newline
