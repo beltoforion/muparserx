@@ -885,7 +885,12 @@ void Calc()
 
       if (sLine==_T("dbg"))
       {
-        sLine  = _T("1\n");
+        sLine   = _T("# Zeile 1\n");
+        sLine  += _T("# Zeile 2\n");
+        sLine  += _T("a = 10\n");
+        sLine  += _T("b = 20 # Das ist ein Kommentar\n");
+        sLine  += _T("c = a+b\n");
+        sLine  += _T("# Schlusskommentar");
         mup::console() << sLine << endl;
       }
 
@@ -901,12 +906,8 @@ void Calc()
       // The returned result is of type Value, value is a Variant like
       // type that can be either a boolean an integer or a floating point value
       ans = parser.Eval();
-      int nNumResults = parser.GetNumResults();
-
-      if (nNumResults==1)
       {
         // Value supports C++ streaming like this:
-        console() << _T("Number or results: ") << parser.GetNumResults() << _T("\n");
         console() << _T("Result (type: '") << ans.GetType() <<  _T("'):\n");
         console() << _T("ans = ") << ans << _T("\n");
 /*
@@ -920,17 +921,6 @@ void Calc()
         case 'b': break;
         }
 */
-      }
-      else
-      {
-        // This piece of code demonstrates how to query multiple results
-        // an equation consisting of comma separated subexpressions
-        // will yield multiple return values (i.e.: "sin(8),2,3").
-        ptr_val_type* results = parser.Eval(nNumResults);
-        for (int i=0; i<nNumResults; ++i)
-        {
-          console() << _T("ans[") << i << _T("] = ") << *(results[i]) << _T("\n");
-        }
       }
     }
     catch(ParserError &e)

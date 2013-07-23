@@ -55,32 +55,33 @@ using namespace std;
 MUP_NAMESPACE_START
 
 //------------------------------------------------------------------------------
-const char_type *g_sCmdCode[] = { _T("BRCK. OPEN     "),
-                                  _T("BRCK. CLOSE    "),
-                                  _T("IDX OPEN       "),
-                                  _T("IDX CLOSE      "),
-                                  _T("ARG_SEP        "),
-                                  _T("IF             "),
-                                  _T("ELSE           "),
-                                  _T("ENDIF          "),
-                                  _T("JMP            "),
-                                  _T("VAR            "),
-                                  _T("VAL            "),
-                                  _T("FUNC           "),
-                                  _T("OPRT_BIN       "),
-                                  _T("OPRT_IFX       "),
-                                  _T("OPRT_PFX       "),
-                                  _T("END            "),
-                                  _T("SCRIPT_GOTO    "),
-                                  _T("SCRIPT_LABEL   "),
-                                  _T("SCRIPT_FOR     "),
-                                  _T("SCRIPT_IF      "),
-                                  _T("SCRIPT_ELSE    "),
-                                  _T("SCRIPT_ELSEIF  "),
-                                  _T("SCRIPT_ENDIF   "),
-                                  _T("SCRIPT_NEWLINE "),
-                                  _T("SCRIPT_FUNCTION"),
-                                  _T("UNKNOWN        ") };
+const char_type *g_sCmdCode[] = { _T("BRCK. OPEN  "),
+                                  _T("BRCK. CLOSE "),
+                                  _T("IDX OPEN    "),
+                                  _T("IDX CLOSE   "),
+                                  _T("ARG_SEP     "),
+                                  _T("IF          "),
+                                  _T("ELSE        "),
+                                  _T("ENDIF       "),
+                                  _T("JMP         "),
+                                  _T("VAR         "),
+                                  _T("VAL         "),
+                                  _T("FUNC        "),
+                                  _T("OPRT_BIN    "),
+                                  _T("OPRT_IFX    "),
+                                  _T("OPRT_PFX    "),
+                                  _T("END         "),
+                                  _T("SCRIPT_ENDL "),
+                                  _T("SCRIPT_CMT  "),
+                                  _T("SCRIPT_GOTO "),
+                                  _T("SCRIPT_LABEL"),
+                                  _T("SCRIPT_FOR  "),
+                                  _T("SCRIPT_IF   "),
+                                  _T("SCRIPT_ELSE "),
+                                  _T("SCRIPT_ELIF "),
+                                  _T("SCRIPT_ENDIF"),
+                                  _T("SCRIPT_FUNC "),
+                                  _T("UNKNOWN     ") };
 
 //------------------------------------------------------------------------------
 bool ParserXBase::s_bDumpStack = false;
@@ -116,7 +117,6 @@ ParserXBase::ParserXBase()
   ,m_sNameChars()
   ,m_sOprtChars()
   ,m_sInfixOprtChars()
-  ,m_nFinalResultIdx(0)
   ,m_bIsQueryingExprVar(false)
   ,m_bAutoCreateVar(false)
   ,m_rpn()
@@ -144,7 +144,6 @@ ParserXBase::ParserXBase(const ParserXBase &a_Parser)
   ,m_sNameChars()
   ,m_sOprtChars()
   ,m_sInfixOprtChars()
-  ,m_nFinalResultIdx(0)
   ,m_bAutoCreateVar()
   ,m_rpn()
   ,m_vStackBuffer()
@@ -206,7 +205,6 @@ void ParserXBase::Assign(const ParserXBase &ref)
   m_valDef          = ref.m_valDef;
   m_valDynVarShadow = ref.m_valDynVarShadow;
   m_varDef          = ref.m_varDef;             // Copy user defined variables
-  m_nFinalResultIdx = ref.m_nFinalResultIdx;
 
   // Copy charsets
   m_sNameChars = ref.m_sNameChars;
@@ -238,20 +236,6 @@ void ParserXBase::Assign(const ParserXBase &ref)
 const IValue& ParserXBase::Eval() const
 {
   return (this->*m_pParserEngine)();
-}
-
-//---------------------------------------------------------------------------
-ptr_val_type* ParserXBase::Eval(int &nNumResults)
-{
-  (this->*m_pParserEngine)();
-  nNumResults = m_nFinalResultIdx+1;
-  return &m_vStackBuffer[0];
-}
-
-//---------------------------------------------------------------------------
-int ParserXBase::GetNumResults() const
-{
-  return m_nFinalResultIdx+1;
 }
 
 //---------------------------------------------------------------------------
@@ -353,6 +337,7 @@ void ParserXBase::ReInit() const
   m_pTokenReader->ReInit();
   m_rpn.Reset();
   m_vStackBuffer.clear();
+  m_nPos = 0;
 }
 
 //---------------------------------------------------------------------------
@@ -649,8 +634,7 @@ string_type ParserXBase::GetVersion()
 }
 
 //---------------------------------------------------------------------------
-void ParserXBase::ApplyRemainingOprt(Stack<ptr_tok_type> &stOpt,
-                                     Stack<ptr_val_type> &stVal) const
+void ParserXBase::ApplyRemainingOprt(Stack<ptr_tok_type> &stOpt) const
 
 
 {
@@ -665,11 +649,11 @@ void ParserXBase::ApplyRemainingOprt(Stack<ptr_tok_type> &stOpt,
     {
       case  cmOPRT_INFIX:
       case  cmOPRT_BIN:
-        ApplyFunc(stOpt, stVal, 2);
+        ApplyFunc(stOpt, 2);
         break;
 
       case  cmELSE:
-        ApplyIfElse(stOpt, stVal);
+        ApplyIfElse(stOpt);
         break;
 
       default:
@@ -685,7 +669,6 @@ void ParserXBase::ApplyRemainingOprt(Stack<ptr_tok_type> &stOpt,
       \param a_iArgCount The number of function arguments
   */
 void ParserXBase::ApplyFunc(Stack<ptr_tok_type> &a_stOpt,
-                            Stack<ptr_val_type> &a_stVal,
                             int a_iArgCount) const
 {
   if (a_stOpt.empty())
@@ -695,89 +678,28 @@ void ParserXBase::ApplyFunc(Stack<ptr_tok_type> &a_stOpt,
   ICallback *pFun = tok->AsICallback();
 
   int iArgCount = (pFun->GetArgc()>=0) ? pFun->GetArgc() : a_iArgCount;
-  int iOffset = a_stVal.size() - iArgCount;
-  MUP_VERIFY(iOffset>=0);
+  pFun->SetNumArgsPresent(iArgCount);
 
-  // The paramater stack may be empty since functions may not
-  // have a parameter. They do always have a return value though.
-  // If the param stack is empty create an entry for the function
-  // return value.
-  if (iArgCount==0)
-    a_stVal.push(ptr_val_type(new Value()));
-
-  MUP_VERIFY((std::size_t)iOffset<a_stVal.size());
-  ptr_val_type *pArg = a_stVal.get_data() + iOffset;
-
-  try
-  {
-    // Make sure to pass on a volatile flag to the function result
-    bool bResultIsVolatile = false;
-    for (int i=0; i<iArgCount && bResultIsVolatile==false; ++i)
-    {
-      if (pArg[i]->IsFlagSet(IToken::flVOLATILE))
-        bResultIsVolatile = true;
-    }
-
-    // Instead of evaluating the function merely a dummy value of the same type as the function return value
-    // is created
-    *pArg = ptr_val_type(new Value());
-    pFun->SetNumArgsPresent(iArgCount);
-
-    if (bResultIsVolatile)
-      (*pArg)->AddFlags(IToken::flVOLATILE);
-
-    m_rpn.Add(tok);
-  }
-  catch(ParserError &e)
-  {
-    // This are type related errors caused by undefined
-    // variables. They must be ignored if the parser is
-    // just checking the presence of expression variables
-    if (!m_bIsQueryingExprVar)
-    {
-      ErrorContext &err = e.GetContext();
-      err.Pos   = m_pTokenReader->GetPos();
-      err.Expr  = m_pTokenReader->GetExpr();
-
-      if (err.Ident.empty())
-        err.Ident = pFun->GetIdent();
-
-      throw;
-    }
-  }
-
-  if (iArgCount>0)
-    a_stVal.pop(iArgCount-1); // remove the arguments
+  m_nPos -= (iArgCount - 1);
+  m_rpn.Add(tok);
 }
 
 //---------------------------------------------------------------------------
-void ParserXBase::ApplyIfElse(Stack<ptr_tok_type> &a_stOpt,
-                              Stack<ptr_val_type> &a_stVal) const
+void ParserXBase::ApplyIfElse(Stack<ptr_tok_type> &a_stOpt) const
 {
   while (a_stOpt.size() && a_stOpt.top()->GetCode()==cmELSE)
   {
     MUP_ASSERT(a_stOpt.size()>0);
-    MUP_ASSERT(a_stVal.size()>=3);
+    MUP_ASSERT(m_nPos>=3);
     MUP_ASSERT(a_stOpt.top()->GetCode()==cmELSE);
-
-    // it then else is a ternary operator Pop all three values from the value
-    // stack and just return the right value
-    ptr_val_type vVal2 = a_stVal.pop();
-    ptr_val_type vVal1 = a_stVal.pop();
-    ptr_val_type bExpr = a_stVal.pop();
-
-    // Push a dummy value of the correct type
-    a_stVal.push(ptr_val_type(new Value(/*cType*/)));
-
-    // Pass on volatile flags
-    if (vVal1->IsFlagSet(IToken::flVOLATILE) || vVal2->IsFlagSet(IToken::flVOLATILE))
-      a_stVal.top()->AddFlags(IToken::flVOLATILE);
 
     ptr_tok_type opElse = a_stOpt.pop();
     ptr_tok_type opIf = a_stOpt.pop();
     MUP_ASSERT(opElse->GetCode()==cmELSE)
     MUP_ASSERT(opIf->GetCode()==cmIF)
 
+    // If then else hat 3 argumente und erzeugt einen rückgabewert (3-1=2)
+    m_nPos -= 2;
     m_rpn.Add(ptr_tok_type(new TokenIfThenElse(cmENDIF)));
   }
 }
@@ -796,7 +718,6 @@ void ParserXBase::CreateRPN() const
 
   // The Stacks take the ownership over the tokens
   Stack<ptr_tok_type> stOpt;
-  Stack<ptr_val_type> stVal;
   Stack<ICallback*>   stFunc;
   Stack<int>  stArgCount;
   Stack<int>  stIdxCount;
@@ -804,10 +725,6 @@ void ParserXBase::CreateRPN() const
   Value val;
 
   ReInit();
-
-  // The outermost counter counts the number of seperated items
-  // such as in "a=10,b=20,c=c+a"
-  stArgCount.push(1);
 
   for(;;)
   {
@@ -823,25 +740,8 @@ void ParserXBase::CreateRPN() const
     {
       case  cmVAL:
             {
-              IValue *pVal = pTok->AsIValue();
-              if (stFunc.empty() && pVal->GetType()=='n')
-              {
-                ErrorContext err;
-                err.Errc  = ecUNEXPECTED_PARENS;
-                err.Ident = _T(")");
-                err.Pos   = pTok->GetExprPos();
-                throw ParserError(err);
-              }
-
-              stVal.push( ptr_val_type(pVal) );
-
-              // Arrays can't be added directly to the reverse polish notation
-              // since there may be an index operator following next...
+              m_nPos++;
               m_rpn.Add(pTok);
-
-              //// Apply infix operator if existant
-              //if (stOpt.size() && stOpt.top()->GetCode()==cmOPRT_INFIX)
-              //  ApplyFunc(stOpt, stVal, 1);
             }
             break;
 
@@ -854,7 +754,7 @@ void ParserXBase::CreateRPN() const
               if (pTokPrev.Get()!=nullptr && pTokPrev->GetCode()==cmIO)
                 --stArgCount.top();
 
-              ApplyRemainingOprt(stOpt, stVal);
+              ApplyRemainingOprt(stOpt);
 
               // if opt is "]" and opta is "[" the bracket content has been evaluated.
               // Now its time to check if there is either a function or a sign pending.
@@ -868,7 +768,6 @@ void ParserXBase::CreateRPN() const
                 // Find out how many dimensions were used in the index operator.
                 //
                 std::size_t iArgc = stArgCount.pop();
-
                 stOpt.pop(); // Take opening bracket from stack
 
                 IOprtIndex *pOprtIndex = pTok->AsIOprtIndex();
@@ -878,15 +777,8 @@ void ParserXBase::CreateRPN() const
                 m_rpn.Add(pTok);
 
                 // Pop the index values from the stack
-                MUP_ASSERT(stVal.size()>=iArgc+1);
-                for (std::size_t i=0; i<iArgc; ++i)
-                  stVal.pop();
-
-                // Now i would need to pop the topmost value from the stack, apply the index
-                // opertor and push the result back to the stack. But here we are just creating the
-                // RPN and are working with dummy values anyway so i just mark the topmost value as
-                // volatile and leave it were it is. The real index logic is in the RPN evaluator...
-                stVal.top()->AddFlags(IToken::flVOLATILE);
+                MUP_ASSERT(m_nPos>=(int)iArgc+1);
+                m_nPos -= iArgc;
               } // if opening index bracket is on top of operator stack
             }
             break;
@@ -900,7 +792,7 @@ void ParserXBase::CreateRPN() const
               if (pTokPrev.Get()!=nullptr && pTokPrev->GetCode()==cmBO)
                 --stArgCount.top();
 
-              ApplyRemainingOprt(stOpt, stVal);
+              ApplyRemainingOprt(stOpt);
 
               // if opt is ")" and opta is "(" the bracket content has been evaluated.
               // Now its time to check if there is either a function or a sign pending.
@@ -931,36 +823,31 @@ void ParserXBase::CreateRPN() const
                 if (iArgc < pFun->GetArgc())
                   Error(ecTOO_FEW_PARAMS, pTok->GetExprPos(), pFun);
 
-                //// Evaluate the function
-                //ApplyFunc(stOpt, stVal, iArgc);
-
-                // Apply an infix operator, if present
+                // Apply function, if present
                 if (stOpt.size() && 
                     stOpt.top()->GetCode()!=cmOPRT_INFIX && 
                     stOpt.top()->GetCode()!=cmOPRT_BIN)
                 {
-                  ApplyFunc(stOpt, stVal, iArgc);
+                  ApplyFunc(stOpt, iArgc);
                 }
               }
             }
             break;
 
       case  cmELSE:
-            ApplyRemainingOprt(stOpt, stVal);
+            ApplyRemainingOprt(stOpt);
             m_rpn.Add(pTok);
             stOpt.push(pTok);
             break;
 
       case  cmSCRIPT_NEWLINE:
             {
-              ApplyRemainingOprt(stOpt, stVal);
+              ApplyRemainingOprt(stOpt);
 
-              // Value stack plätten
               // Stack der RPN um die Anzahl im stack enthaltener Werte zurück setzen
-              int n = stVal.size();
-              m_rpn.AddNewline(pTok, n);
-              stVal.clear();
+              m_rpn.AddNewline(pTok, m_nPos);
               stOpt.clear();
+              m_nPos = 0;
             }
             break;
 
@@ -970,14 +857,11 @@ void ParserXBase::CreateRPN() const
 
             ++stArgCount.top();
 
-            //if (stVal.size()) // increase argument counter
-            //  stArgCount.top()++;
-
-            ApplyRemainingOprt(stOpt, stVal);
+            ApplyRemainingOprt(stOpt);
             break;
 
       case  cmEOE:
-            ApplyRemainingOprt(stOpt, stVal);
+            ApplyRemainingOprt(stOpt);
             m_rpn.Finalize();
             break;
 
@@ -1015,7 +899,7 @@ void ParserXBase::CreateRPN() const
 
                 // apply the operator now
                 // (binary operators are identic to functions with two arguments)
-                ApplyFunc(stOpt, stVal, 2);
+                ApplyFunc(stOpt, 2);
               } // while ( ... )
 
               if (pTok->GetCode()==cmIF)
@@ -1030,23 +914,8 @@ void ParserXBase::CreateRPN() const
       //
       case  cmOPRT_POSTFIX:
             {
-              MUP_ASSERT(stVal.size());
-
-              ptr_val_type &pVal(stVal.top());
-              try
-              {
-                // place a dummy return value into the value stack, do not
-                // evaluate pOprt (this is important for lazy evaluation!)
-                // The only place where evaluation takes place is the RPN
-                // engine!
-                pVal = ptr_val_type(new Value());
-                m_rpn.Add(pTok);
-              }
-              catch(ParserError &)
-              {
-                if (!m_bIsQueryingExprVar)
-                  throw;
-              }
+              MUP_ASSERT(m_nPos);
+              m_rpn.Add(pTok);
             }
             break;
 
@@ -1056,9 +925,9 @@ void ParserXBase::CreateRPN() const
             stArgCount.push(1);
             break;
 
-        //
-        // Functions
-        //
+      //
+      // Functions
+      //
       case  cmOPRT_INFIX:
       case  cmFUNC:
             {
@@ -1090,7 +959,7 @@ void ParserXBase::CreateRPN() const
 
     if (ParserXBase::s_bDumpStack)
     {
-      StackDump( stVal, stOpt );
+      StackDump(stOpt);
     }
 
     if ( pTok->GetCode() == cmEOE )
@@ -1101,8 +970,6 @@ void ParserXBase::CreateRPN() const
   {
     m_rpn.AsciiDump();
   }
-
-  m_nFinalResultIdx = stArgCount.top()-1;
 }
 
 //---------------------------------------------------------------------------
@@ -1157,8 +1024,7 @@ const IValue& ParserXBase::ParseFromRPN() const
     switch (eCode)
     {
       case cmSCRIPT_NEWLINE:
-        sidx = -1; //-= static_cast<TokenNewline*>(pTok)->GetStackOffset();
-        m_nFinalResultIdx = 0;
+        sidx = -1;
         continue;
 
       case cmVAL:
@@ -1268,7 +1134,7 @@ const IValue& ParserXBase::ParseFromRPN() const
     } // switch token
   } // for all RPN tokens
 
-  return *pStack[m_nFinalResultIdx];
+  return *pStack[0];
 }
 
 //---------------------------------------------------------------------------
@@ -1395,21 +1261,13 @@ bool ParserXBase::IsAutoCreateVarEnabled() const
 
       This function is used for debugging only.
   */
-void ParserXBase::StackDump(const Stack<ptr_val_type> &a_stVal,
-                            const Stack<ptr_tok_type> &a_stOprt) const
+void ParserXBase::StackDump(const Stack<ptr_tok_type> &a_stOprt) const
 {
   using std::cout;
   Stack<ptr_tok_type>  stOprt(a_stOprt);
-  Stack<ptr_val_type>  stVal(a_stVal);
 
   string_type sInfo = _T("StackDump>  ");
-  console() << _T("\n") << sInfo << _T("Value stack:\n");
   console() << sInfo;
-  while ( !stVal.empty() )
-  {
-    ptr_val_type val = stVal.pop();
-    console() << _T("  ") << *(val.Get()) << _T(" ") << ((val->AsValue()!=nullptr) ? _T("(Val)") : _T("(Var)"));
-  }
 
   if (stOprt.empty())
     console() << _T("\n") << sInfo << _T("Operator stack is empty.\n");

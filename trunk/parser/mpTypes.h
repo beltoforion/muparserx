@@ -175,20 +175,21 @@ enum ECmdCode
 
     // The following codes are reserved in case i will ever turn this
     // into a scripting language
-    cmSCRIPT_GOTO       = 16,  ///< Reserved for future use
-    cmSCRIPT_LABEL      = 17,  ///< Reserved for future use
-    cmSCRIPT_FOR        = 18,  ///< Reserved for future use
-    cmSCRIPT_IF         = 19,  ///< Reserved for future use
-    cmSCRIPT_ELSE       = 20,  ///< Reserved for future use
-    cmSCRIPT_ELSEIF     = 21,  ///< Reserved for future use
-    cmSCRIPT_ENDIF      = 22,  ///< Reserved for future use
-    cmSCRIPT_NEWLINE    = 23,  ///< Newline
-    cmSCRIPT_COMMENT    = 24,  ///< reserved for future use
-    cmSCRIPT_FUNCTION   = 25,  ///< Reserved for future use
+    cmSCRIPT_NEWLINE    = 16,  ///< Newline
+    cmSCRIPT_COMMENT    = 17,
+    cmSCRIPT_WHILE      = 18,  ///< Reserved for future use
+    cmSCRIPT_GOTO       = 19,  ///< Reserved for future use
+    cmSCRIPT_LABEL      = 20,  ///< Reserved for future use
+    cmSCRIPT_FOR        = 21,  ///< Reserved for future use
+    cmSCRIPT_IF         = 22,  ///< Reserved for future use
+    cmSCRIPT_ELSE       = 23,  ///< Reserved for future use
+    cmSCRIPT_ELSEIF     = 24,  ///< Reserved for future use
+    cmSCRIPT_ENDIF      = 25,  ///< Reserved for future use
+    cmSCRIPT_FUNCTION   = 26,  ///< Reserved for future use
 
     // misc codes
-    cmUNKNOWN           = 26,  ///< uninitialized item
-    cmCOUNT             = 27   ///< Dummy entry for counting the enum values
+    cmUNKNOWN,                 ///< uninitialized item
+    cmCOUNT                    ///< Dummy entry for counting the enum values
 }; // ECmdCode
 
 
