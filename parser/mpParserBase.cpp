@@ -953,6 +953,11 @@ void ParserXBase::CreateRPN() const
   {
     m_rpn.AsciiDump();
   }
+
+  if (m_nPos>1)
+  {
+    Error(ecUNEXPECTED_COMMA, -1);
+  }
 }
 
 //---------------------------------------------------------------------------
