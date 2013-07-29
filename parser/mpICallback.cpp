@@ -118,8 +118,9 @@ MUP_NAMESPACE_START
 
     ss << g_sCmdCode[ GetCode() ];
     ss << _T(" [addr=0x") << std::hex << this << std::dec;
-    ss << _T("; ident=\"") << GetIdent() << "\"";
-    ss << _T("; argc=") << GetArgc() << " (present: " << m_nArgsPresent << ")";
+    ss << _T("; pos=") << GetExprPos();
+    ss << _T("; id=\"") << GetIdent() << "\"";
+    ss << _T("; argc=") << GetArgc() << " (found: " << m_nArgsPresent << ")";
     ss << _T("]");
 
     return ss.str();

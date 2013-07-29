@@ -166,26 +166,25 @@ enum ECmdCode
     cmENDIF             =  7,  ///< Ternary if then else operator
     cmJMP               =  8,  ///< Reserved for future use
     cmVAL               =  9,  ///< value item
-    cmANY               = 10,  ///< Reserved for futur use: matrix row/column placeholder m[1,:] or m[:,1]
-    cmFUNC              = 11,  ///< Code for a function item
-    cmOPRT_BIN          = 12,  ///< Binary operator
-    cmOPRT_INFIX        = 13,  ///< Infix operator
-    cmOPRT_POSTFIX      = 14,  ///< Postfix operator
-    cmEOE               = 15,  ///< End of expression
+    cmFUNC              = 10,  ///< Code for a function item
+    cmOPRT_BIN          = 11,  ///< Binary operator
+    cmOPRT_INFIX        = 12,  ///< Infix operator
+    cmOPRT_POSTFIX      = 13,  ///< Postfix operator
+    cmEOE               = 14,  ///< End of expression
 
     // The following codes are reserved in case i will ever turn this
     // into a scripting language
-    cmSCRIPT_NEWLINE    = 16,  ///< Newline
-    cmSCRIPT_COMMENT    = 17,
-    cmSCRIPT_WHILE      = 18,  ///< Reserved for future use
-    cmSCRIPT_GOTO       = 19,  ///< Reserved for future use
-    cmSCRIPT_LABEL      = 20,  ///< Reserved for future use
-    cmSCRIPT_FOR        = 21,  ///< Reserved for future use
-    cmSCRIPT_IF         = 22,  ///< Reserved for future use
-    cmSCRIPT_ELSE       = 23,  ///< Reserved for future use
-    cmSCRIPT_ELSEIF     = 24,  ///< Reserved for future use
-    cmSCRIPT_ENDIF      = 25,  ///< Reserved for future use
-    cmSCRIPT_FUNCTION   = 26,  ///< Reserved for future use
+    cmSCRIPT_NEWLINE    = 15,  ///< Newline
+    cmSCRIPT_COMMENT    = 16,
+    cmSCRIPT_WHILE      = 17,  ///< Reserved for future use
+    cmSCRIPT_GOTO       = 18,  ///< Reserved for future use
+    cmSCRIPT_LABEL      = 19,  ///< Reserved for future use
+    cmSCRIPT_FOR        = 20,  ///< Reserved for future use
+    cmSCRIPT_IF         = 21,  ///< Reserved for future use
+    cmSCRIPT_ELSE       = 22,  ///< Reserved for future use
+    cmSCRIPT_ELSEIF     = 23,  ///< Reserved for future use
+    cmSCRIPT_ENDIF      = 24,  ///< Reserved for future use
+    cmSCRIPT_FUNCTION   = 25,  ///< Reserved for future use
 
     // misc codes
     cmUNKNOWN,                 ///< uninitialized item

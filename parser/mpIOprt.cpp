@@ -63,7 +63,8 @@ MUP_NAMESPACE_START
 
     ss << g_sCmdCode[ GetCode() ];
     ss << _T(" [addr=0x") << std::hex << this << std::dec;
-    ss << _T("; ident=\"") << GetIdent() << _T("\"");
+    ss << _T("; pos=") << GetExprPos();
+    ss << _T("; id=\"") << GetIdent() << _T("\"");
     ss << _T("; prec=") << GetPri();
     ss << _T("; argc=") << GetArgc();
     ss << _T("]");
@@ -110,7 +111,8 @@ MUP_NAMESPACE_START
 
     ss << g_sCmdCode[ GetCode() ];
     ss << _T(" [addr=0x") << std::hex << this << std::dec;
-    ss << _T("; ident=\"") << GetIdent() << _T("\"");
+    ss << _T("; pos=") << GetExprPos();
+    ss << _T("; id=\"") << GetIdent() << _T("\"");
     ss << _T("; argc=") << GetArgc();
     ss << _T("]");
 
@@ -140,7 +142,8 @@ MUP_NAMESPACE_START
 
     ss << g_sCmdCode[ GetCode() ];
     ss << _T(" [addr=0x") << std::hex << this << std::dec;
-    ss << _T("; ident=\"") << GetIdent() << _T("\"");
+    ss << _T("; pos=") << GetExprPos();
+    ss << _T("; id=\"") << GetIdent() << _T("\"");
     ss << _T("; argc=") << GetArgc();
     ss << _T("]");
 
@@ -187,7 +190,8 @@ MUP_NAMESPACE_START
 
     ss << g_sCmdCode[ GetCode() ];
     ss << _T(" [addr=0x") << std::hex << this << std::dec;
-    ss << _T("; ident=\"") << GetIdent() << _T("\"");
+    ss << _T("; pos=") << GetExprPos();
+    ss << _T("; id=\"") << GetIdent() << _T("\"");
     ss << _T("; argc=") << GetArgc();
     ss << _T("]");
 
