@@ -78,7 +78,6 @@ MUP_NAMESPACE_START
       void  SetArgc(int argc);
 
   private:
-
       parent_type *m_pParent;      ///< Pointer to the parser object using this callback
       const IPackage *m_pPackage;  ///< Pointer to thhe package this callback is belonging to (may be zero)
       int  m_nArgc;                ///< Number of this function can take Arguments.

@@ -614,11 +614,10 @@ MUP_NAMESPACE_START
     int  iNumErr = 0;
     *m_stream << _T("testing error codes...");
 
-    // This is allowed now:
-    //iNumErr += ThrowTest(_T("1,2"),   ecUNEXPECTED_COMMA);
-    //iNumErr += ThrowTest(_T("(1,2)"), ecUNEXPECTED_COMMA);
-    //iNumErr += ThrowTest(_T("2*1,2"), ecUNEXPECTED_COMMA);
-
+    iNumErr += ThrowTest(_T("a,b"),   ecUNEXPECTED_COMMA);
+    iNumErr += ThrowTest(_T("(a,b)"), ecUNEXPECTED_COMMA);
+    iNumErr += ThrowTest(_T("((a,b))"), ecUNEXPECTED_COMMA);
+    iNumErr += ThrowTest(_T("2*1,2"), ecUNEXPECTED_COMMA);
     iNumErr += ThrowTest(_T("sin(1,2)"), ecTOO_MANY_PARAMS);
 
     // Invalid expression

@@ -436,34 +436,34 @@ MUP_NAMESPACE_START
         {
           switch(i)
           {
-          case cmARG_SEP:
-		            if (m_nSynFlags & noCOMMA)
+          case  cmARG_SEP:
+                if (m_nSynFlags & noCOMMA)
                   throw ecUNEXPECTED_COMMA;
 
                 m_nSynFlags = noBC | noOPT | noEND | noNEWLINE | noCOMMA | noPFX | noIC | noIO | noIF | noELSE;
                 a_Tok = ptr_tok_type(new GenericToken((ECmdCode)i, pOprtDef[i]));
 	              break;
 
-          case cmELSE:
-               if (m_nSynFlags & noELSE)
-                 throw ecUNEXPECTED_CONDITIONAL;
+          case  cmELSE:
+                if (m_nSynFlags & noELSE)
+                  throw ecUNEXPECTED_CONDITIONAL;
 
-               m_nNumIfElse--;
-               if (m_nNumIfElse<0)
-                 throw ecMISPLACED_COLON;
+                m_nNumIfElse--;
+                if (m_nNumIfElse<0)
+                  throw ecMISPLACED_COLON;
 
-               m_nSynFlags = noBC | noIO | noIC | noPFX | noEND | noNEWLINE | noCOMMA | noOPT | noIF | noELSE;
-               a_Tok = ptr_tok_type(new TokenIfThenElse(cmELSE));
-               break;
+                m_nSynFlags = noBC | noIO | noIC | noPFX | noEND | noNEWLINE | noCOMMA | noOPT | noIF | noELSE;
+                a_Tok = ptr_tok_type(new TokenIfThenElse(cmELSE));
+                break;
 
-          case cmIF:
-               if (m_nSynFlags & noIF)
-                 throw ecUNEXPECTED_CONDITIONAL;
+          case  cmIF:
+                if (m_nSynFlags & noIF)
+                  throw ecUNEXPECTED_CONDITIONAL;
 
-               m_nNumIfElse++; 
-               m_nSynFlags = noBC | noIO | noPFX | noIC | noEND | noNEWLINE | noCOMMA | noOPT | noIF | noELSE;
-               a_Tok = ptr_tok_type(new TokenIfThenElse(cmIF));
-               break;
+                m_nNumIfElse++; 
+                m_nSynFlags = noBC | noIO | noPFX | noIC | noEND | noNEWLINE | noCOMMA | noOPT | noIF | noELSE;
+                a_Tok = ptr_tok_type(new TokenIfThenElse(cmIF));
+                break;
 
           case cmBO:
                 if (m_nSynFlags & noBO)
@@ -510,7 +510,6 @@ MUP_NAMESPACE_START
                 if (m_nNumIndex<0)
                   throw ecUNEXPECTED_SQR_BRACKET;
 
-//                a_Tok = ptr_tok_type(new GenericToken((ECmdCode)i, pOprtDef[i]));
                 a_Tok = ptr_tok_type(new OprtIndex());
                 break;
 

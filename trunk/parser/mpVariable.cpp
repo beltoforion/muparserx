@@ -306,6 +306,7 @@ MUP_NAMESPACE_START
 
     ss << g_sCmdCode[ GetCode() ];
     ss << _T(" [addr=0x") << std::hex << this << std::dec;
+    ss << _T("; pos=") << GetExprPos();
     ss << _T("; id=\"") << GetIdent() << _T("\"");
     ss << _T("; type=\"") << GetType() << _T("\"");
     ss << _T("; val=");
@@ -318,7 +319,7 @@ MUP_NAMESPACE_START
     case 's': ss << _T("\"") << GetString() << _T("\""); break;
     }
 
-    ss << ((IsFlagSet(IToken::flVOLATILE)) ? _T("; ") : _T("; not ")) << _T("volatile");
+    ss << ((IsFlagSet(IToken::flVOLATILE)) ? _T("; ") : _T("; not ")) << _T("vol");
     ss << _T("]");
 
     return ss.str();

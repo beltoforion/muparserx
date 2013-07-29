@@ -99,6 +99,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\parser\mpIAggregator.cpp" />
     <ClCompile Include="..\..\parser\mpParserMessageProvider.cpp" />
     <ClCompile Include="..\..\sample\example.cpp" />
     <ClCompile Include="..\..\sample\timer.cpp" />
@@ -145,6 +146,7 @@
     <ClInclude Include="..\..\parser\mpFuncMatrix.h" />
     <ClInclude Include="..\..\parser\mpFuncNonCmplx.h" />
     <ClInclude Include="..\..\parser\mpFuncStr.h" />
+    <ClInclude Include="..\..\parser\mpIAggregator.h" />
     <ClInclude Include="..\..\parser\mpOprtBinAssign.h" />
     <ClInclude Include="..\..\parser\mpOprtBinCommon.h" />
     <ClInclude Include="..\..\parser\mpOprtPostfixCommon.h" />

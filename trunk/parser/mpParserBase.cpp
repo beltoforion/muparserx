@@ -55,33 +55,32 @@ using namespace std;
 MUP_NAMESPACE_START
 
 //------------------------------------------------------------------------------
-const char_type *g_sCmdCode[] = { _T("BRCK. OPEN  "),
-                                  _T("BRCK. CLOSE "),
-                                  _T("IDX OPEN    "),
-                                  _T("IDX CLOSE   "),
-                                  _T("ARG_SEP     "),
-                                  _T("IF          "),
-                                  _T("ELSE        "),
-                                  _T("ENDIF       "),
-                                  _T("JMP         "),
-                                  _T("VAR         "),
-                                  _T("VAL         "),
-                                  _T("FUNC        "),
-                                  _T("OPRT_BIN    "),
-                                  _T("OPRT_IFX    "),
-                                  _T("OPRT_PFX    "),
-                                  _T("END         "),
-                                  _T("SCRIPT_ENDL "),
-                                  _T("SCRIPT_CMT  "),
-                                  _T("SCRIPT_GOTO "),
-                                  _T("SCRIPT_LABEL"),
-                                  _T("SCRIPT_FOR  "),
-                                  _T("SCRIPT_IF   "),
-                                  _T("SCRIPT_ELSE "),
-                                  _T("SCRIPT_ELIF "),
-                                  _T("SCRIPT_ENDIF"),
-                                  _T("SCRIPT_FUNC "),
-                                  _T("UNKNOWN     ") };
+const char_type *g_sCmdCode[] = { _T("BRCK. OPEN "),
+                                  _T("BRCK. CLOSE"),
+                                  _T("IDX OPEN   "),
+                                  _T("IDX CLOSE  "),
+                                  _T("ARG_SEP    "),
+                                  _T("IF         "),
+                                  _T("ELSE       "),
+                                  _T("ENDIF      "),
+                                  _T("JMP        "),
+                                  _T("VAL        "),
+                                  _T("FUNC       "),
+                                  _T("OPRT_BIN   "),
+                                  _T("OPRT_IFX   "),
+                                  _T("OPRT_PFX   "),
+                                  _T("END        "),
+                                  _T("SCR_ENDL   "),
+                                  _T("SCR_CMT    "),
+                                  _T("SCR_GOTO   "),
+                                  _T("SCR_LABEL  "),
+                                  _T("SCR_FOR    "),
+                                  _T("SCR_IF     "),
+                                  _T("SCR_ELSE   "),
+                                  _T("SCR_ELIF   "),
+                                  _T("SCR_ENDIF  "),
+                                  _T("SCR_FUNC   "),
+                                  _T("UNKNOWN    ") };
 
 //------------------------------------------------------------------------------
 bool ParserXBase::s_bDumpStack = false;
@@ -644,20 +643,12 @@ void ParserXBase::ApplyRemainingOprt(Stack<ptr_tok_type> &stOpt) const
          stOpt.top()->GetCode() != cmIF)
   {
     ptr_tok_type &op = stOpt.top();
-
     switch(op->GetCode())
     {
       case  cmOPRT_INFIX:
-      case  cmOPRT_BIN:
-        ApplyFunc(stOpt, 2);
-        break;
-
-      case  cmELSE:
-        ApplyIfElse(stOpt);
-        break;
-
-      default:
-        Error(ecINTERNAL_ERROR);
+      case  cmOPRT_BIN:    ApplyFunc(stOpt, 2);   break;
+      case  cmELSE:        ApplyIfElse(stOpt);    break;
+      default:             Error(ecINTERNAL_ERROR);
     } // switch operator token type
   } // While operator stack not empty
 }
@@ -739,10 +730,8 @@ void ParserXBase::CreateRPN() const
     switch (eCmd)
     {
       case  cmVAL:
-            {
-              m_nPos++;
-              m_rpn.Add(pTok);
-            }
+            m_nPos++;
+            m_rpn.Add(pTok);
             break;
 
       case  cmIC:
@@ -808,10 +797,10 @@ void ParserXBase::CreateRPN() const
                 int iArgc = stArgCount.pop();
 
                 stOpt.pop(); // Take opening bracket from stack
-                if ( stOpt.empty() )
+                if (stOpt.empty())
                   break;
 
-                if ( (stOpt.top()->GetCode()!=cmFUNC) && (stOpt.top()->GetCode()!=cmOPRT_INFIX) )
+                if ((stOpt.top()->GetCode()!=cmFUNC) && (stOpt.top()->GetCode()!=cmOPRT_INFIX))
                   break;
 
                 ICallback *pFun = stOpt.top()->AsICallback();
@@ -841,19 +830,15 @@ void ParserXBase::CreateRPN() const
             break;
 
       case  cmSCRIPT_NEWLINE:
-            {
-              ApplyRemainingOprt(stOpt);
-
-              // Stack der RPN um die Anzahl im stack enthaltener Werte zurück setzen
-              m_rpn.AddNewline(pTok, m_nPos);
-              stOpt.clear();
-              m_nPos = 0;
-            }
+            ApplyRemainingOprt(stOpt);
+            m_rpn.AddNewline(pTok, m_nPos);
+            stOpt.clear();
+            m_nPos = 0;
             break;
 
       case  cmARG_SEP:
             if (stArgCount.empty())
-              Error(ecUNEXPECTED_COMMA, m_pTokenReader->GetPos());
+              Error(ecUNEXPECTED_COMMA, m_pTokenReader->GetPos()-1);
 
             ++stArgCount.top();
 
@@ -913,10 +898,8 @@ void ParserXBase::CreateRPN() const
       //  Postfix Operators
       //
       case  cmOPRT_POSTFIX:
-            {
-              MUP_ASSERT(m_nPos);
-              m_rpn.Add(pTok);
-            }
+            MUP_ASSERT(m_nPos);
+            m_rpn.Add(pTok);
             break;
 
       case  cmIO:
