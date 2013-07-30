@@ -892,7 +892,8 @@ MUP_NAMESPACE_START
         
         m_nPos = iEnd;
         m_nSynFlags = noVAL | noVAR | noFUN | noBO | noIFX;
-        a_Tok = item->second;
+//        a_Tok = item->second;
+        a_Tok = ptr_tok_type(item->second->Clone());
         a_Tok->SetIdent(sTok);
         m_UsedVar[item->first] = item->second;  // Add variable to used-var-list
         return true;
@@ -907,7 +908,8 @@ MUP_NAMESPACE_START
 
         m_nPos = iEnd;
         m_nSynFlags = noVAL | noVAR | noFUN | noBO | noIFX | noIO;
-        a_Tok = item->second;
+//        a_Tok = item->second;
+        a_Tok = ptr_tok_type(item->second->Clone());
         a_Tok->SetIdent(sTok);
         return true;
       }
