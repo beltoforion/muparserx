@@ -58,6 +58,7 @@ Bugfixes:
   - Issue 23: min, max and sum functions return values when called without parameters
   - Issue 26: bugfixes for "<<" and ">>" operators.
   - Issue 27: Querying multiple results of comma separated expressions did not work (multiple results are no longer supported)
+  - Issue 31: m_nPosExpr incorrect value after Eval() or GetExprVar()
   - untracked issue: compiling with UNICODE did not work
   - untracked issue: Column number of matrices were not reported correctly
   - untracked issue: expressions ending with newline could not be evaluated
