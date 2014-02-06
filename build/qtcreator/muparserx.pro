@@ -3,7 +3,7 @@ TARGET = example
 CONFIG += console
 CONFIG -= qt
 
-QMAKE_CXXFLAGS += -std=c++11
+QMAKE_CXXFLAGS += -std=c++11 -Wall -pedantic
 
 CONFIG(debug, debug|release) {
     DESTDIR = ./debug
