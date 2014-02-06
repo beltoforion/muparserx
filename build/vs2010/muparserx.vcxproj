@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="12.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -20,11 +20,13 @@
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>NotSet</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
+    <PlatformToolset>v120</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>Unicode</CharacterSet>
     <CLRSupport>false</CLRSupport>
+    <PlatformToolset>v120</PlatformToolset>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
   <ImportGroup Label="ExtensionSettings">
@@ -99,7 +101,6 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\parser\mpIAggregator.cpp" />
     <ClCompile Include="..\..\parser\mpParserMessageProvider.cpp" />
     <ClCompile Include="..\..\sample\example.cpp" />
     <ClCompile Include="..\..\sample\timer.cpp" />
@@ -146,7 +147,6 @@
     <ClInclude Include="..\..\parser\mpFuncMatrix.h" />
     <ClInclude Include="..\..\parser\mpFuncNonCmplx.h" />
     <ClInclude Include="..\..\parser\mpFuncStr.h" />
-    <ClInclude Include="..\..\parser\mpIAggregator.h" />
     <ClInclude Include="..\..\parser\mpOprtBinAssign.h" />
     <ClInclude Include="..\..\parser\mpOprtBinCommon.h" />
     <ClInclude Include="..\..\parser\mpOprtPostfixCommon.h" />
@@ -191,10 +191,8 @@
     <ClInclude Include="..\..\parser\mpPackageUnit.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\doc\custom\example.txt" />
-    <None Include="..\doc\custom\features.txt" />
-    <None Include="..\doc\custom\licence.txt" />
-    <None Include="..\doc\custom\Main.txt" />
+    <Text Include="..\..\License.txt" />
+    <Text Include="..\..\Readme.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
