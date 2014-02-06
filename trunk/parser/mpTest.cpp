@@ -801,10 +801,10 @@ MUP_NAMESPACE_START
     iNumErr += EqnTest(_T("-(-1)"),  (float_type)1.0, true);
     iNumErr += EqnTest(_T("-(-1)*2"),  (float_type)2.0, true);
     iNumErr += EqnTest(_T("-(-2)*sqrt(4)"),  (float_type)4.0, true);
-    iNumErr += EqnTest(_T("-a"),  (float_type)-1.0, true);
-    iNumErr += EqnTest(_T("-(a)"),  (float_type)-1.0, true);
-    iNumErr += EqnTest(_T("-(-a)"),  (float_type)1.0, true);
-    iNumErr += EqnTest(_T("-(-a)*2"),  (float_type)2.0, true);
+    iNumErr += EqnTest(_T("-a"),  -a, true);
+    iNumErr += EqnTest(_T("-(a)"),  -(a), true);
+    iNumErr += EqnTest(_T("-(-a)"), -(-a), true);
+    iNumErr += EqnTest(_T("-(-a)*2"),  -(-a)*2, true);
     iNumErr += EqnTest(_T("-(8)"), (float_type)-8.0, true);
     iNumErr += EqnTest(_T("-8"), (float_type)-8.0, true);
     iNumErr += EqnTest(_T("-(2+1)"), (float_type)-3.0, true);

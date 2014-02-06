@@ -47,7 +47,7 @@ MUP_NAMESPACE_START
   {}
 
   //------------------------------------------------------------------------------
-  void OprtSign::Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int a_iArgc)  
+  void OprtSign::Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int /*a_iArgc*/)
   { 
     MUP_ASSERT(a_iArgc==1);
 
@@ -97,7 +97,7 @@ MUP_NAMESPACE_START
   {}
 
   //------------------------------------------------------------------------------
-  void OprtSignPos::Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int a_iArgc)  
+  void OprtSignPos::Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int /*a_iArgc*/)
   { 
     MUP_ASSERT(a_iArgc==1);
 
