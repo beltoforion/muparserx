@@ -73,9 +73,9 @@ void PackageCommon::AddToParser(ParserXBase *pParser)
   // be added first (i.e. hex -> "0x...") Otherwise the
   // zero in 0x will be read as a value of zero!
   pParser->AddValueReader(new HexValReader);
+  pParser->AddValueReader(new BinValReader);
   pParser->AddValueReader(new DblValReader);
   pParser->AddValueReader(new BoolValReader);
-  pParser->AddValueReader(new BinValReader);
 
   // Constants
   pParser->DefineConst( _T("pi"), (float_type)MUP_CONST_PI );
