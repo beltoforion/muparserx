@@ -228,12 +228,12 @@ MUP_NAMESPACE_START
   {
     const char_type *szExpr = a_szExpr + a_iPos;
 
-    if (szExpr[0]!='#') 
+     if (szExpr[0]!='0' || (szExpr[1]!='b' && szExpr[1]!='B'))
       return false;
 
     unsigned iVal = 0, iBits = sizeof(iVal)*8, i;
-    for (i=0; (szExpr[i+1]=='0' || szExpr[i+1]=='1') && i<iBits; ++i)
-      iVal |= (int)(szExpr[i+1]=='1') << ((iBits-1)-i);
+    for (i=0; (szExpr[i+2]=='0' || szExpr[i+2]=='1') && i<iBits; ++i)
+       iVal |= (int)(szExpr[i+2]=='1') << ((iBits-1)-i);
 
     if (i==0) 
       return false;
@@ -242,7 +242,7 @@ MUP_NAMESPACE_START
       throw ParserError(_T("Binary to integer conversion error (overflow)."));
 
     a_Val = (int)(iVal >> (iBits-i) );
-    a_iPos += i+1;
+    a_iPos += i+2;
 
     return true;
   }
