@@ -49,7 +49,7 @@ MUP_NAMESPACE_START
   {}
 
   //-----------------------------------------------------------------------------------------------
-  void OprtSignCmplx::Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int /*a_iArgc*/)
+  void OprtSignCmplx::Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int a_iArgc)
   { 
     MUP_ASSERT(a_iArgc==1);
 

@@ -66,6 +66,7 @@ MUP_NAMESPACE_START
         int TestMatrix();
         int TestComplex();
         int TestScript();
+		int TestValReader();
 
         void Assessment(int a_iNumErr) const;
         void Abort() const;
