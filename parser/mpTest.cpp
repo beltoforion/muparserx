@@ -136,6 +136,7 @@ MUP_NAMESPACE_START
     AddTest(&ParserTester::TestInfix);
     AddTest(&ParserTester::TestMultiArg);
     AddTest(&ParserTester::TestScript);
+	AddTest(&ParserTester::TestValReader);
 
     ParserTester::c_iCount = 0;
   }
@@ -1269,6 +1270,42 @@ MUP_NAMESPACE_START
     return iNumErr;
   }
 
+  //---------------------------------------------------------------------------
+  int ParserTester::TestValReader()
+  {
+	  int  iNumErr = 0;
+	  *m_stream << _T("testing value reader...");
+
+	  // Hex value reader
+	  iNumErr += EqnTest(_T("0x1"), 1, true);
+	  iNumErr += EqnTest(_T("0x1+0x2"), 3, true);
+	  iNumErr += EqnTest(_T("0xff"), 255, true);
+
+	  // Reading of binary values
+	  iNumErr += EqnTest(_T("0b1"),   1, true);
+	  iNumErr += EqnTest(_T("0b01"),  1, true);
+	  iNumErr += EqnTest(_T("0b11"),  3, true);
+	  iNumErr += EqnTest(_T("0b011"), 3, true);
+	  iNumErr += EqnTest(_T("0b11111111"), 255, true);
+	  iNumErr += EqnTest(_T("b*0b011"), 6, true);
+
+	  // string value reader
+	  iNumErr += EqnTest(_T("\"hallo\""), _T("hallo"), true);
+
+	  // boolean value reader
+	  iNumErr += EqnTest(_T("true"), true, true);
+	  iNumErr += EqnTest(_T("false"), false, true);
+
+	  // boolean value reader
+	  iNumErr += EqnTest(_T("true"), true, true);
+	  iNumErr += EqnTest(_T("false"), false, true);
+
+	  // mixed
+	  iNumErr += EqnTest(_T("0b011+0xef"), 242, true);
+
+	  Assessment(iNumErr);
+	  return iNumErr;
+  }
 
   //---------------------------------------------------------------------------
   void ParserTester::AddTest(testfun_type a_pFun)
