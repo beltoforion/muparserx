@@ -87,6 +87,15 @@ If you need a column vector it can be transformed easily by using the transform 
 
 muparserx provides several functions for creating certain types of matrices:
 
+=== zeros ===
+In order to create a new matrix muparser provides a function called zeros. Calling this function will create a new m x n matrix filled with zeros.
+
+{{{
+zeros(2,2)
+}}}
+
+will yield a 2 x 2 matrix with a 0 in each cell.
+
 === ones ===
 In order to create a new matrix muparser provides a function called ones. Calling this function will create a new m x n matrix filled the number one.
 
