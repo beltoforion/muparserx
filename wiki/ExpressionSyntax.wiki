@@ -37,7 +37,7 @@ Concatenating strings can be done with the operator "//":
 The parsing engine supports boolean values. The keywords true and false can be used to assign boolean contant like for instance:
 
 {{{
-a==true
+a=true
 }}}
 
 = Numeric Values = 
