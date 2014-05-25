@@ -34,7 +34,7 @@ Concatenating strings can be done with the operator "//":
 }}}
 
 = Booloean values = 
-The parsing engine supports boolean values. The keywords true and false can be used to assign boolean contant like for instance:
+The parsing engine supports boolean values. The keywords {{{true}}} and {{{false}}} can be used to assign boolean contant like for instance:
 
 {{{
 a=true
@@ -61,7 +61,7 @@ or the long version:
 }}}
 
 = Matrices and arrays =
-In order to use matices muparserx must be initialized with the [http://code.google.com/p/muparserx/wiki/Using#Parser_initialization pckMATRIX] flag. This flag will activate the transpose operator and the functions {{{ones}}} which can be used for creating new matrices on the fly.
+In order to use matices muparserx must be initialized with the [http://code.google.com/p/muparserx/wiki/Using#Parser_initialization pckMATRIX] flag. This flag will activate the transpose operator and the functions {{{ones}}}, {{{eye}}} and {{{zeros}}} which can be used for creating new matrices on the fly.
 
 == Creating Vectors ==
 
