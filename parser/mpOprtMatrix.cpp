@@ -72,6 +72,71 @@ MUP_NAMESPACE_START
     return new OprtTranspose(*this); 
   }
 
+  //-----------------------------------------------------------------------------------------------
+  //
+  //  class  OprtCreateArray
+  //
+  //-----------------------------------------------------------------------------------------------
+
+  OprtCreateArray::OprtCreateArray(IPackage *pPackage)
+	  :ICallback(cmCBC, _T("Array constructor"), -1, pPackage)
+  {}
+
+  //-----------------------------------------------------------------------------------------------
+  /** \brief Index operator implementation
+      \param ret A reference to the return value
+      \param a_pArg Pointer to an array with the indices as ptr_val_type
+      \param a_iArgc Number of indices (=dimension) actully used in the expression found. This must
+             be 1 or 2 since three dimensional data structures are not supported by muParserX.
+  */
+  void OprtCreateArray::Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int a_iArgc)
+  {
+	  try
+	  {
+		  // The index is -1. 
+		  if (a_iArgc <= 0)
+		  {
+			  throw ParserError(ErrorContext(ecINVALID_PARAMETER, -1, GetIdent()));
+		  }
+
+		  matrix_type m(a_iArgc, 1, 0);
+		  for (int i = 0; i < a_iArgc; ++i)
+		  {
+			  if (a_pArg[i]->GetDim() != 0)
+			  {
+				  // Prevent people from using this constructor for matrix creation.
+				  // This would not work as expected and i dont't want them
+				  // to get used to awkward workarounds. It's just not working right now ok?
+				  ErrorContext errc(ecINVALID_PARAMETER, -1, GetIdent());
+				  errc.Arg = i+1;
+				  throw ParserError(errc);
+			  }
+
+			  m.At(i) = *a_pArg[i];
+		  }
+		  m.Transpose();
+
+		  *ret = m;
+	  }
+	  catch (ParserError &exc)
+	  {
+		  exc.GetContext().Pos = GetExprPos();
+		  throw exc;
+	  }
+  }
+
+  //-----------------------------------------------------------------------------------------------
+  const char_type* OprtCreateArray::GetDesc() const
+  {
+	  return _T("{,} - Array construction operator.");
+  }
+
+  //-----------------------------------------------------------------------------------------------
+  IToken* OprtCreateArray::Clone() const
+  {
+	  return new OprtCreateArray(*this);
+  }
+
 //-----------------------------------------------------------
 //
 // class OprtColon

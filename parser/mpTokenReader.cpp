@@ -47,7 +47,7 @@
 #include "mpIfThenElse.h"
 #include "mpScriptTokens.h"
 #include "mpOprtIndex.h"
-
+#include "mpOprtMatrix.h"
 
 MUP_NAMESPACE_START
 
@@ -88,6 +88,7 @@ MUP_NAMESPACE_START
     m_nPos                = obj.m_nPos;
     m_nNumBra             = obj.m_nNumBra;
     m_nNumIndex           = obj.m_nNumIndex;
+	m_nNumCurly           = obj.m_nNumCurly;
     m_nNumIfElse          = obj.m_nNumIfElse;
     m_nSynFlags           = obj.m_nSynFlags;
     m_UsedVar             = obj.m_UsedVar;
@@ -124,6 +125,7 @@ MUP_NAMESPACE_START
     ,m_nPos(0)
     ,m_nNumBra(0)
     ,m_nNumIndex(0)
+    ,m_nNumCurly(0)
     ,m_nNumIfElse(0)
     ,m_nSynFlags(0)
     ,m_vTokens()
@@ -254,8 +256,9 @@ MUP_NAMESPACE_START
     m_nPos = 0;
     m_nNumBra = 0;
     m_nNumIndex = 0;
+	m_nNumCurly = 0;
     m_nNumIfElse = 0;
-    m_nSynFlags = noOPT | noBC | noPFX | noCOMMA | noIO | noIC | noIF | noELSE;
+    m_nSynFlags = noOPT | noBC | noCBC | noPFX | noCOMMA | noIO | noIC | noIF | noELSE;
     m_UsedVar.clear();
     m_eLastTokCode = cmUNKNOWN;
 	m_vTokens.clear();
@@ -440,7 +443,7 @@ MUP_NAMESPACE_START
                 if (m_nSynFlags & noCOMMA)
                   throw ecUNEXPECTED_COMMA;
 
-                m_nSynFlags = noBC | noOPT | noEND | noNEWLINE | noCOMMA | noPFX | noIC | noIO | noIF | noELSE;
+                m_nSynFlags = noBC | noCBC | noOPT | noEND | noNEWLINE | noCOMMA | noPFX | noIC | noIO | noIF | noELSE;
                 a_Tok = ptr_tok_type(new GenericToken((ECmdCode)i, pOprtDef[i]));
 	              break;
 
@@ -452,7 +455,7 @@ MUP_NAMESPACE_START
                 if (m_nNumIfElse<0)
                   throw ecMISPLACED_COLON;
 
-                m_nSynFlags = noBC | noIO | noIC | noPFX | noEND | noNEWLINE | noCOMMA | noOPT | noIF | noELSE;
+                m_nSynFlags = noBC | noCBC | noIO | noIC | noPFX | noEND | noNEWLINE | noCOMMA | noOPT | noIF | noELSE;
                 a_Tok = ptr_tok_type(new TokenIfThenElse(cmELSE));
                 break;
 
@@ -461,7 +464,7 @@ MUP_NAMESPACE_START
                   throw ecUNEXPECTED_CONDITIONAL;
 
                 m_nNumIfElse++; 
-                m_nSynFlags = noBC | noIO | noPFX | noIC | noEND | noNEWLINE | noCOMMA | noOPT | noIF | noELSE;
+                m_nSynFlags = noBC | noCBC | noIO | noPFX | noIC | noEND | noNEWLINE | noCOMMA | noOPT | noIF | noELSE;
                 a_Tok = ptr_tok_type(new TokenIfThenElse(cmIF));
                 break;
 
@@ -469,12 +472,16 @@ MUP_NAMESPACE_START
                 if (m_nSynFlags & noBO)
                   throw ecUNEXPECTED_PARENS;
 
-                if (m_eLastTokCode==cmFUNC)
-                  m_nSynFlags = noOPT | noEND | noNEWLINE | noCOMMA | noPFX | noIC | noIO | noIF | noELSE;
-                else
-                  m_nSynFlags = noBC | noOPT | noEND | noNEWLINE | noCOMMA | noPFX | noIC | noIO | noIF | noELSE;
+				if (m_eLastTokCode == cmFUNC)
+				{
+                  m_nSynFlags = noOPT | noEND | noNEWLINE | noCOMMA | noPFX | noIC | noIO | noIF | noELSE | noCBC;
+				}
+				else
+				{
+                  m_nSynFlags = noBC | noOPT | noEND | noNEWLINE | noCOMMA | noPFX | noIC | noIO | noIF | noELSE | noCBC;
+				}
 
-		            m_nNumBra++;
+                m_nNumBra++;
                 a_Tok = ptr_tok_type(new GenericToken((ECmdCode)i, pOprtDef[i]));
                 break;
 
@@ -482,8 +489,8 @@ MUP_NAMESPACE_START
                 if (m_nSynFlags & noBC)
                   throw ecUNEXPECTED_PARENS;
 
-                m_nSynFlags  = noBO | noVAR | noVAL | noFUN | noIFX | noIO;
-		            m_nNumBra--;
+                m_nSynFlags = noBO | noVAR | noVAL | noFUN | noIFX | noIO | noCBO;
+                m_nNumBra--;
 
                 if (m_nNumBra<0)
                   throw ecUNEXPECTED_PARENS;
@@ -495,7 +502,7 @@ MUP_NAMESPACE_START
                 if (m_nSynFlags & noIO)
                   throw ecUNEXPECTED_SQR_BRACKET;
 
-                m_nSynFlags  = noIC | noIO | noOPT | noPFX | noBC | noNEWLINE;
+                m_nSynFlags  = noIC | noIO | noOPT | noPFX | noBC | noNEWLINE | noCBC;
                 m_nNumIndex++;
                 a_Tok = ptr_tok_type(new GenericToken((ECmdCode)i, pOprtDef[i]));
                 break;
@@ -504,7 +511,7 @@ MUP_NAMESPACE_START
                 if (m_nSynFlags & noIC)
                   throw ecUNEXPECTED_SQR_BRACKET;
 
-                m_nSynFlags  = noBO | noIFX;
+                m_nSynFlags = noBO | noIFX | noCBO;
                 m_nNumIndex--;
 
                 if (m_nNumIndex<0)
@@ -512,6 +519,28 @@ MUP_NAMESPACE_START
 
                 a_Tok = ptr_tok_type(new OprtIndex());
                 break;
+
+		  case cmCBO:
+			  if (m_nSynFlags & noVAL)
+				  throw ecUNEXPECTED_CURLY_BRACKET;
+
+			  m_nSynFlags = cmCBC | noIC | noIO | noOPT | noPFX | noBC | noNEWLINE;
+			  m_nNumCurly++;
+			  a_Tok = ptr_tok_type(new GenericToken((ECmdCode)i, pOprtDef[i]));
+			  break;
+
+		  case cmCBC:
+			  if (m_nSynFlags & noIC)
+				  throw ecUNEXPECTED_CURLY_BRACKET;
+
+			  m_nSynFlags = noBO | noCBO | noIFX;
+			  m_nNumCurly--;
+
+			  if (m_nNumCurly<0)
+				  throw ecUNEXPECTED_CURLY_BRACKET;
+
+			  a_Tok = ptr_tok_type(new OprtCreateArray());
+			  break;
 
           default:  // The operator is listed in c_DefaultOprt, but not here. This is a bad thing...
                 throw ecINTERNAL_ERROR;
@@ -545,7 +574,9 @@ MUP_NAMESPACE_START
     bool bRet(false);
     try
     {
-      if ( m_sExpr[m_nPos]=='\n')
+      // <ibg 2014-05-24/> added semicolon; only for test purposes! will be removed again!
+      if (m_sExpr[m_nPos] == '\n' || m_sExpr[m_nPos] == ';')
+      // </ibg>
       {
         // Check if all brackets were closed
         if ( m_nSynFlags & noNEWLINE )
@@ -557,7 +588,10 @@ MUP_NAMESPACE_START
         if (m_nNumIndex>0)
           throw ecMISSING_SQR_BRACKET;
 
-        if (m_nNumIfElse>0)
+		if (m_nNumCurly>0)
+			throw ecMISSING_CURLY_BRACKET;
+		
+		if (m_nNumIfElse>0)
           throw(ecMISSING_ELSE_CLAUSE);
 
         m_nPos++;

@@ -55,32 +55,36 @@ using namespace std;
 MUP_NAMESPACE_START
 
 //------------------------------------------------------------------------------
-const char_type *g_sCmdCode[] = { _T("BRCK. OPEN "),
-                                  _T("BRCK. CLOSE"),
-                                  _T("IDX OPEN   "),
-                                  _T("IDX CLOSE  "),
-                                  _T("ARG_SEP    "),
-                                  _T("IF         "),
-                                  _T("ELSE       "),
-                                  _T("ENDIF      "),
-                                  _T("JMP        "),
-                                  _T("VAL        "),
-                                  _T("FUNC       "),
-                                  _T("OPRT_BIN   "),
-                                  _T("OPRT_IFX   "),
-                                  _T("OPRT_PFX   "),
-                                  _T("END        "),
-                                  _T("SCR_ENDL   "),
-                                  _T("SCR_CMT    "),
-                                  _T("SCR_GOTO   "),
-                                  _T("SCR_LABEL  "),
-                                  _T("SCR_FOR    "),
-                                  _T("SCR_IF     "),
-                                  _T("SCR_ELSE   "),
-                                  _T("SCR_ELIF   "),
-                                  _T("SCR_ENDIF  "),
-                                  _T("SCR_FUNC   "),
-                                  _T("UNKNOWN    ") };
+const char_type *g_sCmdCode[] = { _T("BRCK. OPEN       "),
+                                  _T("BRCK. CLOSE      "),
+                                  _T("IDX OPEN         "),
+                                  _T("IDX CLOSE        "),
+								  _T("CURLY BRCK. OPEN "),
+								  _T("CURLY BRCK. CLOSE"),
+                                  _T("ARG_SEP          "),
+                                  _T("IF               "),
+                                  _T("ELSE             "),
+                                  _T("ENDIF            "),
+                                  _T("JMP              "),
+                                  _T("VAL              "),
+                                  _T("FUNC             "),
+                                  _T("OPRT_BIN         "),
+                                  _T("OPRT_IFX         "),
+                                  _T("OPRT_PFX         "),
+                                  _T("END              "),
+								  _T("SCR_ENDL         "),
+                                  _T("SCR_CMT          "),
+								  _T("SCR_WHILE        "),
+                                  _T("SCR_GOTO         "),
+                                  _T("SCR_LABEL        "),
+                                  _T("SCR_FOR          "),
+                                  _T("SCR_IF           "),
+                                  _T("SCR_ELSE         "),
+                                  _T("SCR_ELIF         "),
+                                  _T("SCR_ENDIF        "),
+                                  _T("SCR_FUNC         "),
+                                  _T("UNKNOWN          "),
+                                  nullptr };
 
 //------------------------------------------------------------------------------
 bool ParserXBase::s_bDumpStack = false;
@@ -96,6 +100,8 @@ const char_type* ParserXBase::c_DefaultOprt[] = { _T("("),
                                                   _T(")"),
                                                   _T("["),
                                                   _T("]"),
+												  _T("{"),
+												  _T("}"),
                                                   _T(","),
                                                   _T("?"),
                                                   _T(":"),
@@ -638,8 +644,9 @@ void ParserXBase::ApplyRemainingOprt(Stack<ptr_tok_type> &stOpt) const
 
 {
   while (stOpt.size() &&
-         stOpt.top()->GetCode() != cmBO &&
-         stOpt.top()->GetCode() != cmIO &&
+         stOpt.top()->GetCode() != cmBO  &&
+         stOpt.top()->GetCode() != cmIO  &&
+		 stOpt.top()->GetCode() != cmCBO &&
          stOpt.top()->GetCode() != cmIF)
   {
     ptr_tok_type &op = stOpt.top();
@@ -654,7 +661,7 @@ void ParserXBase::ApplyRemainingOprt(Stack<ptr_tok_type> &stOpt) const
 }
 
 //---------------------------------------------------------------------------
-/** \brief Calls a parser function with its corresponding arguments.
+/** \brief Simulates the call of a parser function with its corresponding arguments.
       \param a_stOpt The operator stack
       \param a_stVal The value stack
       \param a_iArgCount The number of function arguments
@@ -676,6 +683,8 @@ void ParserXBase::ApplyFunc(Stack<ptr_tok_type> &a_stOpt,
 }
 
 //---------------------------------------------------------------------------
+/** \brief Simulates the effect of the execution of an if-then-else block.
+*/
 void ParserXBase::ApplyIfElse(Stack<ptr_tok_type> &a_stOpt) const
 {
   while (a_stOpt.size() && a_stOpt.top()->GetCode()==cmELSE)
@@ -734,24 +743,24 @@ void ParserXBase::CreateRPN() const
             m_rpn.Add(pTok);
             break;
 
+	  case  cmCBC:
       case  cmIC:
             {
+              ECmdCode eStarter = (ECmdCode)(eCmd - 1);
+              MUP_ASSERT(eStarter == cmCBO || eStarter == cmIO);
+
               // The argument count for parameterless functions is zero
               // by default an opening bracket sets parameter count to 1
               // in preparation of arguments to come. If the last token
               // was an opening bracket we know better...
-              if (pTokPrev.Get()!=nullptr && pTokPrev->GetCode()==cmIO)
+			  if (pTokPrev.Get() != nullptr && pTokPrev->GetCode() == eStarter)
                 --stArgCount.top();
 
               ApplyRemainingOprt(stOpt);
 
               // if opt is "]" and opta is "[" the bracket content has been evaluated.
-              // Now its time to check if there is either a function or a sign pending.
-              // - Neither the opening nor the closing bracket will be pushed back to
-              //   the operator stack
-              // - Check if a function is standing in front of the opening bracket,
-              //   if so evaluate it afterwards to apply an infix operator.
-              if ( stOpt.size() && stOpt.top()->GetCode()==cmIO )
+			  // Now check whether there is an index operator on the stack.
+			  if (stOpt.size() && stOpt.top()->GetCode() == eStarter)
               {
                 //
                 // Find out how many dimensions were used in the index operator.
@@ -759,15 +768,22 @@ void ParserXBase::CreateRPN() const
                 std::size_t iArgc = stArgCount.pop();
                 stOpt.pop(); // Take opening bracket from stack
 
-                IOprtIndex *pOprtIndex = pTok->AsIOprtIndex();
+                ICallback *pOprtIndex = pTok->AsICallback();
                 MUP_ASSERT(pOprtIndex!=nullptr);
 
                 pOprtIndex->SetNumArgsPresent(iArgc);
-                m_rpn.Add(pTok);
+				m_rpn.Add(pOprtIndex);
 
-                // Pop the index values from the stack
-                MUP_ASSERT(m_nPos>=(int)iArgc+1);
-                m_nPos -= iArgc;
+				// If this is an index operator there must be something else in the register (the variable to index)
+				MUP_ASSERT(eCmd != cmIC || m_nPos >= (int)iArgc + 1);
+				
+				// Reduce the index into the value registers accordingly
+				m_nPos -= iArgc;
+
+				if (eCmd == cmCBC)
+				{
+					++m_nPos;
+				}
               } // if opening index bracket is on top of operator stack
             }
             break;
@@ -854,8 +870,9 @@ void ParserXBase::CreateRPN() const
       case  cmOPRT_BIN:
             {
               while ( stOpt.size() &&
-                      stOpt.top()->GetCode() != cmBO &&
-                      stOpt.top()->GetCode() != cmIO &&
+                      stOpt.top()->GetCode() != cmBO   &&
+                      stOpt.top()->GetCode() != cmIO   &&
+					  stOpt.top()->GetCode() != cmCBO  &&
                       stOpt.top()->GetCode() != cmELSE &&
                       stOpt.top()->GetCode() != cmIF)
               {
@@ -902,6 +919,7 @@ void ParserXBase::CreateRPN() const
             m_rpn.Add(pTok);
             break;
 
+	  case  cmCBO:
       case  cmIO:
       case  cmBO:
             stOpt.push(pTok);
@@ -1016,39 +1034,64 @@ const IValue& ParserXBase::ParseFromRPN() const
         continue;
 
       case cmVAL:
-      {
-        IValue *pVal = static_cast<IValue*>(pTok);
-
-        sidx++;
-        assert(sidx<(int)m_vStackBuffer.size());
-        if (pVal->IsVariable())
         {
-          pStack[sidx].Reset(pVal);
-        }
-        else
-        {
-          ptr_val_type &val = pStack[sidx];
-          if (val->IsVariable())
-            val.Reset(m_cache.CreateFromCache());
+          IValue *pVal = static_cast<IValue*>(pTok);
 
-          *val = *(static_cast<IValue*>(pTok));
+          sidx++;
+          assert(sidx<(int)m_vStackBuffer.size());
+          if (pVal->IsVariable())
+          {
+            pStack[sidx].Reset(pVal);
+          }
+          else
+          {
+            ptr_val_type &val = pStack[sidx];
+            if (val->IsVariable())
+              val.Reset(m_cache.CreateFromCache());
+
+            *val = *(static_cast<IValue*>(pTok));
+          }
         }
-      }
         continue;
+		/*
+      // Deal with:
+      //   - Index operator:             [,,,]
+      //   - Array constrution operator: {,,,}
+	  case  cmCBC:
+        {
+          ICallback *pFun = static_cast<ICallback*>(pTok);
+          int nArgs = pFun->GetArgsPresent();
+          sidx -= nArgs - 1;
+          assert(sidx >= 0);
 
+          ptr_val_type &val = pStack[sidx];   // Pointer to the variable or value beeing indexed
+		  if (val->IsVariable())
+		  {
+			  ptr_val_type buf(m_cache.CreateFromCache());
+			  pFun->Eval(buf, &val, nArgs);
+			  val = buf;
+		  }
+		  else
+		  {
+			  pFun->Eval(val, &val, nArgs);
+		  }
+        }
+		continue;
+*/
       case  cmIC:
-      {
-        IOprtIndex *pIdxOprt = static_cast<IOprtIndex*>(pTok);
-        int nArgs = pIdxOprt->GetArgsPresent();
-        sidx -= nArgs - 1;
-        assert(sidx>=0);
+        {
+          ICallback *pIdxOprt = static_cast<ICallback*>(pTok);
+          int nArgs = pIdxOprt->GetArgsPresent();
+          sidx -= nArgs - 1;
+          assert(sidx>=0);
 
-        ptr_val_type &idx = pStack[sidx];     // Pointer to the first index
-        ptr_val_type &val = pStack[--sidx];   // Pointer to the variable or value beeing indexed
-        pIdxOprt->At(val, &idx, nArgs);
-      }
+          ptr_val_type &idx = pStack[sidx];   // Pointer to the first index
+          ptr_val_type &val = pStack[--sidx];   // Pointer to the variable or value beeing indexed
+          pIdxOprt->Eval(val, &idx, nArgs);
+        }
         continue;
 
+	  case  cmCBC:
       case cmOPRT_POSTFIX:
       case cmFUNC:
       case cmOPRT_BIN:
@@ -1068,8 +1111,10 @@ const IValue& ParserXBase::ParseFromRPN() const
             pFun->Eval(buf, &val, nArgs);
             val = buf;
           }
-          else
-            pFun->Eval(val, &val, nArgs);
+		  else
+		  {
+			pFun->Eval(val, &val, nArgs);
+		  }
         }
         catch(ParserError &exc)
         {

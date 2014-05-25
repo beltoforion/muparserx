@@ -74,12 +74,12 @@ MUP_NAMESPACE_START
     return new CLASS(*this);                                       \
   }
 
-  MUP_POSTFIX_IMLP(OprtNano,   "{n}",   (float_type)1e-9,   "{n} - unit multiplicator 1e-9")
-  MUP_POSTFIX_IMLP(OprtMicro,  "{mu}",  (float_type)1e-6,   "{µ} - unit multiplicator 1e-6")
-  MUP_POSTFIX_IMLP(OprtMilli,  "{m}",   (float_type)1e-3,   "{m} - unit multiplicator 1e-3")
-  MUP_POSTFIX_IMLP(OprtKilo,   "{k}",   (float_type)1e3,    "{k} - unit multiplicator 1e3")
-  MUP_POSTFIX_IMLP(OprtMega,   "{M}",   (float_type)1e6,    "{M} - unit multiplicator 1e6")
-  MUP_POSTFIX_IMLP(OprtGiga,   "{G}",   (float_type)1e9,    "{G} - unit multiplicator 1e9")
+  MUP_POSTFIX_IMLP(OprtNano,   "n",   (float_type)1e-9,   "n - unit multiplicator 1e-9")
+  MUP_POSTFIX_IMLP(OprtMicro,  "u",   (float_type)1e-6,   "u - unit multiplicator 1e-6")
+  MUP_POSTFIX_IMLP(OprtMilli,  "m",   (float_type)1e-3,   "m - unit multiplicator 1e-3")
+  MUP_POSTFIX_IMLP(OprtKilo,   "k",   (float_type)1e3,    "k - unit multiplicator 1e3")
+  MUP_POSTFIX_IMLP(OprtMega,   "M",   (float_type)1e6,    "M - unit multiplicator 1e6")
+  MUP_POSTFIX_IMLP(OprtGiga,   "G",   (float_type)1e9,    "G - unit multiplicator 1e9")
 
 #undef MUP_POSTFIX_IMLP
 

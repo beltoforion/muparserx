@@ -14,7 +14,7 @@
 #  e-mail:  muparserx@beltoforion.de                                    #
 #                                                                       #
 #  The code contains contributions made by the following people:        #
-#       	Martin Rotter                                           #
+#       	Martin Rotter                                               #
 #                                                                       #
 #  This software is distributed under the terms of the                  #
 #  BSD - Clause 2 "Simplified" or "FreeBSD" Licence (BSD-2-Clause)      #
@@ -28,11 +28,17 @@
 #                                                                       #
 #########################################################################
 
-V3.0.0 (20130224; prerelease)
+V3.0.0 (20140524; prerelease)
 -----------------------------
 
 Warning: This code requires a C++11 capable compiler!
 
+Syntax rule changes:
+  - Curly brackets removed from unit postfix operator identifiers. (I need them for on the fly array construction)
+  - in place array construction like: {1,2,3} to create a row vector
+  - Comma can no longer be used to separate terms in an expression. 
+  - '#' added for comments
+  
 API Changes:
   - C++11 features introduced in the code
   - Functions defining variables, constants, operators or functions will now throw an exception
@@ -49,7 +55,6 @@ Changes:
   - factorial operator added
   - floating point data type can now be selected with the "MUP_FLOAT_TYPE" macro
     in mpDefines.h
-  - Querying multiple results of comma separated expressions added
 
 Bugfixes:
   - Issue 14: Precedence of Unary Operators

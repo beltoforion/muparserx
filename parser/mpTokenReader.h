@@ -97,6 +97,7 @@ MUP_NAMESPACE_START
     int  m_nPos;             ///< Current parsing position in the expression
     int  m_nNumBra;          ///< Number of open parenthesis
     int  m_nNumIndex;        ///< Number of open index paranethesis    
+	int  m_nNumCurly;        ///< Number of open curly brackets
     int  m_nNumIfElse;       ///< Coubter for if-then-else levels
     int  m_nSynFlags;        ///< Flags to controll the syntax flow
 
