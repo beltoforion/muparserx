@@ -9,6 +9,7 @@
      * [http://code.google.com/p/muparserx/wiki/Introduction#Predefined_Functions Predefined Functions]
    * [http://code.google.com/p/muparserx/wiki/Introduction#Sample_expressions Expression samples]
  * [http://code.google.com/p/muparserx/wiki/Using Using the library]
+   * [http://code.google.com/p/muparserx/wiki/ExpressionSyntax Expression Syntax]
    * [http://code.google.com/p/muparserx/wiki/Using#Getting_the_latest_source_code Getting the latest source code]
    * [http://code.google.com/p/muparserx/wiki/Using#Adding_the_library_to_your_projects Adding the library to your projects]
    * [http://code.google.com/p/muparserx/wiki/Using#Basic_design_concept Basic design concept]
