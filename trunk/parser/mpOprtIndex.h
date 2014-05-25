@@ -55,11 +55,11 @@ MUP_NAMESPACE_START
   //-----------------------------------------------------------------------------------------------
   /** \brief Default implementation of a multidimensional index operator.
   */
-  class OprtIndex : public IOprtIndex
+  class OprtIndex : public ICallback
   {
   public:
     OprtIndex(IPackage* pPackage=nullptr);
-    virtual void At(ptr_val_type& ret, const ptr_val_type *arg, int argc) override;
+    virtual void Eval(ptr_val_type& ret, const ptr_val_type *arg, int argc) override;
     virtual const char_type* GetDesc() const;
     virtual IToken* Clone() const override;
   }; 

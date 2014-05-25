@@ -43,8 +43,8 @@ MUP_NAMESPACE_START
   //
   //-----------------------------------------------------------------------------------------------
 
-  OprtIndex::OprtIndex(IPackage* /*pPackage*/)
-    :IOprtIndex(-1)
+  OprtIndex::OprtIndex(IPackage *pPackage)
+	:ICallback(cmIC, _T("Index operator"), -1, pPackage)
   {}
 
   //-----------------------------------------------------------------------------------------------
@@ -54,11 +54,11 @@ MUP_NAMESPACE_START
       \param a_iArgc Number of indices (=dimension) actully used in the expression found. This must 
              be 1 or 2 since three dimensional data structures are not supported by muParserX.
   */
-  void OprtIndex::At(ptr_val_type &ret, const ptr_val_type *a_pArg, int a_iArgc)
+  void OprtIndex::Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int a_iArgc)
   {
     try
     {
-      // The index is -1, thats the actual variable reference
+      // The index is -1. (That is the actual variable reference)
       if (a_iArgc!=a_pArg[-1]->GetDim())
       {
         throw ParserError(ErrorContext(ecINDEX_DIMENSION, -1, GetIdent()));
@@ -96,7 +96,5 @@ MUP_NAMESPACE_START
   {
     return new OprtIndex(*this); 
   }
-
-
 
 MUP_NAMESPACE_END

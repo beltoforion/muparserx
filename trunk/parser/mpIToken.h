@@ -81,7 +81,6 @@ MUP_NAMESPACE_START
     virtual ICallback* AsICallback();
     virtual IValue* AsIValue();
     virtual IPrecedence* AsIPrecedence();
-    virtual IOprtIndex* AsIOprtIndex();
 
     virtual void Compile(const string_type &sArg);
 

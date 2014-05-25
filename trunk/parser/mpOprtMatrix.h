@@ -59,6 +59,18 @@ MUP_NAMESPACE_START
   }; 
 
   //-----------------------------------------------------------------------------------------------
+  /** \brief On the fly array creation using the curly bracket operator.
+  */
+  class OprtCreateArray : public ICallback
+  {
+  public:
+	  OprtCreateArray(IPackage* pPackage = nullptr);
+	  virtual void Eval(ptr_val_type& ret, const ptr_val_type *arg, int argc) override;
+	  virtual const char_type* GetDesc() const;
+	  virtual IToken* Clone() const override;
+  };
+
+  //-----------------------------------------------------------------------------------------------
   class OprtColon : public IOprtBin
   {
   public:

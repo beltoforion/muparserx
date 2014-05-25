@@ -332,6 +332,10 @@ MUP_NAMESPACE_START
     iNumErr += EqnTest(_T("2*va'*vb"),  32,   true); 
     iNumErr += EqnTest(_T("va*vb'"),    va_times_vb_transp,   true); 
 
+	// vector creation
+	iNumErr += EqnTest(_T("{1,2,3}'"), va, true);
+	iNumErr += EqnTest(_T("{a,2,3}'"), va, true);		// that was an actual bug: variable a was overwritten
+
     Assessment(iNumErr);
     return iNumErr;
   }
@@ -632,7 +636,7 @@ MUP_NAMESPACE_START
     iNumErr += ThrowTest(_T("str2dbl(sin(3.14))"),   ecEVAL, 0); 
 
     // Invalid unary operator argument types
-    iNumErr += ThrowTest(_T("\"test\"{n}"), ecEVAL, 6); // (nano can only be applied to floats)
+    iNumErr += ThrowTest(_T("\"test\"n"), ecEVAL, 6); // (nano can only be applied to floats)
     iNumErr += ThrowTest(_T("(1+3i)/(8*9i)+\"hallo\""), ecEVAL); 
     iNumErr += ThrowTest(_T("(1+3i)/(8*9i)-\"hallo\""), ecEVAL); 
     iNumErr += ThrowTest(_T("(1+3i)/(8*9i)*\"hallo\""), ecEVAL); 
@@ -676,15 +680,15 @@ MUP_NAMESPACE_START
     iNumErr += ThrowTest(_T("sin(3)xyz"), ecUNASSIGNABLE_TOKEN);
     iNumErr += ThrowTest(_T("5t6"),       ecUNASSIGNABLE_TOKEN);
     iNumErr += ThrowTest(_T("5 t 6"),     ecUNASSIGNABLE_TOKEN);
-    iNumErr += ThrowTest(_T("ksdfj"),     ecUNASSIGNABLE_TOKEN);
+	iNumErr += ThrowTest(_T("ksdfj"),     ecUNEXPECTED_OPERATOR);  // k - postfix operator
 
     // unexpected operator
-    iNumErr += ThrowTest(_T("-{m}"),      ecUNEXPECTED_OPERATOR);
-    iNumErr += ThrowTest(_T("{m}4"),      ecUNEXPECTED_OPERATOR);
-    iNumErr += ThrowTest(_T("sin({m})"),  ecUNEXPECTED_OPERATOR);
-    iNumErr += ThrowTest(_T("{m} {m}"),   ecUNEXPECTED_OPERATOR);
-    iNumErr += ThrowTest(_T("{m}(8)"),    ecUNEXPECTED_OPERATOR);
-    iNumErr += ThrowTest(_T("4 + {m}"),   ecUNEXPECTED_OPERATOR);
+    iNumErr += ThrowTest(_T("-m"),      ecUNEXPECTED_OPERATOR);
+    iNumErr += ThrowTest(_T("m4"),        ecUNEXPECTED_OPERATOR);
+    iNumErr += ThrowTest(_T("sin(m)"),  ecUNEXPECTED_OPERATOR);
+    iNumErr += ThrowTest(_T("m m"),   ecUNEXPECTED_OPERATOR);
+    iNumErr += ThrowTest(_T("m(8)"),    ecUNEXPECTED_OPERATOR);
+    iNumErr += ThrowTest(_T("4 + m"),   ecUNEXPECTED_OPERATOR);
     iNumErr += ThrowTest(_T("5+*3)"),     ecUNEXPECTED_OPERATOR);
 
     // unexpected comma (used without a function)
@@ -711,7 +715,7 @@ MUP_NAMESPACE_START
     iNumErr += ThrowTest(_T("sin[a)"),  ecUNEXPECTED_SQR_BRACKET);
     iNumErr += ThrowTest(_T("1+[8]"),   ecUNEXPECTED_SQR_BRACKET);
     iNumErr += ThrowTest(_T("1[8]"),    ecUNEXPECTED_SQR_BRACKET);
-    iNumErr += ThrowTest(_T("3{n}[1]"), ecUNEXPECTED_SQR_BRACKET);
+    iNumErr += ThrowTest(_T("3n[1]"),   ecUNEXPECTED_SQR_BRACKET);
     iNumErr += ThrowTest(_T("[1]"),     ecUNEXPECTED_SQR_BRACKET);
     iNumErr += ThrowTest(_T("]1"),      ecUNEXPECTED_SQR_BRACKET);
     iNumErr += ThrowTest(_T("va[[3]]"), ecUNEXPECTED_SQR_BRACKET);
@@ -752,16 +756,14 @@ MUP_NAMESPACE_START
     *m_stream << _T("testing postfix operators...");
 
     // application
-    iNumErr += EqnTest(_T("8{n}"), (float_type)8e-9, true);
-    iNumErr += EqnTest(_T("8{n}"), (float_type)123.0, false);
-    iNumErr += EqnTest(_T("3{m}+5"), (float_type)5.003, true);
-    iNumErr += EqnTest(_T("1000{m}"), (float_type)1.0, true);
-    iNumErr += EqnTest(_T("1000 {m}"), (float_type)1.0, true);
-    iNumErr += EqnTest(_T("a{m}"), (float_type)1e-3, true);
-    iNumErr += EqnTest(_T("(a){m}"), (float_type)1e-3, true);
-    iNumErr += EqnTest(_T("-(a){m}"), (float_type)-1e-3, true);
-    iNumErr += EqnTest(_T("-a{m}"), (float_type)-1e-3, true);
-    iNumErr += EqnTest(_T("-2{m}"), (float_type)-2e-3, true);
+    iNumErr += EqnTest(_T("8n"), (float_type)8e-9, true);
+    iNumErr += EqnTest(_T("8n"), (float_type)123.0, false);
+    iNumErr += EqnTest(_T("3m+5"), (float_type)5.003, true);
+    iNumErr += EqnTest(_T("1000m"), (float_type)1.0, true);
+    iNumErr += EqnTest(_T("1000 m"), (float_type)1.0, true);
+    iNumErr += EqnTest(_T("(a)m"), (float_type)1e-3, true);
+    iNumErr += EqnTest(_T("-(a)m"), (float_type)-1e-3, true);
+    iNumErr += EqnTest(_T("-2m"), (float_type)-2e-3, true);
     iNumErr += EqnTest(_T("a++b"), 3, true);
     iNumErr += EqnTest(_T("a ++ b"), 3, true);
     iNumErr += EqnTest(_T("1++2"), 3, true);
@@ -770,10 +772,10 @@ MUP_NAMESPACE_START
     //iNumErr += EqnTest(_T("-f1of1(1000)m"), -1, true);
     //iNumErr += EqnTest(_T("-f1of1(-1000)m"), 1, true);
     //iNumErr += EqnTest(_T("f4of4(0,0,0,1000)m"), 1, true);
-    iNumErr += EqnTest(_T("2+(a*1000){m}"), (float_type)3.0, true);
+    iNumErr += EqnTest(_T("2+(a*1000)m"), (float_type)3.0, true);
     // some incorrect results
-    iNumErr += EqnTest(_T("1000{m}"), (float_type)0.1, false);
-    iNumErr += EqnTest(_T("(a){m}"), (float_type)2.0, false);
+    iNumErr += EqnTest(_T("1000m"), (float_type)0.1, false);
+    iNumErr += EqnTest(_T("(a)m"), (float_type)2.0, false);
     // factorial operator
     iNumErr += EqnTest(_T("5!"), 120, true);
     iNumErr += EqnTest(_T("-5!"), -120, true);
@@ -1065,7 +1067,7 @@ MUP_NAMESPACE_START
 
 	iNumErr += ThrowTest(_T("1==?"),  ecUNEXPECTED_CONDITIONAL);  
     iNumErr += ThrowTest(_T("1+?"),   ecUNEXPECTED_CONDITIONAL);  // bin oprt + ?
-	iNumErr += ThrowTest(_T("1{m}?"), ecUNEXPECTED_CONDITIONAL);  // postfix + ?
+	iNumErr += ThrowTest(_T("1m?"), ecUNEXPECTED_CONDITIONAL);  // postfix + ?
 	iNumErr += ThrowTest(_T("-?"),    ecUNEXPECTED_CONDITIONAL);  // infix + ?
 
     iNumErr += EqnTest(_T("(true) ? 128 : 255"), 128, true);
@@ -1203,10 +1205,10 @@ MUP_NAMESPACE_START
     iNumErr += EqnTest(_T("-(2^1.1)"), (float_type)-2.14354692, true);
 
     // infix + postfix operator in arguments for binary operators (Reference: Matlab)
-    iNumErr += EqnTest(_T("-sin(8){m}*6"), (float_type)-0.00593615, true);
-    iNumErr += EqnTest(_T("-sin(8){m}/6"), (float_type)-1.6489e-4, true);
-    iNumErr += EqnTest(_T("-sin(8){m}+6"), (float_type)5.99901, true);
-    iNumErr += EqnTest(_T("-sin(8){m}-6"), (float_type)-6.000989, true);
+    iNumErr += EqnTest(_T("-sin(8)m*6"), (float_type)-0.00593615, true);
+    iNumErr += EqnTest(_T("-sin(8)m/6"), (float_type)-1.6489e-4, true);
+    iNumErr += EqnTest(_T("-sin(8)m+6"), (float_type)5.99901, true);
+    iNumErr += EqnTest(_T("-sin(8)m-6"), (float_type)-6.000989, true);
 
     iNumErr += EqnTest(_T("(cos(2.41)/b)"), (float_type)-0.372056, true);
 

@@ -12,7 +12,7 @@
                                        All rights reserved.
 
   muparserx - A C++ math parser library with array and string support
-  Copyright (c) 2013, Ingo Berg
+  Copyright (c) 2014, Ingo Berg
   All rights reserved.
 
   Redistribution and use in source and binary forms, with or without 
