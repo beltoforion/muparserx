@@ -63,6 +63,14 @@ or the long version:
 = Matrices and arrays =
 In order to use matices muparserx must be initialized with the [http://code.google.com/p/muparserx/wiki/Using#Parser_initialization pckMATRIX] flag. This flag will activate the transpose operator and the functions {{{ones}}}, {{{eye}}} and {{{zeros}}} which can be used for creating new matrices on the fly.
 
+Matrix and array values are exactly treated like any other value. The only exception is that they support the index operator. The index operator can either be one or two dimensional, depending on the dimension of the parser variable. When using the index operator on matrices the index dimensions are seperated with a comma. The first index refers to the rows of the matrix, the second to the columns.
+
+{{{
+m[1,2]=1
+}}}
+
+All Matrix and vector indices are zero based!
+
 == Creating Vectors ==
 
 A simple row vector can be created by using the {...} operator. Currently you can not use any other values than scalars as the arguments to the vector creation operator.
@@ -76,12 +84,6 @@ If you need a column vector it can be transformed easily by using the transform 
 }}}
 
 == Creating new matrices ==
-
-Matrix and array values are exactly treated like any other value. The only exception is that they support the index operator. The index operator can either be one or two dimensional, depending on the dimension of the parser variable. When using the index operator on matrices the index dimensions are seperated with a comma. The first index refers to the rows of the matrix, the second to the columns.
-
-{{{
-m[1,2]=1
-}}}
 
 muparserx provides several functions for creating certain types of matrices:
 
