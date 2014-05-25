@@ -106,19 +106,23 @@ By default the parser supports the following mathematical constants:
     * if then else conditionals with lazy evaluation: *?:*
 
 == Postfix operators ==
-    * Unit postfixes (nano, micro, milli, kilo, giga, mega): *{n}*, *{mu}*, *{m}*, *{k}*, *{G}*, *{M}*
+    * Unit postfixes (nano, micro, milli, kilo, giga, mega): *n*, *mu*, *m*, *k*, *G*, *M*
+    * transpose operator: *'*
 
 == Infix operators ==
     * Sign operator and type conversions: *-*, *(float)*, *(int)*
+
 == Special Operators ==
     * Multidimensional index operator: a{{{[}}}1,2{{{]}}}
     * Ternary if-then-else operator: (a<b) ? c:d
+    * In-place array creation: {1,2,3}
+
 == Predefined Functions ==
     * Standard functions *abs*, *sin*, *cos*, *tan*, *sinh*, *cosh*, *tanh*, *ln*, *log*, *log10*, *exp*, *sqrt*
     * Unlimited number of arguments: *min*, *max*, *sum*
     * String functions: *str2dbl*, *strlen*, *toupper*
     * Complex functions: *real*, *imag*, *conj*, *arg*, *norm*
-    * Array functions: *sizeof*
+    * Array functions: *sizeof*, *eye*, *ones*, *zeros*
 
 = Sample expressions =
 The next table shows samples of expressions that can be evaluated using <b>muParserX</b>:
