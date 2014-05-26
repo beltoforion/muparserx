@@ -350,7 +350,7 @@ MUP_NAMESPACE_START
 	iNumErr += EqnTest(_T("va'[0,0]"), 1, true);
 	iNumErr += EqnTest(_T("va'[0,1]"), 2, true);
 	iNumErr += EqnTest(_T("va'[0,2]"), 3, true);
-
+	iNumErr += EqnTest(_T("(va')[0,2]"), 3, true); // <- Index operator after closing bracket is ok
 
 	// vector creation
 	iNumErr += EqnTest(_T("{1,2,3}'"), va, true);
@@ -1310,6 +1310,10 @@ MUP_NAMESPACE_START
 	  iNumErr += EqnTest(_T("0b011"), 3, true);
 	  iNumErr += EqnTest(_T("0b11111111"), 255, true);
 	  iNumErr += EqnTest(_T("b*0b011"), 6, true);
+	  iNumErr += EqnTest(_T("0b1111111111111111111111111111111"), 2147483647, true);
+	  iNumErr += EqnTest(_T("0b10000000000000000000000000000000"), -2147483647 - 1, true);
+	  iNumErr += EqnTest(_T("0b11111111111111111111111111111111"), -1, true);
+	  iNumErr += ThrowTest(_T("0b100000000000000000000000000000000"), ecUNDEFINED);
 
 	  // string value reader
 	  iNumErr += EqnTest(_T("\"hallo\""), _T("hallo"), true);

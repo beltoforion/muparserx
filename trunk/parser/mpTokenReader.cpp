@@ -489,7 +489,7 @@ MUP_NAMESPACE_START
                 if (m_nSynFlags & noBC)
                   throw ecUNEXPECTED_PARENS;
 
-                m_nSynFlags = noBO | noVAR | noVAL | noFUN | noIFX | noIO | noCBO;
+                m_nSynFlags = noBO | noVAR | noVAL | noFUN | noIFX | noCBO;
                 m_nNumBra--;
 
                 if (m_nNumBra<0)
