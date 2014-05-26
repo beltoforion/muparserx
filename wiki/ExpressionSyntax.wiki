@@ -83,7 +83,7 @@ If you need a column vector it can be transformed easily by using the transform 
 {1,2,3}'
 }}}
 
-== Creating new matrices ==
+== Creating Matrices ==
 
 muparserx provides several functions for creating certain types of matrices:
 
