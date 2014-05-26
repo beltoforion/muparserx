@@ -280,7 +280,7 @@ MUP_NAMESPACE_START
     iNumErr += ThrowTest(_T("va+eye(2)"), ecMATRIX_DIMENSION_MISMATCH);
     iNumErr += ThrowTest(_T("m1[1]"),     ecINDEX_DIMENSION);
     iNumErr += ThrowTest(_T("m1[1,2,3]"), ecINDEX_DIMENSION);
-    iNumErr += ThrowTest(_T("va[1,2]"),   ecINDEX_DIMENSION);
+    iNumErr += ThrowTest(_T("va[1,2]"),   ecINDEX_OUT_OF_BOUNDS); // va has 1 column, 3 rows -> the coulumn index is referencing the third column
     iNumErr += ThrowTest(_T("a+m1"), ecEVAL); 
     iNumErr += ThrowTest(_T("m1+a"), ecEVAL); 
     iNumErr += ThrowTest(_T("a-m1"), ecEVAL); 
@@ -331,6 +331,26 @@ MUP_NAMESPACE_START
     iNumErr += EqnTest(_T("va'*vb"),    16,   true); 
     iNumErr += EqnTest(_T("2*va'*vb"),  32,   true); 
     iNumErr += EqnTest(_T("va*vb'"),    va_times_vb_transp,   true); 
+
+	// index operator
+	// erster index: Zeilenindex, zweiter index: Spaltenindex
+	iNumErr += EqnTest(_T("va[0]"), 1, true);
+	iNumErr += EqnTest(_T("va[1]"), 2, true);
+	iNumErr += EqnTest(_T("va[2]"), 3, true);
+	// Use two dimensional index operator on a vector
+	iNumErr += EqnTest(_T("va[0,0]"), 1, true);
+	iNumErr += EqnTest(_T("va[1,0]"), 2, true);
+	iNumErr += EqnTest(_T("va[2,0]"), 3, true);
+	
+	// Now test the same with a transposed vector:
+	iNumErr += EqnTest(_T("va'[0]"), 1, true);
+	iNumErr += EqnTest(_T("va'[1]"), 2, true);
+	iNumErr += EqnTest(_T("va'[2]"), 3, true);
+	// Use two dimensional index operator on a vector
+	iNumErr += EqnTest(_T("va'[0,0]"), 1, true);
+	iNumErr += EqnTest(_T("va'[0,1]"), 2, true);
+	iNumErr += EqnTest(_T("va'[0,2]"), 3, true);
+
 
 	// vector creation
 	iNumErr += EqnTest(_T("{1,2,3}'"), va, true);
@@ -708,6 +728,7 @@ MUP_NAMESPACE_START
     iNumErr += ThrowTest(_T("a+0x"),    ecUNASSIGNABLE_TOKEN);  // incomplete hex value  
 
     // index operator
+	iNumErr += ThrowTest(_T("3n[1]"),   ecINDEX_OUT_OF_BOUNDS);  // Indexing a scalar is ok, but this index is out of bounds (0 would be ok)
     iNumErr += ThrowTest(_T("min(3,]"), ecUNEXPECTED_SQR_BRACKET);
     iNumErr += ThrowTest(_T("sin(]"),   ecUNEXPECTED_SQR_BRACKET);
     iNumErr += ThrowTest(_T("va[]"),    ecUNEXPECTED_SQR_BRACKET);
@@ -715,7 +736,6 @@ MUP_NAMESPACE_START
     iNumErr += ThrowTest(_T("sin[a)"),  ecUNEXPECTED_SQR_BRACKET);
     iNumErr += ThrowTest(_T("1+[8]"),   ecUNEXPECTED_SQR_BRACKET);
     iNumErr += ThrowTest(_T("1[8]"),    ecUNEXPECTED_SQR_BRACKET);
-    iNumErr += ThrowTest(_T("3n[1]"),   ecUNEXPECTED_SQR_BRACKET);
     iNumErr += ThrowTest(_T("[1]"),     ecUNEXPECTED_SQR_BRACKET);
     iNumErr += ThrowTest(_T("]1"),      ecUNEXPECTED_SQR_BRACKET);
     iNumErr += ThrowTest(_T("va[[3]]"), ecUNEXPECTED_SQR_BRACKET);
@@ -885,7 +905,7 @@ MUP_NAMESPACE_START
     iNumErr += ThrowTest(_T("va[-1]"),     ecINDEX_OUT_OF_BOUNDS); // fail: negative value used as an index
     iNumErr += ThrowTest(_T("va[c]"),      ecINDEX_OUT_OF_BOUNDS);
     iNumErr += ThrowTest(_T("va[(3)]"),    ecINDEX_OUT_OF_BOUNDS);
-    iNumErr += ThrowTest(_T("a[1]"),       ecINDEX_DIMENSION); 
+	iNumErr += ThrowTest(_T("a[1]"),       ecINDEX_OUT_OF_BOUNDS); // indexing a scalar is ok, but this index is out of bounds (0 would be ok...)
     iNumErr += ThrowTest(_T("va[1"),       ecMISSING_SQR_BRACKET);
     iNumErr += ThrowTest(_T("va[1]]"),     ecUNEXPECTED_SQR_BRACKET);
 

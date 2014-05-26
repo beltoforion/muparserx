@@ -58,16 +58,24 @@ MUP_NAMESPACE_START
   {
     try
     {
-      // The index is -1. (That is the actual variable reference)
-      if (a_iArgc!=a_pArg[-1]->GetDim())
-      {
-        throw ParserError(ErrorContext(ecINDEX_DIMENSION, -1, GetIdent()));
-      }
+	  int rows = a_pArg[-1]->GetRows();
+	  int cols = a_pArg[-1]->GetCols();
 
       switch(a_iArgc)
       {
       case 1:
-          ret.Reset(new Variable( &(ret->At(*a_pArg[0], Value(0))) ) );
+		  if (cols == 1)
+		  {
+			  ret.Reset(new Variable(&(ret->At(*a_pArg[0], Value(0)))));
+		  }
+		  else if (rows == 1)
+		  {
+			  ret.Reset(new Variable(&(ret->At(Value(0), *a_pArg[0]))));
+		  }
+		  else
+		  {
+			  throw ParserError(ErrorContext(ecINDEX_DIMENSION, -1, GetIdent()));
+		  }
           break;
 
       case 2:
