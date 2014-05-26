@@ -28,10 +28,10 @@
 #                                                                       #
 #########################################################################
 
-V3.0.0 (20140524; prerelease)
------------------------------
+V3.0.0 (20140524)
+-----------------
 
-Warning: This code requires a C++11 capable compiler!
+Warning: The library requires a C++11 compliant compiler!
 
 Syntax rule changes:
   - Curly brackets removed from unit postfix operator identifiers. (I need them for on the fly array construction)
@@ -50,7 +50,7 @@ API Changes:
 
 Changes:
   - added "zeros" function for creating matrices initialized to all zero added
-  - added "eye" function for creating idendity matrices
+  - added "eye" function for creating an idendity matrices
   - added "size" function for determining matrix dimensions
   - factorial operator added
   - floating point data type can now be selected with the "MUP_FLOAT_TYPE" macro
