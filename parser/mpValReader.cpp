@@ -231,14 +231,17 @@ MUP_NAMESPACE_START
      if (szExpr[0]!='0' || (szExpr[1]!='b' && szExpr[1]!='B'))
       return false;
 
-    unsigned iVal = 0, iBits = sizeof(iVal)*8, i;
-    for (i=0; (szExpr[i+2]=='0' || szExpr[i+2]=='1') && i<iBits; ++i)
-       iVal |= (int)(szExpr[i+2]=='1') << ((iBits-1)-i);
+    // <ibg 2014-05-26/> Number of bits hardcoded to 32, i can't 
+    //                   store 64 bit integers in double values without 
+    //                   loss. There is no point in accepting them.
+    unsigned iVal = 0, iBits = 32 /*sizeof(iVal)*8*/, i;
+    for (i=0; (szExpr[i+2]=='0' || szExpr[i+2]=='1') && i<=iBits; ++i)
+       iVal |= (unsigned)(szExpr[i+2]=='1') << ((iBits-1)-i);
 
     if (i==0) 
       return false;
 
-    if (i==iBits)
+    if (i>iBits)
       throw ParserError(_T("Binary to integer conversion error (overflow)."));
 
     a_Val = (int)(iVal >> (iBits-i) );
