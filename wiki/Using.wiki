@@ -53,11 +53,11 @@ Each parser package is encoded with a certain bit. The following values and valu
 
 || *Package enumerator* || *Numeric value* || *Description* ||
 || pckCOMMON || 1 || Installs common functionality such as binary operators and basic functions. ||
-|| pckUNIT || 2 || Installs common functionality such as binary operators and basic functions. ||
+|| pckUNIT || 2 || Installs postfix operators for scaling to mimic basic unit support. ||
 || pckCOMPLEX || 4 || Installs complex valued functions, operators and the imaginary unit *i* as a parser constant. The packages pckCOMPLEX and pckNON_COMPLEX are mutually exclusive. ||
 || pckNON_COMPLEX || 8 || Installs noncomplex functions and operators. The packages pckCOMPLEX and pckNON_COMPLEX are mutually exclusive. ||
 || pckSTRING || 16 || Adds function for string processing as well as the capability to detect string values. ||
-|| pckMATRIX || 32 || Adds the "Ones" and transpose postfix operator. ||
+|| pckMATRIX || 32 || Adds functions and operators for metrix support. ||
 || pckALL_COMPLEX || pckCOMMON | pckCOMPLEX | pckSTRING | pckUNIT || combines the flags of packages useable with complex numbers.||
 || pckALL_NON_COMPLEX ||  pckCOMMON | pckNON_COMPLEX | pckSTRING | pckUNIT || Combines the flags of all packages useable with noncomple numbers. ||
 
