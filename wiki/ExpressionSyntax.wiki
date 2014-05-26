@@ -78,7 +78,7 @@ A simple row vector can be created by using the {...} operator. Currently you ca
 {1,2,3}
 }}}
 
-If you need a column vector it can be transformed easily by using the transform postfix operator:
+If you need a column vector it can be transformed easily by using the transpose postfix operator:
 {{{
 {1,2,3}'
 }}}
