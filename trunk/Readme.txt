@@ -7,7 +7,7 @@
 #  |__|_|  /____/|____|    (____  /__|  /____  >\___  >__| /___/\  \    #
 #        \/                     \/           \/     \/           \_/    #
 #                                                                       #
-#  Copyright (C) 2013 Ingo Berg                                         #
+#  Copyright (C) 2014 Ingo Berg                                         #
 #                                                                       #
 #  Web:     http://muparserx.beltoforion.de                             #
 #  SVN:     http://muparserx.googlecode.com/svn/trunk                   #
@@ -28,7 +28,14 @@
 #                                                                       #
 #########################################################################
 
-V3.0.0 (20140524)
+V3.0.1 (20140527)
+-----------------
+
+Bugfixes:
+  - Index operator did not work properly when applied to non variable types. The bug only occured when used
+    together with an assignment operator.
+  
+V3.0.0 (20140525)
 -----------------
 
 Warning: The library requires a C++11 compliant compiler!
