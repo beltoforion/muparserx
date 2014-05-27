@@ -885,12 +885,7 @@ void Calc()
 
       if (sLine==_T("dbg"))
       {
-        sLine   = _T("# Zeile 1\n");
-        sLine  += _T("# Zeile 2\n");
-        sLine  += _T("a = 10\n");
-        sLine  += _T("b = 20 # Das ist ein Kommentar\n");
-        sLine  += _T("c = a+b\n");
-        sLine  += _T("# Schlusskommentar");
+        sLine   = _T("sin(10*{3+1i,2+0.18}[0])");
         mup::console() << sLine << endl;
       }
 
