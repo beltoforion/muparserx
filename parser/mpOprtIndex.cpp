@@ -37,72 +37,85 @@
 
 MUP_NAMESPACE_START
 
-  //-----------------------------------------------------------------------------------------------
-  //
-  //  class  OprtIndex
-  //
-  //-----------------------------------------------------------------------------------------------
+    //-----------------------------------------------------------------------------------------------
+    //
+    //  class  OprtIndex
+    //
+    //-----------------------------------------------------------------------------------------------
 
-  OprtIndex::OprtIndex(IPackage *pPackage)
-	:ICallback(cmIC, _T("Index operator"), -1, pPackage)
-  {}
+    OprtIndex::OprtIndex(IPackage *pPackage)
+        :ICallback(cmIC, _T("Index operator"), -1, pPackage)
+    {}
 
-  //-----------------------------------------------------------------------------------------------
-  /** \brief Index operator implementation
-      \param ret A reference to the return value
-      \param a_pArg Pointer to an array with the indices as ptr_val_type
-      \param a_iArgc Number of indices (=dimension) actully used in the expression found. This must 
-             be 1 or 2 since three dimensional data structures are not supported by muParserX.
-  */
-  void OprtIndex::Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int a_iArgc)
-  {
-    try
+    //-----------------------------------------------------------------------------------------------
+    /** \brief Index operator implementation
+    \param ret A reference to the return value
+    \param a_pArg Pointer to an array with the indices as ptr_val_type
+    \param a_iArgc Number of indices (=dimension) actully used in the expression found. This must 
+            be 1 or 2 since three dimensional data structures are not supported by muParserX.
+    */
+    void OprtIndex::Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int a_iArgc)
     {
-	  int rows = a_pArg[-1]->GetRows();
-	  int cols = a_pArg[-1]->GetCols();
+        try
+        {
+            int rows = a_pArg[-1]->GetRows();
+            int cols = a_pArg[-1]->GetCols();
+            bool bArgIsVariable = a_pArg[-1]->IsVariable();
 
-      switch(a_iArgc)
-      {
-      case 1:
-		  if (cols == 1)
-		  {
-			  ret.Reset(new Variable(&(ret->At(*a_pArg[0], Value(0)))));
-		  }
-		  else if (rows == 1)
-		  {
-			  ret.Reset(new Variable(&(ret->At(Value(0), *a_pArg[0]))));
-		  }
-		  else
-		  {
-			  throw ParserError(ErrorContext(ecINDEX_DIMENSION, -1, GetIdent()));
-		  }
-          break;
+            // If the index operator is applied to a variable the return value is also a variable
+            // pointing to a specific cell in the matrix. If the operator is applied to a value
+            // the return value is also a value.
+            switch (a_iArgc)
+            {
+            case 1:
+                if (cols == 1)
+                {
+                    if (bArgIsVariable) 
+                        ret.Reset(new Variable(&(ret->At(*a_pArg[0], Value(0)))));
+                    else
+                        *ret = ret->At(*a_pArg[0], Value(0));
+                }
+                else if (rows == 1)
+                {
+                    if (bArgIsVariable) 
+                        ret.Reset(new Variable(&(ret->At(Value(0), *a_pArg[0]))));
+                    else
+                        *ret = ret->At(Value(0), *a_pArg[0]);
+                }
+                else
+                {
+                    throw ParserError(ErrorContext(ecINDEX_DIMENSION, -1, GetIdent()));
+                }
+                break;
 
-      case 2:
-          ret.Reset(new Variable( &(ret->At(*a_pArg[0], *a_pArg[1])) ) );
-          break;
+            case 2:
+                if (bArgIsVariable)
+                    ret.Reset(new Variable(&(ret->At(*a_pArg[0], *a_pArg[1]))));
+                else
+	                *ret = ret->At(*a_pArg[0], *a_pArg[1]);
+                break;
 
-      default:
-          throw ParserError(ErrorContext(ecINDEX_DIMENSION, -1, GetIdent()));
-      }
+            default:
+                throw ParserError(ErrorContext(ecINDEX_DIMENSION, -1, GetIdent()));
+            }
+        }
+        catch(ParserError &exc)
+        {
+            exc.GetContext().Pos = GetExprPos();
+            throw exc;
+        }
     }
-    catch(ParserError &exc)
+
+    //-----------------------------------------------------------------------------------------------
+    const char_type* OprtIndex::GetDesc() const
     {
-      exc.GetContext().Pos = GetExprPos();
-      throw exc;
+        return _T("[,] - The index operator.");
     }
-  }
 
-  //-----------------------------------------------------------------------------------------------
-  const char_type* OprtIndex::GetDesc() const
-  {
-    return _T("[,] - The index operator.");
-  }
-
-  //-----------------------------------------------------------------------------------------------
-  IToken* OprtIndex::Clone() const
-  {
-    return new OprtIndex(*this); 
-  }
+    //-----------------------------------------------------------------------------------------------
+    IToken* OprtIndex::Clone() const
+    {
+        return new OprtIndex(*this); 
+    }
 
 MUP_NAMESPACE_END

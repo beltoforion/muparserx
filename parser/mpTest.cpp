@@ -356,6 +356,9 @@ MUP_NAMESPACE_START
 	iNumErr += EqnTest(_T("{1,2,3}'"), va, true);
 	iNumErr += EqnTest(_T("{a,2,3}'"), va, true);		// that was an actual bug: variable a was overwritten
 
+	// assignment to element:
+    iNumErr += ThrowTest(_T("va'[0]=123"), ecASSIGNEMENT_TO_VALUE);
+
     Assessment(iNumErr);
     return iNumErr;
   }

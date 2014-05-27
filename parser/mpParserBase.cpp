@@ -1118,23 +1118,28 @@ const IValue& ParserXBase::ParseFromRPN() const
         }
         catch(ParserError &exc)
         {
-          // <ibg 20130131> Not too happy about that:
-          // Multiarg functions may throw specific error codes when evaluating.
-          // These codes would be converted to ecEVAL here. I omit the conversion
-          // for certain handpicked errors. (The reason this catch block exists is
-          // that not all exceptions contain proper metadata when thrown out of
-          // a function.)
-          if (exc.GetCode()==ecTOO_FEW_PARAMS || exc.GetCode()==ecDOMAIN_ERROR || exc.GetCode()==ecOVERFLOW)
-            throw;
-          // </ibg>
-
-          ErrorContext err;
-          err.Expr = m_pTokenReader->GetExpr();
-          err.Ident = pFun->GetIdent();
-          err.Errc = ecEVAL;
-          err.Pos = pFun->GetExprPos();
-          err.Hint = exc.GetMsg();
-          throw ParserError(err);
+            // <ibg 20130131> Not too happy about that:
+            // Multiarg functions may throw specific error codes when evaluating.
+            // These codes would be converted to ecEVAL here. I omit the conversion
+            // for certain handpicked errors. (The reason this catch block exists is
+            // that not all exceptions contain proper metadata when thrown out of
+            // a function.)
+            if (exc.GetCode() == ecTOO_FEW_PARAMS || exc.GetCode() == ecDOMAIN_ERROR || exc.GetCode() == ecOVERFLOW || exc.GetCode() == ecASSIGNEMENT_TO_VALUE)
+            {
+                exc.GetContext().Pos = pFun->GetExprPos();
+                throw;
+            }
+            // </ibg>
+            else
+            {
+                ErrorContext err;
+                err.Expr = m_pTokenReader->GetExpr();
+                err.Ident = pFun->GetIdent();
+                err.Errc = ecEVAL;
+                err.Pos = pFun->GetExprPos();
+                err.Hint = exc.GetMsg();
+                throw ParserError(err);
+            }
         }
         catch(MatrixError & /*exc*/)
         {
