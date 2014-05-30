@@ -652,12 +652,14 @@ MUP_NAMESPACE_START
     // Issue 20: http://code.google.com/p/muparserx/issues/detail?id=20
     iNumErr += ThrowTest(_T(" "), ecUNEXPECTED_EOF);
 
+    iNumErr += ThrowTest(_T("sin(nonexistent_var)"), ecUNASSIGNABLE_TOKEN, 4, _T("nonexistent_var"));
+
     // Invalid function argument types
     iNumErr += ThrowTest(_T("sin(\"test\")"),        ecEVAL, 0);
     iNumErr += ThrowTest(_T("max(1, \"test\")"),     ecEVAL, 0);
     iNumErr += ThrowTest(_T("max(1,sin(8), \"t\")"), ecEVAL, 0);
     iNumErr += ThrowTest(_T("str2dbl(sin(3.14))"),   ecEVAL, 0); 
-
+    
     // Invalid unary operator argument types
     iNumErr += ThrowTest(_T("\"test\"n"), ecEVAL, 6); // (nano can only be applied to floats)
     iNumErr += ThrowTest(_T("(1+3i)/(8*9i)+\"hallo\""), ecEVAL); 
@@ -703,16 +705,16 @@ MUP_NAMESPACE_START
     iNumErr += ThrowTest(_T("sin(3)xyz"), ecUNASSIGNABLE_TOKEN);
     iNumErr += ThrowTest(_T("5t6"),       ecUNASSIGNABLE_TOKEN);
     iNumErr += ThrowTest(_T("5 t 6"),     ecUNASSIGNABLE_TOKEN);
-	iNumErr += ThrowTest(_T("ksdfj"),     ecUNEXPECTED_OPERATOR);  // k - postfix operator
+    iNumErr += ThrowTest(_T("ksdfj"),     ecUNASSIGNABLE_TOKEN); 
+    iNumErr += ThrowTest(_T("-m"),        ecUNASSIGNABLE_TOKEN);
+    iNumErr += ThrowTest(_T("m4"),        ecUNASSIGNABLE_TOKEN);
+    iNumErr += ThrowTest(_T("sin(m)"),    ecUNASSIGNABLE_TOKEN);
+    iNumErr += ThrowTest(_T("m m"),       ecUNASSIGNABLE_TOKEN);
+    iNumErr += ThrowTest(_T("m(8)"),      ecUNASSIGNABLE_TOKEN);
+    iNumErr += ThrowTest(_T("4 + m"),     ecUNASSIGNABLE_TOKEN);
 
     // unexpected operator
-    iNumErr += ThrowTest(_T("-m"),      ecUNEXPECTED_OPERATOR);
-    iNumErr += ThrowTest(_T("m4"),        ecUNEXPECTED_OPERATOR);
-    iNumErr += ThrowTest(_T("sin(m)"),  ecUNEXPECTED_OPERATOR);
-    iNumErr += ThrowTest(_T("m m"),   ecUNEXPECTED_OPERATOR);
-    iNumErr += ThrowTest(_T("m(8)"),    ecUNEXPECTED_OPERATOR);
-    iNumErr += ThrowTest(_T("4 + m"),   ecUNEXPECTED_OPERATOR);
-    iNumErr += ThrowTest(_T("5+*3)"),     ecUNEXPECTED_OPERATOR);
+    iNumErr += ThrowTest(_T("5+*3)"),   ecUNEXPECTED_OPERATOR);
 
     // unexpected comma (used without a function)
     iNumErr += ThrowTest(_T(",3"),           ecUNEXPECTED_COMMA);
@@ -1388,7 +1390,7 @@ MUP_NAMESPACE_START
 
 
   //---------------------------------------------------------------------------
-  int ParserTester::ThrowTest(const string_type &a_sExpr, int a_nErrc, int a_nPos)
+  int ParserTester::ThrowTest(const string_type &a_sExpr, int a_nErrc, int a_nPos, string_type a_sIdent)
   {
     ParserTester::c_iCount++;
     
@@ -1464,6 +1466,14 @@ MUP_NAMESPACE_START
                   << _T("Invalid error position: \"") << a_sExpr 
                   << _T("\"  Pos:")  << e.GetPos()
                   << _T("  Expected:")  << a_nPos;
+      }
+
+      if (a_sIdent.length() && a_sIdent!=e.GetContext().Ident)
+      {
+          *m_stream << _T("\n  ")
+              << _T("Invalid identifier: \"") << a_sExpr
+              << _T("\"  Ident:") << e.GetContext().Ident
+              << _T("  Expected:") << a_sIdent;
       }
 
       return (a_nErrc==e.GetCode() && (a_nPos==-1 || a_nPos==e.GetPos()) ) ? 0 : 1;

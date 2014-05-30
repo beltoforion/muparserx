@@ -474,11 +474,11 @@ MUP_NAMESPACE_START
 
 				if (m_eLastTokCode == cmFUNC)
 				{
-                  m_nSynFlags = noOPT | noEND | noNEWLINE | noCOMMA | noPFX | noIC | noIO | noIF | noELSE | noCBC;
+                    m_nSynFlags = noOPT | noEND | noNEWLINE | noCOMMA | noPFX | noIC | noIO | noIF | noELSE | noCBC;
 				}
 				else
 				{
-                  m_nSynFlags = noBC | noOPT | noEND | noNEWLINE | noCOMMA | noPFX | noIC | noIO | noIF | noELSE | noCBC;
+                    m_nSynFlags = noBC | noOPT | noEND | noNEWLINE | noCOMMA | noPFX | noIC | noIO | noIF | noELSE | noCBC;
 				}
 
                 m_nNumBra++;
@@ -575,7 +575,7 @@ MUP_NAMESPACE_START
     try
     {
       // <ibg 2014-05-24/> added semicolon; only for test purposes! will be removed again!
-      if (m_sExpr[m_nPos] == '\n' || m_sExpr[m_nPos] == ';')
+      if (m_sExpr[m_nPos] == '\n' /*|| m_sExpr[m_nPos] == ';'*/)
       // </ibg>
       {
         // Check if all brackets were closed
@@ -737,55 +737,64 @@ MUP_NAMESPACE_START
     }
   }
 
-  //---------------------------------------------------------------------------
-  /** \brief Check if a string position contains a unary post value operator. */
-  bool TokenReader::IsPostOpTok(ptr_tok_type &a_Tok)
-  {
-    // Tricky problem with equations like "3m+5":
-    //     m is a postfix operator, + is a valid sign for postfix operators and 
-    //     for binary operators parser detects "m+" as operator string and 
-    //     finds no matching postfix operator.
-    // 
-    // This is a special case so this routine slightly differs from the other
-    // token readers.
-    
-    // Test if there could be a postfix operator
-    string_type sTok;
-    int iEnd = ExtractToken(m_pParser->ValidOprtChars(), sTok, m_nPos);
-    if (iEnd==m_nPos)
-      return false;
-
-    try
+    //---------------------------------------------------------------------------
+    /** \brief Check if a string position contains a unary post value operator. */
+    bool TokenReader::IsPostOpTok(ptr_tok_type &a_Tok)
     {
-      // iteraterate over all postfix operator strings
-      oprt_pfx_maptype::const_iterator item;
-      for (item=m_pPostOprtDef->begin(); item!=m_pPostOprtDef->end(); ++item)
-      {
-        if (sTok.find(item->first)!=0)
-          continue;
-
-        a_Tok = ptr_tok_type(item->second->Clone());
-        m_nPos += (int)item->first.length();
-
         if (m_nSynFlags & noPFX)
-          throw ecUNEXPECTED_OPERATOR;
+        {
+            // <ibg 2014-05-30/> Only look for postfix operators if they are allowed at the given position.
+            //                   This will prevent conflicts with variable names such as: 
+            //                   "sin(n)" where n is the postfix for "nano"
+            return false;
+            // </ibg>
+        }
 
-        m_nSynFlags = noVAL | noVAR | noFUN | noBO | noPFX /*| noIO*/  | noIF;
-        return true;
-      }
+        // Tricky problem with equations like "3m+5":
+        //     m is a postfix operator, + is a valid sign for postfix operators and 
+        //     for binary operators parser detects "m+" as operator string and 
+        //     finds no matching postfix operator.
+        // 
+        // This is a special case so this routine slightly differs from the other
+        // token readers.
+    
+        // Test if there could be a postfix operator
+        string_type sTok;
+        int iEnd = ExtractToken(m_pParser->ValidOprtChars(), sTok, m_nPos);
+        if (iEnd==m_nPos)
+            return false;
+
+        try
+        {
+            // iteraterate over all postfix operator strings
+            oprt_pfx_maptype::const_iterator item;
+            for (item=m_pPostOprtDef->begin(); item!=m_pPostOprtDef->end(); ++item)
+            {
+                if (sTok.find(item->first)!=0)
+                    continue;
+
+                a_Tok = ptr_tok_type(item->second->Clone());
+                m_nPos += (int)item->first.length();
+
+                if (m_nSynFlags & noPFX)
+                    throw ecUNEXPECTED_OPERATOR;
+
+                m_nSynFlags = noVAL | noVAR | noFUN | noBO | noPFX /*| noIO*/  | noIF;
+                return true;
+            }
       
-      return false;
+            return false;
+        }
+        catch(EErrorCodes e)
+        {
+            ErrorContext err;
+            err.Errc = e;
+            err.Pos = m_nPos - (int)a_Tok->GetIdent().length();
+            err.Ident = a_Tok->GetIdent();
+            err.Expr = m_sExpr;
+            throw ParserError(err);
+        }
     }
-    catch(EErrorCodes e)
-    {
-      ErrorContext err;
-      err.Errc = e;
-      err.Pos = m_nPos - (int)a_Tok->GetIdent().length();
-      err.Ident = a_Tok->GetIdent();
-      err.Expr = m_sExpr;
-      throw ParserError(err);
-    }
-  }
 
   //---------------------------------------------------------------------------
   /** \brief Check if a string position contains a binary operator. */

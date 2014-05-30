@@ -28,6 +28,17 @@
 #                                                                       #
 #########################################################################
 
+V3.0.2 (20140527)
+-----------------
+
+Syntax rule changes:
+  - Semicolon removed as term separator (was not meant to be in the release)
+  - postfix operator identifiers are searched only at locations that could 
+    contain such an operator. (This will prevent conflicts with variable names.)
+  
+Bugfixes:
+  - Identifiers of uninitialized variables could be lost in error messages.
+  
 V3.0.1 (20140527)
 -----------------
 

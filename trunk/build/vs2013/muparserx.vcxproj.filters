@@ -200,9 +200,6 @@
     <ClInclude Include="..\..\parser\mpFwdDecl.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\parser\mpPlatformFixes.h">
-      <Filter>src</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\parser\mpTest.h">
       <Filter>src</Filter>
     </ClInclude>
