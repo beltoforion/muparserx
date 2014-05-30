@@ -119,75 +119,75 @@ MUP_NAMESPACE_START
     return this;
   }
 
-  //---------------------------------------------------------------------------
-  string_type IValue::ToString() const
-  {
-    stringstream_type ss;
-    switch (GetType())
+    //---------------------------------------------------------------------------
+    string_type IValue::ToString() const
     {
-    case 'm':  
-          {
-            const matrix_type &arr(GetArray());
-
-            if (arr.GetRows()>1)
-              ss << _T("{");
-
-            for (int i=0; i<arr.GetRows(); ++i)
+        stringstream_type ss;
+        switch (GetType())
+        {
+        case 'm':  
             {
-              if (arr.GetCols()>1)
-                ss << _T("{");
+                const matrix_type &arr(GetArray());
 
-              for (int j=0; j<arr.GetCols();++j)
-              {
-                ss << arr.At(i, j).ToString();
-                if (j!=arr.GetCols()-1)
-                  ss << _T(", ");
-              }
+                if (arr.GetRows()>1)
+                    ss << _T("{");
 
-              if (arr.GetCols()>1)
-                ss << _T("}");
+                for (int i=0; i<arr.GetRows(); ++i)
+                {
+                    if (arr.GetCols()>1)
+                    ss << _T("{");
 
-              if (i!=arr.GetRows()-1)
-                ss << _T("; ");
+                    for (int j=0; j<arr.GetCols();++j)
+                    {
+                        ss << arr.At(i, j).ToString();
+                        if (j!=arr.GetCols()-1)
+                            ss << _T(", ");
+                    }
+
+                    if (arr.GetCols()>1)
+                        ss << _T("}");
+
+                    if (i!=arr.GetRows()-1)
+                        ss << _T("; ");
+                }
+
+                if (arr.GetRows()>1)
+                    ss << _T("} ");
             }
+            break;
 
-            if (arr.GetRows()>1)
-              ss << _T("} ");
-          }
-          break;
-
-    case 'c':
-              {
+        case 'c':
+            {
                 float_type re = GetFloat(),
                            im = GetImag();
 								
-								// realteil nicht ausgeben, wenn es eine rein imaginäre Zahl ist
-								if (im==0 || re!=0 || (im==0 && re==0))
-									ss << re;
+                // realteil nicht ausgeben, wenn es eine rein imaginäre Zahl ist
+                if (im==0 || re!=0 || (im==0 && re==0))
+	                ss << re;
 
                 if (im!=0)
                 {
-	                if (im>0 && re!=0)
-	                  ss << _T("+");
+                    if (im>0 && re!=0)
+	                    ss << _T("+");
 									
-									if (im!=1)
-	                  ss << im;
+                    if (im!=1)
+                        ss << im;
 
-                  ss << _T("i");
+                    ss << _T("i");
                 }
-              }
-              break;
+            }
+            break;
             
-    case 'i':  
-    case 'f':  ss << std::setprecision(std::numeric_limits<float_type>::digits10) << GetFloat(); break;
-    case 's':  ss << _T("\"") << GetString() << _T("\""); break;
-    case 'b':  ss << ((GetBool()==true) ? _T("true"):_T("false")); break;
-    case 'v':  ss << _T("void"); break;
-    default:   ss << _T("internal error: unknown value type."); break;
-    }
+        case 'i':  
+        case 'f':  ss << std::setprecision(std::numeric_limits<float_type>::digits10) << GetFloat(); break;
+        case 's':  ss << _T("\"") << GetString() << _T("\""); break;
+        case 'b':  ss << ((GetBool()==true) ? _T("true"):_T("false")); break;
+        case 'v':  ss << _T("void"); break;
+        default:   ss << _T("internal error: unknown value type."); break;
+        }
 
-    return ss.str();
-  }
+        return ss.str();
+    }
 
   //---------------------------------------------------------------------------
   bool IValue::operator==(const IValue &a_Val) const

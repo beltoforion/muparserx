@@ -62,7 +62,7 @@
 #endif
 
 /** \brief A macro containing the version of muParserX. */
-#define MUP_PARSER_VERSION _T("3.0.1 (20140527; release)")
+#define MUP_PARSER_VERSION _T("3.0.2 (20140530; development snapshot)")
 
 /** \brief A macro for setting the parser namespace. */
 #define MUP_NAMESPACE_START namespace mup {
@@ -108,10 +108,6 @@
   #define MUP_TOK_CAST(TYPE, POINTER)  static_cast<TYPE>(POINTER);
 #endif
 
-  /** \brief Include tests for features about to be implemented in 
-             the future in the unit test.
-  */
-  //#define MUP_NICE_TO_HAVE
 #endif
 
 

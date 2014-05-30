@@ -191,68 +191,140 @@ MUP_NAMESPACE_START
     return (m_pVal) ? m_pVal->GetType() : 'v';
   }
 
-  //-----------------------------------------------------------------------------------------------
-  /** \brief Returns the Value pointer bound to this variable. 
-      \throw nothrow
-  */
-  IValue* Variable::GetPtr() const
-  {
-    return m_pVal;
-  }
+    //-----------------------------------------------------------------------------------------------
+    /** \brief Returns the Value pointer bound to this variable. 
+        \throw nothrow
+    */
+    IValue* Variable::GetPtr() const
+    {
+        return m_pVal;
+    }
 
-  //-----------------------------------------------------------------------------------------------
-  int_type Variable::GetInteger() const
-  {
-    return m_pVal->GetInteger();
-  }
+    //-----------------------------------------------------------------------------------------------
+    int_type Variable::GetInteger() const
+    {
+        try
+        {
+            return m_pVal->GetInteger();
+        }
+        catch (ParserError &exc)
+        {
+            exc.GetContext().Ident = GetIdent();
+            throw;
+        }
+    }
 
-  //-----------------------------------------------------------------------------------------------
-  float_type Variable::GetFloat() const
-  {
-    return m_pVal->GetFloat();
-  }
+    //-----------------------------------------------------------------------------------------------
+    float_type Variable::GetFloat() const
+    {
+        try
+        {
+            return m_pVal->GetFloat();
+        }
+        catch (ParserError &exc)
+        {
+            exc.GetContext().Ident = GetIdent();
+            throw;
+        }
+    }
 
-  //-----------------------------------------------------------------------------------------------
-  float_type Variable::GetImag() const
-  {
-    return m_pVal->GetImag();
-  }
+    //-----------------------------------------------------------------------------------------------
+    float_type Variable::GetImag() const
+    {
+        try
+        {
+            return m_pVal->GetImag();
+        }
+        catch (ParserError &exc)
+        {
+            exc.GetContext().Ident = GetIdent();
+            throw;
+        }
+    }
 
-  //-----------------------------------------------------------------------------------------------
-  const cmplx_type& Variable::GetComplex() const
-  {
-    return m_pVal->GetComplex();
-  }
+    //-----------------------------------------------------------------------------------------------
+    const cmplx_type& Variable::GetComplex() const
+    {
+        try
+        {
+            return m_pVal->GetComplex();
+        }
+        catch (ParserError &exc)
+        {
+            exc.GetContext().Ident = GetIdent();
+            throw;
+        }
+    }
 
-  //-----------------------------------------------------------------------------------------------
-  const string_type& Variable::GetString() const
-  {
-    return m_pVal->GetString();
-  }
+    //-----------------------------------------------------------------------------------------------
+    const string_type& Variable::GetString() const
+    {
+        try
+        {
+            return m_pVal->GetString();
+        }
+        catch (ParserError &exc)
+        {
+            exc.GetContext().Ident = GetIdent();
+            throw;
+        }
+    }
 
-  //-----------------------------------------------------------------------------------------------
-  bool Variable::GetBool() const
-  {
-    return m_pVal->GetBool();
-  }
+    //-----------------------------------------------------------------------------------------------
+    bool Variable::GetBool() const
+    {
+        try
+        {
+            return m_pVal->GetBool();
+        }
+        catch (ParserError &exc)
+        {
+            exc.GetContext().Ident = GetIdent();
+            throw;
+        }
+    }
 
-  //-----------------------------------------------------------------------------------------------
-  const matrix_type& Variable::GetArray() const
-  {
-    return m_pVal->GetArray();
-  }
+    //-----------------------------------------------------------------------------------------------
+    const matrix_type& Variable::GetArray() const
+    {
+        try
+        {
+            return m_pVal->GetArray();
+        }
+        catch (ParserError &exc)
+        {
+            exc.GetContext().Ident = GetIdent();
+            throw;
+        }
+    }
 
-  //-----------------------------------------------------------------------------------------------
-  int Variable::GetRows() const
-  {
-    return m_pVal->GetRows();
-  }
+    //-----------------------------------------------------------------------------------------------
+    int Variable::GetRows() const
+    {
+        try
+        {
+            return m_pVal->GetRows();
+        }
+        catch (ParserError &exc)
+        {
+            exc.GetContext().Ident = GetIdent();
+            throw;
+        }
+    }
 
-  //-----------------------------------------------------------------------------------------------
-  int Variable::GetCols() const
-  {
-    return m_pVal->GetCols();
-  }
+    //-----------------------------------------------------------------------------------------------
+    int Variable::GetCols() const
+    {
+        try
+        {
+            return m_pVal->GetCols();
+        }
+        catch (ParserError &exc)
+        {
+            exc.GetContext().Ident = GetIdent();
+            throw;
+        }
+    }
 
   //-----------------------------------------------------------------------------------------------
   void Variable::SetFloat(float_type a_fVal)
