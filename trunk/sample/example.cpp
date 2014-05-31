@@ -874,6 +874,11 @@ void Calc()
 //  ParserXBase::EnableDebugDump(1, 0);
 #endif
 
+  Value x = 1;
+  Value y = std::complex<double>(0,1);
+  parser.DefineVar(_T("x"), Variable(&x));
+  parser.DefineVar(_T("y"), Variable(&y));
+
   for(;;)
   {
     try

@@ -542,6 +542,28 @@ MUP_NAMESPACE_START
       bool b = (bool)iVal;
       if (  iVar.GetType()!='b' || b!=false)  
         iNumErr++;
+
+      // Issue 33: https://code.google.com/p/muparserx/issues/detail?id=33
+      // Remark: Type information was not properly set when invoking +=, -= operators
+      {
+        Value x = 1;
+        Value y = cmplx_type(0,1);
+        x+=y;
+        if (x.GetImag()!=1 || x.GetFloat()!=1 || x.GetType()!='c')
+        {
+            *m_stream << _T("\nValue::operator+=(...) failed.");
+            iNumErr++;
+        }
+
+        x = 1;
+        y = cmplx_type(0,1);
+        x-=y;
+        if (x.GetImag()!=-1 || x.GetFloat()!=1 || x.GetType()!='c')
+        {
+            *m_stream << _T("\nValue::operator-=(...) failed.");
+            iNumErr++;
+        }
+      }
     }
     catch(...)
     {

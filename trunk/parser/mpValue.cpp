@@ -473,6 +473,7 @@ MUP_NAMESPACE_START
     {
       // Scalar/Scalar addition
       m_val += val.GetComplex();
+      m_cType = (m_val.imag()==0) ? ( (m_val.real()==(int)m_val.real()) ? 'i' : 'f' ) : 'c';
     }
     else if (IsMatrix() && val.IsMatrix())
     {
@@ -502,6 +503,7 @@ MUP_NAMESPACE_START
     {
       // Scalar/Scalar addition
       m_val -= val.GetComplex();
+      m_cType = (m_val.imag()==0) ? ( (m_val.real()==(int)m_val.real()) ? 'i' : 'f' ) : 'c';
     }
     else if (IsMatrix() && val.IsMatrix())
     {
@@ -533,13 +535,7 @@ MUP_NAMESPACE_START
     {
       // Scalar/Scalar multiplication
       m_val *= val.GetComplex();
-      
-      // Check whether we're dealing with a complex or integer result, if so set the 
-      // type flag accordingly
-      if (m_val.imag()!=0)
-        m_cType = 'c';
-      else if ((float_type)(int)m_val.real()==m_val.real())
-        m_cType = 'i';
+      m_cType = (m_val.imag()==0) ? ( (m_val.real()==(int)m_val.real()) ? 'i' : 'f' ) : 'c';
     }
     else if (IsMatrix() && val.IsMatrix())
     {
