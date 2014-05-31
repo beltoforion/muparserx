@@ -28,7 +28,7 @@
 #                                                                       #
 #########################################################################
 
-V3.0.2 (20140527)
+V3.0.2 (20140531)
 -----------------
 
 Syntax rule changes:
@@ -37,14 +37,16 @@ Syntax rule changes:
     contain such an operator. (This will prevent conflicts with variable names.)
   
 Bugfixes:
-  - Identifiers of uninitialized variables could be lost in error messages.
+  - untracked issuer: Identifiers of uninitialized variables could be lost in error messages.
+  - Issue 33: Value::operator+= and Value::operator-= do not work properly
+              when used with complex values. 
   
 V3.0.1 (20140527)
 -----------------
 
 Bugfixes:
-  - Index operator did not work properly when applied to non variable types. The bug only occured when used
-    together with an assignment operator.
+  - untracked issue: Index operator did not work properly when applied to non variable types. 
+                     The bug only occured when used together with an assignment operator.
   
 V3.0.0 (20140525)
 -----------------
