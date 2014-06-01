@@ -390,6 +390,7 @@ MUP_NAMESPACE_START
 
     // complex numbers
     iNumErr += EqnTest(_T("i*i"), -1, true, 0);
+    iNumErr += EqnTest(_T("1i"), cmplx_type(0, 1), true, 0);
     iNumErr += EqnTest(_T("norm(3+4i)"), 25, true, 0);
     iNumErr += EqnTest(_T("norm(4i+3)"), 25, true, 0);
     iNumErr += EqnTest(_T("norm(3i+4)"), 25, true, 0);
@@ -803,6 +804,7 @@ MUP_NAMESPACE_START
     *m_stream << _T("testing postfix operators...");
 
     // application
+    iNumErr += EqnTest(_T("1n"), (float_type)1e-9, true);
     iNumErr += EqnTest(_T("8n"), (float_type)8e-9, true);
     iNumErr += EqnTest(_T("8n"), (float_type)123.0, false);
     iNumErr += EqnTest(_T("3m+5"), (float_type)5.003, true);
@@ -815,10 +817,6 @@ MUP_NAMESPACE_START
     iNumErr += EqnTest(_T("a ++ b"), 3, true);
     iNumErr += EqnTest(_T("1++2"), 3, true);
     iNumErr += EqnTest(_T("1 ++ 2"), 3, true);
-    //iNumErr += EqnTest(_T("f1of1(1000)m"), 1, true);
-    //iNumErr += EqnTest(_T("-f1of1(1000)m"), -1, true);
-    //iNumErr += EqnTest(_T("-f1of1(-1000)m"), 1, true);
-    //iNumErr += EqnTest(_T("f4of4(0,0,0,1000)m"), 1, true);
     iNumErr += EqnTest(_T("2+(a*1000)m"), (float_type)3.0, true);
     // some incorrect results
     iNumErr += EqnTest(_T("1000m"), (float_type)0.1, false);
