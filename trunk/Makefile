@@ -2,7 +2,7 @@ CC	=	g++
 # debug version
 #CFLAGS  = -Wall -ggdb  
 # release version:
-CFLAGS	=	-O3 -Wall -ffast-math -fomit-frame-pointer 
+CFLAGS	=	-O3 -Wall -pedantic -std=c++11 -ffast-math -fomit-frame-pointer 
 
 PATH_BIN = ./bin
 
@@ -12,11 +12,11 @@ PATH_LIB = parser
 PATH_OBJ = obj
 LIB_SRC = mpError.cpp mpRPN.cpp mpICallback.cpp mpIValReader.cpp mpParserBase.cpp mpTokenReader.cpp\
           mpVariable.cpp mpIOprt.cpp mpIValue.cpp mpParser.cpp mpValReader.cpp mpFuncStr.cpp\
-		  mpFuncCommon.cpp mpOprtPostfixCommon.cpp mpFuncNonCmplx.cpp mpFuncCmplx.cpp mpIToken.cpp mpOprtCmplx.cpp \
-		  mpOprtNonCmplx.cpp mpOprtBinCommon.cpp mpOprtBinAssign.cpp mpOprtMatrix.cpp\
+	  mpFuncCommon.cpp mpOprtPostfixCommon.cpp mpFuncNonCmplx.cpp mpFuncCmplx.cpp mpIToken.cpp mpOprtCmplx.cpp \
+	  mpOprtNonCmplx.cpp mpOprtBinCommon.cpp mpOprtBinAssign.cpp mpOprtMatrix.cpp\
           mpIPackage.cpp mpPackageCommon.cpp mpPackageStr.cpp mpPackageCmplx.cpp mpPackageNonCmplx.cpp\
           mpPackageMatrix.cpp mpPackageUnit.cpp mpIfThenElse.cpp mpValueCache.cpp mpValue.cpp mpTest.cpp\
-		  mpScriptTokens.cpp mpFuncMatrix.cpp mpOprtIndex.cpp
+	  mpScriptTokens.cpp mpFuncMatrix.cpp mpOprtIndex.cpp mpParserMessageProvider.cpp
 LIB_OBJ = ${LIB_SRC:.cpp=.o}
 NAME_LIB = libmuparserx.a
 
