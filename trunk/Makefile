@@ -2,7 +2,7 @@ CC	=	g++
 # debug version
 #CFLAGS  = -Wall -ggdb  
 # release version:
-CFLAGS	=	-O3 -Wall -pedantic -std=c++11 -ffast-math -fomit-frame-pointer 
+CFLAGS	=	-O3 -Wall -pedantic -ffast-math -fomit-frame-pointer 
 
 PATH_BIN = ./bin
 
