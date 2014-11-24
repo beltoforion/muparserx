@@ -62,7 +62,7 @@
 #endif
 
 /** \brief A macro containing the version of muParserX. */
-#define MUP_PARSER_VERSION _T("3.0.3 (20141011; release)")
+#define MUP_PARSER_VERSION _T("3.0.4 (20141124; development snapshot)")
 
 /** \brief A macro for setting the parser namespace. */
 #define MUP_NAMESPACE_START namespace mup {
