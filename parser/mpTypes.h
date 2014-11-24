@@ -49,9 +49,9 @@
 
 //--- muParserX framework ---------------------------------------------------
 #include "suSortPred.h"  // We need the string utils sorting predicates
-#include "mpCompat.h"
 #include "mpDefines.h"
 #include "mpMatrix.h"
+#include "mpCompat.h"
 
 
 MUP_NAMESPACE_START

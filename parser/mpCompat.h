@@ -36,7 +36,16 @@
 #define MUP_COMPAT_H
 
 // This file contains code to maintain backwards compatibility with older compilers.
-#if __cplusplus <= 199711L
+// Note:    This does not work on windows since the lazy bums at microsoft are unable to assign a macro value properly and
+//          don't give a shit in general:
+//
+//          https ://connect.microsoft.com/VisualStudio/feedback/details/763051/a-value-of-predefined-macro-cplusplus-is-still-199711l
+//
+//          I'll hereby officially announce that i also stopped giving a shit whether this library runs on anything older then VS2013. This
+//          is not a bug, please refrein from reporting it. Seriousely, report it to Microsoft.
+#if !defined(_MSC_VER) && __cplusplus <= 199711L
+  // Warning: If you activate this in a project on windows all hell will break loose and Satan himself will come out of hell to eat 
+  //          your soul whilst reciting verses from the Microsoft MFC programming manual.
   #define override
   #define unique_ptr auto_ptr
   #define nullptr NULL

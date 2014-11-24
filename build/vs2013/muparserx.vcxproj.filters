@@ -254,6 +254,9 @@
     <ClInclude Include="..\..\parser\mpError.h">
       <Filter>src\parser</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\parser\mpCompat.h">
+      <Filter>src\parser</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="doc">

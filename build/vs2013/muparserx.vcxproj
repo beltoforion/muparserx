@@ -142,6 +142,7 @@
     <ClCompile Include="..\..\parser\mpPackageUnit.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\parser\mpCompat.h" />
     <ClInclude Include="..\..\parser\mpFuncCmplx.h" />
     <ClInclude Include="..\..\parser\mpFuncCommon.h" />
     <ClInclude Include="..\..\parser\mpFuncMatrix.h" />
