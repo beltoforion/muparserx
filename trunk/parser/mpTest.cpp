@@ -1093,8 +1093,8 @@ int ParserTester::TestBinOp()
     iNumErr += EqnTest(_T("3--a"), 4, true);
 
     // Problems with small bogus real/imag values introduced due to limited floating point accuracy
-    iNumErr += EqnTest(_T("-2^3"), -8, true);                   // may introduce incorrect imaginary value (When computed with the log/exp formula: -8 + 2.93e-15i)
-    iNumErr += EqnTest(_T("imag(-2^3)==0"), true, true);        // may introduce incorrect imaginary value (When computed with the log/exp formula: -8 + 2.93e-15i)
+    iNumErr += EqnTest(_T("(-2)^3"), -8, true);                   // may introduce incorrect imaginary value (When computed with the log/exp formula: -8 + 2.93e-15i)
+    iNumErr += EqnTest(_T("imag((-2)^3)==0"), true, true);        // may introduce incorrect imaginary value (When computed with the log/exp formula: -8 + 2.93e-15i)
 
     Assessment(iNumErr);
     return iNumErr;
