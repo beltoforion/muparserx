@@ -1106,6 +1106,8 @@ int ParserTester::TestIfElse()
     int  iNumErr = 0;
     *m_stream << _T("testing if-else conditional...");
 
+    float_type a = 1;
+
     // Test error detection
     iNumErr += ThrowTest(_T(": 2"), ecUNEXPECTED_CONDITIONAL);
     iNumErr += ThrowTest(_T("? 1 : 2"), ecUNEXPECTED_CONDITIONAL);
@@ -1214,6 +1216,12 @@ int ParserTester::TestIfElse()
 
     iNumErr += EqnTest(_T("a=true?5:b=true?3:4"), 5, true);
     iNumErr += EqnTest(_T("a=false?5:b=true?3:4"), 3, true);
+
+    // Issue 42:  	?: operator must be last in expression
+    // https://code.google.com/p/muparserx/issues/detail?id=42
+    iNumErr += EqnTest(_T("abs(0.1) < 0.25 ? (-1) : (1) + 1"), fabs(0.1) < 0.25 ? (-1) : (1) + 1, true);
+    iNumErr += EqnTest(_T("abs(a) < 0.25 ? (-1) : (1) + 1"), fabs(a) < 0.25 ? (-1) : (1) + 1, true);
+    iNumErr += EqnTest(_T("(abs(a) < 0.25 ? -1 : 1)"), (abs(a) < 0.25 ? -1 : 1), true);
 
     Assessment(iNumErr);
     return iNumErr;

@@ -129,8 +129,8 @@ MUP_NAMESPACE_START
     EFlags       m_iFlags; ///< Additional flags
     ValueCache  *m_pCache; ///< Pointer to the Value Cache
 
-    int m_nCols;    ///< Number of columns in this value (for matrices)
-    int m_nRows;    ///< Number of Rows in this value (for matrices)
+//    int m_nCols;    ///< Number of columns in this value (for matrices)
+//    int m_nRows;    ///< Number of Rows in this value (for matrices)
 
     void CheckType(char_type a_cType) const;
     void Assign(const Value &a_Val);
