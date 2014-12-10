@@ -1,8 +1,12 @@
-CC	=	g++
+#CC	=	g++
+#CFLAGS	=	-O3 -Wall -pedantic -ffast-math -fomit-frame-pointer 
+
+CC      = clang++
+CFLAGS	=	`llvm-config --ldflags` -O3 -Wall -pedantic
+
 # debug version
 #CFLAGS  = -Wall -ggdb  
 # release version:
-CFLAGS	=	-O3 -Wall -pedantic -ffast-math -fomit-frame-pointer 
 
 PATH_BIN = ./bin
 
