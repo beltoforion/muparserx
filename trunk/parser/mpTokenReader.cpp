@@ -524,7 +524,7 @@ MUP_NAMESPACE_START
 			  if (m_nSynFlags & noVAL)
 				  throw ecUNEXPECTED_CURLY_BRACKET;
 
-			  m_nSynFlags = cmCBC | noIC | noIO | noOPT | noPFX | noBC | noNEWLINE;
+              m_nSynFlags = noCBC | noIC | noIO | noOPT | noPFX | noBC | noNEWLINE;
 			  m_nNumCurly++;
 			  a_Tok = ptr_tok_type(new GenericToken((ECmdCode)i, pOprtDef[i]));
 			  break;
@@ -533,7 +533,7 @@ MUP_NAMESPACE_START
 			  if (m_nSynFlags & noIC)
 				  throw ecUNEXPECTED_CURLY_BRACKET;
 
-			  m_nSynFlags = noBO | noCBO | noIFX;
+              m_nSynFlags = noBO | noCBO | noIFX;
 			  m_nNumCurly--;
 
 			  if (m_nNumCurly<0)

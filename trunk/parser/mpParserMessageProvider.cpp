@@ -62,7 +62,7 @@ MUP_NAMESPACE_START
     m_vErrMsg[ecUNEXPECTED_OPERATOR]      = _T("Unexpected operator \"$IDENT$\" found at position $POS$.");
     m_vErrMsg[ecUNEXPECTED_EOF]           = _T("Unexpected end of expression found at position $POS$.");
     m_vErrMsg[ecUNEXPECTED_COMMA]         = _T("Unexpected comma found at position $POS$.");
-    m_vErrMsg[ecUNEXPECTED_PARENS  ]      = _T("Unexpected parenthesis \"$IDENT$\" found at position $POS$.");
+    m_vErrMsg[ecUNEXPECTED_PARENS]        = _T("Unexpected parenthesis \"$IDENT$\" found at position $POS$.");
     m_vErrMsg[ecUNEXPECTED_FUN]           = _T("Unexpected function \"$IDENT$\" found at position $POS$.");
     m_vErrMsg[ecUNEXPECTED_VAL]           = _T("Unexpected value \"$IDENT$\" found at position $POS$.");
     m_vErrMsg[ecUNEXPECTED_VAR]           = _T("Unexpected variable \"$IDENT$\" found at position $POS$.");
