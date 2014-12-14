@@ -461,12 +461,12 @@ int ParserTester::TestParserValue()
     matrix.At(2) = Value(3, 0);
 
     Variable bVar(&bVal),
-        iVar(&iVal),
-        fVar(&fVal),
-        sVar(&sVal),
-        sVar1(&sVal1),
-        cVar(&cVal),
-        aVar(&aVal);
+             iVar(&iVal),
+             fVar(&fVal),
+             sVar(&sVal),
+             sVar1(&sVal1),
+             cVar(&cVal),
+             aVar(&aVal);
 
     // Check the value types
     try
@@ -489,22 +489,22 @@ int ParserTester::TestParserValue()
 
 
         // test type checking of values
-        if (!iVal.IsScalar() || iVal.IsMatrix() || iVal.GetType() != 'i')  iNumErr++;
-        if (!fVal.IsScalar() || fVal.IsMatrix() || fVal.GetType() != 'f')  iNumErr++;
-        if (!cVal.IsScalar() || cVal.IsMatrix() || cVal.GetType() != 'c')  iNumErr++;
-        if (aVal.IsScalar() || !aVal.IsMatrix() || aVal.GetType() != 'm')  iNumErr++;
-        if (sVal.IsScalar() || sVal.IsMatrix() || sVal.GetType() != 's')  iNumErr++;
+        if (!iVal.IsScalar() || iVal.IsMatrix()  || iVal.GetType()  != 'i') iNumErr++;
+        if (!fVal.IsScalar() || fVal.IsMatrix()  || fVal.GetType()  != 'f') iNumErr++;
+        if (!cVal.IsScalar() || cVal.IsMatrix()  || cVal.GetType()  != 'c') iNumErr++;
+        if (aVal.IsScalar()  || !aVal.IsMatrix() || aVal.GetType()  != 'm') iNumErr++;
+        if (sVal.IsScalar()  || sVal.IsMatrix()  || sVal.GetType()  != 's') iNumErr++;
         if (sVal1.IsScalar() || sVal1.IsMatrix() || sVal1.GetType() != 's') iNumErr++;
-        if (bVal.IsScalar() || bVal.IsMatrix() || bVal.GetType() != 'b')  iNumErr++;
+        if (bVal.IsScalar()  || bVal.IsMatrix()  || bVal.GetType()  != 'b') iNumErr++;
 
         // test type checking of variables
-        if (!iVar.IsScalar() || iVar.IsMatrix() || iVar.GetType() != 'i')  iNumErr++;
-        if (!fVar.IsScalar() || fVar.IsMatrix() || fVar.GetType() != 'f')  iNumErr++;
-        if (!cVar.IsScalar() || cVar.IsMatrix() || cVar.GetType() != 'c')  iNumErr++;
-        if (aVar.IsScalar() || !aVar.IsMatrix() || aVar.GetType() != 'm')  iNumErr++;
-        if (sVar.IsScalar() || sVar.IsMatrix() || sVar.GetType() != 's')  iNumErr++;
+        if (!iVar.IsScalar() || iVar.IsMatrix()  || iVar.GetType() != 'i')  iNumErr++;
+        if (!fVar.IsScalar() || fVar.IsMatrix()  || fVar.GetType() != 'f')  iNumErr++;
+        if (!cVar.IsScalar() || cVar.IsMatrix()  || cVar.GetType() != 'c')  iNumErr++;
+        if (aVar.IsScalar()  || !aVar.IsMatrix() || aVar.GetType() != 'm')  iNumErr++;
+        if (sVar.IsScalar()  || sVar.IsMatrix()  || sVar.GetType() != 's')  iNumErr++;
         if (sVar1.IsScalar() || sVar1.IsMatrix() || sVar1.GetType() != 's') iNumErr++;
-        if (bVar.IsScalar() || bVar.IsMatrix() || bVar.GetType() != 'b')  iNumErr++;
+        if (bVar.IsScalar()  || bVar.IsMatrix()  || bVar.GetType() != 'b')  iNumErr++;
 
         // Test type identifier after calling an assignment operator
 
@@ -945,13 +945,19 @@ int ParserTester::TestVector()
     //iNumErr += ThrowTest(_T("9==va"),      ecEVAL);
 
     Value v(3, 0);
-    v.At(0) = (float_type)5.0, v.At(1) = (float_type)5.0, v.At(2) = (float_type)5.0;
+    v.At(0) = (float_type)5.0;
+    v.At(1) = (float_type)5.0;
+    v.At(2) = (float_type)5.0;
     iNumErr += EqnTest(_T("va+vb"), v, true);
 
-    v.At(0) = (float_type)5.0, v.At(1) = (float_type)5.0, v.At(2) = (float_type)6.0;
+    v.At(0) = (float_type)5.0;
+    v.At(1) = (float_type)5.0;
+    v.At(2) = (float_type)6.0;
     iNumErr += EqnTest(_T("va+vb"), v, false);
 
-    v.At(0) = (float_type)-1.0, v.At(1) = (float_type)-2.0, v.At(2) = (float_type)-3.0;
+    v.At(0) = (float_type)-1.0;
+    v.At(1) = (float_type)-2.0;
+    v.At(2) = (float_type)-3.0;
     iNumErr += EqnTest(_T("-va"), v, true);
 
     iNumErr += EqnTest(_T("sizeof(va+vb)"), 3, true);
@@ -998,11 +1004,13 @@ int ParserTester::TestVector()
     iNumErr += EqnTest(_T("va[2]*b"), 6, true);
     iNumErr += EqnTest(_T("b*va[2]"), 6, true);
 
-    //Value buf(3,0);
-    //buf[0] = 3;
-    //buf[1] = 4;
-    //buf[2] = 5;
-    //iNumErr += EqnTest(_T("vx+vy"), buf, true);
+    // Issue 42:
+    // https://code.google.com/p/muparserx/issues/detail?id=42
+    v.At(0) = (float_type)1.0;
+    v.At(1) = (float_type)0.0;
+    v.At(2) = (float_type)0.0;
+    iNumErr += EqnTest(_T("{1,0,0}'"), v, true);
+    iNumErr += EqnTest(_T("{(1),0,0}'"), v, true);
 
     Assessment(iNumErr);
     return iNumErr;
