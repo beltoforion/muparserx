@@ -2,9 +2,7 @@
 # Project setup
 ########################################################################
 cmake_minimum_required(VERSION 2.8.0)
-project(muparserx)
-enable_language(CXX)
-enable_testing()
+project(muparserx CXX)
 
 ########################################################################
 # Extract version
@@ -32,10 +30,11 @@ endif()
 
 ########################################################################
 # Build library
+# Defaults to static, set BUILD_SHARED_LIBS=ON for shared
 ########################################################################
 file(GLOB MUPARSERX_SOURCES "${MUPARSERX_SOURCE_DIR}/*.cpp")
 include_directories(${MUPARSERX_SOURCE_DIR})
-add_library(muparserx STATIC ${MUPARSERX_SOURCES})
+add_library(muparserx ${MUPARSERX_SOURCES})
 set_target_properties(muparserx PROPERTIES VERSION ${MUPARSERX_VERSION})
 
 #link with lib math when found
