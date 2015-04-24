@@ -77,8 +77,11 @@ install(
 ########################################################################
 # Example application
 ########################################################################
-add_executable(example sample/example.cpp sample/timer.cpp)
-target_link_libraries(example muparserx)
+option(BUILD_EXAMPLES "enable building example applications" ON)
+if (BUILD_EXAMPLES)
+    add_executable(example sample/example.cpp sample/timer.cpp)
+    target_link_libraries(example muparserx)
+endif ()
 
 ########################################################################
 # Print summary
