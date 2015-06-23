@@ -10,9 +10,9 @@ project(muparserx CXX)
 set(MUPARSERX_SOURCE_DIR ${CMAKE_CURRENT_SOURCE_DIR}/parser)
 file(READ "${MUPARSERX_SOURCE_DIR}/mpDefines.h" mpDefines_h)
 string(REGEX MATCH "\\#define MUP_PARSER_VERSION _T\\(\"([0-9]+\\.[0-9]+\\.[0-9]+) \\(" MUPARSERX_VERSION_MATCHES "${mpDefines_h}")
-if (NOT MUPARSERX_VERSION_MATCHES)
+if(NOT MUPARSERX_VERSION_MATCHES)
     message(FATAL_ERROR "Failed to extract version number from mpDefines.h")
-endif ()
+endif(NOT MUPARSERX_VERSION_MATCHES)
 set(MUPARSERX_VERSION ${CMAKE_MATCH_1})
 
 ########################################################################
@@ -22,11 +22,11 @@ if(CMAKE_COMPILER_IS_GNUCXX)
     add_compile_options(-pedantic)
     add_compile_options(-Wall)
     add_compile_options(-Wextra)
-endif()
+endif(CMAKE_COMPILER_IS_GNUCXX)
 
 if(MSVC)
     add_compile_options(/MP) #multi-core build
-endif()
+endif(MSVC)
 
 ########################################################################
 # Build library
@@ -42,9 +42,9 @@ find_library(
     M_LIBRARY NAMES m
     PATHS /usr/lib /usr/lib64
 )
-if (M_LIBRARY)
+if(M_LIBRARY)
     target_link_libraries(muparserx ${M_LIBRARY})
-endif()
+endif(M_LIBRARY)
 
 install(TARGETS muparserx
     LIBRARY DESTINATION lib${LIB_SUFFIX} # .so file
@@ -78,10 +78,10 @@ install(
 # Example application
 ########################################################################
 option(BUILD_EXAMPLES "enable building example applications" ON)
-if (BUILD_EXAMPLES)
+if(BUILD_EXAMPLES)
     add_executable(example sample/example.cpp sample/timer.cpp)
     target_link_libraries(example muparserx)
-endif ()
+endif(BUILD_EXAMPLES)
 
 ########################################################################
 # Print summary
