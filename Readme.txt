@@ -14,7 +14,7 @@
 #  e-mail:  muparserx@beltoforion.de                                    #
 #                                                                       #
 #  The code contains contributions made by the following people:        #
-#       	Martin Rotter                                           #
+#       	Martin Rotter                                               #
 #                                                                       #
 #  This software is distributed under the terms of the                  #
 #  BSD - Clause 2 "Simplified" or "FreeBSD" Licence (BSD-2-Clause)      #
@@ -27,6 +27,14 @@
 #  Version history                                                      #
 #                                                                       #
 #########################################################################
+
+V4.0.0 (20150622)
+-----------------
+
+API changes:
+  - removed value and variable constructors from integer types. There was something   
+    confusion as to the extend of support for integers (see Issue #36). muparserx  
+	is always using floating point values even when dealing with integer numbers.
 
 V3.0.2 (20140531)
 -----------------
