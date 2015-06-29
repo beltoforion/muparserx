@@ -33,9 +33,11 @@ V4.0.0 (20150622)
 -----------------
 
 API changes:
-  - removed value and variable constructors from integer types. There was something   
-    confusion as to the extend of support for integers (see Issue #36). muparserx  
-	is always using floating point values even when dealing with integer numbers.
+  - removed value and variable constructors from integer types. There was some   
+    confusion about the extend of support for integers (see Issue #36). Internally 
+    muparserx is always using floating point values even when dealing with integer 
+    numbers. There is no point in the API pretending to have real integer
+    support.
 
 V3.0.2 (20140531)
 -----------------
