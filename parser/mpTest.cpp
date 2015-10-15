@@ -150,9 +150,15 @@ int ParserTester::TestIssueReports()
     *m_stream << _T("testing github issue reports...");
 
 
-    // The following expressions are original expressions from the github bugtracker
+    // Github: Issue 55
+    iNumErr += ThrowTest(_T("{0,{0}}*{0,{0}}*{,{0}}*{0,{0}0,{0}}*{0,{0}}*{,{0}}*{0}*{000}"), ecUNEXPECTED_COMMA);
 
+    // Github: Issue 56
     iNumErr += ThrowTest(_T("0M[,1][0/1M[0M]M]"), ecUNEXPECTED_COMMA);
+
+    // Github Issue 57:
+    iNumErr += ThrowTest(_T("{?{{{{:44"), ecMISSING_CURLY_BRACKET);
+
 
     Assessment(iNumErr);
     return iNumErr;
@@ -305,6 +311,7 @@ int ParserTester::TestMatrix()
     iNumErr += ThrowTest(_T("m1-a"), ecEVAL);
     iNumErr += ThrowTest(_T("va[,1]"), ecUNEXPECTED_COMMA);
     iNumErr += ThrowTest(_T("va[{1]"), ecMISSING_CURLY_BRACKET);
+    iNumErr += ThrowTest(_T("{,1}"), ecUNEXPECTED_COMMA);
 
     // sample expressions
     iNumErr += EqnTest(_T("m1"), unity, true);
