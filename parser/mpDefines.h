@@ -100,11 +100,9 @@
           bool MSG=false;  \
           assert(MSG);
 
-  #define MUP_ASSERT MUP_VERIFY
   #define MUP_LEAKAGE_REPORT
 #else
   #define MUP_FAIL(MSG)
-  #define MUP_ASSERT(COND)
   #define MUP_TOK_CAST(TYPE, POINTER)  static_cast<TYPE>(POINTER);
 #endif
 
