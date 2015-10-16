@@ -157,8 +157,28 @@ int ParserTester::TestIssueReports()
     iNumErr += ThrowTest(_T("0M[,1][0/1M[0M]M]"), ecUNEXPECTED_COMMA);
 
     // Github Issue 57:
-    iNumErr += ThrowTest(_T("{?{{{{:44"), ecMISSING_CURLY_BRACKET);
+    iNumErr += ThrowTest(_T("{?{{{{:44"), ecUNEXPECTED_CONDITIONAL);
 
+    // Github Issue 60
+    iNumErr += ThrowTest(_T("0<01?1=:1"), ecMISPLACED_COLON);
+    iNumErr += ThrowTest(_T("0<01?1<:1"), ecMISPLACED_COLON);
+    iNumErr += ThrowTest(_T("0<01?1>:1"), ecMISPLACED_COLON);
+    iNumErr += ThrowTest(_T("0<01?1-:1"), ecMISPLACED_COLON);
+    iNumErr += ThrowTest(_T("0<01?1-:1"), ecMISPLACED_COLON);
+    iNumErr += ThrowTest(_T("0<01?1-:1"), ecMISPLACED_COLON);
+    iNumErr += ThrowTest(_T("0<01?1-:1"), ecMISPLACED_COLON);
+    iNumErr += ThrowTest(_T("0<01?1-:1"), ecMISPLACED_COLON);
+    iNumErr += ThrowTest(_T("0<01?1+:1"), ecMISPLACED_COLON);
+    iNumErr += ThrowTest(_T("0<01?1*:1"), ecMISPLACED_COLON);
+    iNumErr += ThrowTest(_T("0<01?1/:1"), ecMISPLACED_COLON);
+    iNumErr += ThrowTest(_T("0<01?1&:1"), ecMISPLACED_COLON);
+    iNumErr += ThrowTest(_T("0<01?1<<:1"), ecMISPLACED_COLON);
+    iNumErr += ThrowTest(_T("0<01?1>>:1"), ecMISPLACED_COLON);
+    iNumErr += ThrowTest(_T("{ ? 0 : 7m}-{7, -00007m}-{7M}"), ecUNEXPECTED_CONDITIONAL);
+    iNumErr += ThrowTest(_T("{ { { ? 2 }, 7:2 }*7m }"), ecUNEXPECTED_CONDITIONAL);
+
+    // Not too happy about the undefined code, but better than a crash of an assertion at runtime
+    iNumErr += ThrowTest(_T("{0<0?0,0:0<0}"), ecUNDEFINED);
 
     Assessment(iNumErr);
     return iNumErr;
@@ -1097,7 +1117,7 @@ int ParserTester::TestIfElse()
     float_type a = 1;
 
     // Test error detection
-    iNumErr += ThrowTest(_T(": 2"), ecUNEXPECTED_CONDITIONAL);
+    iNumErr += ThrowTest(_T(": 2"), ecMISPLACED_COLON);
     iNumErr += ThrowTest(_T("? 1 : 2"), ecUNEXPECTED_CONDITIONAL);
     iNumErr += ThrowTest(_T("(a<b) ? (b<c) ? 1 : 2"), ecMISSING_ELSE_CLAUSE);
     iNumErr += ThrowTest(_T("(a<b) ? 1"), ecMISSING_ELSE_CLAUSE);
