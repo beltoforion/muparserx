@@ -352,7 +352,7 @@ int ParserTester::TestMatrix()
     Value ones_3(3, 1.0);
     Value ones_3x3(3, 3, 1.0);
     iNumErr += ThrowTest(_T("ones(1,2,3)"), ecINVALID_NUMBER_OF_PARAMETERS);
-    iNumErr += ThrowTest(_T("ones()"), ecEVAL);
+    iNumErr += ThrowTest(_T("ones()"), ecINVALID_NUMBER_OF_PARAMETERS);
     iNumErr += EqnTest(_T("ones(1,1)"), 1.0, true);
     iNumErr += EqnTest(_T("ones(1)"), 1.0, true);
     iNumErr += EqnTest(_T("ones(3,3)"), ones_3x3, true);
@@ -365,12 +365,14 @@ int ParserTester::TestMatrix()
     iNumErr += EqnTest(_T("size(ones(3))"), size_3x3, true);  // check return value dimension
 
     // zeros
+    iNumErr += ThrowTest(_T("zeros()"), ecINVALID_NUMBER_OF_PARAMETERS);
     iNumErr += EqnTest(_T("size(zeros(3,3))"), size_3x3, true);  // check return value dimension
     iNumErr += EqnTest(_T("size(zeros(1,3))"), size_1x3, true);  // check return value dimension
     iNumErr += EqnTest(_T("size(zeros(3,1))"), size_3x1, true);  // check return value dimension
     iNumErr += EqnTest(_T("size(zeros(3))"), size_3x3, true);  // check return value dimension
 
     // eye
+    iNumErr += ThrowTest(_T("eye()"), ecINVALID_NUMBER_OF_PARAMETERS);
     iNumErr += EqnTest(_T("size(eye(3,3))"), size_3x3, true);  // check return value dimension
     iNumErr += EqnTest(_T("size(eye(1,3))"), size_1x3, true);  // check return value dimension
     iNumErr += EqnTest(_T("size(eye(3,1))"), size_3x1, true);  // check return value dimension
