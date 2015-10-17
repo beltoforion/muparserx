@@ -322,6 +322,10 @@ int ParserTester::TestMatrix()
     iNumErr += ThrowTest(_T("m1-va"), ecMATRIX_DIMENSION_MISMATCH);
     iNumErr += ThrowTest(_T("va*m1"), ecMATRIX_DIMENSION_MISMATCH);
     iNumErr += ThrowTest(_T("va+eye(2)"), ecMATRIX_DIMENSION_MISMATCH);
+
+    // Issue 63:
+    iNumErr += ThrowTest(_T("0-0-eye()"), ecINVALID_NUMBER_OF_PARAMETERS);
+
     iNumErr += ThrowTest(_T("m1[1]"), ecINDEX_DIMENSION);
     iNumErr += ThrowTest(_T("m1[1,2,3]"), ecINDEX_DIMENSION);
     iNumErr += ThrowTest(_T("va[1,2]"), ecINDEX_OUT_OF_BOUNDS); // va has 1 column, 3 rows -> the coulumn index is referencing the third column
@@ -347,7 +351,7 @@ int ParserTester::TestMatrix()
     // ones
     Value ones_3(3, 1.0);
     Value ones_3x3(3, 3, 1.0);
-    iNumErr += ThrowTest(_T("ones(1,2,3)"), ecEVAL);
+    iNumErr += ThrowTest(_T("ones(1,2,3)"), ecINVALID_NUMBER_OF_PARAMETERS);
     iNumErr += ThrowTest(_T("ones()"), ecEVAL);
     iNumErr += EqnTest(_T("ones(1,1)"), 1.0, true);
     iNumErr += EqnTest(_T("ones(1)"), 1.0, true);

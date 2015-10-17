@@ -1121,7 +1121,11 @@ const IValue& ParserXBase::ParseFromRPN() const
                 // for certain handpicked errors. (The reason this catch block exists is
                 // that not all exceptions contain proper metadata when thrown out of
                 // a function.)
-                if (exc.GetCode() == ecTOO_FEW_PARAMS || exc.GetCode() == ecDOMAIN_ERROR || exc.GetCode() == ecOVERFLOW || exc.GetCode() == ecASSIGNEMENT_TO_VALUE)
+                if (exc.GetCode() == ecTOO_FEW_PARAMS ||
+                    exc.GetCode() == ecDOMAIN_ERROR ||
+                    exc.GetCode() == ecOVERFLOW ||
+                    exc.GetCode() == ecINVALID_NUMBER_OF_PARAMETERS ||
+                    exc.GetCode() == ecASSIGNEMENT_TO_VALUE)
                 {
                     exc.GetContext().Pos = pFun->GetExprPos();
                     throw;
