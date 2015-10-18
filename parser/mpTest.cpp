@@ -180,6 +180,9 @@ int ParserTester::TestIssueReports()
     // Not too happy about the undefined code, but better than a crash of an assertion at runtime
     iNumErr += ThrowTest(_T("{0<0?0,0:0<0}"), ecUNDEFINED);
 
+    // Github Issue 63
+    iNumErr += ThrowTest(_T("0<0-0--eye()"), ecINVALID_NUMBER_OF_PARAMETERS);
+
     Assessment(iNumErr);
     return iNumErr;
 
