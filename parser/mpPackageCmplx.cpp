@@ -80,6 +80,7 @@ void PackageCmplx::AddToParser(ParserXBase *pParser)
   pParser->DefineFun(new FunCmplxLog2());
   pParser->DefineFun(new FunCmplxLog10());
   pParser->DefineFun(new FunCmplxAbs());
+  pParser->DefineFun(new FunCmplxPow());
 
   // Complex valued operators
   pParser->DefineOprt(new OprtAddCmplx());

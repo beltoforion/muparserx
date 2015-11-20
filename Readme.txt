@@ -7,7 +7,7 @@
 #  |__|_|  /____/|____|    (____  /__|  /____  >\___  >__| /___/\  \    #
 #        \/                     \/           \/     \/           \_/    #
 #                                                                       #
-#  Copyright (C) 2014 Ingo Berg                                         #
+#  Copyright (C) 2015 Ingo Berg                                         #
 #                                                                       #
 #  Web:     http://muparserx.beltoforion.de                             #
 #  SVN:     http://muparserx.googlecode.com/svn/trunk                   #
@@ -28,6 +28,13 @@
 #  Version history                                                      #
 #                                                                       #
 #########################################################################
+
+V4.0.5 (20151120)
+-----------------
+
+Changes:
+  - New Noncomplex Functions:	cbrt (Cubic root), hypot (length of a 2d vector), pow (power function)
+  - New complex functions:      pow (Power function)
 
 V4.0.4 (20151015)
 -----------------

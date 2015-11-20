@@ -426,6 +426,7 @@ MUP_NAMESPACE_START
     return new FunCmplxSqrt(*this);
   }
 
+
   //-----------------------------------------------------------------------
   //
   //  class FunCmplxExp
@@ -601,5 +602,34 @@ MUP_NAMESPACE_START
   {
     return new FunCmplxAbs(*this);
   }
+
+  //-----------------------------------------------------------------------
+  //
+  //  class FunCmplxPow
+  //
+  //-----------------------------------------------------------------------
+
+  FunCmplxPow::FunCmplxPow()
+    :ICallback(cmFUNC, _T("pow"), 2)
+  {}
+
+  //-----------------------------------------------------------------------
+  void FunCmplxPow::Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int)
+  {
+    *ret = std::pow(a_pArg[0]->GetComplex(), a_pArg[1]->GetComplex());
+  }
+
+  //-----------------------------------------------------------------------
+  const char_type* FunCmplxPow::GetDesc() const
+  {
+    return _T("pox(x, y) - Raise x to the power of y.");
+  }
+
+  //-----------------------------------------------------------------------
+  IToken* FunCmplxPow::Clone() const
+  {
+    return new FunCmplxPow(*this);
+  }
+
 
 MUP_NAMESPACE_END

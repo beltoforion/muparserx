@@ -100,8 +100,33 @@ MUP_NAMESPACE_START
     MUP_UNARY_FUNC(FunLn,    "ln",    std::log,   "Natural logarithm")
     // square root
     MUP_UNARY_FUNC(FunSqrt,  "sqrt",  std::sqrt,  "sqrt(x) - square root of x")
+    MUP_UNARY_FUNC(FunCbrt,  "cbrt",  std::sqrt,  "cbrt(x) - cubic root of x")
     MUP_UNARY_FUNC(FunExp,   "exp",   std::exp,   "exp(x) - e to the power of x")
     MUP_UNARY_FUNC(FunAbs,   "abs",   std::fabs,  "abs(x) - absolute value of x")
 #undef MUP_UNARY_FUNC
+
+#define MUP_BINARY_FUNC(CLASS, IDENT, FUNC, DESC) \
+    CLASS::CLASS()                                                   \
+    :ICallback(cmFUNC, _T(IDENT), 2)                                 \
+    {}                                                               \
+                                                                     \
+    void CLASS::Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int)        \
+    {                                                                \
+      *ret = FUNC(a_pArg[0]->GetFloat(), a_pArg[1]->GetFloat());     \
+    }                                                                \
+                                                                     \
+    const char_type* CLASS::GetDesc() const                          \
+    {                                                                \
+      return _T(DESC);                                               \
+    }                                                                \
+                                                                     \
+    IToken* CLASS::Clone() const                                     \
+    {                                                                \
+      return new CLASS(*this);                                       \
+    }
+
+    MUP_BINARY_FUNC(FunPow,  "pow",  std::pow,  "pow(x, y) - raise x to the power of y")
+    MUP_BINARY_FUNC(FunHypot,  "hypot",  std::hypot,  "hypot(x, y) - compute the length of the vector x,y")
+#undef MUP_BINARY_FUNC
 
 MUP_NAMESPACE_END

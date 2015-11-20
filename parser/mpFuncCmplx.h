@@ -184,6 +184,7 @@ MUP_NAMESPACE_START
     virtual IToken* Clone() const override;
   };
 
+
   //-----------------------------------------------------------------------
   class FunCmplxExp : public ICallback
   {
@@ -240,6 +241,17 @@ MUP_NAMESPACE_START
   public:
 
     FunCmplxAbs();
+    virtual void Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int a_iArgc) override;
+    virtual const char_type* GetDesc() const override;
+    virtual IToken* Clone() const override;
+  };
+
+  //-----------------------------------------------------------------------
+  class FunCmplxPow : public ICallback
+  {
+  public:
+
+    FunCmplxPow();
     virtual void Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int a_iArgc) override;
     virtual const char_type* GetDesc() const override;
     virtual IToken* Clone() const override;
