@@ -33,14 +33,17 @@ V4.0.5 (20151120)
 -----------------
 
 Changes:
-  - New Noncomplex Functions:	cbrt (Cubic root), hypot (length of a 2d vector), pow (power function)
-  - New complex functions:      pow (Power function)
+  - New Noncomplex Functions:	cbrt  - Cubic root
+                                hypot - Length of a 2d vector
+                                pow   - Power function
+  - New complex functions:      pow   - Power function
 
 V4.0.4 (20151015)
 -----------------
 
 Bugfixes:
-  - Issue 59, 60, 61, 63: Various segfaults/assertions for unexpected input        
+  - Issue 59, 60, 61, 63: Various segfaults/assertions for unexpected 
+                          input        
   - Issue 55, 56, 57, 58: Various issued related to a failure to detect 
                           missing brackets.
 
