@@ -47,11 +47,9 @@ MUP_NAMESPACE_START
   //------------------------------------------------------------------------------
   ICallback::ICallback(ECmdCode a_iCode, 
                        const char_type *a_szName, 
-                       int a_nArgc,
-                       const IPackage *a_pPackage)
+                       int a_nArgc)
     :IToken(a_iCode, a_szName)
     ,m_pParent(nullptr)
-    ,m_pPackage(a_pPackage)
     ,m_nArgc(a_nArgc)
     ,m_nArgsPresent(-1)
   {}

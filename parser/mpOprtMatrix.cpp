@@ -43,7 +43,7 @@ MUP_NAMESPACE_START
 //
 //-------------------------------------------------------------------------------------------------
 
-  OprtTranspose::OprtTranspose(IPackage* /*pPackage*/)
+  OprtTranspose::OprtTranspose()
     :IOprtPostfix(_T("'"))
   {}
 
@@ -78,8 +78,8 @@ MUP_NAMESPACE_START
   //
   //-----------------------------------------------------------------------------------------------
 
-  OprtCreateArray::OprtCreateArray(IPackage *pPackage)
-	  :ICallback(cmCBC, _T("Array constructor"), -1, pPackage)
+  OprtCreateArray::OprtCreateArray()
+      :ICallback(cmCBC, _T("Array constructor"), -1)
   {}
 
   //-----------------------------------------------------------------------------------------------

@@ -57,8 +57,7 @@ MUP_NAMESPACE_START
 
       ICallback(ECmdCode a_iCode, 
                 const char_type *a_szName, 
-                int a_nArgNum = 1,
-                const IPackage *a_pPackage = nullptr);
+                int a_nArgNum = 1);
       virtual ~ICallback();
 
       virtual ICallback* AsICallback();

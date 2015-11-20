@@ -51,7 +51,7 @@ MUP_NAMESPACE_START
   class FunCmplxReal : public ICallback
   {
   public:
-    FunCmplxReal(IPackage *pPackage = nullptr);
+    FunCmplxReal();
     virtual ~FunCmplxReal();
     virtual void Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int a_iArgc) override;
     virtual const char_type* GetDesc() const override;

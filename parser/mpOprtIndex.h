@@ -58,7 +58,7 @@ MUP_NAMESPACE_START
   class OprtIndex : public ICallback
   {
   public:
-    OprtIndex(IPackage* pPackage=nullptr);
+    OprtIndex();
     virtual void Eval(ptr_val_type& ret, const ptr_val_type *arg, int argc) override;
     virtual const char_type* GetDesc() const;
     virtual IToken* Clone() const override;

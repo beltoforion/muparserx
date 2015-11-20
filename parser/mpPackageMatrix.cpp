@@ -64,7 +64,7 @@ void PackageMatrix::AddToParser(ParserXBase *pParser)
   pParser->DefineFun(new FunMatrixSize());
   
   // Matrix Operators
-  pParser->DefinePostfixOprt(new OprtTranspose(this));
+  pParser->DefinePostfixOprt(new OprtTranspose());
 
   // Colon operator
 //pParser->DefineOprt(new OprtColon());

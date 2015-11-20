@@ -43,8 +43,8 @@ MUP_NAMESPACE_START
     //
     //-----------------------------------------------------------------------------------------------
 
-    OprtIndex::OprtIndex(IPackage *pPackage)
-        :ICallback(cmIC, _T("Index operator"), -1, pPackage)
+    OprtIndex::OprtIndex()
+        :ICallback(cmIC, _T("Index operator"), -1)
     {}
 
     //-----------------------------------------------------------------------------------------------

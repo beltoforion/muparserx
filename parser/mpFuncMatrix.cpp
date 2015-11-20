@@ -57,8 +57,8 @@ MUP_NAMESPACE_START
 //
 //-----------------------------------------------------------------------
 
-FunMatrixOnes::FunMatrixOnes(IPackage *package)
-:ICallback(cmFUNC, _T("ones"), -1, package)
+FunMatrixOnes::FunMatrixOnes()
+:ICallback(cmFUNC, _T("ones"), -1)
 {}
 
 //-----------------------------------------------------------------------
@@ -108,8 +108,8 @@ IToken* FunMatrixOnes::Clone() const
 //
 //-----------------------------------------------------------------------
 
-FunMatrixZeros::FunMatrixZeros(IPackage *package)
-    :ICallback(cmFUNC, _T("zeros"), -1, package)
+FunMatrixZeros::FunMatrixZeros()
+    :ICallback(cmFUNC, _T("zeros"), -1)
 {}
 
 //-----------------------------------------------------------------------
@@ -159,8 +159,8 @@ IToken* FunMatrixZeros::Clone() const
 //
 //-----------------------------------------------------------------------
 
-FunMatrixEye::FunMatrixEye(IPackage *package)
-    :ICallback(cmFUNC, _T("eye"), -1, package)
+FunMatrixEye::FunMatrixEye()
+    :ICallback(cmFUNC, _T("eye"), -1)
 {}
 
 //-----------------------------------------------------------------------
@@ -210,8 +210,8 @@ IToken* FunMatrixEye::Clone() const
 //
 //-----------------------------------------------------------------------
 
-FunMatrixSize::FunMatrixSize(IPackage *package)
-    :ICallback(cmFUNC, _T("size"), -1, package)
+FunMatrixSize::FunMatrixSize()
+    :ICallback(cmFUNC, _T("size"), -1)
 {}
 
 //-----------------------------------------------------------------------

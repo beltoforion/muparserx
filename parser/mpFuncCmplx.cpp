@@ -57,8 +57,8 @@ MUP_NAMESPACE_START
   //
   //-----------------------------------------------------------------------
 
-  FunCmplxReal::FunCmplxReal(IPackage *package)
-    :ICallback(cmFUNC, _T("real"), 1, package)
+  FunCmplxReal::FunCmplxReal()
+    :ICallback(cmFUNC, _T("real"), 1)
   {}
 
   //-----------------------------------------------------------------------

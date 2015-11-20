@@ -52,7 +52,7 @@ MUP_NAMESPACE_START
   class FunMatrixOnes : public ICallback
   {
   public:
-    FunMatrixOnes(IPackage *pPackage = nullptr);
+    FunMatrixOnes();
     virtual ~FunMatrixOnes();
     virtual void Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int a_iArgc) override;
     virtual const char_type* GetDesc() const override;
@@ -67,7 +67,7 @@ MUP_NAMESPACE_START
   class FunMatrixZeros : public ICallback
   {
   public:
-    FunMatrixZeros(IPackage *pPackage = nullptr);
+    FunMatrixZeros();
     virtual ~FunMatrixZeros();
     virtual void Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int a_iArgc) override;
     virtual const char_type* GetDesc() const override;
@@ -81,7 +81,7 @@ MUP_NAMESPACE_START
   class FunMatrixEye : public ICallback
   {
   public:
-    FunMatrixEye(IPackage *pPackage = nullptr);
+    FunMatrixEye();
     virtual ~FunMatrixEye();
     virtual void Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int a_iArgc) override;
     virtual const char_type* GetDesc() const override;
@@ -96,7 +96,7 @@ MUP_NAMESPACE_START
   class FunMatrixSize : public ICallback
   {
   public:
-    FunMatrixSize(IPackage *pPackage = nullptr);
+    FunMatrixSize();
     virtual ~FunMatrixSize();
     virtual void Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int a_iArgc) override;
     virtual const char_type* GetDesc() const override;
