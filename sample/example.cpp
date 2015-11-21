@@ -758,8 +758,8 @@ int CheckKeywords(const char_type *a_szLine, ParserXBase &a_Parser)
 //---------------------------------------------------------------------------
 void Calc()
 {
-//  ParserX  parser(pckALL_NON_COMPLEX);
-  ParserX  parser(pckALL_COMPLEX);
+  ParserX  parser(pckALL_NON_COMPLEX);
+//  ParserX  parser(pckALL_COMPLEX);
 
   // Create an array variable
   Value arr1(3, 0);
@@ -808,7 +808,7 @@ void Calc()
   val[4] = _T("World");
 
   Value fVal[3];
-  fVal[0] = (float_type)1.11;
+  fVal[0] = 1;
   fVal[1] = (float_type)2.22;
   fVal[2] = (float_type)3.33;
 

@@ -62,16 +62,16 @@ MUP_NAMESPACE_START
     }
 }
 
-////---------------------------------------------------------------------------
-//Value::Value(int_type a_iVal)
-//  :IValue(cmVAL)
-//  ,m_val((float_type)a_iVal, 0)
-//  ,m_psVal(nullptr)
-//  ,m_pvVal(nullptr)
-//  ,m_cType('i')
-//  ,m_iFlags(flNONE)
-//  ,m_pCache(nullptr)
-//{}
+//---------------------------------------------------------------------------
+Value::Value(int_type a_iVal)
+  :IValue(cmVAL)
+  ,m_val((float_type)a_iVal, 0)
+  ,m_psVal(nullptr)
+  ,m_pvVal(nullptr)
+  ,m_cType('i')
+  ,m_iFlags(flNONE)
+  ,m_pCache(nullptr)
+{}
 
 //---------------------------------------------------------------------------
 Value::Value(bool_type a_bVal)
@@ -362,21 +362,21 @@ IValue& Value::operator=(bool val)
     return *this;
 }
 
-////---------------------------------------------------------------------------
-//IValue& Value::operator=(int_type a_iVal)
-//{
-//  m_val = cmplx_type(a_iVal,0);
+//---------------------------------------------------------------------------
+IValue& Value::operator=(int_type a_iVal)
+{
+  m_val = cmplx_type(a_iVal,0);
 
-//  delete m_psVal;
-//  m_psVal = nullptr;
+  delete m_psVal;
+  m_psVal = nullptr;
 
-//  delete m_pvVal;
-//  m_pvVal = nullptr;
+  delete m_pvVal;
+  m_pvVal = nullptr;
 
-//  m_cType = 'i';
-//  m_iFlags = flNONE;
-//  return *this;
-//}
+  m_cType = 'i';
+  m_iFlags = flNONE;
+  return *this;
+}
 
 //---------------------------------------------------------------------------
 IValue& Value::operator=(float_type val)

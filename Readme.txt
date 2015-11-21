@@ -37,6 +37,8 @@ Changes:
                                 hypot - Length of a 2d vector
                                 pow   - Power function
   - New complex functions:      pow   - Power function
+  - Value construction and assignment from int is supported again (removed
+    when going from in 3.x to 4.x).
 
 V4.0.4 (20151015)
 -----------------

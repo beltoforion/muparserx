@@ -62,7 +62,7 @@ MUP_NAMESPACE_START
 
     explicit Value(char_type cType = 'v');
 
-//    Value(int_type val);
+    Value(int_type val);
     Value(bool_type val);
     Value(float_type val);
     Value(string_type val);
@@ -83,7 +83,7 @@ MUP_NAMESPACE_START
     virtual IValue& At(int nRow, int nCol = 0);
     virtual IValue& At(const IValue &row, const IValue &col);
 
-//    virtual IValue& operator=(int_type a_iVal);
+    virtual IValue& operator=(int_type a_iVal);
     virtual IValue& operator=(float_type a_fVal);
     virtual IValue& operator=(string_type a_sVal);
     virtual IValue& operator=(bool val);
