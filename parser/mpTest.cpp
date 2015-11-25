@@ -1013,6 +1013,10 @@ int ParserTester::TestVector()
     iNumErr += EqnTest(_T("va[2]*b"), 6.0, true);
     iNumErr += EqnTest(_T("b*va[2]"), 6.0, true);
 
+    // Issue 68:
+    iNumErr += EqnTest(_T("(abs(-3)+2)>=min(6,5)"), true, true);
+    iNumErr += EqnTest(_T("((abs(-3)+2)>=min(6,5))"), true, true);
+
     // Issue 42:
     // https://code.google.com/p/muparserx/issues/detail?id=42
     v.At(0) = (float_type)1.0;
