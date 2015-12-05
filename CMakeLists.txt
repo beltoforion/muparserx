@@ -55,6 +55,9 @@ file(GLOB MUPARSERX_SOURCES "${MUPARSERX_SOURCE_DIR}/*.cpp")
 include_directories(${MUPARSERX_SOURCE_DIR})
 add_library(muparserx ${MUPARSERX_SOURCES})
 set_target_properties(muparserx PROPERTIES VERSION ${MUPARSERX_VERSION})
+set_property(TARGET muparserx PROPERTY POSITION_INDEPENDENT_CODE TRUE)
+set_target_properties(muparserx PROPERTIES SOVERSION ${MUPARSERX_VERSION})
+set_target_properties(muparserx PROPERTIES VERSION ${MUPARSERX_VERSION})
 
 #link with lib math when found
 find_library(
