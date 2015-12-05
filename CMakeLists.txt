@@ -19,10 +19,29 @@ set(MUPARSERX_VERSION ${CMAKE_MATCH_1})
 # Compiler specific flags
 ########################################################################
 if(CMAKE_COMPILER_IS_GNUCXX)
-    add_compile_options(-pedantic)
-    add_compile_options(-Wall)
-    add_compile_options(-Wextra)
+
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pedantic")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wextra")
+
+    #C++11 is a required language feature for this project
+    include(CheckCXXCompilerFlag)
+    CHECK_CXX_COMPILER_FLAG("-std=c++11" HAS_STD_CXX11)
+    if(HAS_STD_CXX11)
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+    else(HAS_STD_CXX11)
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
+    endif()
+
+    #Thread support enabled (not the same as -lpthread)
+    list(APPEND SoapySDR_LIBRARIES -pthread)
+
 endif(CMAKE_COMPILER_IS_GNUCXX)
+
+#enable c++11 extensions for OSX
+if (APPLE)
+   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x -Wc++11-extensions")
+endif(APPLE)
 
 if(MSVC)
     add_compile_options(/MP) #multi-core build
