@@ -33,9 +33,6 @@ if(CMAKE_COMPILER_IS_GNUCXX)
         set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
     endif()
 
-    #Thread support enabled (not the same as -lpthread)
-    list(APPEND SoapySDR_LIBRARIES -pthread)
-
 endif(CMAKE_COMPILER_IS_GNUCXX)
 
 #enable c++11 extensions for OSX
