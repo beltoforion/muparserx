@@ -88,6 +88,22 @@ install(
 )
 
 ########################################################################
+# Install project config
+########################################################################
+configure_file(
+    ${PROJECT_SOURCE_DIR}/cmake/muparserxConfigVersion.in.cmake
+    ${PROJECT_BINARY_DIR}/muparserxConfigVersion.cmake
+@ONLY)
+set(cmake_files
+    ${PROJECT_SOURCE_DIR}/cmake/muparserxConfig.cmake
+    ${PROJECT_BINARY_DIR}/muparserxConfigVersion.cmake)
+if (UNIX)
+    install(FILES ${cmake_files} DESTINATION share/cmake/${CMAKE_PROJECT_NAME})
+elseif (WIN32)
+    install(FILES ${cmake_files} DESTINATION cmake)
+endif ()
+
+########################################################################
 # Install headers
 ########################################################################
 file(GLOB MUPARSERX_HEADERS "${MUPARSERX_SOURCE_DIR}/*.h")
