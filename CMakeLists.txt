@@ -93,7 +93,7 @@ install(
 file(GLOB MUPARSERX_HEADERS "${MUPARSERX_SOURCE_DIR}/*.h")
 install(
     FILES ${MUPARSERX_HEADERS}
-    DESTINATION include
+    DESTINATION include/muparserx
 )
 
 ########################################################################
