@@ -1,4 +1,4 @@
-set(PACKAGE_FIND_NAME "@CMAKE_PROJECT_NAME@")
+set(PACKAGE_FIND_NAME "muparserx")
 set(PACKAGE_VERSION "@MUPARSERX_VERSION@")
 
 # Check whether the requested PACKAGE_FIND_VERSION is compatible

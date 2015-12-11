@@ -95,7 +95,7 @@ set(cmake_files
     ${PROJECT_SOURCE_DIR}/cmake/muparserxConfig.cmake
     ${PROJECT_BINARY_DIR}/muparserxConfigVersion.cmake)
 if (UNIX)
-    install(FILES ${cmake_files} DESTINATION share/cmake/${CMAKE_PROJECT_NAME})
+    install(FILES ${cmake_files} DESTINATION share/cmake/muparserx)
 elseif (WIN32)
     install(FILES ${cmake_files} DESTINATION cmake)
 endif ()
