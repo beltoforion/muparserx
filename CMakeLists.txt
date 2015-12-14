@@ -19,10 +19,26 @@ set(MUPARSERX_VERSION ${CMAKE_MATCH_1})
 # Compiler specific flags
 ########################################################################
 if(CMAKE_COMPILER_IS_GNUCXX)
-    add_compile_options(-pedantic)
-    add_compile_options(-Wall)
-    add_compile_options(-Wextra)
+
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pedantic")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wextra")
+
+    #C++11 is a required language feature for this project
+    include(CheckCXXCompilerFlag)
+    CHECK_CXX_COMPILER_FLAG("-std=c++11" HAS_STD_CXX11)
+    if(HAS_STD_CXX11)
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
+    else(HAS_STD_CXX11)
+        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
+    endif()
+
 endif(CMAKE_COMPILER_IS_GNUCXX)
+
+#enable c++11 extensions for OSX
+if (APPLE)
+   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x -Wc++11-extensions")
+endif(APPLE)
 
 if(MSVC)
     add_compile_options(/MP) #multi-core build
@@ -35,6 +51,9 @@ endif(MSVC)
 file(GLOB MUPARSERX_SOURCES "${MUPARSERX_SOURCE_DIR}/*.cpp")
 include_directories(${MUPARSERX_SOURCE_DIR})
 add_library(muparserx ${MUPARSERX_SOURCES})
+set_target_properties(muparserx PROPERTIES VERSION ${MUPARSERX_VERSION})
+set_property(TARGET muparserx PROPERTY POSITION_INDEPENDENT_CODE TRUE)
+set_target_properties(muparserx PROPERTIES SOVERSION ${MUPARSERX_VERSION})
 set_target_properties(muparserx PROPERTIES VERSION ${MUPARSERX_VERSION})
 
 #link with lib math when found
@@ -66,12 +85,28 @@ install(
 )
 
 ########################################################################
+# Install project config
+########################################################################
+configure_file(
+    ${PROJECT_SOURCE_DIR}/cmake/muparserxConfigVersion.in.cmake
+    ${PROJECT_BINARY_DIR}/muparserxConfigVersion.cmake
+@ONLY)
+set(cmake_files
+    ${PROJECT_SOURCE_DIR}/cmake/muparserxConfig.cmake
+    ${PROJECT_BINARY_DIR}/muparserxConfigVersion.cmake)
+if (UNIX)
+    install(FILES ${cmake_files} DESTINATION share/cmake/muparserx)
+elseif (WIN32)
+    install(FILES ${cmake_files} DESTINATION cmake)
+endif ()
+
+########################################################################
 # Install headers
 ########################################################################
 file(GLOB MUPARSERX_HEADERS "${MUPARSERX_SOURCE_DIR}/*.h")
 install(
     FILES ${MUPARSERX_HEADERS}
-    DESTINATION include
+    DESTINATION include/muparserx
 )
 
 ########################################################################
