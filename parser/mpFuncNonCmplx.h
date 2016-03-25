@@ -98,6 +98,9 @@ MUP_NAMESPACE_START
 
     MUP_BINARY_FUNC_DEF(FunPow)
     MUP_BINARY_FUNC_DEF(FunHypot)
+    MUP_BINARY_FUNC_DEF(FunAtan2)
+    MUP_BINARY_FUNC_DEF(FunFmod)
+    MUP_BINARY_FUNC_DEF(FunRemainder)
 #undef MUP_BINARY_FUNC_DEF
 
 }  // namespace mu
