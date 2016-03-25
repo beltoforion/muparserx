@@ -83,6 +83,9 @@ void PackageNonCmplx::AddToParser(ParserXBase *pParser)
   // binary functions
   pParser->DefineFun(new FunPow());
   pParser->DefineFun(new FunHypot());
+  pParser->DefineFun(new FunAtan2());
+  pParser->DefineFun(new FunFmod());
+  pParser->DefineFun(new FunRemainder());
 
   // Operator callbacks
   pParser->DefineInfixOprt(new OprtSign());
