@@ -1,8 +1,8 @@
-#CC	=	g++
-#CFLAGS	=	-O3 -Wall -pedantic -ffast-math -fomit-frame-pointer 
+CC	=	g++ -std=c++11 -O3 -Wall -pedantic
+CFLAGS	=	-O3 -Wall -pedantic -ffast-math -fomit-frame-pointer 
 
-CC      = clang++
-CFLAGS	=	`llvm-config --ldflags` -O3 -Wall -pedantic -std=c++11
+#CC      = clang++
+#CFLAGS	=	`llvm-config --ldflags` -O3 -Wall -pedantic -std=c++11
 
 # debug version
 #CFLAGS  = -Wall -ggdb  

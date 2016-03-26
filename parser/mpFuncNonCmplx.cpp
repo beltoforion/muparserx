@@ -100,7 +100,7 @@ MUP_NAMESPACE_START
     MUP_UNARY_FUNC(FunLn,    "ln",    std::log,   "Natural logarithm")
     // square root
     MUP_UNARY_FUNC(FunSqrt,  "sqrt",  std::sqrt,  "sqrt(x) - square root of x")
-    MUP_UNARY_FUNC(FunCbrt,  "cbrt",  std::cqrt,  "cbrt(x) - cubic root of x")
+    MUP_UNARY_FUNC(FunCbrt,  "cbrt",  std::cbrt,  "cbrt(x) - cubic root of x")
     MUP_UNARY_FUNC(FunExp,   "exp",   std::exp,   "exp(x) - e to the power of x")
     MUP_UNARY_FUNC(FunAbs,   "abs",   std::fabs,  "abs(x) - absolute value of x")
 #undef MUP_UNARY_FUNC
