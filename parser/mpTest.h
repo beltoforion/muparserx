@@ -5,12 +5,8 @@
   |  Y Y  \  |  /    |     / __ \|  | \/\___ \\  ___/|  | \/     \ 
   |__|_|  /____/|____|    (____  /__|  /____  >\___  >__| /___/\  \
         \/                     \/           \/     \/           \_/
-                                       Copyright (C) 2013 Ingo Berg
+                                       Copyright (C) 2016, Ingo Berg
                                        All rights reserved.
-
-  muParserX - A C++ math parser library with array and string support
-  Copyright (c) 2014, Ingo Berg
-  All rights reserved.
 
   Redistribution and use in source and binary forms, with or without 
   modification, are permitted provided that the following conditions are met:
@@ -44,8 +40,6 @@
 MUP_NAMESPACE_START
 
     /** \brief Test cases for unit testing the parser framework.
-
-      (C) 2015 Ingo Berg
     */
     class ParserTester // final
     {

@@ -2,13 +2,13 @@
     \brief Implementation of the muParserX engine.
 
     <pre>
-    __________                                 ____  ___
-    _____  __ _\______   \_____ _______  ______ __________\   \/  /
+               __________                                 ____  ___
+     _____  __ _\______   \_____ _______  ______ __________\   \/  /
     /     \|  |  \     ___/\__  \\_  __ \/  ___// __ \_  __ \     /
     |  Y Y  \  |  /    |     / __ \|  | \/\___ \\  ___/|  | \/     \
     |__|_|  /____/|____|    (____  /__|  /____  >\___  >__| /___/\  \
-    \/                     \/           \/     \/           \_/
-    Copyright (C) 2013 Ingo Berg
+          \/                     \/           \/     \/           \_/
+    Copyright (C) 2016 Ingo Berg
     All rights reserved.
 
     Redistribution and use in source and binary forms, with or without
@@ -408,7 +408,7 @@ void ParserXBase::DefineVar(const string_type &ident, const Variable &var)
 }
 
 
-void ParserXBase::CheckForEntityExistence(const string_type & ident, EErrorCodes error_code)
+void ParserXBase::CheckForEntityExistence(const string_type &ident, EErrorCodes error_code)
 {
     if (IsVarDefined(ident) ||
         IsConstDefined(ident) ||
@@ -486,9 +486,9 @@ void ParserXBase::DefinePostfixOprt(const TokenPtr<IOprtPostfix> &oprt)
 
 //---------------------------------------------------------------------------
 /** \brief Add a user defined operator.
-      \param a_pOprt Pointer to a unary postfix operator object. The parser will
-      become the new owner of this object hence will destroy it.
-      */
+    \param a_pOprt Pointer to a unary postfix operator object. The parser will
+           become the new owner of this object hence will destroy it.
+*/
 void ParserXBase::DefineInfixOprt(const TokenPtr<IOprtInfix> &oprt)
 {
     if (IsInfixOprtDefined(oprt->GetIdent()))
@@ -715,7 +715,6 @@ void ParserXBase::CreateRPN() const
 
     // The Stacks take the ownership over the tokens
     Stack<ptr_tok_type> stOpt;
-    Stack<ICallback*>   stFunc;
     Stack<int>  stArgCount;
     Stack<int>  stIdxCount;
     ptr_tok_type pTok, pTokPrev;
@@ -817,7 +816,6 @@ void ParserXBase::CreateRPN() const
                     break;
 
                 ICallback *pFun = stOpt.top()->AsICallback();
-                stFunc.pop();
 
                 if (pFun->GetArgc() != -1 && iArgc > pFun->GetArgc())
                     Error(ecTOO_MANY_PARAMS, pTok->GetExprPos(), pFun);
@@ -875,7 +873,7 @@ void ParserXBase::CreateRPN() const
             {
                 IToken *pOprt1 = stOpt.top().Get();
                 IToken *pOprt2 = pTok.Get();
-                MUP_VERIFY(pOprt1 && pOprt2);
+                MUP_VERIFY(pOprt1!=nullptr && pOprt2!=nullptr);
                 MUP_VERIFY(pOprt1->AsIPrecedence() && pOprt2->AsIPrecedence());
 
                 int nPrec1 = pOprt1->AsIPrecedence()->GetPri(),
@@ -930,24 +928,8 @@ void ParserXBase::CreateRPN() const
         case  cmFUNC:
         {
             ICallback *pFunc = pTok->AsICallback();
-            MUP_VERIFY(pFunc);
-
-            // Check if this function is a argument to another function
-            // if so check if the the return type fits.
-            if (!stFunc.empty() && stFunc.top()->GetCode() == cmFUNC)
-            {
-                MUP_VERIFY(stArgCount.size());
-                int iArgc = (int)stArgCount.top() /*+ 1*/;
-
-                ICallback *pOuterFunc = stFunc.top();
-                if (pOuterFunc->GetArgc() != -1 && iArgc > pOuterFunc->GetArgc())
-                    Error(ecTOO_MANY_PARAMS, m_pTokenReader->GetPos());
-
-                MUP_VERIFY(pOuterFunc->GetArgc() == -1 || iArgc <= pOuterFunc->GetArgc());
-            }
-
+            MUP_VERIFY(pFunc!=nullptr);
             stOpt.push(pTok);
-            stFunc.push(pFunc); // to collect runtime type information
         }
         break;
 

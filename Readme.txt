@@ -7,15 +7,15 @@
 #  |__|_|  /____/|____|    (____  /__|  /____  >\___  >__| /___/\  \    #
 #        \/                     \/           \/     \/           \_/    #
 #                                                                       #
-#  Copyright (C) 2015 Ingo Berg                                         #
+#  Copyright (C) 2016 Ingo Berg                                         #
 #                                                                       #
 #  Web:     http://muparserx.beltoforion.de                             #
 #  SVN:     http://muparserx.googlecode.com/svn/trunk                   #
 #  e-mail:  muparserx@beltoforion.de                                    #
 #                                                                       #
 #  The code contains contributions made by the following people:        #
-#       	Martin Rotter (https://github.com/martinrotter)         #
-#               Josh Blum     (https://github.com/guruofquality)        #
+#       	Martin Rotter (https://github.com/martinrotter)             #
+#           Josh Blum     (https://github.com/guruofquality)            #
 #                                                                       #
 #  This software is distributed under the terms of the                  #
 #  BSD - Clause 2 "Simplified" or "FreeBSD" Licence (BSD-2-Clause)      #

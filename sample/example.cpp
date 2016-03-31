@@ -8,12 +8,8 @@
   |  Y Y  \  |  /    |     / __ \|  | \/\___ \\  ___/|  | \/     \ 
   |__|_|  /____/|____|    (____  /__|  /____  >\___  >__| /___/\  \
         \/                     \/           \/     \/           \_/
-                                       Copyright (C) 2015 Ingo Berg
+                                       Copyright (C) 2016, Ingo Berg
                                        All rights reserved.
-
-  muparserx - A C++ math parser library with array and string support
-  Copyright (c) 2014, Ingo Berg
-  All rights reserved.
 
   Redistribution and use in source and binary forms, with or without 
   modification, are permitted provided that the following conditions are met:
@@ -654,7 +650,7 @@ void Splash()
   console() << _T("  |__|_|  /____/|____|    (____  /__|  /____  >\\___  >__| /___/\\  \\\n");
   console() << _T("        \\/                     \\/           \\/     \\/           \\_/\n");
   console() << _T("  Version ") << ParserXBase::GetVersion() << _T("\n");
-  console() << _T("  Copyright (C) 2015 Ingo Berg");
+  console() << _T("  Copyright (C) 2016, Ingo Berg");
   console() << _T("\n\n");
   console() << _T("-------------------------------------------------------------------------\n\n");
   console() << _T( "Build configuration:\n\n");

@@ -2,17 +2,13 @@
     \brief Implementation of classes that interpret values in a string.
 
     <pre>
-    __________                                 ____  ___
-    _____  __ _\______   \_____ _______  ______ __________\   \/  /
-    /     \|  |  \     ___/\__  \\_  __ \/  ___// __ \_  __ \     /
+                 __________                                 ____  ___
+      _____  __ _\______   \_____ _______  ______ __________\   \/  /
+     /     \|  |  \     ___/\__  \\_  __ \/  ___// __ \_  __ \     /
     |  Y Y  \  |  /    |     / __ \|  | \/\___ \\  ___/|  | \/     \
     |__|_|  /____/|____|    (____  /__|  /____  >\___  >__| /___/\  \
-    \/                     \/           \/     \/           \_/
-    Copyright (C) 2013 Ingo Berg
-    All rights reserved.
-
-    muParserX - A C++ math parser library with array and string support
-    Copyright (c) 2013, Ingo Berg
+          \/                     \/           \/     \/           \_/
+    Copyright (C) 2016, Ingo Berg
     All rights reserved.
 
     Redistribution and use in source and binary forms, with or without

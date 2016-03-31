@@ -8,11 +8,11 @@
     |  Y Y  \  |  /    |     / __ \|  | \/\___ \\  ___/|  | \/     \
     |__|_|  /____/|____|    (____  /__|  /____  >\___  >__| /___/\  \
           \/                     \/           \/     \/           \_/
-    Copyright (C) 2013 Ingo Berg
+    Copyright (C) 2016 Ingo Berg
     All rights reserved.
 
     muParserX - A C++ math parser library with array and string support
-    Copyright (c) 2013, Ingo Berg
+    Copyright (c) 2016, Ingo Berg
     All rights reserved.
 
     Redistribution and use in source and binary forms, with or without
@@ -1013,9 +1013,12 @@ int ParserTester::TestVector()
     iNumErr += EqnTest(_T("va[2]*b"), 6.0, true);
     iNumErr += EqnTest(_T("b*va[2]"), 6.0, true);
 
-    // Issue 68:
+    // Issue 68 (and related issues):
     iNumErr += EqnTest(_T("(abs(-3)+2)>=min(6,5)"), true, true);
-    iNumErr += EqnTest(_T("((abs(-3)+2)>=min(6,5))"), true, true);
+    iNumErr += EqnTest(_T("(abs(-3))>abs(2)"), true, true);
+    iNumErr += EqnTest(_T("min(1,2,-3)>-4"), true, true);
+    iNumErr += EqnTest(_T("(abs(-3))>-2"), true, true);
+    iNumErr += EqnTest(_T("abs(-3)>abs(2)"), true, true);
 
     // Issue 42:
     // https://code.google.com/p/muparserx/issues/detail?id=42
