@@ -7,15 +7,16 @@
 #  |__|_|  /____/|____|    (____  /__|  /____  >\___  >__| /___/\  \    #
 #        \/                     \/           \/     \/           \_/    #
 #                                                                       #
-#  Copyright (C) 2016 Ingo Berg                                         #
+#  Copyright (C) 2016, Ingo Berg                                        #
 #                                                                       #
 #  Web:     http://muparserx.beltoforion.de                             #
 #  SVN:     http://muparserx.googlecode.com/svn/trunk                   #
 #  e-mail:  muparserx@beltoforion.de                                    #
 #                                                                       #
 #  The code contains contributions made by the following people:        #
-#       	Martin Rotter (https://github.com/martinrotter)             #
+#           Martin Rotter (https://github.com/martinrotter)             #
 #           Josh Blum     (https://github.com/guruofquality)            #
+#           and others                                                  #
 #                                                                       #
 #  This software is distributed under the terms of the                  #
 #  BSD - Clause 2 "Simplified" or "FreeBSD" Licence (BSD-2-Clause)      #
@@ -29,6 +30,13 @@
 #                                                                       #
 #########################################################################
 
+V4.0.7 (20160331)
+-----------------
+Bugfixes:
+  - Issue 68: 	Assertion fails (i.e "abs(-3)>abs(2)")
+  - untracked issue: cbrt function did not work properly
+  - new functions: atan2, reminder, fmod
+  
 V4.0.5 (20151120)
 -----------------
 
