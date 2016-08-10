@@ -81,13 +81,13 @@ MUP_NAMESPACE_START
     MUP_UNARY_FUNC(FunCosH,  "cosh",  std::cosh,  "hyperbolic cosine")
     MUP_UNARY_FUNC(FunTanH,  "tanh",  std::tanh,  "hyperbolic tangens")
     // hyperbolic arcus functions
-	MUP_UNARY_FUNC(FunASinH, "asinh", std::asinh, "hyperbolic arcus sine")
-	MUP_UNARY_FUNC(FunACosH, "acosh", std::acosh, "hyperbolic arcus cosine")
-	MUP_UNARY_FUNC(FunATanH, "atanh", std::atanh, "hyperbolic arcus tangens")
+    MUP_UNARY_FUNC(FunASinH, "asinh", std::asinh, "hyperbolic arcus sine")
+    MUP_UNARY_FUNC(FunACosH, "acosh", std::acosh, "hyperbolic arcus cosine")
+    MUP_UNARY_FUNC(FunATanH, "atanh", std::atanh, "hyperbolic arcus tangens")
     // logarithm functions
     MUP_UNARY_FUNC(FunLog,   "log",   std::log,   "Natural logarithm")
     MUP_UNARY_FUNC(FunLog10, "log10", std::log10, "Logarithm base 10")
-	MUP_UNARY_FUNC(FunLog2,  "log2",  std::log2,  "Logarithm base 2")
+    MUP_UNARY_FUNC(FunLog2,  "log2",  std::log2,  "Logarithm base 2")
     MUP_UNARY_FUNC(FunLn,    "ln",    std::log,   "Natural logarithm")
     // square root
     MUP_UNARY_FUNC(FunSqrt,  "sqrt",  std::sqrt,  "sqrt(x) - square root of x")
