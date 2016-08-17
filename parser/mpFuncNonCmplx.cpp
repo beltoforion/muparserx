@@ -48,11 +48,6 @@
 
 MUP_NAMESPACE_START
 
-  float_type log2(float_type v)  { return log(v) * 1.0/log(2.0); }
-  float_type asinh(float_type v) { return log(v + sqrt(v * v + 1)); }
-  float_type acosh(float_type v) { return log(v + sqrt(v * v - 1)); }
-  float_type atanh(float_type v) { return (0.5 * log((1 + v) / (1 - v))); }
-
 #define MUP_UNARY_FUNC(CLASS, IDENT, FUNC, DESC)                     \
     CLASS::CLASS()                                                   \
     :ICallback(cmFUNC, _T(IDENT), 1)                                 \
@@ -86,13 +81,13 @@ MUP_NAMESPACE_START
     MUP_UNARY_FUNC(FunCosH,  "cosh",  std::cosh,  "hyperbolic cosine")
     MUP_UNARY_FUNC(FunTanH,  "tanh",  std::tanh,  "hyperbolic tangens")
     // hyperbolic arcus functions
-    MUP_UNARY_FUNC(FunASinH,  "asinh",  asinh,  "hyperbolic arcus sine")
-    MUP_UNARY_FUNC(FunACosH,  "acosh",  acosh,  "hyperbolic arcus cosine")
-    MUP_UNARY_FUNC(FunATanH,  "atanh",  atanh,  "hyperbolic arcus tangens")
+    MUP_UNARY_FUNC(FunASinH, "asinh", std::asinh, "hyperbolic arcus sine")
+    MUP_UNARY_FUNC(FunACosH, "acosh", std::acosh, "hyperbolic arcus cosine")
+    MUP_UNARY_FUNC(FunATanH, "atanh", std::atanh, "hyperbolic arcus tangens")
     // logarithm functions
     MUP_UNARY_FUNC(FunLog,   "log",   std::log,   "Natural logarithm")
     MUP_UNARY_FUNC(FunLog10, "log10", std::log10, "Logarithm base 10")
-    MUP_UNARY_FUNC(FunLog2,  "log2",  log2,  "Logarithm base 2")
+    MUP_UNARY_FUNC(FunLog2,  "log2",  std::log2,  "Logarithm base 2")
     MUP_UNARY_FUNC(FunLn,    "ln",    std::log,   "Natural logarithm")
     // square root
     MUP_UNARY_FUNC(FunSqrt,  "sqrt",  std::sqrt,  "sqrt(x) - square root of x")

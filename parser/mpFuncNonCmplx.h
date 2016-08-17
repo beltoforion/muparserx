@@ -55,9 +55,9 @@ MUP_NAMESPACE_START
       virtual IToken* Clone() const override;                              \
     }; 
 
-    MUP_UNARY_FUNC_DEF(FunTan)
-    MUP_UNARY_FUNC_DEF(FunCos)
     MUP_UNARY_FUNC_DEF(FunSin)
+    MUP_UNARY_FUNC_DEF(FunCos)
+    MUP_UNARY_FUNC_DEF(FunTan)
     // arcus functions
     MUP_UNARY_FUNC_DEF(FunASin)
     MUP_UNARY_FUNC_DEF(FunACos)
