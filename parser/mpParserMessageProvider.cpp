@@ -1,5 +1,4 @@
-﻿#include "mpParserMessageProvider.h"
-
+#include "mpParserMessageProvider.h"
 #include <cassert>
 #include "mpError.h"
 
@@ -111,7 +110,7 @@ MUP_NAMESPACE_START
 
   //-------------------------------------------------------------------------------------------------
   //
-  // class ParserMessageProviderGerman - German translations of Parser Messages 
+  // class ParserMessageProviderGerman - German translations of Parser Messages
   //
   //-------------------------------------------------------------------------------------------------
 
