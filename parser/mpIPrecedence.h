@@ -51,6 +51,7 @@ MUP_NAMESPACE_START
   class IPrecedence
   {
   public:
+    virtual ~IPrecedence(){}
     virtual int GetPri() const = 0;
     virtual EOprtAsct GetAssociativity() const = 0;
   };
