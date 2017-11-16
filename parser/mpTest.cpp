@@ -1641,7 +1641,7 @@ int ParserTester::EqnTest(const string_type &a_str, Value a_val, bool a_fPass, i
 			std::size_t n2 = p2.GetExprVar().size();
 			std::size_t n3 = p3.GetExprVar().size();
 
-			if (n2 + n3 != 2 * n2 || n2 != nExprVar)
+			if (n2 + n3 != 2 * n2 || int(n2) != nExprVar)
 			{
 				*m_stream << _T("  Number of expression variables is incorrect. (expected: ")
 					<< nExprVar << _T("; detected: ") << n2 << _T(")");

@@ -279,8 +279,8 @@ void TokenReader::SkipCommentsAndWhitespaces()
 			// skip comments
 		case  '#':
 		{
-			int i = static_cast<int>(m_sExpr.find_first_of('\n', m_nPos + 1));
-			m_nPos = (i != string_type::npos) ? i : static_cast<int>(m_sExpr.length());
+			std::size_t i = m_sExpr.find_first_of('\n', m_nPos + 1);
+			m_nPos = static_cast<int>((i != string_type::npos) ? i : m_sExpr.length());
 		}
 		break;
 
