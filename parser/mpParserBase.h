@@ -69,7 +69,7 @@ MUP_NAMESPACE_START
 
   private:
 
-    typedef const IValue& (ParserXBase::*parse_function_type)() const;  
+    typedef const IValue& (ParserXBase::*parse_function_type)() const;  // Redem:	"(ParserXBase::*parse_function_type)" is type name, "()" after it means function pointer
     static const char_type *c_DefaultOprt[]; 
     static bool s_bDumpStack;
     static bool s_bDumpRPN;
@@ -82,9 +82,11 @@ MUP_NAMESPACE_START
     ParserXBase(); 
     ParserXBase( const ParserXBase &a_Parser );
     ParserXBase& operator=(const ParserXBase &a_Parser);
+	void AssignVars(const ParserXBase &a_Parser);
     virtual ~ParserXBase();
     
     const IValue& Eval() const;
+
 
     void SetExpr(const string_type &a_sExpr);
     void AddValueReader(IValueReader *a_pReader);
@@ -92,7 +94,11 @@ MUP_NAMESPACE_START
     void AddPackage(IPackage *p);
 
     void DefineConst(const string_type &ident, const Value &val);
+	void SetConst(const string_type &ident, const Value &val);
+	Value GetConst(const string_type &ident);
     void DefineVar(const string_type &ident, const Variable &var);
+	void SetVar(const string_type &ident, const Variable &var);
+	Value GetVar(const string_type & ident);
     void DefineFun(const ptr_cal_type &fun);
     void DefineOprt(const TokenPtr<IOprtBin> &oprt);
     void DefinePostfixOprt(const TokenPtr<IOprtPostfix> &oprt);
@@ -174,6 +180,7 @@ MUP_NAMESPACE_START
     void ApplyIfElse(Stack<ptr_tok_type> &a_stOpt) const;
     void ApplyRemainingOprt(Stack<ptr_tok_type> &a_stOpt) const;
     const IValue& ParseFromString() const; 
+	void Preconnect_Curlies_and_Breaks_RPN() const;
     const IValue& ParseFromRPN() const; 
 
     /** \brief Pointer to the parser function. 
@@ -191,7 +198,30 @@ MUP_NAMESPACE_START
     string_type m_sOprtChars;        ///< Charset for postfix/ binary operator tokens
     string_type m_sInfixOprtChars;   ///< Charset for infix operator tokens
     mutable int m_nPos;
+	mutable int String_Start_Pos;
+	mutable bool Parse_As_String_Value;	///< Redem: used with semicolons and curly brackets to mark a block of code as string, instead of using quotes
 
+	mutable bool Parse_If_Condition; // to notify the CreateRPN() that parsing of If-condition is in process
+	mutable int Bracket_Number; // number of opened brackets inside If-condition to find which closing bracket closes the condtion
+	mutable int If_Nest_Level;	// Level of nesting for If or Else bodies, used in CreateRPN() and ParseFromRPN to determine, which If or Else body Start/End position to address.
+	// Redem note: do the boundary checking some day in case some crazy goes beyond 256 levels of nesting
+	mutable int Number_Of_Curlys_At_IfElse_Level[256];	// Used in CreateRPN() to determine when to close If or Else body
+	mutable int Parse_If_Or_Else[256];	// Which body is being parsed. 0 - Neither; 1 - Int; 2 - Else
+
+	mutable int Curly_Number;
+	mutable int Loop_Level;
+	mutable int Number_Of_Curlys_At_Loop_Level[256];	// Used in CreateRPN() to determine when to close Loop body
+
+	// Redem: Array index represents position in RPN (so for now RPN assumes no more than 10000 tokens).
+	// Array value at given index represents position of what variable name tells.
+	// Such index-value pair is defined for, for example, opening curly bracket, in which case index is the token position of "{" and value is position of corresponding "}".
+	#define MAX_NUMBER_OF_TOKENS 10000
+	mutable int Closing_Curly[MAX_NUMBER_OF_TOKENS];	// To jump from opening curly to closing curly (for example, to skip Else body if If_Condition is true)
+	mutable int Opening_Curly[MAX_NUMBER_OF_TOKENS];	// To jump from closing curly to opening curly (for example, in a Loop body)
+	mutable int Break_Closing_Curly[MAX_NUMBER_OF_TOKENS];	// To jump from Break statement over closing curly
+	mutable bool Loop_Curly[MAX_NUMBER_OF_TOKENS];	// To determine if this curly belongs to Loop
+	mutable bool IfElse_Curly[MAX_NUMBER_OF_TOKENS];	// To determine if this curly belongs to If or Else body
+	
     /** \brief Index of the final result in the stack array. 
     
       The parser supports expressions using with commas for seperating
@@ -215,7 +245,10 @@ MUP_NAMESPACE_START
     mutable bool m_bAutoCreateVar;      ///< If this flag is set unknown variables will be defined automatically
 
     mutable RPN m_rpn;                  ///< reverse polish notation
+	//mutable std::vector<RPN> RPN_Stack;
     mutable val_vec_type m_vStackBuffer;
+	//mutable std::vector<val_vec_type> Value_Stack;
+	//mutable ptr_val_type Stack_Buffer;
     mutable ValueCache m_cache;         ///< A cache for recycling value items instead of deleting them
 
   };

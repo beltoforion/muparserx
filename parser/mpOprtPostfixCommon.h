@@ -27,7 +27,7 @@ MUP_NAMESPACE_START
 
     OprtFact();
 
-    virtual void Eval(ptr_val_type& ret, const ptr_val_type *arg, int) override;
+    virtual void Eval(ptr_val_type& ret, const ptr_val_type *arg, int);
     virtual const char_type* GetDesc() const override;
     virtual IToken* Clone() const override;
   };

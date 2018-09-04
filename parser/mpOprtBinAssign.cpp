@@ -74,8 +74,12 @@ MUP_NAMESPACE_START
       err.Errc  = ecASSIGNEMENT_TO_VALUE;
       throw ParserError(err);
     }
-
-    *pVar = *a_pArg[1]; //pVar->SetFloat(a_pArg[1]->GetFloat());
+	if (a_pArg[1]->GetType() == 'f')
+		*pVar = a_pArg[1]->GetFloat();
+	else if (a_pArg[1]->GetType() == 'i')
+		*pVar = a_pArg[1]->GetInteger();
+	else
+		*pVar = *a_pArg[1]; //pVar->SetFloat(a_pArg[1]->GetFloat());
     *ret = *pVar; 
   }
 

@@ -754,9 +754,9 @@ int CheckKeywords(const char_type *a_szLine, ParserXBase &a_Parser)
 //---------------------------------------------------------------------------
 void Calc()
 {
-  ParserX  parser(pckALL_NON_COMPLEX);
-//  ParserX  parser(pckALL_COMPLEX);
-
+// ParserX  parser(pckALL_NON_COMPLEX);
+  ParserX  parser(pckALL_COMPLEX);
+  /*
   // Create an array variable
   Value arr1(3, 0);
   arr1.At(0) = (float_type)1.0;
@@ -817,10 +817,10 @@ void Calc()
   cVal[0] = mup::cmplx_type(1, 1);
   cVal[1] = mup::cmplx_type(2, 2);
   cVal[2] = mup::cmplx_type(3, 3);
-
+  */
   Value ans;
   parser.DefineVar(_T("ans"), Variable(&ans));
-
+  /*
   // some tests for vectors
   parser.DefineVar(_T("va"), Variable(&arr1));
   parser.DefineVar(_T("vb"), Variable(&arr2));
@@ -839,7 +839,7 @@ void Calc()
 
   parser.DefineVar(_T("sa"), Variable(&sVal[0]));
   parser.DefineVar(_T("sb"), Variable(&sVal[1]));
-
+  */
   // Add functions for inspecting the parser properties
   parser.DefineFun(new FunListVar);
   parser.DefineFun(new FunListFunctions);
@@ -850,7 +850,6 @@ void Calc()
   parser.DefineFun(new FunEnableDebugDump);
   parser.DefineFun(new FunTest0);
   parser.DefineFun(new FunPrint);
-
 #if defined(_UNICODE)
   parser.DefineFun(new FunLang);
 #endif
@@ -887,7 +886,35 @@ void Calc()
       case  1: continue;
       case -1: return;
       }
-    
+	  if (sLine == _T("test"))
+	  {
+		  sLine = _T(
+			  "test1 = 0\n"
+			  "test2 = 0\n"
+			  "test3 = 0\n"
+			  "j = 0\n"		  
+			  "Loop{"					// Loop, where the piece of code, enclosed by following curly brackets repeats until "Break" statement is executed
+				  "If (j > 9){"
+					"Break"				// Must be present in every Loop, otherwise block will run infinitely. Break statement works like regular C break, jumping to the statement after the closing curly bracket of Loop it is in.
+				  "}\n"
+			      
+
+			      "If(j < 5) {"			// Conditional statement. Currently, there must be no newlines between ")" and "{" operators.
+					"Nested_Loop_Counter = 0\n"
+					"Loop{"				// Nested loops are supported as well.
+						"If (Nested_Loop_Counter > 9) {Break}\n"
+						"test3 += 1\n"
+						"Nested_Loop_Counter += 1\n"
+					"}\n"
+					"test1 += 1"
+				  "}" 
+			      "Else {"				// Optional Else block. There must be no newlines between "}" and "Else" and between "Else" and "{" operators, otherwise Else block may be executed regardless of condition.
+					"test2 -=1"
+				  "}\n"
+				 "j+=1\n"
+	          "}\n"			  
+		  );
+	  }
       parser.SetExpr(sLine);
 
       // The returned result is of type Value, value is a Variant like
