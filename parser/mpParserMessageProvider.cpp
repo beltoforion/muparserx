@@ -1,4 +1,5 @@
-#include "mpParserMessageProvider.h"
+﻿#include "mpParserMessageProvider.h"
+
 #include <cassert>
 #include "mpError.h"
 
@@ -67,7 +68,7 @@ MUP_NAMESPACE_START
     m_vErrMsg[ecUNEXPECTED_VAR]           = _T("Unexpected variable \"$IDENT$\" found at position $POS$.");
     m_vErrMsg[ecUNEXPECTED_STR]           = _T("Unexpected string token found at position $POS$.");
     m_vErrMsg[ecUNEXPECTED_CONDITIONAL]   = _T("The \"$IDENT$\" operator must be preceded by a closing bracket.");
-    m_vErrMsg[ecUNEXPECTED_NEWLINE]       = _T("Unexprected newline.");
+    m_vErrMsg[ecUNEXPECTED_NEWLINE]       = _T("Unexpected newline.");
     m_vErrMsg[ecMISSING_PARENS]           = _T("Missing parenthesis.");
     m_vErrMsg[ecMISSING_ELSE_CLAUSE]      = _T("If-then-else operator is missing an else clause.");
     m_vErrMsg[ecMISPLACED_COLON]          = _T("Misplaced colon at position $POS$.");
@@ -104,13 +105,19 @@ MUP_NAMESPACE_START
     m_vErrMsg[ecVARIABLE_DEFINED]             = _T("Variable \"$IDENT$\" is already defined.");
     m_vErrMsg[ecCONSTANT_DEFINED]             = _T("Constant \"$IDENT$\" is already defined.");
     m_vErrMsg[ecFUNOPRT_DEFINED]              = _T("Function/operator \"$IDENT$\" is already defined.");
+	m_vErrMsg[ecUNEXPECTED_SEMICOLON] = _T("A semicolon should be used only after opening curly bracket.");
+	m_vErrMsg[ecUNEXPECTED_SCRIPT_IF] = _T("Unexpected \"If\" statement");
+	m_vErrMsg[ecUNEXPECTED_SCRIPT_ELSE] = _T("Unexpected \"Else\" statement");
+	m_vErrMsg[ecUNEXPECTED_SCRIPT_LOOP] = _T("Unexpected \"Loop\" statement");
+	m_vErrMsg[ecUNEXPECTED_SCRIPT_BREAK] = _T("Unexpected \"Break\" statement");
+	m_vErrMsg[ecSURPLUS_BRACKET] = _T("An unclosed  \"(\" operator or it is not adjacent to \"If\" statement");
   }
 
 #if defined(_UNICODE)
 
   //-------------------------------------------------------------------------------------------------
   //
-  // class ParserMessageProviderGerman - German translations of Parser Messages
+  // class ParserMessageProviderGerman - German translations of Parser Messages 
   //
   //-------------------------------------------------------------------------------------------------
 

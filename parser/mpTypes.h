@@ -160,7 +160,7 @@ enum ECmdCode
     cmARG_SEP           =  6,  ///< Operator item:  comma
     cmIF                =  7,  ///< Ternary if then else operator
     cmELSE              =  8,  ///< Ternary if then else operator
-    cmENDIF             =  9,  ///< Ternary if then else operator
+    cmENDIF             =  9,  ///< Operator item: semicolon
     cmJMP               = 10,  ///< Reserved for future use
     cmVAL               = 11,  ///< value item
     cmFUNC              = 12,  ///< Code for a function item
@@ -174,6 +174,8 @@ enum ECmdCode
     cmSCRIPT_NEWLINE    = 17,  ///< Newline
     cmSCRIPT_COMMENT    = 18,
     cmSCRIPT_WHILE      = 19,  ///< Reserved for future use
+	cmSCRIPT_LOOP       = 29,
+	cmSCRIPT_BREAK      = 30,
     cmSCRIPT_GOTO       = 20,  ///< Reserved for future use
     cmSCRIPT_LABEL      = 21,  ///< Reserved for future use
     cmSCRIPT_FOR        = 22,  ///< Reserved for future use
@@ -235,6 +237,11 @@ enum ESynCodes
     noIF      = 1 << 14,
     noELSE    = 1 << 15,
     noNEWLINE = 1 << 16,  ///< to avoid i.e. "a+\nb" or "sin(\na)"
+	noENDIF   = 1 << 17,  ///< semicolons should only be used with curly brackets
+	noSCRIPT_IF = 1 << 18,
+	noSCRIPT_ELSE = 1 << 19,
+	noSCRIPT_LOOP = 1 << 20,
+	noSCRIPT_BREAK = 1 << 21,
 
     sfSTART_OF_LINE = noOPT | noBC | noPFX | noCOMMA | noIO | noIC | noIF | noELSE,
     sfALLOW_NONE    = ~0  ///< All of he above flags set
@@ -357,6 +364,14 @@ enum EErrorCodes
 
     // internal errors
     ecINTERNAL_ERROR            = 51, ///< Internal error of any kind.
+
+	//Script errors
+	ecUNEXPECTED_SEMICOLON = 52, ///< Redem note: for now, semicolon can only be used after opening curly bracket
+	ecUNEXPECTED_SCRIPT_IF = 53,
+	ecUNEXPECTED_SCRIPT_ELSE = 54,
+	ecUNEXPECTED_SCRIPT_LOOP = 55,
+	ecUNEXPECTED_SCRIPT_BREAK = 56,
+	ecSURPLUS_BRACKET = 57,
 
     // The last two are special entries
     ecCOUNT,                          ///< This is no error code, It just stores just the total number of error codes

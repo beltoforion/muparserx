@@ -82,6 +82,7 @@ MUP_NAMESPACE_START
     bool IsPostOpTok(ptr_tok_type &t);
     bool IsOprt(ptr_tok_type &t);
     bool IsValTok(ptr_tok_type &t);
+	bool IsKeywordTok(ptr_tok_type &t);
     bool IsVarOrConstTok(ptr_tok_type &t);
     bool IsUndefVarTok(ptr_tok_type &t);
     bool IsComment();
@@ -128,6 +129,7 @@ MUP_NAMESPACE_START
 
     void ReInit();
     ptr_tok_type ReadNextToken();
+	ptr_tok_type ReadSemicolonStringToken();
   }; // class TokenReader
 
 MUP_NAMESPACE_END
