@@ -245,10 +245,7 @@ MUP_NAMESPACE_START
     mutable bool m_bAutoCreateVar;      ///< If this flag is set unknown variables will be defined automatically
 
     mutable RPN m_rpn;                  ///< reverse polish notation
-	//mutable std::vector<RPN> RPN_Stack;
     mutable val_vec_type m_vStackBuffer;
-	//mutable std::vector<val_vec_type> Value_Stack;
-	//mutable ptr_val_type Stack_Buffer;
     mutable ValueCache m_cache;         ///< A cache for recycling value items instead of deleting them
 
   };
