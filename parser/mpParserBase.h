@@ -69,7 +69,7 @@ MUP_NAMESPACE_START
 
   private:
 
-    typedef const IValue& (ParserXBase::*parse_function_type)() const;  // Redem:	"(ParserXBase::*parse_function_type)" is type name, "()" after it means function pointer
+    typedef const IValue& (ParserXBase::*parse_function_type)() const;
     static const char_type *c_DefaultOprt[]; 
     static bool s_bDumpStack;
     static bool s_bDumpRPN;
