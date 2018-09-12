@@ -84,19 +84,19 @@ void RPN::Add(ptr_tok_type tok)
 	}
 
 	MUP_VERIFY(m_nStackPos >= 0);
-    m_nMaxStackPos = std::max(m_nStackPos, m_nMaxStackPos);
-  }
-  
-  //---------------------------------------------------------------------------
-  void RPN::AddNewline(ptr_tok_type tok, int n)
-  {
-    static_cast<TokenNewline*>(tok.Get())->SetStackOffset(n);
-    m_vRPN.push_back(tok);
-    m_nStackPos -= n;
-    m_nLine++;
-  }
+	m_nMaxStackPos = std::max(m_nStackPos, m_nMaxStackPos);
+}
 
-  //---------------------------------------------------------------------------
+//---------------------------------------------------------------------------
+void RPN::AddNewline(ptr_tok_type tok, int n)
+{
+	static_cast<TokenNewline*>(tok.Get())->SetStackOffset(n);
+	m_vRPN.push_back(tok);
+	m_nStackPos -= n;
+	m_nLine++;
+}
+
+//---------------------------------------------------------------------------
 void RPN::Pop(int num)
 {
 	if (m_vRPN.size() == 0)

@@ -754,9 +754,9 @@ int CheckKeywords(const char_type *a_szLine, ParserXBase &a_Parser)
 //---------------------------------------------------------------------------
 void Calc()
 {
-// ParserX  parser(pckALL_NON_COMPLEX);
-  ParserX  parser(pckALL_COMPLEX);
-  /*
+  ParserX  parser(pckALL_NON_COMPLEX);
+//  ParserX  parser(pckALL_COMPLEX);
+
   // Create an array variable
   Value arr1(3, 0);
   arr1.At(0) = (float_type)1.0;
@@ -817,10 +817,10 @@ void Calc()
   cVal[0] = mup::cmplx_type(1, 1);
   cVal[1] = mup::cmplx_type(2, 2);
   cVal[2] = mup::cmplx_type(3, 3);
-  */
+
   Value ans;
   parser.DefineVar(_T("ans"), Variable(&ans));
-  /*
+
   // some tests for vectors
   parser.DefineVar(_T("va"), Variable(&arr1));
   parser.DefineVar(_T("vb"), Variable(&arr2));
@@ -839,7 +839,7 @@ void Calc()
 
   parser.DefineVar(_T("sa"), Variable(&sVal[0]));
   parser.DefineVar(_T("sb"), Variable(&sVal[1]));
-  */
+
   // Add functions for inspecting the parser properties
   parser.DefineFun(new FunListVar);
   parser.DefineFun(new FunListFunctions);
@@ -850,6 +850,7 @@ void Calc()
   parser.DefineFun(new FunEnableDebugDump);
   parser.DefineFun(new FunTest0);
   parser.DefineFun(new FunPrint);
+
 #if defined(_UNICODE)
   parser.DefineFun(new FunLang);
 #endif
