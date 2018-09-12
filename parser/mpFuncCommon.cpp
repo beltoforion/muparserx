@@ -93,7 +93,7 @@ MUP_NAMESPACE_START
     {
       switch(a_pArg[i]->GetType())
       {
-      case 'f': val = a_pArg[i]->GetFloat();   break;
+      case 'f':
       case 'i': val = a_pArg[i]->GetFloat(); break;
       case 'n': break; // ignore not in list entries (missing parameter)
       case 'c':

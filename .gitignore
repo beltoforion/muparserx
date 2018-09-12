@@ -235,3 +235,6 @@ _Pvt_Extensions
 
 # FAKE - F# Make
 .fake/
+/sample/Example.vcxproj.filters
+/sample/Example.vcxproj
+/sample/Example.sln
