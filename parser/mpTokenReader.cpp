@@ -237,7 +237,6 @@ void TokenReader::SetExpr(const string_type &a_sExpr)
     ReInit();
 }
 
-
 //---------------------------------------------------------------------------
 /** \brief Reset the token reader to the start of the formula.
     \post #m_nPos==0, #m_nSynFlags = noOPT | noBC | noPOSTOP | noSTR
@@ -272,28 +271,28 @@ const ptr_tok_type& TokenReader::Store(const ptr_tok_type &t, int token_pos)
 //---------------------------------------------------------------------------
 void TokenReader::SkipCommentsAndWhitespaces()
 {
-    bool bSkip = true;
-    while (m_nPos < (int)m_sExpr.length() && bSkip)
-    {
-        switch (m_sExpr[m_nPos])
-        {
-            // skip comments
-        case  '#':
-        {
-            std::size_t i = m_sExpr.find_first_of('\n', m_nPos + 1);
-            m_nPos = (i != string_type::npos) ? i : m_sExpr.length();
-        }
-        break;
+	bool bSkip = true;
+	while (m_nPos < static_cast<int>(m_sExpr.length()) && bSkip)
+	{
+		switch (m_sExpr[m_nPos])
+		{
+			// skip comments
+		case  '#':
+		{
+			std::size_t i = m_sExpr.find_first_of('\n', m_nPos + 1);
+			m_nPos = static_cast<int>((i != string_type::npos) ? i : m_sExpr.length());
+		}
+		break;
 
-        // skip whitespaces
-        case ' ':
-            ++m_nPos;
-            break;
+		// skip whitespaces
+		case ' ':
+			++m_nPos;
+			break;
 
-        default:
-            bSkip = false;
-        } // switch 
-    } // while comment or whitespace
+		default:
+			bSkip = false;
+		} // switch
+	} // while comment or whitespace
 }
 
 //---------------------------------------------------------------------------
@@ -816,7 +815,6 @@ bool TokenReader::IsInfixOpTok(ptr_tok_type &a_Tok)
         throw ParserError(err);
     }
 }
-
 
 //---------------------------------------------------------------------------
 /** \brief Check expression for function tokens. */

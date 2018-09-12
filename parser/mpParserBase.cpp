@@ -46,7 +46,6 @@
 
 using namespace std;
 
-
 MUP_NAMESPACE_START
 
 //------------------------------------------------------------------------------
@@ -336,7 +335,6 @@ const char_type* ParserXBase::ValidInfixOprtChars() const
     MUP_VERIFY(m_sInfixOprtChars.size());
     return m_sInfixOprtChars.c_str();
 }
-
 
 //---------------------------------------------------------------------------
 /** \brief Initialize the token reader.
@@ -681,7 +679,6 @@ string_type ParserXBase::GetVersion()
 //---------------------------------------------------------------------------
 void ParserXBase::ApplyRemainingOprt(Stack<ptr_tok_type> &stOpt) const
 
-
 {
     while (stOpt.size() &&
         stOpt.top()->GetCode() != cmBO  &&
@@ -851,7 +848,7 @@ void ParserXBase::CreateRPN() const
                 //
                 // Find out how many dimensions were used in the index operator.
                 //
-                std::size_t iArgc = stArgCount.pop();
+                int iArgc = stArgCount.pop();
                 stOpt.pop(); // Take opening bracket from stack
 
                 ICallback *pOprtIndex = pTok->AsICallback();
@@ -1011,7 +1008,7 @@ void ParserXBase::CreateRPN() const
             {
                 IToken *pOprt1 = stOpt.top().Get();
                 IToken *pOprt2 = pTok.Get();
-                MUP_VERIFY(pOprt1!=nullptr && pOprt2!=nullptr);
+                MUP_VERIFY(pOprt1 != nullptr && pOprt2 != nullptr);
                 MUP_VERIFY(pOprt1->AsIPrecedence() && pOprt2->AsIPrecedence());
 
                 int nPrec1 = pOprt1->AsIPrecedence()->GetPri(),
@@ -1095,7 +1092,7 @@ void ParserXBase::CreateRPN() const
         case  cmFUNC:
         {
             ICallback *pFunc = pTok->AsICallback();
-            MUP_VERIFY(pFunc!=nullptr);
+			MUP_VERIFY(pFunc != nullptr);
             stOpt.push(pTok);
         }
         break;
@@ -1626,5 +1623,4 @@ void ParserXBase::StackDump(const Stack<ptr_tok_type> &a_stOprt) const
 
     console() << endl;
 }
-
 } // namespace mu

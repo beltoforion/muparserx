@@ -3,7 +3,7 @@
 #include <stdio.h>
 #include <time.h>
 
-#if defined(__WIN32__) || defined(WIN32)
+#if defined(__WIN32__) || defined(_WIN32)
 #include <Windows.h>
 DWORD tvs, tve;
 #else
@@ -14,7 +14,7 @@ struct timeval	tvs, tve;
 
 void StartTimer(void)
 {
-#if defined(__WIN32__) || defined(WIN32)
+#if defined(__WIN32__) || defined(_WIN32)
   tvs = GetTickCount();
 #else
   if (gettimeofday(&tvs,0)) fprintf(stderr,"cant get time!\n");
@@ -23,7 +23,7 @@ void StartTimer(void)
 
 double StopTimer(void)
 {
-#if defined(__WIN32__) || defined(WIN32)
+#if defined(__WIN32__) || defined(_WIN32)
   tve = GetTickCount();
   return tve - tvs;
 #else
@@ -36,7 +36,7 @@ double PrintTimer(void)
 {
   double t;
 
-#if defined(__WIN32__) || defined(WIN32)
+#if defined(__WIN32__) || defined(_WIN32)
   tve = GetTickCount();
   t = (double)(tve - tvs) / 1000.0;
   printf("%.3f ",t);

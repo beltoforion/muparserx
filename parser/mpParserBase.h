@@ -87,7 +87,6 @@ MUP_NAMESPACE_START
     
     const IValue& Eval() const;
 
-
     void SetExpr(const string_type &a_sExpr);
     void AddValueReader(IValueReader *a_pReader);
 

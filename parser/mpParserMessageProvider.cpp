@@ -1,5 +1,4 @@
-﻿#include "mpParserMessageProvider.h"
-
+#include "mpParserMessageProvider.h"
 #include <cassert>
 #include "mpError.h"
 

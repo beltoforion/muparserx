@@ -160,7 +160,7 @@ enum ECmdCode
     cmARG_SEP           =  6,  ///< Operator item:  comma
     cmIF                =  7,  ///< Ternary if then else operator
     cmELSE              =  8,  ///< Ternary if then else operator
-    cmENDIF             =  9,  ///< Operator item: semicolon
+    cmENDIF             =  9,  ///< Ternary if then else operator
     cmJMP               = 10,  ///< Reserved for future use
     cmVAL               = 11,  ///< value item
     cmFUNC              = 12,  ///< Code for a function item
