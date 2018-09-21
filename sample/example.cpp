@@ -890,20 +890,20 @@ void Calc()
 	  if (sLine == _T("test"))
 	  {
 		  sLine = _T(
+			  "limit = (2+2)*2+1\n"
 			  "test1 = 0\n"
 			  "test2 = 0\n"
 			  "test3 = 0\n"
 			  "j = 0\n"		  
 			  "Loop{"					// Loop, where the piece of code, enclosed by following curly brackets repeats until "Break" statement is executed
-				  "If (j > 9){"
+				  "If (j > limit){"		// Conditional statement. Currently, there must be no newlines between ")" and "{" operators. Also, for now, you cannot use compound expression in the condition but you can assign an expression to variable and use that variable.
 					"Break"				// Must be present in every Loop, otherwise block will run infinitely. Break statement works like regular C break, jumping to the statement after the closing curly bracket of Loop it is in.
 				  "}\n"
 			      
-
-			      "If(j < 5) {"			// Conditional statement. Currently, there must be no newlines between ")" and "{" operators.
+			      "If(j < 5) {"
 					"Nested_Loop_Counter = 0\n"
 					"Loop{"				// Nested loops are supported as well.
-						"If (Nested_Loop_Counter > 9) {Break}\n"
+						"If (Nested_Loop_Counter > 9) {Break}\n"	// Nested conditionals are supported too
 						"test3 += 1\n"
 						"Nested_Loop_Counter += 1\n"
 					"}\n"

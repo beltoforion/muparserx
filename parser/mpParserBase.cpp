@@ -753,6 +753,37 @@ void ParserXBase::DumpRPN() const
 	m_rpn.AsciiDump();
 }
 
+void ParserXBase::Count_Max_Nesting_Level() const
+{
+	int If_Nest_Level_Max = 0;
+	int Loop_Level_Max = 0;
+	ECmdCode eCmd;
+	for (;;)
+	{
+		eCmd = m_pTokenReader->CheckIfsAndLoops();
+		switch (eCmd)
+		{
+		case cmSCRIPT_IF:
+			If_Nest_Level_Max++;
+			break;
+		case cmSCRIPT_LOOP:
+			Loop_Level_Max++;
+			break;
+		default:
+			break;
+		}
+		if (eCmd == cmEOE)
+			break;
+	}
+	if (!If_Nest_Level_Max)
+		If_Nest_Level_Max = 1;
+	Number_Of_Curlys_At_IfElse_Level = new int[If_Nest_Level_Max];
+	Parse_If_Or_Else = new int[If_Nest_Level_Max];
+	if (!Loop_Level_Max)
+		Loop_Level_Max = 1;
+	Number_Of_Curlys_At_Loop_Level = new int[Loop_Level_Max];
+}
+
 //---------------------------------------------------------------------------
 void ParserXBase::CreateRPN() const
 {
@@ -767,9 +798,11 @@ void ParserXBase::CreateRPN() const
 	Value val;
 
 	ReInit();
+	Count_Max_Nesting_Level();
+	ReInit();
 	Parse_If_Condition = 0;
 	If_Nest_Level = 0;
-	Parse_If_Or_Else[If_Nest_Level] = 0;
+	Parse_If_Or_Else[0] = 0;
 	Bracket_Number = 0;
 	Curly_Number = 0;
 	Loop_Level = 0;
@@ -1147,7 +1180,7 @@ const IValue& ParserXBase::ParseFromString() const
 		pValue->BindToCache(&m_cache);
 		m_vStackBuffer[i].Reset(pValue);
 	}
-	Preconnect_Curlies_and_Breaks_RPN();
+	Preconnect_Curlies_and_Keywords_RPN();
 	m_pParserEngine = &ParserXBase::ParseFromRPN;
 
 	return (this->*m_pParserEngine)();
@@ -1155,8 +1188,14 @@ const IValue& ParserXBase::ParseFromString() const
 
 // The role of this function is to tie the opening and closing curly brackets together in RPN
 // to allow fast jumps between them. Also connect Break statements to corresponding "}"
-void ParserXBase::Preconnect_Curlies_and_Breaks_RPN() const
+void ParserXBase::Preconnect_Curlies_and_Keywords_RPN() const
 {
+	Closing_Curly = new int [m_rpn.GetSize()];
+	Opening_Curly = new int [m_rpn.GetSize()];
+	Break_Closing_Curly = new int [m_rpn.GetSize()];
+	Loop_Curly = new bool [m_rpn.GetSize()];
+	IfElse_Curly = new bool [m_rpn.GetSize()];
+
 	Curly_Number = 0;
 	int j;
 	int Curly_Open_Pos;
@@ -1164,7 +1203,7 @@ void ParserXBase::Preconnect_Curlies_and_Breaks_RPN() const
 	std::size_t lenRPN = m_rpn.GetSize();
 
 	// Initialize the curly identifiers
-	for (j = 0; j < MAX_NUMBER_OF_TOKENS; j++)
+	for (j = 0; j < m_rpn.GetSize(); j++)
 	{
 		Loop_Curly[j] = 0;
 		IfElse_Curly[j] = 0;

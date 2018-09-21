@@ -408,6 +408,21 @@ ptr_tok_type TokenReader::ReadSemicolonStringToken()
 	return Store(pTok, m_nPos); // Check for values / constant tokens
 }
 
+ECmdCode TokenReader::CheckIfsAndLoops()
+{
+	SkipCommentsAndWhitespaces();
+
+	ptr_tok_type pTok;
+	m_nSynFlags = 0;	// For now allow any tokens, since the ReadNextToken() in CreateRPN() will do the syntax checking
+	if (IsKeywordTok(pTok) || IsEOF(pTok))
+	{
+		m_nPos++;
+		return pTok->GetCode();
+	}
+	m_nPos++;
+	return cmUNKNOWN;
+}
+
 //---------------------------------------------------------------------------
 /** \brief Read the next token from the string. */
 ptr_tok_type TokenReader::ReadNextToken()

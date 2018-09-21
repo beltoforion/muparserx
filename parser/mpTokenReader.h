@@ -128,6 +128,7 @@ MUP_NAMESPACE_START
     void SetExpr(const string_type &a_sExpr);
 
     void ReInit();
+	ECmdCode CheckIfsAndLoops();	// Check for keywords and ignore all other tokens
     ptr_tok_type ReadNextToken();
 	ptr_tok_type ReadSemicolonStringToken();
   }; // class TokenReader
