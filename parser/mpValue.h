@@ -111,7 +111,7 @@ MUP_NAMESPACE_START
 	
     // Conversion operators
     operator cmplx_type();
-    operator int ();
+    operator int_type();
     operator string_type();
     operator float_type();
     operator bool();

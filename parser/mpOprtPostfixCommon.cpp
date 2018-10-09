@@ -19,7 +19,7 @@ MUP_NAMESPACE_START
     if (!arg[0]->IsInteger())
       throw ParserError(ErrorContext(ecTYPE_CONFLICT_FUN, GetExprPos(), GetIdent(), arg[0]->GetType(), 'i', 1));
 
-    int input = arg[0]->GetInteger();
+    int_type input = arg[0]->GetInteger();
     float_type input_long = float_type(input);
 
     if (input < 0) {
@@ -40,11 +40,15 @@ MUP_NAMESPACE_START
       //                 If the compiler does not support IEEE 754, chances are 
       //                 you are running on a pretty fucked up system.
       //
+      #ifdef _MSC_VER
       #pragma warning(push)
       #pragma warning(disable:4127)
+      #endif /* _MSC_VER */
       if ( !std::numeric_limits<float_type>::is_iec559 && 
            (result>std::numeric_limits<float_type>::max() || result < 1.0) )
+      #ifdef _MSC_VER
       #pragma warning(pop)
+      #endif /* _MSC_VER */
       {
         throw ParserError(ErrorContext(ecOVERFLOW, GetExprPos(), GetIdent()));
       }

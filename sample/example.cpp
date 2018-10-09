@@ -902,7 +902,7 @@ void Calc()
         switch (ans.GetType())
         {
         case 's': { std::string s = ans.GetString();               console() << s << " (string)"  << "\n"; } break;
-        case 'i': { int i = ans.GetInteger();                      console() << i << " (int)"     << "\n"; } break;
+        case 'i': { int_type i = ans.GetInteger();                      console() << i << " (int)"     << "\n"; } break;
         case 'f': { float_type f = ans.GetFloat();                 console() << f << " (float)"   << "\n"; } break;
         case 'c': { std::complex<float_type> c = ans.GetComplex(); console() << c << " (complex)" << "\n"; } break;
         case 'b': break;
