@@ -237,7 +237,7 @@ IValue& Value::At(const IValue &row, const IValue &col)
         throw ParserError(errc);
     }
 
-    int nRow = row.GetInteger(),
+    int_type nRow = row.GetInteger(),
         nCol = col.GetInteger();
     return At(nRow, nCol);
 }
@@ -779,7 +779,7 @@ Value::operator cmplx_type ()
 }
 
 //-----------------------------------------------------------------------------------------------
-Value::operator int()
+Value::operator int_type()
 {
     return GetInteger();
 }

@@ -19,7 +19,7 @@ MUP_NAMESPACE_START
     if (!arg[0]->IsInteger())
       throw ParserError(ErrorContext(ecTYPE_CONFLICT_FUN, GetExprPos(), GetIdent(), arg[0]->GetType(), 'i', 1));
 
-    int input = arg[0]->GetInteger();
+    int_type input = arg[0]->GetInteger();
     float_type input_long = float_type(input);
 
     if (input < 0) {
