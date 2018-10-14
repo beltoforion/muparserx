@@ -9,8 +9,8 @@
 #                                                                       #
 #  Copyright (C) 2016, Ingo Berg                                        #
 #                                                                       #
-#  Web:     http://muparserx.beltoforion.de                             #
-#  SVN:     http://muparserx.googlecode.com/svn/trunk                   #
+#  Web:     http://beltoforion.de/article.php?a=muparserx               #
+#  GitHub:  http://https://github.com/beltoforion/muparserx             #
 #  e-mail:  muparserx@beltoforion.de                                    #
 #                                                                       #
 #  The code contains contributions made by the following people:        #
