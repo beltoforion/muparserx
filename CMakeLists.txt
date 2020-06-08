@@ -35,11 +35,6 @@ if(CMAKE_COMPILER_IS_GNUCXX OR (CMAKE_CXX_COMPILER_ID MATCHES "Clang"))
 
 endif(CMAKE_COMPILER_IS_GNUCXX OR (CMAKE_CXX_COMPILER_ID MATCHES "Clang"))
 
-#enable c++11 extensions for OSX
-if (APPLE)
-   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x -Wc++11-extensions")
-endif(APPLE)
-
 if(MSVC)
     add_compile_options(/MP) #multi-core build
 endif(MSVC)
