@@ -2,6 +2,11 @@ muparserx 4.0.9
 ===========================
 ![titleimage](http://beltoforion.de/en/muparser/images/title.jpg)
 
+This is the main repository of muparserx. muparserx is a math expression parser with support
+for complex numbers, strings, matrices and vectors. 
+
+For details please consult the [muparserx documentation](https://beltoforion.de/article.php?a=muparserx)
+
 V4.0.9 (20200619)
 -----------------
 Changes:
