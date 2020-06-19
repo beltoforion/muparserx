@@ -30,6 +30,11 @@
 #                                                                       #
 #########################################################################
 
+V4.0.9 (20200619)
+-----------------
+Bugfixes:
+  - Issue 68: 	Integer test causes floating point exceptions fixed as suggested
+
 V4.0.7 (20160331)
 -----------------
 Bugfixes:

@@ -650,7 +650,7 @@ void Splash()
   console() << _T("  |__|_|  /____/|____|    (____  /__|  /____  >\\___  >__| /___/\\  \\\n");
   console() << _T("        \\/                     \\/           \\/     \\/           \\_/\n");
   console() << _T("  Version ") << ParserXBase::GetVersion() << _T("\n");
-  console() << _T("  Copyright (C) 2016, Ingo Berg");
+  console() << _T("  Copyright (C) 2010 - 2020, Ingo Berg");
   console() << _T("\n\n");
   console() << _T("-------------------------------------------------------------------------\n\n");
   console() << _T( "Build configuration:\n\n");

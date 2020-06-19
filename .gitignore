@@ -8,3 +8,8 @@
 *.log
 *.tlog
 *.ilk
+*.db
+*.db-shm
+*.ipch
+.vs/*
+out/*
