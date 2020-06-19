@@ -24,6 +24,11 @@ Changes:
 Bugfixes:
   - Issue 68: 	Integer test causes floating point exceptions; fixed as suggested
 
+V4.0.8 (20181218)
+-----------------
+Changes:
+  - Build system changed to CMake
+
 V4.0.7 (20160331)
 -----------------
 Bugfixes:
