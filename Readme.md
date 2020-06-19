@@ -16,7 +16,7 @@ Changes:
   - Expressions will be checked for non printable characters
   
 Bugfixes:
-  - Issue 68: 	Integer test causes floating point exceptions fixed as suggested
+  - Issue 68: 	Integer test causes floating point exceptions; fixed as suggested
 
 V4.0.7 (20160331)
 -----------------
