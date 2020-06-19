@@ -1123,6 +1123,28 @@ int ParserTester::TestIfElse()
 
 	float_type a = 1;
 
+	// test case copied from muparser (https://oss-fuzz.com/testcase-detail/4777121158529024)
+	iNumErr += ThrowTest(_T("3!=min(false?2>2,2>5,1:6)"), ecUNEXPECTED_COMMA);
+
+	// test case copied from muparser (https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=22922#c1)
+	iNumErr += ThrowTest(_T("1?2:0?(7:1)"), ecMISPLACED_COLON);
+
+	//  test case copied from muparser (https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=23410)
+	// with variations
+	iNumErr += ThrowTest(_T(R"(false ? 4 : "", ? 4 : "", ? 4 : "")"), ecUNEXPECTED_COMMA);
+	iNumErr += EqnTest(_T(R"(false ? "four" : 4)"), 4, true);
+	iNumErr += EqnTest(_T(R"(true ? "four" : 4)"), "four", true);
+	iNumErr += EqnTest(_T(R"(true ? "foo" : "bar")"), "foo", true);
+
+	// test case and variations copied from muparser https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=22938
+	iNumErr += ThrowTest(_T("sum(false?1,0,0:3)"), ecUNEXPECTED_COMMA);
+	iNumErr += ThrowTest(_T("sum(false?(1,0,0):3)"), ecUNEXPECTED_COMMA);
+	iNumErr += ThrowTest(_T("sum(2>3?2,4,2:4)"), ecUNEXPECTED_COMMA);
+	iNumErr += ThrowTest(_T("sum(2>3?2,4,sin(2):4)"), ecUNEXPECTED_COMMA);
+	iNumErr += ThrowTest(_T("sum(2>3?sin(2),4,2:4)"), ecUNEXPECTED_COMMA);
+	iNumErr += ThrowTest(_T("sum(2>3?sin(a),4,2:4)"), ecUNEXPECTED_COMMA);
+	iNumErr += ThrowTest(_T("sum(2>3?sin(2),4,2:4)"), ecUNEXPECTED_COMMA);
+
 	// Test error detection
 	iNumErr += ThrowTest(_T(": 2"), ecMISPLACED_COLON);
 	iNumErr += ThrowTest(_T("? 1 : 2"), ecUNEXPECTED_CONDITIONAL);
@@ -1247,6 +1269,13 @@ int ParserTester::TestEqn()
 {
 	int  iNumErr = 0;
 	*m_stream << _T("testing sample equations...");
+
+	// test case copied from muparser: https://oss-fuzz.com/testcase-detail/5106868061208576
+	iNumErr += ThrowTest(_T(R"("","","","","","","","","","","","","","","","","","","","","","","","","","","","","","","",8)"), ecUNEXPECTED_COMMA);
+	iNumErr += ThrowTest(_T(R"("","",9)"), ecUNEXPECTED_COMMA);
+
+	// test case copied from muparser: https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=23330#c1
+	iNumErr += ThrowTest(_T("6, +, +, +, +, +, +, +, +, +, +, +, +, +, +, 1, +, +, +, +, +, +, +, +, +, +, +, +, +, +, +, +, +, +, +, +, +, +, +, +, +, +, +, +, +, +, +, +"), ecUNEXPECTED_COMMA);
 
 	iNumErr += ThrowTest(_T("1e1234"), ecUNASSIGNABLE_TOKEN);
 	iNumErr += ThrowTest(_T("-1e1234"), ecUNASSIGNABLE_TOKEN);
