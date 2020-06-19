@@ -11,7 +11,7 @@ V4.0.9 (20200619)
 -----------------
 Changes:
   - Copied unit tests from muparser (no new failures)
-  - introduced a maximum expression length of 10000
+  - Introduced a maximum expression length of 10000
   - Expressions will be checked for non printable characters
   
 Bugfixes:
