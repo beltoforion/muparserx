@@ -2,6 +2,7 @@
 
 [![GitHub issues](https://img.shields.io/github/issues/beltoforion/muparserx.svg?maxAge=360)](https://github.com/beltoforion/muparserx/issues)
 [![Version](https://img.shields.io/github/release/beltoforion/muparserx.svg?maxAge=360)](https://github.com/beltoforion/muparserx/blob/master/CHANGELOG)
+[![Packaging status](https://repology.org/badge/tiny-repos/muparserx.svg)](https://repology.org/project/muparserx/versions)
 <!-- [![License](https://img.shields.io/github/license/beltoforion/muparserx.svg?maxAge=360000)](https://github.com/beltoforion/muparserx/blob/master/License.md) -->
 
 muparserx 4.0.9
