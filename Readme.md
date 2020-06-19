@@ -1,7 +1,7 @@
 ![titleimage](http://beltoforion.de/en/muparserx/images/muparserx.jpg)
 
 [![GitHub issues](https://img.shields.io/github/issues/beltoforion/muparserx.svg?maxAge=360)](https://github.com/beltoforion/muparserx/issues)
-[![Version](https://img.shields.io/github/release/beltoforion/muparserx.svg?maxAge=360)](https://rgithub.com/beltoforion/muparserx/master/CHANGELOG)
+[![Version](https://img.shields.io/github/release/beltoforion/muparserx.svg?maxAge=360)](https://github.com/beltoforion/muparserx/blob/master/CHANGELOG)
 <!-- [![License](https://img.shields.io/github/license/beltoforion/muparserx.svg?maxAge=360000)](https://github.com/beltoforion/muparserx/blob/master/License.md) -->
 
 muparserx 4.0.9
