@@ -233,7 +233,20 @@ const var_maptype& TokenReader::GetUsedVar() const
 	*/
 void TokenReader::SetExpr(const string_type &a_sExpr)
 {
-	m_sExpr = a_sExpr; // + string_type(_T(" "));
+	if (a_sExpr.empty())
+		throw ParserError(_T("Expression is empty!"), ecUNEXPECTED_EOF);
+
+	if (a_sExpr.find_first_not_of(' ') == std::string::npos)
+		throw ParserError(_T("Expression is empty!"), ecUNEXPECTED_EOF);
+
+	if (std::all_of(a_sExpr.begin(), a_sExpr.end(), [](char_type c) { return !std::isgraph(c); }))
+		throw ParserError(_T("Non printable characters in expression found!"));
+
+	// Check maximum allowed expression length. An arbitrary value small enough so i can debug expressions sent to me
+	if (a_sExpr.length() >= 10000)
+		throw ParserError(_T("Expression longer than 10000 characters!"));
+
+	m_sExpr = a_sExpr; 
 	ReInit();
 }
 

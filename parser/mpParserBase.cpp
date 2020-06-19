@@ -49,7 +49,7 @@ using namespace std;
 MUP_NAMESPACE_START
 
 //------------------------------------------------------------------------------
-const char_type *g_sCmdCode[] = {
+const char_type* g_sCmdCode[] = {
 	_T("BRCK. OPEN       "),
 	_T("BRCK. CLOSE      "),
 	_T("IDX OPEN         "),
@@ -132,7 +132,7 @@ ParserXBase::ParserXBase()
 
 	  Implemented by calling Assign(a_Parser)
 	  */
-ParserXBase::ParserXBase(const ParserXBase &a_Parser)
+ParserXBase::ParserXBase(const ParserXBase& a_Parser)
 	:m_FunDef()
 	, m_PostOprtDef()
 	, m_InfixOprtDef()
@@ -174,7 +174,7 @@ ParserXBase::~ParserXBase()
 
 	  Implemented by calling Assign(a_Parser). Self assignement is suppressed.
 	  */
-ParserXBase& ParserXBase::operator=(const ParserXBase &a_Parser)
+ParserXBase& ParserXBase::operator=(const ParserXBase& a_Parser)
 {
 	Assign(a_Parser);
 	return *this;
@@ -188,7 +188,7 @@ ParserXBase& ParserXBase::operator=(const ParserXBase &a_Parser)
 	  Copies the states of all internal variables.
 	  Resets parse function to string parse mode.
 	  */
-void ParserXBase::Assign(const ParserXBase &ref)
+void ParserXBase::Assign(const ParserXBase& ref)
 {
 	if (&ref == this)
 		return;
@@ -248,14 +248,14 @@ const IValue& ParserXBase::Eval() const
 	  */
 const char_type** ParserXBase::GetOprtDef() const
 {
-	return (const char_type **)(&c_DefaultOprt[0]);
+	return (const char_type**)(&c_DefaultOprt[0]);
 }
 
 //---------------------------------------------------------------------------
 /** \brief Define the set of valid characters to be used in names of
 			  functions, variables, constants.
 			  */
-void ParserXBase::DefineNameChars(const char_type *a_szCharset)
+void ParserXBase::DefineNameChars(const char_type* a_szCharset)
 {
 	m_sNameChars = a_szCharset;
 }
@@ -266,7 +266,7 @@ void ParserXBase::DefineNameChars(const char_type *a_szCharset)
 			 \param a_szCharset A string containing all characters that can be used
 			 in operator identifiers.
 			 */
-void ParserXBase::DefineOprtChars(const char_type *a_szCharset)
+void ParserXBase::DefineOprtChars(const char_type* a_szCharset)
 {
 	m_sOprtChars = a_szCharset;
 }
@@ -277,7 +277,7 @@ void ParserXBase::DefineOprtChars(const char_type *a_szCharset)
 			 \param a_szCharset A string containing all characters that can be used
 			 in infix operator identifiers.
 			 */
-void ParserXBase::DefineInfixOprtChars(const char_type *a_szCharset)
+void ParserXBase::DefineInfixOprtChars(const char_type* a_szCharset)
 {
 	m_sInfixOprtChars = a_szCharset;
 }
@@ -346,7 +346,7 @@ void ParserXBase::ReInit() const
 	The parser becomes the owner of the package pointer and is responsible for
 	its deletion.
 	*/
-void ParserXBase::AddPackage(IPackage *p)
+void ParserXBase::AddPackage(IPackage* p)
 {
 	p->AddToParser(this);
 }
@@ -355,7 +355,7 @@ void ParserXBase::AddPackage(IPackage *p)
 /** \brief Add a value reader object to muParserX.
 	  \param a_pReader Pointer to the value reader object.
 	  */
-void ParserXBase::AddValueReader(IValueReader *a_pReader)
+void ParserXBase::AddValueReader(IValueReader* a_pReader)
 {
 	m_pTokenReader->AddValueReader(a_pReader);
 }
@@ -366,8 +366,8 @@ void ParserXBase::AddValueReader(IValueReader *a_pReader)
 	  \param a_szCharSet The characterset
 	  \throw ParserException if the name contains invalid charakters.
 	  */
-void ParserXBase::CheckName(const string_type &a_strName,
-	const string_type &a_szCharSet) const
+void ParserXBase::CheckName(const string_type& a_strName,
+	const string_type& a_szCharSet) const
 {
 	if (!a_strName.length() ||
 		(a_strName.find_first_not_of(a_szCharSet) != string_type::npos) ||
@@ -385,7 +385,7 @@ void ParserXBase::CheckName(const string_type &a_strName,
 	  Triggers first time calculation thus the creation of the bytecode and
 	  scanning of used variables.
 	  */
-void ParserXBase::SetExpr(const string_type &a_sExpr)
+void ParserXBase::SetExpr(const string_type& a_sExpr)
 {
 	m_pTokenReader->SetExpr(a_sExpr);
 	ReInit();
@@ -396,7 +396,7 @@ void ParserXBase::SetExpr(const string_type &a_sExpr)
 	  \param a_sName The variable name
 	  \param a_Var The variable to be added to muParserX
 	  */
-void ParserXBase::DefineVar(const string_type &ident, const Variable &var)
+void ParserXBase::DefineVar(const string_type& ident, const Variable& var)
 {
 	CheckName(ident, ValidNameChars());
 
@@ -405,7 +405,7 @@ void ParserXBase::DefineVar(const string_type &ident, const Variable &var)
 	m_varDef[ident] = ptr_tok_type(var.Clone());
 }
 
-void ParserXBase::CheckForEntityExistence(const string_type &ident, EErrorCodes error_code)
+void ParserXBase::CheckForEntityExistence(const string_type& ident, EErrorCodes error_code)
 {
 	if (IsVarDefined(ident) ||
 		IsConstDefined(ident) ||
@@ -425,7 +425,7 @@ void ParserXBase::CheckForEntityExistence(const string_type &ident, EErrorCodes 
 		which are handed over by reference. Consequently the parser can not change
 		their value.
 		*/
-void ParserXBase::DefineConst(const string_type &ident, const Value &val)
+void ParserXBase::DefineConst(const string_type& ident, const Value& val)
 {
 	CheckName(ident, ValidNameChars());
 
@@ -442,7 +442,7 @@ void ParserXBase::DefineConst(const string_type &ident, const Value &val)
 
 		The parser takes ownership over the callback object.
 		*/
-void ParserXBase::DefineFun(const ptr_cal_type &fun)
+void ParserXBase::DefineFun(const ptr_cal_type& fun)
 {
 	if (IsFunDefined(fun->GetIdent()))
 		throw ParserError(ErrorContext(ecFUNOPRT_DEFINED, 0, fun->GetIdent()));
@@ -455,7 +455,7 @@ void ParserXBase::DefineFun(const ptr_cal_type &fun)
 /** \brief Define a binary operator.
 		\param a_pCallback Pointer to the callback object
 		*/
-void ParserXBase::DefineOprt(const TokenPtr<IOprtBin> &oprt)
+void ParserXBase::DefineOprt(const TokenPtr<IOprtBin>& oprt)
 {
 	if (IsOprtDefined(oprt->GetIdent()))
 		throw ParserError(ErrorContext(ecFUNOPRT_DEFINED, 0, oprt->GetIdent()));
@@ -470,7 +470,7 @@ void ParserXBase::DefineOprt(const TokenPtr<IOprtBin> &oprt)
 	  \param a_pOprt Pointer to a unary postfix operator object. The parser will
 	  become the new owner of this object hence will destroy it.
 	  */
-void ParserXBase::DefinePostfixOprt(const TokenPtr<IOprtPostfix> &oprt)
+void ParserXBase::DefinePostfixOprt(const TokenPtr<IOprtPostfix>& oprt)
 {
 	if (IsPostfixOprtDefined(oprt->GetIdent()))
 		throw ParserError(ErrorContext(ecFUNOPRT_DEFINED, 0, oprt->GetIdent()));
@@ -485,7 +485,7 @@ void ParserXBase::DefinePostfixOprt(const TokenPtr<IOprtPostfix> &oprt)
 	\param a_pOprt Pointer to a unary postfix operator object. The parser will
 		   become the new owner of this object hence will destroy it.
 */
-void ParserXBase::DefineInfixOprt(const TokenPtr<IOprtInfix> &oprt)
+void ParserXBase::DefineInfixOprt(const TokenPtr<IOprtInfix>& oprt)
 {
 	if (IsInfixOprtDefined(oprt->GetIdent()))
 		throw ParserError(ErrorContext(ecFUNOPRT_DEFINED, 0, oprt->GetIdent()));
@@ -496,79 +496,79 @@ void ParserXBase::DefineInfixOprt(const TokenPtr<IOprtInfix> &oprt)
 }
 
 //---------------------------------------------------------------------------
-void ParserXBase::RemoveVar(const string_type &ident)
+void ParserXBase::RemoveVar(const string_type& ident)
 {
 	m_varDef.erase(ident);
 	ReInit();
 }
 
 //---------------------------------------------------------------------------
-void ParserXBase::RemoveConst(const string_type &ident)
+void ParserXBase::RemoveConst(const string_type& ident)
 {
 	m_valDef.erase(ident);
 	ReInit();
 }
 
 //---------------------------------------------------------------------------
-void ParserXBase::RemoveFun(const string_type &ident)
+void ParserXBase::RemoveFun(const string_type& ident)
 {
 	m_FunDef.erase(ident);
 	ReInit();
 }
 
 //---------------------------------------------------------------------------
-void ParserXBase::RemoveOprt(const string_type &ident)
+void ParserXBase::RemoveOprt(const string_type& ident)
 {
 	m_OprtDef.erase(ident);
 	ReInit();
 }
 
 //---------------------------------------------------------------------------
-void ParserXBase::RemovePostfixOprt(const string_type &ident)
+void ParserXBase::RemovePostfixOprt(const string_type& ident)
 {
 	m_PostOprtDef.erase(ident);
 	ReInit();
 }
 
 //---------------------------------------------------------------------------
-void ParserXBase::RemoveInfixOprt(const string_type &ident)
+void ParserXBase::RemoveInfixOprt(const string_type& ident)
 {
 	m_InfixOprtDef.erase(ident);
 	ReInit();
 }
 
 //---------------------------------------------------------------------------
-bool ParserXBase::IsVarDefined(const string_type &ident) const
+bool ParserXBase::IsVarDefined(const string_type& ident) const
 {
 	return m_varDef.find(ident) != m_varDef.end();
 }
 
 //---------------------------------------------------------------------------
-bool ParserXBase::IsConstDefined(const string_type &ident) const
+bool ParserXBase::IsConstDefined(const string_type& ident) const
 {
 	return m_valDef.find(ident) != m_valDef.end();
 }
 
 //---------------------------------------------------------------------------
-bool ParserXBase::IsFunDefined(const string_type &ident) const
+bool ParserXBase::IsFunDefined(const string_type& ident) const
 {
 	return m_FunDef.find(ident) != m_FunDef.end();
 }
 
 //---------------------------------------------------------------------------
-bool ParserXBase::IsOprtDefined(const string_type &ident) const
+bool ParserXBase::IsOprtDefined(const string_type& ident) const
 {
 	return m_OprtDef.find(ident) != m_OprtDef.end();
 }
 
 //---------------------------------------------------------------------------
-bool ParserXBase::IsPostfixOprtDefined(const string_type &ident) const
+bool ParserXBase::IsPostfixOprtDefined(const string_type& ident) const
 {
 	return m_PostOprtDef.find(ident) != m_PostOprtDef.end();
 }
 
 //---------------------------------------------------------------------------
-bool ParserXBase::IsInfixOprtDefined(const string_type &ident) const
+bool ParserXBase::IsInfixOprtDefined(const string_type& ident) const
 {
 	return m_InfixOprtDef.find(ident) != m_InfixOprtDef.end();
 }
@@ -632,16 +632,16 @@ string_type ParserXBase::GetVersion()
 }
 
 //---------------------------------------------------------------------------
-void ParserXBase::ApplyRemainingOprt(Stack<ptr_tok_type> &stOpt) const
+void ParserXBase::ApplyRemainingOprt(Stack<ptr_tok_type>& stOpt) const
 
 {
 	while (stOpt.size() &&
-		stOpt.top()->GetCode() != cmBO  &&
-		stOpt.top()->GetCode() != cmIO  &&
+		stOpt.top()->GetCode() != cmBO &&
+		stOpt.top()->GetCode() != cmIO &&
 		stOpt.top()->GetCode() != cmCBO &&
 		stOpt.top()->GetCode() != cmIF)
 	{
-		ptr_tok_type &op = stOpt.top();
+		ptr_tok_type& op = stOpt.top();
 		switch (op->GetCode())
 		{
 		case  cmOPRT_INFIX:
@@ -658,14 +658,14 @@ void ParserXBase::ApplyRemainingOprt(Stack<ptr_tok_type> &stOpt) const
 	  \param a_stVal The value stack
 	  \param a_iArgCount The number of function arguments
 	  */
-void ParserXBase::ApplyFunc(Stack<ptr_tok_type> &a_stOpt,
+void ParserXBase::ApplyFunc(Stack<ptr_tok_type>& a_stOpt,
 	int a_iArgCount) const
 {
 	if (a_stOpt.empty())
 		return;
 
 	ptr_tok_type tok = a_stOpt.pop();
-	ICallback *pFun = tok->AsICallback();
+	ICallback* pFun = tok->AsICallback();
 
 	int iArgCount = (pFun->GetArgc() >= 0) ? pFun->GetArgc() : a_iArgCount;
 	pFun->SetNumArgsPresent(iArgCount);
@@ -677,7 +677,7 @@ void ParserXBase::ApplyFunc(Stack<ptr_tok_type> &a_stOpt,
 //---------------------------------------------------------------------------
 /** \brief Simulates the effect of the execution of an if-then-else block.
 */
-void ParserXBase::ApplyIfElse(Stack<ptr_tok_type> &a_stOpt) const
+void ParserXBase::ApplyIfElse(Stack<ptr_tok_type>& a_stOpt) const
 {
 	while (a_stOpt.size() && a_stOpt.top()->GetCode() == cmELSE)
 	{
@@ -688,10 +688,18 @@ void ParserXBase::ApplyIfElse(Stack<ptr_tok_type> &a_stOpt) const
 		ptr_tok_type opElse = a_stOpt.pop();
 		ptr_tok_type opIf = a_stOpt.pop();
 		MUP_VERIFY(opElse->GetCode() == cmELSE)
-			MUP_VERIFY(opIf->GetCode() == cmIF)
+		
+		if (opIf->GetCode() != cmIF)
+		{
+			ErrorContext err;
+			err.Expr = m_pTokenReader->GetExpr();
+			err.Errc = ecMISPLACED_COLON;
+			err.Pos = m_pTokenReader->GetPos();
+			throw ParserError(err);
+		}
 
-			// If then else hat 3 argumente und erzeugt einen rückgabewert (3-1=2)
-			m_nPos -= 2;
+		// If then else hat 3 argumente und erzeugt einen rückgabewert (3-1=2)
+		m_nPos -= 2;
 		m_rpn.Add(ptr_tok_type(new TokenIfThenElse(cmENDIF)));
 	}
 }
@@ -759,7 +767,7 @@ void ParserXBase::CreateRPN() const
 				int iArgc = stArgCount.pop();
 				stOpt.pop(); // Take opening bracket from stack
 
-				ICallback *pOprtIndex = pTok->AsICallback();
+				ICallback* pOprtIndex = pTok->AsICallback();
 				MUP_VERIFY(pOprtIndex != nullptr);
 
 				pOprtIndex->SetNumArgsPresent(iArgc);
@@ -810,7 +818,7 @@ void ParserXBase::CreateRPN() const
 				if ((stOpt.top()->GetCode() != cmFUNC) && (stOpt.top()->GetCode() != cmOPRT_INFIX))
 					break;
 
-				ICallback *pFun = stOpt.top()->AsICallback();
+				ICallback* pFun = stOpt.top()->AsICallback();
 
 				if (pFun->GetArgc() != -1 && iArgc > pFun->GetArgc())
 					Error(ecTOO_MANY_PARAMS, pTok->GetExprPos(), pFun);
@@ -860,14 +868,14 @@ void ParserXBase::CreateRPN() const
 		case  cmOPRT_BIN:
 		{
 			while (stOpt.size() &&
-				stOpt.top()->GetCode() != cmBO   &&
-				stOpt.top()->GetCode() != cmIO   &&
-				stOpt.top()->GetCode() != cmCBO  &&
+				stOpt.top()->GetCode() != cmBO &&
+				stOpt.top()->GetCode() != cmIO &&
+				stOpt.top()->GetCode() != cmCBO &&
 				stOpt.top()->GetCode() != cmELSE &&
 				stOpt.top()->GetCode() != cmIF)
 			{
-				IToken *pOprt1 = stOpt.top().Get();
-				IToken *pOprt2 = pTok.Get();
+				IToken* pOprt1 = stOpt.top().Get();
+				IToken* pOprt2 = pTok.Get();
 				MUP_VERIFY(pOprt1 != nullptr && pOprt2 != nullptr);
 				MUP_VERIFY(pOprt1->AsIPrecedence() && pOprt2->AsIPrecedence());
 
@@ -922,7 +930,7 @@ void ParserXBase::CreateRPN() const
 		case  cmOPRT_INFIX:
 		case  cmFUNC:
 		{
-			ICallback *pFunc = pTok->AsICallback();
+			ICallback* pFunc = pTok->AsICallback();
 			MUP_VERIFY(pFunc != nullptr);
 			stOpt.push(pTok);
 		}
@@ -968,7 +976,7 @@ const IValue& ParserXBase::ParseFromString() const
 	m_vStackBuffer.assign(m_rpn.GetRequiredStackSize(), ptr_val_type());
 	for (std::size_t i = 0; i < m_vStackBuffer.size(); ++i)
 	{
-		Value *pValue = new Value;
+		Value* pValue = new Value;
 		pValue->BindToCache(&m_cache);
 		m_vStackBuffer[i].Reset(pValue);
 	}
@@ -981,7 +989,7 @@ const IValue& ParserXBase::ParseFromString() const
 //---------------------------------------------------------------------------
 const IValue& ParserXBase::ParseFromRPN() const
 {
-	ptr_val_type *pStack = &m_vStackBuffer[0];
+	ptr_val_type* pStack = &m_vStackBuffer[0];
 	if (m_rpn.GetSize() == 0)
 	{
 		// Passiert bei leeren strings oder solchen, die nur Leerzeichen enthalten
@@ -992,13 +1000,13 @@ const IValue& ParserXBase::ParseFromRPN() const
 		throw ParserError(err);
 	}
 
-	const ptr_tok_type *pRPN = &(m_rpn.GetData()[0]);
+	const ptr_tok_type* pRPN = &(m_rpn.GetData()[0]);
 
 	int sidx = -1;
 	std::size_t lenRPN = m_rpn.GetSize();
 	for (std::size_t i = 0; i < lenRPN; ++i)
 	{
-		IToken *pTok = pRPN[i].Get();
+		IToken* pTok = pRPN[i].Get();
 		ECmdCode eCode = pTok->GetCode();
 
 		switch (eCode)
@@ -1009,7 +1017,7 @@ const IValue& ParserXBase::ParseFromRPN() const
 
 		case cmVAL:
 		{
-			IValue *pVal = static_cast<IValue*>(pTok);
+			IValue* pVal = static_cast<IValue*>(pTok);
 
 			sidx++;
 			MUP_VERIFY(sidx < (int)m_vStackBuffer.size());
@@ -1019,7 +1027,7 @@ const IValue& ParserXBase::ParseFromRPN() const
 			}
 			else
 			{
-				ptr_val_type &val = pStack[sidx];
+				ptr_val_type& val = pStack[sidx];
 				if (val->IsVariable())
 					val.Reset(m_cache.CreateFromCache());
 
@@ -1027,40 +1035,16 @@ const IValue& ParserXBase::ParseFromRPN() const
 			}
 		}
 		continue;
-		/*
-	  // Deal with:
-	  //   - Index operator:             [,,,]
-	  //   - Array constrution operator: {,,,}
-	  case  cmCBC:
-	  {
-	  ICallback *pFun = static_cast<ICallback*>(pTok);
-	  int nArgs = pFun->GetArgsPresent();
-	  sidx -= nArgs - 1;
-	  MUP_VERIFY(sidx >= 0);
 
-	  ptr_val_type &val = pStack[sidx];   // Pointer to the variable or value beeing indexed
-	  if (val->IsVariable())
-	  {
-	  ptr_val_type buf(m_cache.CreateFromCache());
-	  pFun->Eval(buf, &val, nArgs);
-	  val = buf;
-	  }
-	  else
-	  {
-	  pFun->Eval(val, &val, nArgs);
-	  }
-	  }
-	  continue;
-	  */
 		case  cmIC:
 		{
-			ICallback *pIdxOprt = static_cast<ICallback*>(pTok);
+			ICallback* pIdxOprt = static_cast<ICallback*>(pTok);
 			int nArgs = pIdxOprt->GetArgsPresent();
 			sidx -= nArgs - 1;
 			MUP_VERIFY(sidx >= 0);
 
-			ptr_val_type &idx = pStack[sidx];   // Pointer to the first index
-			ptr_val_type &val = pStack[--sidx];   // Pointer to the variable or value beeing indexed
+			ptr_val_type& idx = pStack[sidx];   // Pointer to the first index
+			ptr_val_type& val = pStack[--sidx];   // Pointer to the variable or value beeing indexed
 			pIdxOprt->Eval(val, &idx, nArgs);
 		}
 		continue;
@@ -1071,12 +1055,21 @@ const IValue& ParserXBase::ParseFromRPN() const
 		case cmOPRT_BIN:
 		case cmOPRT_INFIX:
 		{
-			ICallback *pFun = static_cast<ICallback*>(pTok);
+			ICallback* pFun = static_cast<ICallback*>(pTok);
 			int nArgs = pFun->GetArgsPresent();
 			sidx -= nArgs - 1;
-			MUP_VERIFY(sidx >= 0);
 
-			ptr_val_type &val = pStack[sidx];
+			// most likely cause: Comma in if-then-else sum(false?1,0,0:3)
+			if (sidx < 0)
+			{
+				ErrorContext err;
+				err.Expr = m_pTokenReader->GetExpr();
+				err.Errc = ecUNEXPECTED_COMMA;
+				err.Pos = m_pTokenReader->GetPos();
+				throw ParserError(err);
+			}
+
+			ptr_val_type& val = pStack[sidx];
 			try
 			{
 				if (val->IsVariable())
@@ -1090,7 +1083,7 @@ const IValue& ParserXBase::ParseFromRPN() const
 					pFun->Eval(val, &val, nArgs);
 				}
 			}
-			catch (ParserError &exc)
+			catch (ParserError& exc)
 			{
 				// <ibg 20130131> Not too happy about that:
 				// Multiarg functions may throw specific error codes when evaluating.
@@ -1119,7 +1112,7 @@ const IValue& ParserXBase::ParseFromRPN() const
 					throw ParserError(err);
 				}
 			}
-			catch (MatrixError & /*exc*/)
+			catch (MatrixError& /*exc*/)
 			{
 				ErrorContext err;
 				err.Expr = m_pTokenReader->GetExpr();
@@ -1154,7 +1147,7 @@ const IValue& ParserXBase::ParseFromRPN() const
 }
 
 //---------------------------------------------------------------------------
-void  ParserXBase::Error(EErrorCodes a_iErrc, int a_iPos, const IToken *a_pTok) const
+void  ParserXBase::Error(EErrorCodes a_iErrc, int a_iPos, const IToken* a_pTok) const
 {
 	ErrorContext err;
 	err.Errc = a_iErrc;
@@ -1277,7 +1270,7 @@ bool ParserXBase::IsAutoCreateVarEnabled() const
 
 	  This function is used for debugging only.
 	  */
-void ParserXBase::StackDump(const Stack<ptr_tok_type> &a_stOprt) const
+void ParserXBase::StackDump(const Stack<ptr_tok_type>& a_stOprt) const
 {
 	using std::cout;
 	Stack<ptr_tok_type>  stOprt(a_stOprt);

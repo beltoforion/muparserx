@@ -40,13 +40,12 @@
 
 #if defined(_UNICODE)
   #if !defined(_T)
-  #define _T(x) L##x
+    #define _T(x) L##x
   #endif // not defined _T
   #define MUP_STRING_TYPE std::wstring
 #else
   #ifndef _T
-  /** \brief Macro needed for the "unicodification" of strings.
-  */
+  /** \brief Macro needed for the "unicodification" of strings. */
   #define _T(x) x
   #endif
   

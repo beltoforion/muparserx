@@ -174,7 +174,7 @@ int ParserTester::TestIssueReports()
 	iNumErr += ThrowTest(_T("{ { { ? 2 }, 7:2 }*7m }"), ecUNEXPECTED_CONDITIONAL);
 
 	// Not too happy about the undefined code, but better than a crash of an assertion at runtime
-	iNumErr += ThrowTest(_T("{0<0?0,0:0<0}"), ecUNDEFINED);
+	iNumErr += ThrowTest(_T("{0<0?0,0:0<0}"), ecUNEXPECTED_COMMA);
 
 	// Github Issue 63
 	iNumErr += ThrowTest(_T("0<0-0--eye()"), ecINVALID_NUMBER_OF_PARAMETERS);

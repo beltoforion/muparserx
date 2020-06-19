@@ -74,9 +74,7 @@ MUP_NAMESPACE_START
       
       All Members are initialised to an invalid state.
     */
-    ErrorContext(EErrorCodes a_iErrc = ecUNDEFINED, 
-                  int a_iPos = -1, 
-                  string_type a_sIdent = string_type() );
+    ErrorContext(EErrorCodes a_iErrc = ecUNDEFINED, int a_iPos = -1, string_type a_sIdent = string_type() );
 
     ErrorContext(EErrorCodes a_iErrc, 
                   int a_iPos, 
@@ -119,7 +117,7 @@ MUP_NAMESPACE_START
 
   public:
       ParserError();
-      ParserError(const string_type &sMsg);
+      ParserError(const string_type &sMsg, EErrorCodes ec = ecUNDEFINED);
       ParserError(const ErrorContext &a_Err);
       ParserError(const ParserError &a_Obj);
       ParserError& operator=(const ParserError &a_Obj);
