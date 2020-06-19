@@ -1,6 +1,6 @@
 muparserx 4.0.9
 ===========================
-![titleimage](http://beltoforion.de/en/muparser/images/title.jpg)
+![titleimage](http://beltoforion.de/en/muparserx/images/muparserx.jpg)
 
 This is the main repository of muparserx. 
 
