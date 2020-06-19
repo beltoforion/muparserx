@@ -8,8 +8,6 @@
 muparserx 4.0.9
 ===========================
 
-This is the main repository of muparserx. 
-
 The evaluation of a mathematical expression is a standard task required in many applications. It can be solved by either using a standard math expression parser such as muparser or by embedding a scripting language such as Lua. There are however some limitations: Although muparser is pretty fast it will only work with scalar values and although Lua is very flexible it does neither support binary operators for arrays nor complex numbers. So if you need a math expression parser with support for arrays, matrices and strings muparserx may be able to help you.
 
 For details please consult the [muparserx documentation](https://beltoforion.de/article.php?a=muparserx)
