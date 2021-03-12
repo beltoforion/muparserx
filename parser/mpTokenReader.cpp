@@ -37,6 +37,7 @@
 #include "mpTokenReader.h"
 
 #include <cassert>
+#include <cctype>
 
 #include "mpParserBase.h"
 #include "mpIValReader.h"
@@ -52,7 +53,7 @@ MUP_NAMESPACE_START
 	\sa Assign
 	\throw nothrow
 	*/
-	TokenReader::TokenReader(const TokenReader &a_Reader)
+TokenReader::TokenReader(const TokenReader &a_Reader)
 {
 	Assign(a_Reader);
 }
@@ -116,7 +117,7 @@ void TokenReader::Assign(const TokenReader &obj)
 	\param a_pParent Parent parser object of the token reader.
 	*/
 TokenReader::TokenReader(ParserXBase *a_pParent)
-	:m_pParser(a_pParent)
+	: m_pParser(a_pParent)
 	, m_sExpr()
 	, m_nPos(0)
 	, m_nNumBra(0)
