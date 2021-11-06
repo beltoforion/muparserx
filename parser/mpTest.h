@@ -94,7 +94,7 @@ MUP_NAMESPACE_START
         void AddTest(testfun_type a_pFun);
 
         // Test Double Parser
-        int EqnTest(const string_type &a_str, Value a_val, bool a_fPass, int nExprVar = -1);
+        int EqnTest(const string_type &a_str, Value a_val, bool a_fPass, int nExprVar = -1, bool evaluateOnce = false);
         int ThrowTest(const string_type &a_str, int a_nErrc, int a_nPos = -1, string_type a_sIdent = string_type());
     }; // ParserTester
 }  // namespace mu

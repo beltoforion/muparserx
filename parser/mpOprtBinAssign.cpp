@@ -188,7 +188,11 @@ MUP_NAMESPACE_START
                b = a_pArg[0]->GetImag(),
                c = a_pArg[1]->GetFloat(),
                d = a_pArg[1]->GetImag();
-    *pVar = cmplx_type(a*c-b*d, a*d-b*c); 
+
+    // fix for #107:
+    *pVar = cmplx_type(a * c - b * d, a * d + b * c);
+    // *pVar = cmplx_type(a*c-b*d, a*d-b*c); 
+
     *ret = *pVar;
   }
 

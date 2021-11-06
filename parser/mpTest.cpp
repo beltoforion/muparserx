@@ -438,6 +438,9 @@ int ParserTester::TestComplex()
 	iNumErr += EqnTest(_T("ca<=1"), true, true);
 	iNumErr += EqnTest(_T("ca>=1"), true, true);
 
+	// Issue #107 (https://github.com/beltoforion/muparserx/issues/107)
+	iNumErr += EqnTest(_T("cb*=cc"), cmplx_type(-6, 17), true, 2, true);
+
 	// complex numbers
 	iNumErr += EqnTest(_T("i*i"), -1.0, true, 0);
 	iNumErr += EqnTest(_T("1i"), cmplx_type(0, 1), true, 0);
@@ -1566,7 +1569,7 @@ int ParserTester::ThrowTest(const string_type &a_sExpr, int a_nErrc, int a_nPos,
 }
 
 //---------------------------------------------------------------------------
-int ParserTester::EqnTest(const string_type &a_str, Value a_val, bool a_fPass, int nExprVar)
+int ParserTester::EqnTest(const string_type &a_str, Value a_val, bool a_fPass, int nExprVar, bool evaluateOnce)
 {
 	ParserTester::c_iCount++;
 	int iRet(1);
@@ -1580,7 +1583,7 @@ int ParserTester::EqnTest(const string_type &a_str, Value a_val, bool a_fPass, i
 		std::unique_ptr<ParserX> p1(new ParserX());
 
 		// Add variables
-		Value vVarVal[] = { 1., 2., 3., -2., -1. };
+		Value vVarVal[] = { 1., 2., 3., -2., -1.};
 
 		// m1 ist die Einheitsmatrix
 		Value m1(3, 3, 0);
@@ -1636,44 +1639,55 @@ int ParserTester::EqnTest(const string_type &a_str, Value a_val, bool a_fPass, i
 
 		fVal[0] = p1->Eval();
 
-		// Test copy and assignement operators
-		std::vector<ParserX> vParser;
-		vParser.push_back(*p1);   // Push p1 into the vector
-		ParserX p2 = vParser[0];   // take parser from vector
-
-		// destroy the originals from p2
-		vParser.clear();              // delete the vector
-		p1.reset(0);                  // delete the original
-
-		fVal[1] = p2.Eval();          // If copy constructions does not work
-		// we may see a crash here
-
-		// Test assignement operator
-		// additionally  disable Optimizer this time
-		ParserX p3;
-		p3 = p2;
-		fVal[2] = p3.Eval();          // If assignment does not work
-		// we may see a crash here
-
-		// Calculating a second time will parse from rpn rather than from
-		// string. The result must be the same...
-		fVal[3] = p3.Eval();
-
-		// Calculate yet another time. There is the possibility of
-		// changing variables as a side effect of expression
-		// evaluation. So there are really bugs that could make this fail...
-		fVal[4] = p3.Eval();
-
-		// Check i number of used variables is correct
-		if (nExprVar != -1)
+		if (evaluateOnce)
 		{
-			std::size_t n2 = p2.GetExprVar().size();
-			std::size_t n3 = p3.GetExprVar().size();
+			// Equations with assignments will have differen results each time
+			fVal[1] = fVal[0];
+			fVal[2] = fVal[0];
+			fVal[3] = fVal[0];
+			fVal[4] = fVal[0];
+		}
+		else
+		{
+			// Test copy and assignement operators
+			std::vector<ParserX> vParser;
+			vParser.push_back(*p1);   // Push p1 into the vector
+			ParserX p2 = vParser[0];   // take parser from vector
 
-			if (n2 + n3 != 2 * n2 || int(n2) != nExprVar)
+			// destroy the originals from p2
+			vParser.clear();              // delete the vector
+			p1.reset(0);                  // delete the original
+
+			fVal[1] = p2.Eval();          // If copy constructions does not work
+			// we may see a crash here
+
+			// Test assignement operator
+			// additionally  disable Optimizer this time
+			ParserX p3;
+			p3 = p2;
+			fVal[2] = p3.Eval();          // If assignment does not work
+			// we may see a crash here
+
+			// Calculating a second time will parse from rpn rather than from
+			// string. The result must be the same...
+			fVal[3] = p3.Eval();
+
+			// Calculate yet another time. There is the possibility of
+			// changing variables as a side effect of expression
+			// evaluation. So there are really bugs that could make this fail...
+			fVal[4] = p3.Eval();
+
+			// Check i number of used variables is correct
+			if (nExprVar != -1)
 			{
-				*m_stream << _T("  Number of expression variables is incorrect. (expected: ")
-					<< nExprVar << _T("; detected: ") << n2 << _T(")");
+				std::size_t n2 = p2.GetExprVar().size();
+				std::size_t n3 = p3.GetExprVar().size();
+
+				if (n2 + n3 != 2 * n2 || int(n2) != nExprVar)
+				{
+					*m_stream << _T("  Number of expression variables is incorrect. (expected: ")
+						<< nExprVar << _T("; detected: ") << n2 << _T(")");
+				}
 			}
 		}
 
