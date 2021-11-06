@@ -12,6 +12,11 @@ The evaluation of a mathematical expression is a standard task required in many 
 
 For details please consult the [muparserx documentation](https://beltoforion.de/en/muparserx)
 
+V4.0.10 (20211106)
+-----------------
+Bugfixes:
+  - Issue 107:  Complex multiplication-assignment did not work correctly
+  
 V4.0.9 (20200619)
 -----------------
 Changes:
