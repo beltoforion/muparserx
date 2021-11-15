@@ -53,6 +53,7 @@
 #include "mpTypes.h"
 #include "mpRPN.h"
 #include "mpValueCache.h"
+#include "mpISCOprt.h"
 
 MUP_NAMESPACE_START
   
@@ -95,6 +96,7 @@ MUP_NAMESPACE_START
     void DefineVar(const string_type &ident, const Variable &var);
     void DefineFun(const ptr_cal_type &fun);
     void DefineOprt(const TokenPtr<IOprtBin> &oprt);
+    void DefineSCOprt(const TokenPtr<ISCOprtBin> &oprt);
     void DefinePostfixOprt(const TokenPtr<IOprtPostfix> &oprt);
     void DefineInfixOprt(const TokenPtr<IOprtInfix> &oprt);
 
@@ -102,6 +104,7 @@ MUP_NAMESPACE_START
     bool IsConstDefined(const string_type &ident) const;
     bool IsFunDefined(const string_type &ident) const;
     bool IsOprtDefined(const string_type &ident) const;
+    bool IsScOprtDefined(const string_type &ident) const;
     bool IsPostfixOprtDefined(const string_type &ident) const;
     bool IsInfixOprtDefined(const string_type &ident) const;
 
@@ -111,6 +114,7 @@ MUP_NAMESPACE_START
     void RemoveOprt(const string_type &ident);
     void RemovePostfixOprt(const string_type &ident);
     void RemoveInfixOprt(const string_type &ident);
+    void RemoveSCOprt(const string_type &ident);
 
     // Clear user defined variables, constants or functions
     void ClearVar();
@@ -119,6 +123,7 @@ MUP_NAMESPACE_START
     void ClearInfixOprt();
     void ClearPostfixOprt();
     void ClearOprt();
+    void ClearSCOprt();
     void DumpRPN() const;
 
     const var_maptype& GetExprVar() const;
@@ -155,6 +160,7 @@ MUP_NAMESPACE_START
     oprt_bin_maptype m_OprtDef;      ///< Binary operator callbacks
     val_maptype  m_valDef;           ///< Definition of parser constants
     var_maptype  m_varDef;           ///< user defind variables.
+    sc_maptype   m_ScOprtDef;        ///< short circuit operator definitions
 
   private:
 
@@ -171,6 +177,7 @@ MUP_NAMESPACE_START
     void InitTokenReader();
 
     void ApplyFunc(Stack<ptr_tok_type> &a_stOpt, int a_iArgCount) const;
+    void ApplyScOrpt(Stack<ptr_tok_type> &a_stOpt) const;
     void ApplyIfElse(Stack<ptr_tok_type> &a_stOpt) const;
     void ApplyRemainingOprt(Stack<ptr_tok_type> &a_stOpt) const;
     const IValue& ParseFromString() const; 

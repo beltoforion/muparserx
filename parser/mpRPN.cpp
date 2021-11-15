@@ -39,6 +39,7 @@
 #include "mpStack.h"
 #include "mpIfThenElse.h"
 #include "mpScriptTokens.h"
+#include "mpISCOprt.h"
 
 MUP_NAMESPACE_START
 
@@ -119,6 +120,7 @@ void RPN::Finalize()
 {
 	// Determine the if-then-else jump offsets
 	Stack<int> stIf, stElse;
+	Stack<int> stScBeg;
 	int idx;
 	for (int i = 0; i < static_cast<int>(m_vRPN.size()); ++i)
 	{
@@ -138,7 +140,13 @@ void RPN::Finalize()
 			idx = stElse.pop();
 			static_cast<TokenIfThenElse*>(m_vRPN[idx].Get())->SetOffset(i - idx);
 			break;
-
+		case cmSCBEGIN:
+			stScBeg.push(i);
+		break;
+		case cmSCEND:
+			idx = stScBeg.pop();
+			static_cast<ISCOprtBin*>(m_vRPN[idx].Get())->SetOffset(i - idx);
+		break;
 		default:
 			continue;
 		}

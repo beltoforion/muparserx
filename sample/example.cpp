@@ -804,7 +804,7 @@ void Calc()
   val[4] = _T("World");
 
   Value fVal[3];
-  fVal[0] = 1;
+  fVal[0] = (int_type)1;
   fVal[1] = (float_type)2.22;
   fVal[2] = (float_type)3.33;
 

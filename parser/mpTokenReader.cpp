@@ -93,6 +93,7 @@ void TokenReader::Assign(const TokenReader &obj)
 	m_pPostOprtDef = obj.m_pPostOprtDef;
 	m_pInfixOprtDef = obj.m_pInfixOprtDef;
 	m_pOprtDef = obj.m_pOprtDef;
+	m_pScOprtDef = obj.m_pScOprtDef;
 	m_pFunDef = obj.m_pFunDef;
 	m_pConstDef = obj.m_pConstDef;
 	m_pDynVarShadowValues = obj.m_pDynVarShadowValues;
@@ -129,6 +130,7 @@ TokenReader::TokenReader(ParserXBase *a_pParent)
 	, m_eLastTokCode(cmUNKNOWN)
 	, m_pFunDef(nullptr)
 	, m_pOprtDef(nullptr)
+	, m_pScOprtDef(nullptr)
 	, m_pInfixOprtDef(nullptr)
 	, m_pPostOprtDef(nullptr)
 	, m_pConstDef(nullptr)
@@ -327,6 +329,9 @@ ptr_tok_type TokenReader::ReadNextToken()
 	if (IsNewline(pTok))
 		return Store(pTok, token_pos);
 
+	if (IsScOprt(pTok))
+		return Store(pTok, token_pos);
+
 	if (!(m_nSynFlags & noOPT) && IsOprt(pTok))
 		return Store(pTok, token_pos); // Check for user defined binary operator
 
@@ -398,6 +403,7 @@ void TokenReader::SetParent(ParserXBase *a_pParent)
 	m_pParser = a_pParent;
 	m_pFunDef = &a_pParent->m_FunDef;
 	m_pOprtDef = &a_pParent->m_OprtDef;
+	m_pScOprtDef = &a_pParent->m_ScOprtDef;
 	m_pInfixOprtDef = &a_pParent->m_InfixOprtDef;
 	m_pPostOprtDef = &a_pParent->m_PostOprtDef;
 	m_pVarDef = &a_pParent->m_varDef;
@@ -850,6 +856,51 @@ bool TokenReader::IsOprt(ptr_tok_type &a_Tok)
 				m_nSynFlags = noBC | noIO | noIC | noOPT | noCOMMA | noEND | noNEWLINE | noPFX | noIF | noELSE;
 				return true;
 			}
+		}
+
+		return false;
+	}
+	catch (EErrorCodes e)
+	{
+		ErrorContext err;
+		err.Errc = e;
+		err.Pos = m_nPos; // - (int)item->first.length();
+		err.Ident = item->first;
+		err.Expr = m_sExpr;
+		throw ParserError(err);
+	}
+}
+
+
+//---------------------------------------------------------------------------
+/** \brief Check if a string position contains a binary operator. */
+bool TokenReader::IsScOprt(ptr_tok_type &a_Tok)
+{
+	string_type sTok;
+	int iEnd = ExtractToken(m_pParser->ValidOprtChars(), sTok, m_nPos);
+	if (iEnd == m_nPos)
+		return false;
+
+	sc_maptype::reverse_iterator item;
+	try
+	{
+		// Note:
+		// All tokens in oprt_bin_maptype are have been sorted by their length
+		// Long operators must come first! Otherwise short names (like: "add") that
+		// are part of long token names (like: "add123") will be found instead
+		// of the long ones.
+		// Length sorting is done with ascending length so we use a reverse iterator here.
+		for (item = m_pScOprtDef->rbegin(); item != m_pScOprtDef->rend(); ++item)
+		{
+			if (sTok.find(item->first) != 0)
+				continue;
+
+			// operator found, check if we expect one...
+			a_Tok = ptr_tok_type(item->second->Clone());
+
+			m_nPos += (int)a_Tok->GetIdent().length();
+			m_nSynFlags = noBC | noIO | noIC | noOPT | noCOMMA | noEND | noNEWLINE | noPFX | noIF | noELSE;
+			return true;
 		}
 
 		return false;
