@@ -16,7 +16,7 @@ V4.0.10 (20211122)
 -----------------
 Bugfixes:
   - Issue 107:  Complex multiplication-assignment did not work correctly
-  - Short cut versions of logical operators added (#110)
+  - Issue 110:  Short evaluation for binary operators added (thanks egyptyu)
   
 V4.0.9 (20200619)
 -----------------
