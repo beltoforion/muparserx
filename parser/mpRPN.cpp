@@ -140,10 +140,12 @@ void RPN::Finalize()
 			idx = stElse.pop();
 			static_cast<TokenIfThenElse*>(m_vRPN[idx].Get())->SetOffset(i - idx);
 			break;
-		case cmSCBEGIN:
+		
+		case cmSHORTCUT_BEGIN:
 			stScBeg.push(i);
-		break;
-		case cmSCEND:
+			break;
+		
+		case cmSHORTCUT_END:
 			idx = stScBeg.pop();
 			static_cast<IOprtBinShortcut*>(m_vRPN[idx].Get())->SetOffset(i - idx);
 		break;

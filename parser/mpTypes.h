@@ -171,8 +171,8 @@ enum ECmdCode
     cmOPRT_BIN          = 13,  ///< Binary operator
     cmOPRT_INFIX        = 14,  ///< Infix operator
     cmOPRT_POSTFIX      = 15,  ///< Postfix operator
-    cmSCBEGIN           = 16,  ///< Short circuit operator && / ||
-    cmSCEND             = 17,  ///< Short circuit operator && / ||
+    cmSHORTCUT_BEGIN    = 16,  ///< Short circuit operator && / ||
+    cmSHORTCUT_END      = 17,  ///< Short circuit operator && / ||
     cmEOE               = 18,  ///< End of expression
 
     // The following codes are reserved in case i will ever turn this

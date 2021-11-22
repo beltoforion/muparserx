@@ -665,10 +665,10 @@ void ParserXBase::ApplyRemainingOprt(Stack<ptr_tok_type>& stOpt) const
 		switch (op->GetCode())
 		{
 		case  cmOPRT_INFIX:
-		case  cmOPRT_BIN:    ApplyFunc(stOpt, 2);   break;
-		case  cmSCEND:       ApplyScOrpt(stOpt);    break;
-		case  cmELSE:        ApplyIfElse(stOpt);    break;
-		default:             Error(ecINTERNAL_ERROR);
+		case  cmOPRT_BIN:      ApplyFunc(stOpt, 2);   break;
+		case  cmSHORTCUT_END:  ApplyScOrpt(stOpt);    break;
+		case  cmELSE:          ApplyIfElse(stOpt);    break;
+		default:               Error(ecINTERNAL_ERROR);
 		} // switch operator token type
 	} // While operator stack not empty
 }
@@ -896,7 +896,7 @@ void ParserXBase::CreateRPN() const
 
 		case  cmIF:
 		case  cmOPRT_BIN:
-		case  cmSCBEGIN:
+		case  cmSHORTCUT_BEGIN:
 		{
 			while (stOpt.size() &&
 				stOpt.top()->GetCode() != cmBO &&
@@ -927,7 +927,7 @@ void ParserXBase::CreateRPN() const
 				{
 					break;
 				}
-				if (pOprt1->GetCode() == cmSCEND) {
+				if (pOprt1->GetCode() == cmSHORTCUT_END) {
 					ApplyScOrpt(stOpt);
 					break;
 				} 
@@ -936,10 +936,10 @@ void ParserXBase::CreateRPN() const
 				ApplyFunc(stOpt, 2);
 			} // while ( ... )
 
-			if (pTok->GetCode() == cmIF || pTok->GetCode() == cmSCBEGIN)
+			if (pTok->GetCode() == cmIF || pTok->GetCode() == cmSHORTCUT_BEGIN)
 				m_rpn.Add(pTok);
-			// 短路求值开始标记
-			if (pTok->GetCode() == cmSCBEGIN)
+
+			if (pTok->GetCode() == cmSHORTCUT_BEGIN)
 			{
 				if(pTok->AsIPrecedence()->GetPri() == prLOGIC_OR)
 				{
@@ -1185,7 +1185,8 @@ const IValue& ParserXBase::ParseFromRPN() const
 
 		case cmENDIF:
 			continue;
-		case cmSCBEGIN:
+
+		case cmSHORTCUT_BEGIN:
 			if (pTok->AsIPrecedence()->GetPri() == prLOGIC_OR)
 			{
 				// occur short circuit feature
@@ -1208,9 +1209,10 @@ const IValue& ParserXBase::ParseFromRPN() const
 					--sidx;
 				}
 			}
-		continue;
-		case cmSCEND:
-		continue;
+			continue;
+
+		case cmSHORTCUT_END:
+			continue;
 
 		default:
 			Error(ecINTERNAL_ERROR);

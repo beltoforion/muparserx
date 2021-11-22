@@ -33,12 +33,12 @@
 MUP_NAMESPACE_START
 //-----------------------------------------------------------------------------------------------
 //
-// class SCOprtLOrBegin
+// class OprtShortcutLogicOrBegin
 //
 //-----------------------------------------------------------------------------------------------
 
 OprtShortcutLogicOrBegin::OprtShortcutLogicOrBegin(const char_type* szIdent)
-	:IOprtBinShortcut(cmSCBEGIN, szIdent, (int)prLOGIC_OR, oaLEFT)
+	:IOprtBinShortcut(cmSHORTCUT_BEGIN, szIdent, (int)prLOGIC_OR, oaLEFT)
 {}
 
 
@@ -51,12 +51,12 @@ IToken* OprtShortcutLogicOrBegin::Clone() const
 
 //-----------------------------------------------------------------------------------------------
 //
-// class SCOprtLOrEnd
+// class OprtShortcutLogicOrEnd
 //
 //-----------------------------------------------------------------------------------------------
 
 OprtShortcutLogicOrEnd::OprtShortcutLogicOrEnd(const char_type* szIdent)
-	:IOprtBinShortcut(cmSCEND, szIdent, (int)prLOGIC_OR, oaLEFT)
+	:IOprtBinShortcut(cmSHORTCUT_END, szIdent, (int)prLOGIC_OR, oaLEFT)
 {}
 
 
@@ -68,12 +68,12 @@ IToken* OprtShortcutLogicOrEnd::Clone() const
 
 //-----------------------------------------------------------------------------------------------
 //
-// class SCOprtLAndBegin
+// class OprtShortcutLogicAndBegin
 //
 //-----------------------------------------------------------------------------------------------
 
 OprtShortcutLogicAndBegin::OprtShortcutLogicAndBegin(const char_type* szIdent)
-	:IOprtBinShortcut(cmSCBEGIN, szIdent, (int)prLOGIC_AND, oaLEFT)
+	:IOprtBinShortcut(cmSHORTCUT_BEGIN, szIdent, (int)prLOGIC_AND, oaLEFT)
 {}
 
 //-----------------------------------------------------------------------------------------------
@@ -85,12 +85,12 @@ IToken* OprtShortcutLogicAndBegin::Clone() const
 
 //-----------------------------------------------------------------------------------------------
 //
-// class SCOprtLAndBegin
+// class OprtShortcutLogicAndEnd
 //
 //-----------------------------------------------------------------------------------------------
 
 OprtShortcutLogicAndEnd::OprtShortcutLogicAndEnd(const char_type* szIdent)
-	:IOprtBinShortcut(cmSCEND, szIdent, (int)prLOGIC_AND, oaLEFT)
+	:IOprtBinShortcut(cmSHORTCUT_END, szIdent, (int)prLOGIC_AND, oaLEFT)
 {}
 
 //-----------------------------------------------------------------------------------------------
