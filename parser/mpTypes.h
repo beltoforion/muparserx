@@ -65,6 +65,7 @@ class ParserXBase;
 class Value;
 class Variable;
 class TokenReader;
+class ISCOprtBin;
 
 // smart pointer types
 template<typename T>
@@ -130,6 +131,9 @@ typedef std::map<string_type, ptr_tok_type> val_maptype;
 	     to operator identifiers. */
 typedef std::map<string_type, ptr_tok_type> fun_maptype;
 
+/** \breief Type of a container that short circuit operator object pointer*/
+typedef std::map<string_type, ptr_tok_type> sc_maptype;
+
 /** \brief Type of a container that binds Callback object pointer
 	     to operator identifiers. 
 */
@@ -167,24 +171,26 @@ enum ECmdCode
     cmOPRT_BIN          = 13,  ///< Binary operator
     cmOPRT_INFIX        = 14,  ///< Infix operator
     cmOPRT_POSTFIX      = 15,  ///< Postfix operator
-    cmEOE               = 16,  ///< End of expression
+    cmSCBEGIN           = 16,  ///< Short circuit operator && / ||
+    cmSCEND             = 17,  ///< Short circuit operator && / ||
+    cmEOE               = 18,  ///< End of expression
 
     // The following codes are reserved in case i will ever turn this
     // into a scripting language
-    cmSCRIPT_NEWLINE    = 17,  ///< Newline
-    cmSCRIPT_COMMENT    = 18,
-    cmSCRIPT_WHILE      = 19,  ///< Reserved for future use
-    cmSCRIPT_GOTO       = 20,  ///< Reserved for future use
-    cmSCRIPT_LABEL      = 21,  ///< Reserved for future use
-    cmSCRIPT_FOR        = 22,  ///< Reserved for future use
-    cmSCRIPT_IF         = 23,  ///< Reserved for future use
-    cmSCRIPT_ELSE       = 24,  ///< Reserved for future use
-    cmSCRIPT_ELSEIF     = 25,  ///< Reserved for future use
-    cmSCRIPT_ENDIF      = 26,  ///< Reserved for future use
-    cmSCRIPT_FUNCTION   = 27,  ///< Reserved for future use
+    cmSCRIPT_NEWLINE    = 19,  ///< Newline
+    cmSCRIPT_COMMENT    = 20,
+    cmSCRIPT_WHILE      = 21,  ///< Reserved for future use
+    cmSCRIPT_GOTO       = 22,  ///< Reserved for future use
+    cmSCRIPT_LABEL      = 23,  ///< Reserved for future use
+    cmSCRIPT_FOR        = 24,  ///< Reserved for future use
+    cmSCRIPT_IF         = 25,  ///< Reserved for future use
+    cmSCRIPT_ELSE       = 26,  ///< Reserved for future use
+    cmSCRIPT_ELSEIF     = 27,  ///< Reserved for future use
+    cmSCRIPT_ENDIF      = 28,  ///< Reserved for future use
+    cmSCRIPT_FUNCTION   = 29,  ///< Reserved for future use
 
     // misc codes
-    cmUNKNOWN           = 28,  ///< uninitialized item
+    cmUNKNOWN           = 30,  ///< uninitialized item
     cmCOUNT                    ///< Dummy entry for counting the enum values
 }; // ECmdCode
 

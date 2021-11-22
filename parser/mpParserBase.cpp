@@ -43,6 +43,7 @@
 #include "mpDefines.h"
 #include "mpIfThenElse.h"
 #include "mpScriptTokens.h"
+#include "mpSCOprtBin.h"
 
 using namespace std;
 
@@ -66,6 +67,8 @@ const char_type* g_sCmdCode[] = {
 	_T("OPRT_BIN         "),
 	_T("OPRT_IFX         "),
 	_T("OPRT_PFX         "),
+	_T("SC_BEGIN         "),
+	_T("SC_END           "),
 	_T("END              "),
 	_T("SCR_ENDL         "),
 	_T("SCR_CMT          "),
@@ -112,6 +115,7 @@ ParserXBase::ParserXBase()
 	, m_OprtDef()
 	, m_valDef()
 	, m_varDef()
+	, m_ScOprtDef()
 	, m_pParserEngine(&ParserXBase::ParseFromString)
 	, m_pTokenReader()
 	, m_valDynVarShadow()
@@ -139,6 +143,7 @@ ParserXBase::ParserXBase(const ParserXBase& a_Parser)
 	, m_OprtDef()
 	, m_valDef()
 	, m_varDef()
+	, m_ScOprtDef()
 	, m_pParserEngine(&ParserXBase::ParseFromString)
 	, m_pTokenReader()
 	, m_valDynVarShadow()
@@ -206,6 +211,7 @@ void ParserXBase::Assign(const ParserXBase& ref)
 	m_valDef = ref.m_valDef;
 	m_valDynVarShadow = ref.m_valDynVarShadow;
 	m_varDef = ref.m_varDef;             // Copy user defined variables
+	m_ScOprtDef = ref.m_ScOprtDef;
 
 	// Copy charsets
 	m_sNameChars = ref.m_sNameChars;
@@ -411,6 +417,7 @@ void ParserXBase::CheckForEntityExistence(const string_type& ident, EErrorCodes 
 		IsConstDefined(ident) ||
 		IsFunDefined(ident) ||
 		IsOprtDefined(ident) ||
+		IsScOprtDefined(ident) ||
 		IsPostfixOprtDefined(ident) ||
 		IsInfixOprtDefined(ident))
 		throw ParserError(ErrorContext(error_code, 0, ident));
@@ -462,6 +469,19 @@ void ParserXBase::DefineOprt(const TokenPtr<IOprtBin>& oprt)
 
 	oprt->SetParent(this);
 	m_OprtDef[oprt->GetIdent()] = ptr_tok_type(oprt->Clone());
+}
+
+//---------------------------------------------------------------------------
+/** \brief Define a short circuit operator.
+		\param a_pCallback Pointer to the callback object
+		*/
+void ParserXBase::DefineSCOprt(const TokenPtr<ISCOprtBin> &oprt)
+{
+	if (IsScOprtDefined(oprt->GetIdent()))
+		throw ParserError(ErrorContext(ecFUNOPRT_DEFINED, 0, oprt->GetIdent()));
+
+	//oprt->SetParent(this);
+	m_ScOprtDef[oprt->GetIdent()] = ptr_tok_type(oprt->Clone());
 }
 
 //---------------------------------------------------------------------------
@@ -523,6 +543,12 @@ void ParserXBase::RemoveOprt(const string_type& ident)
 	ReInit();
 }
 
+void ParserXBase::RemoveSCOprt(const string_type &ident)
+{
+	m_ScOprtDef.erase(ident);
+	ReInit();
+}
+
 //---------------------------------------------------------------------------
 void ParserXBase::RemovePostfixOprt(const string_type& ident)
 {
@@ -560,6 +586,13 @@ bool ParserXBase::IsOprtDefined(const string_type& ident) const
 {
 	return m_OprtDef.find(ident) != m_OprtDef.end();
 }
+
+//---------------------------------------------------------------------------
+bool ParserXBase::IsScOprtDefined(const string_type &ident) const
+{
+	return m_ScOprtDef.find(ident) != m_ScOprtDef.end();
+}
+
 
 //---------------------------------------------------------------------------
 bool ParserXBase::IsPostfixOprtDefined(const string_type& ident) const
@@ -646,6 +679,7 @@ void ParserXBase::ApplyRemainingOprt(Stack<ptr_tok_type>& stOpt) const
 		{
 		case  cmOPRT_INFIX:
 		case  cmOPRT_BIN:    ApplyFunc(stOpt, 2);   break;
+		case  cmSCEND:       ApplyScOrpt(stOpt);    break;
 		case  cmELSE:        ApplyIfElse(stOpt);    break;
 		default:             Error(ecINTERNAL_ERROR);
 		} // switch operator token type
@@ -671,6 +705,15 @@ void ParserXBase::ApplyFunc(Stack<ptr_tok_type>& a_stOpt,
 	pFun->SetNumArgsPresent(iArgCount);
 
 	m_nPos -= (iArgCount - 1);
+	m_rpn.Add(tok);
+}
+
+void ParserXBase::ApplyScOrpt(Stack<ptr_tok_type> &a_stOpt) const
+{
+	if (a_stOpt.empty())
+		return;
+	ptr_tok_type tok = a_stOpt.pop();
+	m_nPos -= 1;
 	m_rpn.Add(tok);
 }
 
@@ -866,6 +909,7 @@ void ParserXBase::CreateRPN() const
 
 		case  cmIF:
 		case  cmOPRT_BIN:
+		case  cmSCBEGIN:
 		{
 			while (stOpt.size() &&
 				stOpt.top()->GetCode() != cmBO &&
@@ -896,16 +940,33 @@ void ParserXBase::CreateRPN() const
 				{
 					break;
 				}
-
+				if (pOprt1->GetCode() == cmSCEND) {
+					ApplyScOrpt(stOpt);
+					break;
+				} 
 				// apply the operator now
 				// (binary operators are identic to functions with two arguments)
 				ApplyFunc(stOpt, 2);
 			} // while ( ... )
 
-			if (pTok->GetCode() == cmIF)
+			if (pTok->GetCode() == cmIF || pTok->GetCode() == cmSCBEGIN)
 				m_rpn.Add(pTok);
-
-			stOpt.push(pTok);
+			// 短路求值开始标记
+			if (pTok->GetCode() == cmSCBEGIN)
+			{
+				if(pTok->AsIPrecedence()->GetPri() == prLOGIC_OR)
+				{
+					stOpt.push(ptr_tok_type(new SCOprtLOrEnd));
+				} 
+				else
+				{
+					stOpt.push(ptr_tok_type(new SCOprtLAndEnd));
+				}
+			} 
+			else 
+			{
+				stOpt.push(pTok);
+			}
 		}
 		break;
 
@@ -1137,6 +1198,32 @@ const IValue& ParserXBase::ParseFromRPN() const
 
 		case cmENDIF:
 			continue;
+		case cmSCBEGIN:
+			if (pTok->AsIPrecedence()->GetPri() == prLOGIC_OR)
+			{
+				// occur short circuit feature
+				if (pStack[sidx]->GetBool() == true) 
+				{
+					i += static_cast<ISCOprtBin*>(pTok)->GetOffset();
+				} else {
+					// pop stack ,becuase this value had used
+					--sidx;
+				}
+			}
+			else // logic and
+			{
+				// occur short circuit feature
+				if (pStack[sidx]->GetBool() == false) 
+				{
+					i += static_cast<ISCOprtBin*>(pTok)->GetOffset();
+				} else {
+					// pop stack ,becuase this value had used
+					--sidx;
+				}
+			}
+		continue;
+		case cmSCEND:
+		continue;
 
 		default:
 			Error(ecINTERNAL_ERROR);
@@ -1221,6 +1308,16 @@ void ParserXBase::ClearPostfixOprt()
 void ParserXBase::ClearOprt()
 {
 	m_OprtDef.clear();
+	ReInit();
+}
+
+//------------------------------------------------------------------------------
+/** \brief Clear all user defined binary operators.
+	  \throw nothrow
+	  */
+void ParserXBase::ClearSCOprt()
+{
+	m_ScOprtDef.clear();
 	ReInit();
 }
 

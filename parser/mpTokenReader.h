@@ -81,6 +81,7 @@ MUP_NAMESPACE_START
     bool IsFunTok(ptr_tok_type &t);
     bool IsPostOpTok(ptr_tok_type &t);
     bool IsOprt(ptr_tok_type &t);
+    bool IsScOprt(ptr_tok_type &a_Tok);
     bool IsValTok(ptr_tok_type &t);
     bool IsVarOrConstTok(ptr_tok_type &t);
     bool IsUndefVarTok(ptr_tok_type &t);
@@ -102,6 +103,7 @@ MUP_NAMESPACE_START
 
     mutable fun_maptype  *m_pFunDef;
     mutable oprt_bin_maptype *m_pOprtDef;
+    mutable sc_maptype *m_pScOprtDef;
     mutable oprt_ifx_maptype *m_pInfixOprtDef;
     mutable oprt_pfx_maptype *m_pPostOprtDef;
     mutable val_maptype  *m_pConstDef;

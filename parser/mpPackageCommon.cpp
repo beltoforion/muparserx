@@ -34,6 +34,7 @@
 #include "mpFuncNonCmplx.h"
 #include "mpFuncCommon.h"
 #include "mpOprtBinCommon.h"
+#include "mpSCOprtBin.h"
 #include "mpOprtBinAssign.h"
 #include "mpOprtPostfixCommon.h"
 #include "mpValReader.h"
@@ -89,8 +90,8 @@ void PackageCommon::AddToParser(ParserXBase *pParser)
   pParser->DefineFun(new FunParserID);
 
   // integer package
-  pParser->DefineOprt(new OprtLAnd);
-  pParser->DefineOprt(new OprtLOr);
+  //pParser->DefineOprt(new OprtLAnd);
+  //pParser->DefineOprt(new OprtLOr);
   pParser->DefineOprt(new OprtAnd);
   pParser->DefineOprt(new OprtOr);
   pParser->DefineOprt(new OprtShr);
@@ -103,8 +104,8 @@ void PackageCommon::AddToParser(ParserXBase *pParser)
   pParser->DefineOprt(new OprtGT);
   pParser->DefineOprt(new OprtEQ);
   pParser->DefineOprt(new OprtNEQ);
-  pParser->DefineOprt(new OprtLAnd(_T("and")));  // add logic and with a different identifier
-  pParser->DefineOprt(new OprtLOr(_T("or")));    // add logic and with a different identifier
+  //pParser->DefineOprt(new OprtLAnd(_T("and")));  // add logic and with a different identifier
+  //pParser->DefineOprt(new OprtLOr(_T("or")));    // add logic and with a different identifier
 //  pParser->DefineOprt(new OprtBXor);
 
   // assignement operators
@@ -120,6 +121,12 @@ void PackageCommon::AddToParser(ParserXBase *pParser)
 
   // postfix operators
   pParser->DefinePostfixOprt(new OprtFact);
+
+  // short circit operatoras
+  pParser->DefineSCOprt(new SCOprtLOrBegin);
+  pParser->DefineSCOprt(new SCOprtLAndBegin);
+  pParser->DefineSCOprt(new SCOprtLOrBegin(_T("or")));
+  pParser->DefineSCOprt(new SCOprtLAndBegin(_T("and")));
 // <ibg 20130708> commented: "%" is a reserved sign for either the 
 //                modulo operator or comment lines. 
 //  pParser->DefinePostfixOprt(new OprtPercentage);

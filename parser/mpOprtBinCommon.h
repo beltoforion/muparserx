@@ -164,32 +164,6 @@ public:
 };
 
 //------------------------------------------------------------------------------
-/** \brief Callback class for a logical or operator.
-    \ingroup binop
-    */
-class OprtLOr : public IOprtBin
-{
-public:
-    OprtLOr(const char_type *szIdent = _T("||"));
-    virtual void Eval(ptr_val_type& ret, const ptr_val_type *a_pArg, int) override;
-    virtual const char_type* GetDesc() const override;
-    virtual IToken* Clone() const override;
-};
-
-//------------------------------------------------------------------------------
-/** \brief Callback class for a logical and operator.
-    \ingroup binop
-    */
-class OprtLAnd : public IOprtBin
-{
-public:
-    OprtLAnd(const char_type *szIdent = _T("&&"));
-    virtual void Eval(ptr_val_type& ret, const ptr_val_type *a_pArg, int) override;
-    virtual const char_type* GetDesc() const override;
-    virtual IToken* Clone() const override;
-};
-
-//------------------------------------------------------------------------------
 /** \brief Callback class for the shift left operator.
     \ingroup binop
     */
