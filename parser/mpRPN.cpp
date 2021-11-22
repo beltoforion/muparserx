@@ -148,7 +148,8 @@ void RPN::Finalize()
 		case cmSHORTCUT_END:
 			idx = stScBeg.pop();
 			static_cast<IOprtBinShortcut*>(m_vRPN[idx].Get())->SetOffset(i - idx);
-		break;
+			break;
+
 		default:
 			continue;
 		}
