@@ -122,7 +122,7 @@ void PackageCommon::AddToParser(ParserXBase *pParser)
   // postfix operators
   pParser->DefinePostfixOprt(new OprtFact);
 
-  // short circit operators
+  // locic short circit operators
   pParser->DefineOprt(new OprtShortcutLogicOrBegin);
   pParser->DefineOprt(new OprtShortcutLogicOrBegin(_T("or")));
 

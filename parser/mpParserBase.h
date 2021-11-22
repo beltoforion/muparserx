@@ -174,7 +174,7 @@ MUP_NAMESPACE_START
     void InitTokenReader();
 
     void ApplyFunc(Stack<ptr_tok_type> &a_stOpt, int a_iArgCount) const;
-    void ApplyScOrpt(Stack<ptr_tok_type> &a_stOpt) const;
+    void ApplyOrptShortcut(Stack<ptr_tok_type> &a_stOpt) const;
     void ApplyIfElse(Stack<ptr_tok_type> &a_stOpt) const;
     void ApplyRemainingOprt(Stack<ptr_tok_type> &a_stOpt) const;
     const IValue& ParseFromString() const; 

@@ -666,7 +666,7 @@ void ParserXBase::ApplyRemainingOprt(Stack<ptr_tok_type>& stOpt) const
 		{
 		case  cmOPRT_INFIX:
 		case  cmOPRT_BIN:      ApplyFunc(stOpt, 2);   break;
-		case  cmSHORTCUT_END:  ApplyScOrpt(stOpt);    break;
+		case  cmSHORTCUT_END:  ApplyOrptShortcut(stOpt);    break;
 		case  cmELSE:          ApplyIfElse(stOpt);    break;
 		default:               Error(ecINTERNAL_ERROR);
 		} // switch operator token type
@@ -695,7 +695,7 @@ void ParserXBase::ApplyFunc(Stack<ptr_tok_type>& a_stOpt,
 	m_rpn.Add(tok);
 }
 
-void ParserXBase::ApplyScOrpt(Stack<ptr_tok_type> &a_stOpt) const
+void ParserXBase::ApplyOrptShortcut(Stack<ptr_tok_type> &a_stOpt) const
 {
 	if (a_stOpt.empty())
 		return;
@@ -928,7 +928,7 @@ void ParserXBase::CreateRPN() const
 					break;
 				}
 				if (pOprt1->GetCode() == cmSHORTCUT_END) {
-					ApplyScOrpt(stOpt);
+					ApplyOrptShortcut(stOpt);
 					break;
 				} 
 				// apply the operator now
@@ -944,7 +944,7 @@ void ParserXBase::CreateRPN() const
 				if(pTok->AsIPrecedence()->GetPri() == prLOGIC_OR)
 				{
 					stOpt.push(ptr_tok_type(new OprtShortcutLogicOrEnd));
-				} 
+				}
 				else
 				{
 					stOpt.push(ptr_tok_type(new OprtShortcutLogicAndEnd));
