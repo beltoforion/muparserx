@@ -34,7 +34,7 @@
 #include "mpFuncNonCmplx.h"
 #include "mpFuncCommon.h"
 #include "mpOprtBinCommon.h"
-#include "mpSCOprtBin.h"
+#include "mpOprtBinShortCut.h"
 #include "mpOprtBinAssign.h"
 #include "mpOprtPostfixCommon.h"
 #include "mpValReader.h"
@@ -122,15 +122,12 @@ void PackageCommon::AddToParser(ParserXBase *pParser)
   // postfix operators
   pParser->DefinePostfixOprt(new OprtFact);
 
-  // short circit operatoras
-  pParser->DefineSCOprt(new SCOprtLOrBegin);
-  pParser->DefineSCOprt(new SCOprtLAndBegin);
-  pParser->DefineSCOprt(new SCOprtLOrBegin(_T("or")));
-  pParser->DefineSCOprt(new SCOprtLAndBegin(_T("and")));
-// <ibg 20130708> commented: "%" is a reserved sign for either the 
-//                modulo operator or comment lines. 
-//  pParser->DefinePostfixOprt(new OprtPercentage);
-// </ibg>
+  // short circit operators
+  pParser->DefineOprt(new OprtShortcutLogicOrBegin);
+  pParser->DefineOprt(new OprtShortcutLogicOrBegin(_T("or")));
+
+  pParser->DefineOprt(new OprtShortcutLogicAndBegin);
+  pParser->DefineOprt(new OprtShortcutLogicAndBegin(_T("and")));
 }
 
 //------------------------------------------------------------------------------

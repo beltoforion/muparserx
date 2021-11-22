@@ -13,3 +13,7 @@
 *.ipch
 .vs/*
 out/*
+CMakeFiles/*
+CMakeCache.txt
+*.a
+example

@@ -9,7 +9,7 @@
 	|  Y Y  \  |  /    |     / __ \|  | \/\___ \\  ___/|  | \/     \
 	|__|_|  /____/|____|    (____  /__|  /____  >\___  >__| /___/\  \
 		  \/                     \/           \/     \/           \_/
-	Copyright (C) 2016, Ingo Berg
+	Copyright (C) 2021 Ingo Berg, et al.
 	All rights reserved.
 
 	Redistribution and use in source and binary forms, with or without
@@ -32,7 +32,7 @@
 	ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 	POSSIBILITY OF SUCH DAMAGE.
 	</pre>
-	*/
+*/
 
 #include "mpTokenReader.h"
 
@@ -93,7 +93,7 @@ void TokenReader::Assign(const TokenReader &obj)
 	m_pPostOprtDef = obj.m_pPostOprtDef;
 	m_pInfixOprtDef = obj.m_pInfixOprtDef;
 	m_pOprtDef = obj.m_pOprtDef;
-	m_pScOprtDef = obj.m_pScOprtDef;
+	m_pOprtShortcutDef = obj.m_pOprtShortcutDef;
 	m_pFunDef = obj.m_pFunDef;
 	m_pConstDef = obj.m_pConstDef;
 	m_pDynVarShadowValues = obj.m_pDynVarShadowValues;
@@ -130,7 +130,7 @@ TokenReader::TokenReader(ParserXBase *a_pParent)
 	, m_eLastTokCode(cmUNKNOWN)
 	, m_pFunDef(nullptr)
 	, m_pOprtDef(nullptr)
-	, m_pScOprtDef(nullptr)
+	, m_pOprtShortcutDef(nullptr)
 	, m_pInfixOprtDef(nullptr)
 	, m_pPostOprtDef(nullptr)
 	, m_pConstDef(nullptr)
@@ -403,7 +403,7 @@ void TokenReader::SetParent(ParserXBase *a_pParent)
 	m_pParser = a_pParent;
 	m_pFunDef = &a_pParent->m_FunDef;
 	m_pOprtDef = &a_pParent->m_OprtDef;
-	m_pScOprtDef = &a_pParent->m_ScOprtDef;
+	m_pOprtShortcutDef = &a_pParent->m_OprtShortcutDef;
 	m_pInfixOprtDef = &a_pParent->m_InfixOprtDef;
 	m_pPostOprtDef = &a_pParent->m_PostOprtDef;
 	m_pVarDef = &a_pParent->m_varDef;
@@ -881,7 +881,7 @@ bool TokenReader::IsScOprt(ptr_tok_type &a_Tok)
 	if (iEnd == m_nPos)
 		return false;
 
-	sc_maptype::reverse_iterator item;
+	oprt_bin_shortcut_maptype::reverse_iterator item;
 	try
 	{
 		// Note:
@@ -890,7 +890,7 @@ bool TokenReader::IsScOprt(ptr_tok_type &a_Tok)
 		// are part of long token names (like: "add123") will be found instead
 		// of the long ones.
 		// Length sorting is done with ascending length so we use a reverse iterator here.
-		for (item = m_pScOprtDef->rbegin(); item != m_pScOprtDef->rend(); ++item)
+		for (item = m_pOprtShortcutDef->rbegin(); item != m_pOprtShortcutDef->rend(); ++item)
 		{
 			if (sTok.find(item->first) != 0)
 				continue;

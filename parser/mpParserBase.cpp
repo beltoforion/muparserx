@@ -8,7 +8,7 @@
 	|  Y Y  \  |  /    |     / __ \|  | \/\___ \\  ___/|  | \/     \
 	|__|_|  /____/|____|    (____  /__|  /____  >\___  >__| /___/\  \
 		  \/                     \/           \/     \/           \_/
-	Copyright (C) 2016 Ingo Berg
+	Copyright (C) 2021 Ingo Berg
 	All rights reserved.
 
 	Redistribution and use in source and binary forms, with or without
@@ -43,7 +43,7 @@
 #include "mpDefines.h"
 #include "mpIfThenElse.h"
 #include "mpScriptTokens.h"
-#include "mpSCOprtBin.h"
+#include "mpOprtBinShortCut.h"
 
 using namespace std;
 
@@ -113,9 +113,9 @@ ParserXBase::ParserXBase()
 	, m_PostOprtDef()
 	, m_InfixOprtDef()
 	, m_OprtDef()
+	, m_OprtShortcutDef()
 	, m_valDef()
 	, m_varDef()
-	, m_ScOprtDef()
 	, m_pParserEngine(&ParserXBase::ParseFromString)
 	, m_pTokenReader()
 	, m_valDynVarShadow()
@@ -141,9 +141,9 @@ ParserXBase::ParserXBase(const ParserXBase& a_Parser)
 	, m_PostOprtDef()
 	, m_InfixOprtDef()
 	, m_OprtDef()
+	, m_OprtShortcutDef()
 	, m_valDef()
 	, m_varDef()
-	, m_ScOprtDef()
 	, m_pParserEngine(&ParserXBase::ParseFromString)
 	, m_pTokenReader()
 	, m_valDynVarShadow()
@@ -205,13 +205,13 @@ void ParserXBase::Assign(const ParserXBase& ref)
 	m_pTokenReader.reset(ref.m_pTokenReader->Clone(this));
 
 	m_OprtDef = ref.m_OprtDef;
+	m_OprtShortcutDef = ref.m_OprtShortcutDef;
 	m_FunDef = ref.m_FunDef;
 	m_PostOprtDef = ref.m_PostOprtDef;
 	m_InfixOprtDef = ref.m_InfixOprtDef;
 	m_valDef = ref.m_valDef;
 	m_valDynVarShadow = ref.m_valDynVarShadow;
 	m_varDef = ref.m_varDef;             // Copy user defined variables
-	m_ScOprtDef = ref.m_ScOprtDef;
 
 	// Copy charsets
 	m_sNameChars = ref.m_sNameChars;
@@ -417,7 +417,6 @@ void ParserXBase::CheckForEntityExistence(const string_type& ident, EErrorCodes 
 		IsConstDefined(ident) ||
 		IsFunDefined(ident) ||
 		IsOprtDefined(ident) ||
-		IsScOprtDefined(ident) ||
 		IsPostfixOprtDefined(ident) ||
 		IsInfixOprtDefined(ident))
 		throw ParserError(ErrorContext(error_code, 0, ident));
@@ -475,13 +474,13 @@ void ParserXBase::DefineOprt(const TokenPtr<IOprtBin>& oprt)
 /** \brief Define a short circuit operator.
 		\param a_pCallback Pointer to the callback object
 		*/
-void ParserXBase::DefineSCOprt(const TokenPtr<ISCOprtBin> &oprt)
+void ParserXBase::DefineOprt(const TokenPtr<IOprtBinShortcut> &oprt)
 {
-	if (IsScOprtDefined(oprt->GetIdent()))
+	if (IsOprtDefined(oprt->GetIdent()))
 		throw ParserError(ErrorContext(ecFUNOPRT_DEFINED, 0, oprt->GetIdent()));
 
 	//oprt->SetParent(this);
-	m_ScOprtDef[oprt->GetIdent()] = ptr_tok_type(oprt->Clone());
+	m_OprtShortcutDef[oprt->GetIdent()] = ptr_tok_type(oprt->Clone());
 }
 
 //---------------------------------------------------------------------------
@@ -540,12 +539,7 @@ void ParserXBase::RemoveFun(const string_type& ident)
 void ParserXBase::RemoveOprt(const string_type& ident)
 {
 	m_OprtDef.erase(ident);
-	ReInit();
-}
-
-void ParserXBase::RemoveSCOprt(const string_type &ident)
-{
-	m_ScOprtDef.erase(ident);
+	m_OprtShortcutDef.erase(ident);
 	ReInit();
 }
 
@@ -584,15 +578,8 @@ bool ParserXBase::IsFunDefined(const string_type& ident) const
 //---------------------------------------------------------------------------
 bool ParserXBase::IsOprtDefined(const string_type& ident) const
 {
-	return m_OprtDef.find(ident) != m_OprtDef.end();
+	return m_OprtDef.find(ident) != m_OprtDef.end() || m_OprtShortcutDef.find(ident) != m_OprtShortcutDef.end();
 }
-
-//---------------------------------------------------------------------------
-bool ParserXBase::IsScOprtDefined(const string_type &ident) const
-{
-	return m_ScOprtDef.find(ident) != m_ScOprtDef.end();
-}
-
 
 //---------------------------------------------------------------------------
 bool ParserXBase::IsPostfixOprtDefined(const string_type& ident) const
@@ -956,11 +943,11 @@ void ParserXBase::CreateRPN() const
 			{
 				if(pTok->AsIPrecedence()->GetPri() == prLOGIC_OR)
 				{
-					stOpt.push(ptr_tok_type(new SCOprtLOrEnd));
+					stOpt.push(ptr_tok_type(new OprtShortcutLogicOrEnd));
 				} 
 				else
 				{
-					stOpt.push(ptr_tok_type(new SCOprtLAndEnd));
+					stOpt.push(ptr_tok_type(new OprtShortcutLogicAndEnd));
 				}
 			} 
 			else 
@@ -1204,7 +1191,7 @@ const IValue& ParserXBase::ParseFromRPN() const
 				// occur short circuit feature
 				if (pStack[sidx]->GetBool() == true) 
 				{
-					i += static_cast<ISCOprtBin*>(pTok)->GetOffset();
+					i += static_cast<IOprtBinShortcut*>(pTok)->GetOffset();
 				} else {
 					// pop stack ,becuase this value had used
 					--sidx;
@@ -1215,7 +1202,7 @@ const IValue& ParserXBase::ParseFromRPN() const
 				// occur short circuit feature
 				if (pStack[sidx]->GetBool() == false) 
 				{
-					i += static_cast<ISCOprtBin*>(pTok)->GetOffset();
+					i += static_cast<IOprtBinShortcut*>(pTok)->GetOffset();
 				} else {
 					// pop stack ,becuase this value had used
 					--sidx;
@@ -1308,16 +1295,7 @@ void ParserXBase::ClearPostfixOprt()
 void ParserXBase::ClearOprt()
 {
 	m_OprtDef.clear();
-	ReInit();
-}
-
-//------------------------------------------------------------------------------
-/** \brief Clear all user defined binary operators.
-	  \throw nothrow
-	  */
-void ParserXBase::ClearSCOprt()
-{
-	m_ScOprtDef.clear();
+	m_OprtShortcutDef.clear();
 	ReInit();
 }
 

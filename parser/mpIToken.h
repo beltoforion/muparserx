@@ -65,7 +65,7 @@ MUP_NAMESPACE_START
   friend class TokenPtr<Value>;
   friend class TokenPtr<Variable>;
   friend class TokenPtr<ICallback>;
-  friend class TokenPtr<ISCOprtBin>;
+  friend class TokenPtr<IOprtBinShortcut>;
 
   public:
 

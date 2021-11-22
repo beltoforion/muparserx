@@ -1,3 +1,6 @@
+#ifndef MUP_DEFINES_H
+#define MUP_DEFINES_H
+
 /** \file
     \brief A file containing macros used by muParserX
 
@@ -8,8 +11,8 @@
   |  Y Y  \  |  /    |     / __ \|  | \/\___ \\  ___/|  | \/     \ 
   |__|_|  /____/|____|    (____  /__|  /____  >\___  >__| /___/\  \
         \/                     \/           \/     \/           \_/
-                                       Copyright (C) 2016, Ingo Berg
-                                       All rights reserved.
+  Copyright (C) 2021 Ingo Berg, et. al.
+  All rights reserved.
 
   Redistribution and use in source and binary forms, with or without 
   modification, are permitted provided that the following conditions are met:
@@ -32,11 +35,7 @@
   POSSIBILITY OF SUCH DAMAGE.
 </pre>
 */
-#ifndef MUP_DEFINES_H
-#define MUP_DEFINES_H
-
 #include <cassert>
-
 
 #if defined(_UNICODE)
   #if !defined(_T)
@@ -57,7 +56,7 @@
 #endif
 
 /** \brief A macro containing the version of muParserX. */
-#define MUP_PARSER_VERSION _T("4.0.9 (2020-06-19; Dev)")
+#define MUP_PARSER_VERSION _T("4.0.10 (2021-11-22)")
 
 /** \brief A macro for setting the parser namespace. */
 #define MUP_NAMESPACE_START namespace mup {

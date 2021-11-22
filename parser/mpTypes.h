@@ -65,7 +65,7 @@ class ParserXBase;
 class Value;
 class Variable;
 class TokenReader;
-class ISCOprtBin;
+class IOprtBinShortcut;
 
 // smart pointer types
 template<typename T>
@@ -132,7 +132,7 @@ typedef std::map<string_type, ptr_tok_type> val_maptype;
 typedef std::map<string_type, ptr_tok_type> fun_maptype;
 
 /** \breief Type of a container that short circuit operator object pointer*/
-typedef std::map<string_type, ptr_tok_type> sc_maptype;
+typedef std::map<string_type, ptr_tok_type> oprt_bin_shortcut_maptype;
 
 /** \brief Type of a container that binds Callback object pointer
 	     to operator identifiers. 

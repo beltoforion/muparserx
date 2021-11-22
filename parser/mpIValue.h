@@ -1,3 +1,6 @@
+#ifndef MUP_IVALUE_H
+#define MUP_IVALUE_H
+
 /** \file
     \brief Definition of the virtual base class used for all parser values.
 
@@ -8,11 +11,7 @@
   |  Y Y  \  |  /    |     / __ \|  | \/\___ \\  ___/|  | \/     \ 
   |__|_|  /____/|____|    (____  /__|  /____  >\___  >__| /___/\  \
         \/                     \/           \/     \/           \_/
-                                       Copyright (C) 2016 Ingo Berg
-                                       All rights reserved.
-
-  muParserX - A C++ math parser library with array and string support
-  Copyright (c) 2016, Ingo Berg
+  Copyright (C) 2021 Ingo Berg, et al.
   All rights reserved.
 
   Redistribution and use in source and binary forms, with or without 
@@ -36,9 +35,6 @@
   POSSIBILITY OF SUCH DAMAGE.
 </pre>
 */
-#ifndef MUP_IVALUE_H
-#define MUP_IVALUE_H
-
 #include "mpIToken.h"
 #include "mpFwdDecl.h"
 

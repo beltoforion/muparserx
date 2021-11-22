@@ -9,8 +9,8 @@
   |  Y Y  \  |  /    |     / __ \|  | \/\___ \\  ___/|  | \/     \ 
   |__|_|  /____/|____|    (____  /__|  /____  >\___  >__| /___/\  \
         \/                     \/           \/     \/           \_/
-                                       Copyright (C) 2016, Ingo Berg
-                                       All rights reserved.
+  Copyright (C) 2021 Ingo Berg, et al.
+  All rights reserved.
 
   Redistribution and use in source and binary forms, with or without 
   modification, are permitted provided that the following conditions are met:
@@ -103,7 +103,7 @@ MUP_NAMESPACE_START
 
     mutable fun_maptype  *m_pFunDef;
     mutable oprt_bin_maptype *m_pOprtDef;
-    mutable sc_maptype *m_pScOprtDef;
+    mutable oprt_bin_shortcut_maptype *m_pOprtShortcutDef;
     mutable oprt_ifx_maptype *m_pInfixOprtDef;
     mutable oprt_pfx_maptype *m_pPostOprtDef;
     mutable val_maptype  *m_pConstDef;

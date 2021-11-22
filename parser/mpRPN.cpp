@@ -35,11 +35,11 @@
 #include "mpRPN.h"
 #include "mpIToken.h"
 #include "mpICallback.h"
+#include "mpIOprtBinShortcut.h"
 #include "mpError.h"
 #include "mpStack.h"
 #include "mpIfThenElse.h"
 #include "mpScriptTokens.h"
-#include "mpISCOprt.h"
 
 MUP_NAMESPACE_START
 
@@ -145,7 +145,7 @@ void RPN::Finalize()
 		break;
 		case cmSCEND:
 			idx = stScBeg.pop();
-			static_cast<ISCOprtBin*>(m_vRPN[idx].Get())->SetOffset(i - idx);
+			static_cast<IOprtBinShortcut*>(m_vRPN[idx].Get())->SetOffset(i - idx);
 		break;
 		default:
 			continue;
