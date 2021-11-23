@@ -12,6 +12,11 @@ The evaluation of a mathematical expression is a standard task required in many 
 
 For details please consult the [muparserx documentation](https://beltoforion.de/en/muparserx)
 
+V4.0.11 (20211123)
+-----------------
+Bugfixes:
+  - Issue 112:  COmpilation issue due to an invalid header file name
+ 
 V4.0.10 (20211122)
 -----------------
 Bugfixes:
