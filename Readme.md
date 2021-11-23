@@ -15,7 +15,7 @@ For details please consult the [muparserx documentation](https://beltoforion.de/
 V4.0.11 (20211123)
 -----------------
 Bugfixes:
-  - Issue 112:  COmpilation issue due to an invalid header file name
+  - Issue 112:  Compilation issue due to an invalid header file name
  
 V4.0.10 (20211122)
 -----------------
