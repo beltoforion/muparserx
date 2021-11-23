@@ -1,37 +1,33 @@
 /*
                __________                                 ____  ___
-               _____  __ _\______   \_____ _______  ______ __________\   \/  /
-               /     \|  |  \     ___/\__  \\_  __ \/  ___// __ \_  __ \     /
-               |  Y Y  \  |  /    |     / __ \|  | \/\___ \\  ___/|  | \/     \
-               |__|_|  /____/|____|    (____  /__|  /____  >\___  >__| /___/\  \
-               \/                     \/           \/     \/           \_/
-               Copyright (C) 2016 Ingo Berg
-               All rights reserved.
+    _____  __ _\______   \_____ _______  ______ __________\   \/  /
+    /     \|  |  \     ___/\__  \\_  __ \/  ___// __ \_  __ \     /
+    |  Y Y  \  |  /    |     / __ \|  | \/\___ \\  ___/|  | \/     \
+    |__|_|  /____/|____|    (____  /__|  /____  >\___  >__| /___/\  \
+          \/                     \/           \/     \/           \_/
+    Copyright (C) 2021 Ingo Berg, et al.
+    All rights reserved.
 
-               muParserX - A C++ math parser library with array and string support
-               Copyright (c) 2016, Ingo Berg
-               All rights reserved.
+    Redistribution and use in source and binary forms, with or without
+    modification, are permitted provided that the following conditions are met:
 
-               Redistribution and use in source and binary forms, with or without
-               modification, are permitted provided that the following conditions are met:
+    * Redistributions of source code must retain the above copyright notice,
+    this list of conditions and the following disclaimer.
+    * Redistributions in binary form must reproduce the above copyright notice,
+    this list of conditions and the following disclaimer in the documentation
+    and/or other materials provided with the distribution.
 
-               * Redistributions of source code must retain the above copyright notice,
-               this list of conditions and the following disclaimer.
-               * Redistributions in binary form must reproduce the above copyright notice,
-               this list of conditions and the following disclaimer in the documentation
-               and/or other materials provided with the distribution.
-
-               THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
-               ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
-               WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
-               IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
-               INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
-               NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
-               PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
-               WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
-               ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
-               POSSIBILITY OF SUCH DAMAGE.
-               */
+    THIS SOFTWARE IS PROVIDED BY THE COPYRIGHT HOLDERS AND CONTRIBUTORS "AS IS" AND
+    ANY EXPRESS OR IMPLIED WARRANTIES, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+    WARRANTIES OF MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE ARE DISCLAIMED.
+    IN NO EVENT SHALL THE COPYRIGHT HOLDER OR CONTRIBUTORS BE LIABLE FOR ANY DIRECT,
+    INDIRECT, INCIDENTAL, SPECIAL, EXEMPLARY, OR CONSEQUENTIAL DAMAGES (INCLUDING, BUT
+    NOT LIMITED TO, PROCUREMENT OF SUBSTITUTE GOODS OR SERVICES; LOSS OF USE, DATA, OR
+    PROFITS; OR BUSINESS INTERRUPTION) HOWEVER CAUSED AND ON ANY THEORY OF LIABILITY,
+    WHETHER IN CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
+    ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
+    POSSIBILITY OF SUCH DAMAGE.
+*/
 #include "mpOprtBinCommon.h"
 #include <cmath>
 #include <limits>
@@ -327,34 +323,34 @@ IToken* OprtOr::Clone() const
 {
     return new OprtOr(*this);
 }
-/*
+
 //-----------------------------------------------------------------------------------------------
 //
 // class OprtLOr
 //
 //-----------------------------------------------------------------------------------------------
 
-OprtLOr::OprtLOr(const char_type *szIdent)
+OprtLogicOr::OprtLogicOr(const char_type *szIdent)
     :IOprtBin(szIdent, (int)prLOGIC_OR, oaLEFT)
 {}
 
 //-----------------------------------------------------------------------------------------------
-void OprtLOr::Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int num)
+void OprtLogicOr::Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int num)
 {
     MUP_VERIFY(num == 2);
     *ret = a_pArg[0]->GetBool() || a_pArg[1]->GetBool();
 }
 
 //-----------------------------------------------------------------------------------------------
-const char_type* OprtLOr::GetDesc() const
+const char_type* OprtLogicOr::GetDesc() const
 {
     return _T("logical or");
 }
 
 //-----------------------------------------------------------------------------------------------
-IToken* OprtLOr::Clone() const
+IToken* OprtLogicOr::Clone() const
 {
-    return new OprtLOr(*this);
+    return new OprtLogicOr(*this);
 }
 
 //-----------------------------------------------------------------------------------------------
@@ -363,29 +359,29 @@ IToken* OprtLOr::Clone() const
 //
 //-----------------------------------------------------------------------------------------------
 
-OprtLAnd::OprtLAnd(const char_type *szIdent)
+OprtLogicAnd::OprtLogicAnd(const char_type *szIdent)
     :IOprtBin(szIdent, (int)prLOGIC_AND, oaLEFT)
 {}
 
 //-----------------------------------------------------------------------------------------------
-void OprtLAnd::Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int num)
+void OprtLogicAnd::Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int num)
 {
     MUP_VERIFY(num == 2);
     *ret = a_pArg[0]->GetBool() && a_pArg[1]->GetBool();
 }
 
 //-----------------------------------------------------------------------------------------------
-const char_type* OprtLAnd::GetDesc() const
+const char_type* OprtLogicAnd::GetDesc() const
 {
     return _T("logical and");
 }
 
 //-----------------------------------------------------------------------------------------------
-IToken* OprtLAnd::Clone() const
+IToken* OprtLogicAnd::Clone() const
 {
-    return new OprtLAnd(*this);
+    return new OprtLogicAnd(*this);
 }
-*/
+
 
 //-----------------------------------------------------------------------------------------------
 //
