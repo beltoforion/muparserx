@@ -43,7 +43,7 @@
 #include "mpDefines.h"
 #include "mpIfThenElse.h"
 #include "mpScriptTokens.h"
-#include "mpOprtBinShortCut.h"
+#include "mpOprtBinShortcut.h"
 
 using namespace std;
 

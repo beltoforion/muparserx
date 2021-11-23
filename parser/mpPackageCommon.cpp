@@ -34,7 +34,7 @@
 #include "mpFuncNonCmplx.h"
 #include "mpFuncCommon.h"
 #include "mpOprtBinCommon.h"
-#include "mpOprtBinShortCut.h"
+#include "mpOprtBinShortcut.h"
 #include "mpOprtBinAssign.h"
 #include "mpOprtPostfixCommon.h"
 #include "mpValReader.h"
