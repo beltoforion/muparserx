@@ -67,7 +67,7 @@ MUP_NAMESPACE_START
     m_vErrMsg[ecUNEXPECTED_VAR]           = _T("Unexpected variable \"$IDENT$\" found at position $POS$.");
     m_vErrMsg[ecUNEXPECTED_STR]           = _T("Unexpected string token found at position $POS$.");
     m_vErrMsg[ecUNEXPECTED_CONDITIONAL]   = _T("The \"$IDENT$\" operator must be preceded by a closing bracket.");
-    m_vErrMsg[ecUNEXPECTED_NEWLINE]       = _T("Unexprected newline.");
+    m_vErrMsg[ecUNEXPECTED_NEWLINE]       = _T("Unexpected newline.");
     m_vErrMsg[ecMISSING_PARENS]           = _T("Missing parenthesis.");
     m_vErrMsg[ecMISSING_ELSE_CLAUSE]      = _T("If-then-else operator is missing an else clause.");
     m_vErrMsg[ecMISPLACED_COLON]          = _T("Misplaced colon at position $POS$.");
