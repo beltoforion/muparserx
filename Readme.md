@@ -1,4 +1,4 @@
-![titleimage](http://beltoforion.de/en/muparserx/images/muparserx.jpg)
+![_title](https://user-images.githubusercontent.com/2202567/196066131-a421b3c0-20e0-46e7-88ee-15ae29b215cd.jpg)
 
 [![GitHub issues](https://img.shields.io/github/issues/beltoforion/muparserx.svg?maxAge=360)](https://github.com/beltoforion/muparserx/issues)
 [![Version](https://img.shields.io/github/release/beltoforion/muparserx.svg?maxAge=360)](https://github.com/beltoforion/muparserx/blob/master/CHANGELOG)
