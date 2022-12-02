@@ -8,7 +8,7 @@
   |  Y Y  \  |  /    |     / __ \|  | \/\___ \\  ___/|  | \/     \
   |__|_|  /____/|____|    (____  /__|  /____  >\___  >__| /___/\  \
 		\/                     \/           \/     \/           \_/
-  Copyright (C) 2021 Ingo Berg, et al.
+  Copyright (C) 2022 Ingo Berg, et al.
   All rights reserved.
 
   Redistribution and use in source and binary forms, with or without
@@ -44,24 +44,6 @@
 /** \brief This macro will enable mathematical constants like M_PI. */
 #define _USE_MATH_DEFINES 
 
-/** \brief Needed to ensure successfull compilation on Unicode systems with MinGW. */
-#undef __STRICT_ANSI__
-
-//--- Standard include ------------------------------------------------------
-#if defined(_WIN32) 
-  // Memory leak dumping
-#if defined(_DEBUG)
-#define _CRTDBG_MAP_ALLOC
-#include <stdlib.h>
-#include <crtdbg.h>
-#define CREATE_LEAKAGE_REPORT
-#endif
-
-// Needed for windows console UTF-8 support
-#include <fcntl.h>
-#include <io.h>
-#endif
-
 #include <cstdlib>
 #include <cstring>
 #include <ctime>
@@ -83,22 +65,8 @@
 using namespace std;
 using namespace mup;
 
-#if defined(CREATE_LEAKAGE_REPORT)
-
-// Dumping memory leaks in the destructor of the static guard
-// guarantees i won't get false positives from the ParserErrorMsg 
-// class wich is a singleton with a static instance.
-struct DumpLeaks
-{
-	~DumpLeaks()
-	{
-		_CrtDumpMemoryLeaks();
-	}
-} static LeakDumper;
-
-#endif
-
 const string_type sPrompt = _T("muparserx> ");
+
 
 //-------------------------------------------------------------------------------------------------
 // The following classes will be used to list muParserX variables, constants
@@ -255,11 +223,16 @@ public:
 	{
 		char outstr[200];
 		time_t t = time(nullptr);
+		struct tm newtime;
+
+		errno_t err = localtime_s(&newtime, &t);
+		if (err != 0)
+			return;
 
 #ifdef _DEBUG
-		strftime(outstr, sizeof(outstr), "Result_%Y%m%d_%H%M%S_dbg.txt", localtime(&t));
+		strftime(outstr, sizeof(outstr), "Result_%Y%m%d_%H%M%S_dbg.txt", &newtime);
 #else
-		strftime(outstr, sizeof(outstr), "Result_%Y%m%d_%H%M%S_release.txt", localtime(&t));
+		strftime(outstr, sizeof(outstr), "Result_%Y%m%d_%H%M%S_release.txt", &newtime);
 #endif
 
 		const char_type* sExpr[] = {
@@ -315,7 +288,11 @@ public:
 		parser.DefineConst(_T("pi"), (float_type)M_PI);
 		parser.DefineConst(_T("e"), (float_type)M_E);
 
-		FILE* pFile = fopen(outstr, "w");
+		FILE* pFile;
+		err = fopen_s(&pFile, outstr, "w");
+		if (err != 0)
+			return;
+
 		int iCount = 400000;
 
 #ifdef _DEBUG
@@ -324,11 +301,19 @@ public:
 		string_type sMode = _T("# release mode\n");
 #endif
 
+#if !defined MUP_USE_WIDE_STRING
 		fprintf(pFile, "%s; muParserX V%s\n", sMode.c_str(), ParserXBase::GetVersion().c_str());
 		fprintf(pFile, "\"Eqn no.\", \"number\", \"result\", \"time in ms\", \"eval per second\", \"expr\"\n");
 
 		printf("%s", sMode.c_str());
 		printf("\"Eqn no.\", \"number\", \"result\", \"time in ms\", \"eval per second\", \"expr\"\n");
+#else
+		fwprintf(pFile, _T("%s; muParserX V%s\n"), sMode.c_str(), ParserXBase::GetVersion().c_str());
+		fwprintf(pFile, _T("\"Eqn no.\", \"number\", \"result\", \"time in ms\", \"eval per second\", \"expr\"\n"));
+
+		wprintf(_T("%s"), sMode.c_str());
+		wprintf(_T("\"Eqn no.\", \"number\", \"result\", \"time in ms\", \"eval per second\", \"expr\"\n"));
+#endif
 
 		double avg_eval_per_sec = 0;
 		int ct = 0;
@@ -352,7 +337,7 @@ public:
 			double eval_per_sec = (double)iCount * 1000.0 / diff;
 			avg_eval_per_sec += eval_per_sec;
 
-#if !defined _UNICODE
+#if !defined MUP_USE_WIDE_STRING
 			fprintf(pFile, "Eqn_%d, %d, %lf, %lf, %lf, %s\n", i, iCount, (double)val.GetFloat(), diff, eval_per_sec, sExpr[i]);
 			printf("Eqn_%d, %d, %lf, %lf, %lf, %s\n", i, iCount, (double)val.GetFloat(), diff, eval_per_sec, sExpr[i]);
 #else
@@ -518,7 +503,7 @@ public:
 	}
 }; // class FunEnableDebugDump
 
-#if defined(_UNICODE)
+#if defined(MUP_USE_WIDE_STRING)
 //-------------------------------------------------------------------------------------------------
 class FunLang : public ICallback
 {
@@ -555,7 +540,7 @@ public:
 		return new FunLang(*this);
 	}
 }; // class FunLang
-#endif // #if defined(_UNICODE)
+#endif // #if defined(MUP_USE_WIDE_STRING)
 
 /*
 //-------------------------------------------------------------------------------------------------
@@ -658,7 +643,7 @@ void Splash()
 	console() << _T("  |__|_|  /____/|____|    (____  /__|  /____  >\\___  >__| /___/\\  \\\n");
 	console() << _T("        \\/                     \\/           \\/     \\/           \\_/\n");
 	console() << _T("  Version ") << ParserXBase::GetVersion() << _T("\n");
-	console() << _T("  Copyright (C) 2021 Ingo Berg, et al.");
+	console() << _T("  Copyright (C) 2022 Ingo Berg");
 	console() << _T("\n\n");
 	console() << _T("-------------------------------------------------------------------------\n\n");
 	console() << _T("Build configuration:\n\n");
@@ -669,13 +654,15 @@ void Splash()
 	console() << _T("- RELEASE build\n");
 #endif
 
-#if defined(_UNICODE)
-	console() << _T("- UNICODE build\n");
+#if defined(MUP_USE_WIDE_STRING)
+	console() << _T("- wide string build\n");
 #else  
-	console() << _T("- ASCII build\n");
+	console() << _T("- ascii build\n");
 #endif
 
-#if defined (__GNUC__)
+#if defined (__clang__)
+	console() << _T("- compiled with clang Version ") << __clang_version__ << _T("\n");
+#elif defined (__GNUC__)
 	console() << _T("- compiled with GCC Version ") << __GNUC__ << "." << __GNUC_MINOR__ << "." << __GNUC_PATCHLEVEL__ << _T("\n");
 #elif defined(_MSC_VER)
 	console() << _T("- compiled with MSC Version ") << _MSC_VER << _T("\n");
@@ -859,7 +846,7 @@ void Calc()
 	parser.DefineFun(new FunTest0);
 	parser.DefineFun(new FunPrint);
 
-#if defined(_UNICODE)
+#if defined(MUP_USE_WIDE_STRING)
 	parser.DefineFun(new FunLang);
 #endif
 
@@ -945,17 +932,9 @@ int main(int /*argc*/, char** /*argv*/)
 	Splash();
 	SelfTest();
 
-#if defined(_UNICODE)
-
-#if _MSC_VER
-	// Set console to utf-8 mode, if this is not done language specific
-	// characters will be rendered incorrectly
-	if (_setmode(_fileno(stdout), _O_U8TEXT) == -1)
-		throw std::runtime_error("Can't set \"stdout\" to UTF-8");
-#endif
-
-	//// Internationalization requires UNICODE as translations do contain non ASCII 
-	//// Characters.
+#if defined(MUP_USE_WIDE_STRING)
+	// Internationalization requires UNICODE as translations do contain non ASCII 
+	// Characters.
 	//ParserX::ResetErrorMessageProvider(new mup::ParserMessageProviderGerman);
 #endif
 

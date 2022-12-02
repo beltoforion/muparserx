@@ -40,15 +40,8 @@ MUP_NAMESPACE_START
       //                 If the compiler does not support IEEE 754, chances are 
       //                 you are running on a pretty fucked up system.
       //
-      #ifdef _MSC_VER
-      #pragma warning(push)
-      #pragma warning(disable:4127)
-      #endif /* _MSC_VER */
       if ( !std::numeric_limits<float_type>::is_iec559 && 
            (result>std::numeric_limits<float_type>::max() || result < 1.0) )
-      #ifdef _MSC_VER
-      #pragma warning(pop)
-      #endif /* _MSC_VER */
       {
         throw ParserError(ErrorContext(ecOVERFLOW, GetExprPos(), GetIdent()));
       }

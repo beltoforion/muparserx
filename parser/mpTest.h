@@ -85,7 +85,7 @@ MUP_NAMESPACE_START
     private:
         std::vector<testfun_type> m_vTestFun;
 
-#if defined(_UNICODE)
+#if defined(MUP_USE_WIDE_STRING)
         std::wostream *m_stream;
 #else
         std::ostream *m_stream;

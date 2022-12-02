@@ -96,7 +96,7 @@ Value::Value(int_type array_size, float_type v)
 	:IValue(cmVAL)
 	, m_val()
 	, m_psVal(nullptr)
-	, m_pvVal(new matrix_type(array_size, Value(v)))
+	, m_pvVal(new matrix_type((int)array_size, Value(v)))
 	, m_cType('m')
 	, m_iFlags(flNONE)
 	, m_pCache(nullptr)
@@ -109,7 +109,7 @@ Value::Value(int_type m, int_type n, float_type v)
 	:IValue(cmVAL)
 	, m_val()
 	, m_psVal(nullptr)
-	, m_pvVal(new matrix_type(m, n, Value(v)))
+	, m_pvVal(new matrix_type((int)m, (int)n, Value(v)))
 	, m_cType('m')
 	, m_iFlags(flNONE)
 	, m_pCache(nullptr)
@@ -235,9 +235,9 @@ IValue& Value::At(const IValue& row, const IValue& col)
 		throw ParserError(errc);
 	}
 
-	int_type nRow = row.GetInteger(),
-		nCol = col.GetInteger();
-	return At(nRow, nCol);
+	int_type nRow = row.GetInteger();
+	int_type nCol = col.GetInteger();
+	return At((int)nRow, (int)nCol);
 }
 
 //---------------------------------------------------------------------------
@@ -359,7 +359,7 @@ IValue& Value::operator=(bool val)
 //---------------------------------------------------------------------------
 IValue& Value::operator=(int_type a_iVal)
 {
-	m_val = cmplx_type(a_iVal, 0);
+	m_val = cmplx_type((float_type)a_iVal, (float_type)0.0);
 
 	delete m_psVal;
 	m_psVal = nullptr;

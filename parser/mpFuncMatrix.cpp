@@ -84,7 +84,7 @@ void FunMatrixOnes::Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int argc
     }
     else
     {
-        *ret = matrix_type(m, n, 1.0);
+        *ret = matrix_type((int)m, (int)n, 1.0);
     }
 }
 
@@ -135,7 +135,7 @@ void FunMatrixZeros::Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int arg
     }
     else
     {
-        *ret = matrix_type(m, n, 0.0);
+        *ret = matrix_type((int)m, (int)n, 0.0);
     }
 }
 
@@ -177,10 +177,10 @@ void FunMatrixEye::Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int argc)
         throw ParserError(err);
     }
 
-    int_type m = a_pArg[0]->GetInteger(),
-        n = (argc == 1) ? m : a_pArg[1]->GetInteger();
+    int_type m = a_pArg[0]->GetInteger();
+    int_type n = (argc == 1) ? m : a_pArg[1]->GetInteger();
 
-    matrix_type eye(m, n, 0.0);
+    matrix_type eye((int)m, (int)n, 0.0);
 
     for (int i = 0; i < std::min(m, n); ++i)
     {

@@ -141,9 +141,9 @@ MUP_NAMESPACE_START
       GenericToken(ECmdCode a_iCode, string_type a_sIdent);
       explicit GenericToken(ECmdCode a_iCode);
       GenericToken(const GenericToken &a_Tok);      
-      virtual ~GenericToken();
-      virtual IToken* Clone() const;
-      virtual string_type AsciiDump() const;
+      virtual ~GenericToken() override;
+      virtual IToken* Clone() const override;
+      virtual string_type AsciiDump() const override;
   };
 
   //------------------------------------------------------------------------------

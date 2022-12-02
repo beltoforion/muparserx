@@ -1136,8 +1136,8 @@ int ParserTester::TestIfElse()
 	// with variations
 	iNumErr += ThrowTest(_T(R"(false ? 4 : "", ? 4 : "", ? 4 : "")"), ecUNEXPECTED_COMMA);
 	iNumErr += EqnTest(_T(R"(false ? "four" : 4)"), (int_type)4, true);
-	iNumErr += EqnTest(_T(R"(true ? "four" : 4)"), "four", true);
-	iNumErr += EqnTest(_T(R"(true ? "foo" : "bar")"), "foo", true);
+	iNumErr += EqnTest(_T(R"(true ? "four" : 4)"), _T("four"), true);
+	iNumErr += EqnTest(_T(R"(true ? "foo" : "bar")"), _T("foo"), true);
 
 	// test case and variations copied from muparser https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=22938
 	iNumErr += ThrowTest(_T("sum(false?1,0,0:3)"), ecUNEXPECTED_COMMA);

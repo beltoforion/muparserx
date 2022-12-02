@@ -37,7 +37,7 @@
 */
 #include <cassert>
 
-#if defined(_UNICODE)
+#if defined(MUP_USE_WIDE_STRING)
   #if !defined(_T)
     #define _T(x) L##x
   #endif // not defined _T
@@ -56,7 +56,7 @@
 #endif
 
 /** \brief A macro containing the version of muParserX. */
-#define MUP_PARSER_VERSION _T("4.0.11 (2021-11-23)")
+#define MUP_PARSER_VERSION _T("4.0.12 (2022-12-02)")
 
 /** \brief A macro for setting the parser namespace. */
 #define MUP_NAMESPACE_START namespace mup {

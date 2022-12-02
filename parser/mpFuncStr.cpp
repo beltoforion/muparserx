@@ -5,7 +5,7 @@
   |  Y Y  \  |  /    |     / __ \|  | \/\___ \\  ___/|  | \/     \ 
   |__|_|  /____/|____|    (____  /__|  /____  >\___  >__| /___/\  \
         \/                     \/           \/     \/           \_/
-                                       Copyright (C) 2016, Ingo Berg
+                                       Copyright (C) 2022, Ingo Berg
                                        All rights reserved.
 
   Redistribution and use in source and binary forms, with or without 
@@ -157,10 +157,10 @@ MUP_NAMESPACE_START
 
     in = a_pArg[0]->GetString();
     
-#ifndef _UNICODE    
-    sscanf(in.c_str(), "%lf", &out);
+#ifndef MUP_USE_WIDE_STRING    
+    sscanf_s(in.c_str(), "%lf", &out);
 #else
-    swscanf(in.c_str(), _T("%lf"), &out);
+    swscanf_s(in.c_str(), _T("%lf"), &out);
 #endif
 
     *ret = (float_type)out;

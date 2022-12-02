@@ -20,23 +20,16 @@ set(MUPARSERX_VERSION ${CMAKE_MATCH_1})
 ########################################################################
 if(CMAKE_COMPILER_IS_GNUCXX OR (CMAKE_CXX_COMPILER_ID MATCHES "Clang"))
 
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pedantic")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -pedantic")    
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall")
     set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wextra")
-
-    #C++11 is a required language feature for this project
-    include(CheckCXXCompilerFlag)
-    CHECK_CXX_COMPILER_FLAG("-std=c++11" HAS_STD_CXX11)
-    if(HAS_STD_CXX11)
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++11")
-    else(HAS_STD_CXX11)
-        set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++0x")
-    endif()
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17")
 
 endif(CMAKE_COMPILER_IS_GNUCXX OR (CMAKE_CXX_COMPILER_ID MATCHES "Clang"))
 
 if(MSVC)
     add_compile_options(/MP) #multi-core build
+    add_compile_options(/std:c++17)
 endif(MSVC)
 
 ########################################################################
@@ -105,16 +98,23 @@ install(
 )
 
 ########################################################################
-# Example application
+# Options
 ########################################################################
+
 option(BUILD_EXAMPLES "enable building example applications" ON)
 if(BUILD_EXAMPLES)
     add_executable(example sample/example.cpp sample/timer.cpp)
     target_link_libraries(example muparserx)
 endif(BUILD_EXAMPLES)
 
+option(USE_WIDE_STRING "use UNICODE characters" OFF)
+if(USE_WIDE_STRING)
+    add_compile_definitions(MUP_USE_WIDE_STRING)
+endif(USE_WIDE_STRING)
+
 ########################################################################
 # Print summary
 ########################################################################
+
 message(STATUS "Building muparserx version: ${MUPARSERX_VERSION}")
 message(STATUS "Using install prefix: ${CMAKE_INSTALL_PREFIX}")

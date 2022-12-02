@@ -47,7 +47,6 @@
 #include "suSortPred.h"  // We need the string utils sorting predicates
 #include "mpDefines.h"
 #include "mpMatrix.h"
-#include "mpCompat.h"
 
 
 MUP_NAMESPACE_START
@@ -131,7 +130,7 @@ typedef std::map<string_type, ptr_tok_type> val_maptype;
 	     to operator identifiers. */
 typedef std::map<string_type, ptr_tok_type> fun_maptype;
 
-/** \breief Type of a container that short circuit operator object pointer*/
+/** \brief Type of a container that short circuit operator object pointer*/
 typedef std::map<string_type, ptr_tok_type> oprt_bin_shortcut_maptype;
 
 /** \brief Type of a container that binds Callback object pointer
@@ -369,7 +368,7 @@ enum EErrorCodes
     ecUNDEFINED                 = -1  ///< Undefined message, placeholder to detect unassigned error messages
 };
 
-#if defined(_UNICODE)
+#if defined(MUP_USE_WIDE_STRING)
 
 //------------------------------------------------------------------------------
 /** \brief Encapsulate wcout. */
@@ -405,7 +404,7 @@ inline std::istream& console_in()
     return std::cin;
 }
 
-#endif // _UNICODE
+#endif // MUP_USE_WIDE_STRING
 
 }  // namespace mu
 

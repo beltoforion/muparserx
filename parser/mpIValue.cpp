@@ -52,7 +52,7 @@
 
 MUP_NAMESPACE_START
 
-#ifndef _UNICODE
+#ifndef MUP_USE_WIDE_STRING
 
 //---------------------------------------------------------------------------
 /** \brief Overloaded streaming operator for outputting the value type 
@@ -60,7 +60,7 @@ MUP_NAMESPACE_START
            \param a_Stream The stream object
            \param a_Val The value object to be streamed
 
-           This function is only present if _UNICODE is not defined.
+           This function is only present if MUP_USE_WIDE_STRING is not defined.
            */
            std::ostream& operator<<(std::ostream &a_Stream, const IValue &a_Val)
 {
@@ -75,7 +75,7 @@ MUP_NAMESPACE_START
            \param a_Stream The stream object
            \param a_Val The value object to be streamed
 
-           This function is only present if _UNICODE is defined.
+           This function is only present if MUP_USE_WIDE_STRING is defined.
            */
            std::wostream& operator<<(std::wostream &a_Stream, const IValue &a_Val)
 {

@@ -106,7 +106,7 @@ MUP_NAMESPACE_START
     m_vErrMsg[ecFUNOPRT_DEFINED]              = _T("Function/operator \"$IDENT$\" is already defined.");
   }
 
-#if defined(_UNICODE)
+#if defined(MUP_USE_WIDE_STRING)
 
   //-------------------------------------------------------------------------------------------------
   //
@@ -176,6 +176,6 @@ MUP_NAMESPACE_START
     m_vErrMsg[ecCONSTANT_DEFINED]             = _T("Die Konstante \"$IDENT$\" is bereits definiert.");
     m_vErrMsg[ecFUNOPRT_DEFINED]              = _T("Ein Element mit der Bezeichnung \"$IDENT$\" ist bereits definiert.");
   }
-#endif // _UNICODE
+#endif // MUP_USE_WIDE_STRING
 
 MUP_NAMESPACE_END
