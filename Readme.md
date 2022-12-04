@@ -5,9 +5,11 @@
 [![Packaging status](https://repology.org/badge/tiny-repos/muparserx.svg)](https://repology.org/project/muparserx/versions)
 <!-- [![License](https://img.shields.io/github/license/beltoforion/muparserx.svg?maxAge=360000)](https://github.com/beltoforion/muparserx/blob/master/License.md) -->
 
-muparserx 4.0.12 (20221202)
+muparserx
 ===========================
 
+V4.0.12 (20221204)
+------------------
 Changes:
   - C++17 is now the minimum required C++ version to compile the code
   - added a wide string option to cmake (USE_WIDE_STRING)
@@ -15,12 +17,12 @@ Changes:
   - fixed compiler warnings 
 
 V4.0.11 (20211123)
------------------
+------------------
 Bugfixes:
   - Issue 112:  Compilation issue due to an invalid header file name
  
 V4.0.10 (20211122)
------------------
+------------------
 Bugfixes:
   - Issue 107:  Complex multiplication-assignment did not work correctly
   - Issue 110:  Short evaluation for binary operators added (thanks to user egyptyu)

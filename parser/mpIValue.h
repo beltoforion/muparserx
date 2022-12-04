@@ -11,7 +11,7 @@
   |  Y Y  \  |  /    |     / __ \|  | \/\___ \\  ___/|  | \/     \
   |__|_|  /____/|____|    (____  /__|  /____  >\___  >__| /___/\  \
 		\/                     \/           \/     \/           \_/
-  Copyright (C) 2021 Ingo Berg, et al.
+  Copyright (C) 2022 Ingo Berg, et al.
   All rights reserved.
 
   Redistribution and use in source and binary forms, with or without
@@ -40,7 +40,6 @@
 
 MUP_NAMESPACE_START
 
-//------------------------------------------------------------------------------
 /** \brief Interface to be implemented by all classes representing values.
 
   IValue is the common base class of both the Value and Variable classes.
@@ -94,7 +93,6 @@ public:
 
 	virtual string_type ToString() const override;
 
-	//---------------------------------------------------------------------------
 	/** \brief Returns the dimension of the value represented by a value object.
 
 		The value represents the dimension of the object. Possible value are:
@@ -109,10 +107,10 @@ public:
 		return (IsMatrix()) ? GetArray().GetDim() : 0;
 	}
 
-	//---------------------------------------------------------------------------
+
 	virtual bool  IsVariable() const = 0;
 
-	//---------------------------------------------------------------------------
+
 	/** \brief Returns true if the type is either floating point or interger.
 		\throw nothrow
 	*/
@@ -122,7 +120,6 @@ public:
 		return t == 'f' || t == 'i';
 	}
 
-	//---------------------------------------------------------------------------
 	/** \brief Returns true if the type is not a vector and not a string.
 		\throw nothrow
 	*/
@@ -132,7 +129,16 @@ public:
 		return t == 'f' || t == 'i' || t == 'c';
 	}
 
-	//---------------------------------------------------------------------------
+	/** \brief Returns true if this value represents a scalar value or a boolean value. 
+	
+		Added to fix #117
+	*/
+	inline bool IsScalarOrBool() const
+	{
+		char_type t = GetType();
+		return IsScalar() || t == 'b';
+	}
+
 	/** \brief Returns true if this value is a noncomplex integer.
 		\throw nothrow
 	*/
@@ -143,7 +149,7 @@ public:
 		return IsScalar() && GetImag() == 0 && GetFloat() == static_cast<int_type>(GetFloat());
 	}
 
-	//---------------------------------------------------------------------------
+
 	/** \brief Returns true if this value is an array.
 		\throw nothrow
 	*/
@@ -152,7 +158,7 @@ public:
 		return GetType() == 'm';
 	}
 
-	//---------------------------------------------------------------------------
+
 	/** \brief Returns true if this value is a complex value.
 		\throw nothrow
 	*/
@@ -161,7 +167,7 @@ public:
 		return GetType() == 'c' && GetImag() != 0;
 	}
 
-	//---------------------------------------------------------------------------
+
 	/** \brief Returns true if this value is a string value.
 		\throw nothrow
 	*/
@@ -174,8 +180,9 @@ protected:
 	virtual ~IValue() override;
 }; // class IValue
 
-//---------------------------------------------------------------------------------------------
+
 Value operator*(const IValue& lhs, const IValue& rhs);
+
 }  // namespace mu
 
 #endif
