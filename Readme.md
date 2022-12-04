@@ -10,6 +10,10 @@ muparserx
 
 V4.0.12 (20221204)
 ------------------
+Bugfixes:
+  - Issue 115: String constants starting woth "or" confused with operator during parsing step
+  - Issue 117: Equals operator behavior inconsistent when checking boolean values. (no type check) 
+  
 Changes:
   - C++17 is now the minimum required C++ version to compile the code
   - added a wide string option to cmake (USE_WIDE_STRING)
