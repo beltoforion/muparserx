@@ -8,11 +8,7 @@
 	|  Y Y  \  |  /    |     / __ \|  | \/\___ \\  ___/|  | \/     \
 	|__|_|  /____/|____|    (____  /__|  /____  >\___  >__| /___/\  \
 		  \/                     \/           \/     \/           \_/
-	Copyright (C) 2016 Ingo Berg
-	All rights reserved.
-
-	muParserX - A C++ math parser library with array and string support
-	Copyright (c) 2016, Ingo Berg
+	Copyright (C) 2022 Ingo Berg
 	All rights reserved.
 
 	Redistribution and use in source and binary forms, with or without
@@ -67,7 +63,7 @@ public:
 		:IOprtBin(_T("++"), (int)prADD_SUB, oaLEFT)
 	{}
 
-	//-----------------------------------------------------------------------------------------------
+
 	void Eval(ptr_val_type& ret, const ptr_val_type *arg, int argc)
 	{
 		assert(argc == 2);
@@ -76,20 +72,20 @@ public:
 		*ret = a + b;
 	}
 
-	//-----------------------------------------------------------------------------------------------
+
 	const char_type* GetDesc() const
 	{
 		return _T("internally used operator without special meaning for unit testing");
 	}
 
-	//-----------------------------------------------------------------------------------------------
+
 	IToken* Clone() const
 	{
 		return new DbgSillyAdd(*this);
 	}
 };
 
-//------------------------------------------------------------------------------
+
 class FunTest0 : public ICallback
 {
 public:
@@ -112,10 +108,35 @@ public:
 	}
 }; // class FunTest0
 
-//---------------------------------------------------------------------------
+
+class FunReturnFalse : public ICallback
+{
+public:
+	FunReturnFalse() : ICallback(cmFUNC, _T("returnFalse"), 0)
+	{}
+
+	virtual void Eval(ptr_val_type& ret, const ptr_val_type* /*a_pArg*/, int /*a_iArgc*/)
+	{
+		*ret = false;
+	}
+
+	virtual const char_type* GetDesc() const
+	{
+		return _T("");
+	}
+
+	virtual IToken* Clone() const
+	{
+		return new FunReturnFalse(*this);
+	}
+}; // class FunTest0
+
+
+
 int ParserTester::c_iCount = 0;
 
-//---------------------------------------------------------------------------
+
+
 ParserTester::ParserTester()
 	:m_vTestFun()
 	, m_stream(&console())
@@ -775,6 +796,9 @@ int ParserTester::TestErrorCodes()
 	iNumErr += ThrowTest(_T("[1]"), ecUNEXPECTED_SQR_BRACKET);
 	iNumErr += ThrowTest(_T("]1"), ecUNEXPECTED_SQR_BRACKET);
 	iNumErr += ThrowTest(_T("va[[3]]"), ecUNEXPECTED_SQR_BRACKET);
+
+	// test for #117
+	iNumErr += ThrowTest(_T("returnFalse()==0"), ecEVAL);
 
 	Assessment(iNumErr);
 	return iNumErr;
@@ -1486,6 +1510,9 @@ int ParserTester::ThrowTest(const string_type &a_sExpr, int a_nErrc, int a_nPos,
 		p.DefineVar(_T("c"), Variable(&vVarVal[2]));
 		p.DefineVar(_T("d"), Variable(&vVarVal[3]));
 
+		// Add functions
+		p.DefineFun(new FunReturnFalse);
+
 		// array variables
 		Value aVal1(3, 0);
 		aVal1.At(0) = (float_type)1.0;
@@ -1599,6 +1626,7 @@ int ParserTester::EqnTest(const string_type &a_str, Value a_val, bool a_fPass, i
 
 		p1->DefineOprt(new DbgSillyAdd);
 		p1->DefineFun(new FunTest0);
+		p1->DefineFun(new FunReturnFalse);
 
 		p1->DefineVar(_T("a"), Variable(&vVarVal[0]));
 		p1->DefineVar(_T("b"), Variable(&vVarVal[1]));
