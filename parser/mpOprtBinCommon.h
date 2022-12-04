@@ -5,7 +5,7 @@
     |  Y Y  \  |  /    |     / __ \|  | \/\___ \\  ___/|  | \/     \
     |__|_|  /____/|____|    (____  /__|  /____  >\___  >__| /___/\  \
           \/                     \/           \/     \/           \_/
-    Copyright (C) 2021 Ingo Berg, et al.
+    Copyright (C) 2022 Ingo Berg, et al.
     All rights reserved.
 
     Redistribution and use in source and binary forms, with or without
@@ -48,7 +48,7 @@
 
 MUP_NAMESPACE_START
 
-//-----------------------------------------------------------------------------------------------
+
 class OprtStrAdd : public IOprtBin
 {
 public:
@@ -58,7 +58,7 @@ public:
     virtual IToken* Clone() const override;
 };
 
-//-----------------------------------------------------------------------------------------------
+
 /** \brief Callback object for testing if two values are equal.
     \ingroup binop
     */
@@ -72,7 +72,6 @@ public:
 };
 
 
-//------------------------------------------------------------------------------
 /** \brief Callback object for testing if two values are not equal.
     \ingroup binop
     */
@@ -85,7 +84,7 @@ public:
     virtual IToken* Clone() const override;
 };
 
-//------------------------------------------------------------------------------
+
 /** \brief Callback object class for the "Less than" operator.
     \ingroup binop
     */
@@ -98,7 +97,7 @@ public:
     virtual IToken* Clone() const override;
 };
 
-//------------------------------------------------------------------------------
+
 /** \brief Callback object class for the "Greater than" operator.
     \ingroup binop
     */
@@ -111,7 +110,7 @@ public:
     virtual IToken* Clone() const override;
 };
 
-//------------------------------------------------------------------------------
+
 /** \brief Callback object class for the "Less or equal" operator.
     \ingroup binop
     */
@@ -124,7 +123,7 @@ public:
     virtual IToken* Clone() const override;
 };
 
-//------------------------------------------------------------------------------
+
 /** \brief Callback object class for the "Greater or or equal" operator.
     \ingroup binop
     */
@@ -137,7 +136,7 @@ public:
     virtual IToken* Clone() const override;
 };
 
-//------------------------------------------------------------------------------
+
 /** \brief Callback class for a logic and operator.
     \ingroup binop
     */
@@ -150,7 +149,7 @@ public:
     virtual IToken* Clone() const override;
 };
 
-//------------------------------------------------------------------------------
+
 /** \brief Callback class for a logic or operator.
     \ingroup binop
     */
@@ -163,7 +162,7 @@ public:
     virtual IToken* Clone() const override;
 };
 
-//------------------------------------------------------------------------------
+
 /** \brief Callback class for a logical or operator.
     \ingroup binop
 */
@@ -176,7 +175,7 @@ public:
     virtual IToken* Clone() const override;
 };
 
-//------------------------------------------------------------------------------
+
 /** \brief Callback class for a logical and operator.
     \ingroup binop
 */
@@ -189,7 +188,7 @@ public:
     virtual IToken* Clone() const override;
 };
 
-//------------------------------------------------------------------------------
+
 /** \brief Callback class for the shift left operator.
     \ingroup binop
     */
@@ -202,7 +201,7 @@ public:
     virtual IToken* Clone() const override;
 };
 
-//------------------------------------------------------------------------------
+
 /** \brief Callback class for the shift right operator.
     \ingroup binop
     */
@@ -215,7 +214,7 @@ public:
     virtual IToken* Clone() const override;
 };
 
-//---------------------------------------------------------------------------
+
 /** \brief Callback for an operator allowing to cast values to floating
            point values.
            \ingroup infix
@@ -229,10 +228,10 @@ public:
     virtual IToken* Clone() const override;
 }; // class OprtCastToFloat
 
-////---------------------------------------------------------------------------
-///** \brief Callback for an operator allowing to cast values to integer values.
-//    \ingroup infix
-//*/
+
+/** \brief Callback for an operator allowing to cast values to integer values.
+    \ingroup infix
+*/
 class OprtCastToInt : public IOprtInfix
 {
 public:

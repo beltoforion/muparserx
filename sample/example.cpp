@@ -542,96 +542,6 @@ public:
 }; // class FunLang
 #endif // #if defined(MUP_USE_WIDE_STRING)
 
-/*
-//-------------------------------------------------------------------------------------------------
-class FunGeneric : public ICallback
-{
-public:
-
-  FunGeneric(string_type sIdent, string_type sFunction)
-	:ICallback(cmFUNC, sIdent.c_str())
-	,m_parser()
-	,m_vars()
-	,m_val()
-  {
-	m_parser.SetExpr(sFunction);
-	m_vars = m_parser.GetExprVar();
-	SetArgc(m_vars.size());
-
-	// Create values for the undefined variables and bind them
-	// to the variables
-	var_maptype::iterator item = m_vars.begin();
-	for (; item!=m_vars.end(); ++item)
-	{
-	  ptr_val_type val(new Value());
-	  m_val.push_back(val);
-
-	  // assign a parser variable
-	  m_parser.DefineVar(item->second->GetIdent(), Variable(val.Get()));
-	}
-  }
-
-  virtual ~FunGeneric()
-  {}
-
-  virtual void Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int a_iArgc)
-  {
-	// Set the variables
-	for (std::size_t i=0; i<(std::size_t)a_iArgc; ++i)
-	{
-	  *m_val[i] = *a_pArg[i];
-	}
-
-	*ret = m_parser.Eval();
-  }
-
-  virtual const char_type* GetDesc() const
-  {
-	return _T("xxx(...) - Dynamically defined function");
-  }
-
-  virtual IToken* Clone() const
-  {
-	return new FunGeneric(*this);
-  }
-
-private:
-
-  ParserX m_parser;
-  mup::var_maptype m_vars;
-  val_vec_type m_val;
-}; // class FunGeneric
-
-//---------------------------------------------------------------------------
-class FunDefine : public ICallback
-{
-public:
-  FunDefine() : ICallback(cmFUNC, _T("define"), 2)
-  {}
-
-  virtual void Eval(ptr_val_type &ret, const ptr_val_type *a_pArg, int a_iArgc)
-  {
-	string_type sFun = a_pArg[0]->GetString();
-	string_type sDef = a_pArg[1]->GetString();
-
-	ParserXBase &parser = *GetParent();
-	parser.DefineFun(new FunGeneric(sFun, sDef));
-
-	*ret = 0;
-  }
-
-  virtual const char_type* GetDesc() const
-  {
-	return _T("define(Function, Definition) - Define a new parser function.");
-  }
-
-  virtual IToken* Clone() const
-  {
-	return new FunDefine(*this);
-  }
-}; // class FunDefine
-*/
-
 //---------------------------------------------------------------------------
 void Splash()
 {
@@ -834,6 +744,8 @@ void Calc()
 
 	parser.DefineVar(_T("sa"), Variable(&sVal[0]));
 	parser.DefineVar(_T("sb"), Variable(&sVal[1]));
+
+	parser.DefineConst(_T("organisation"), _T("whatever"));
 
 	// Add functions for inspecting the parser properties
 	parser.DefineFun(new FunListVar);

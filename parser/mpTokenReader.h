@@ -76,12 +76,11 @@ MUP_NAMESPACE_START
     bool IsBuiltIn(ptr_tok_type &t);
     bool IsEOF(ptr_tok_type &t);
     bool IsNewline(ptr_tok_type &a_Tok);
-    bool IsNewLine(ptr_tok_type &t);
     bool IsInfixOpTok(ptr_tok_type &t);
     bool IsFunTok(ptr_tok_type &t);
     bool IsPostOpTok(ptr_tok_type &t);
     bool IsOprt(ptr_tok_type &t);
-    bool IsScOprt(ptr_tok_type &a_Tok);
+    bool IsShortCutOprt(ptr_tok_type &a_Tok);
     bool IsValTok(ptr_tok_type &t);
     bool IsVarOrConstTok(ptr_tok_type &t);
     bool IsUndefVarTok(ptr_tok_type &t);

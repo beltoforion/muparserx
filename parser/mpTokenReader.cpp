@@ -329,7 +329,7 @@ ptr_tok_type TokenReader::ReadNextToken()
 	if (IsNewline(pTok))
 		return Store(pTok, token_pos);
 
-	if (IsScOprt(pTok))
+	if (!(m_nSynFlags & noOPT) && IsShortCutOprt(pTok))
 		return Store(pTok, token_pos);
 
 	if (!(m_nSynFlags & noOPT) && IsOprt(pTok))
@@ -873,8 +873,8 @@ bool TokenReader::IsOprt(ptr_tok_type &a_Tok)
 
 
 //---------------------------------------------------------------------------
-/** \brief Check if a string position contains a binary operator. */
-bool TokenReader::IsScOprt(ptr_tok_type &a_Tok)
+/** \brief Check if a string position contains a binary operator with short cut evaluation. */
+bool TokenReader::IsShortCutOprt(ptr_tok_type &a_Tok)
 {
 	string_type sTok;
 	int iEnd = ExtractToken(m_pParser->ValidOprtChars(), sTok, m_nPos);

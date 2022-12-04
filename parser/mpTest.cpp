@@ -200,6 +200,9 @@ int ParserTester::TestIssueReports()
 	// Github Issue 63
 	iNumErr += ThrowTest(_T("0<0-0--eye()"), ecINVALID_NUMBER_OF_PARAMETERS);
 
+	// Github Issue 115
+	iNumErr += EqnTest(_T("organisation==\"ACME\""), true, true);
+
 	Assessment(iNumErr);
 	return iNumErr;
 }
@@ -1640,6 +1643,7 @@ int ParserTester::EqnTest(const string_type &a_str, Value a_val, bool a_fPass, i
 		p1->DefineConst(_T("const"), 1.);
 		p1->DefineConst(_T("const1"), 2.);
 		p1->DefineConst(_T("const2"), 3.);
+		p1->DefineConst(_T("organisation"), _T("ACME")); // #115
 
 		// some vector variables
 		Value aVal1(3, 0);
