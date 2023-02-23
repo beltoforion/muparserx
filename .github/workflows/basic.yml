@@ -1,0 +1,31 @@
+name: build
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+env:
+  CMAKE_BUILD_TYPE: Debug
+  CMAKE_BUILD_DIR: ${{ github.workspace }}/build
+
+jobs:
+  build:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-2022, ubuntu-22.04, macOS-12]
+
+    runs-on: ${{ matrix.os }}
+
+    steps:
+    - uses: actions/checkout@v3
+
+    - name: Build
+      shell: bash
+      run: |
+        mkdir -p $CMAKE_BUILD_DIR
+        cd  $CMAKE_BUILD_DIR
+        cmake -DCMAKE_BUILD_TYPE=$CMAKE_BUILD_TYPE ..
+        cmake --build .
