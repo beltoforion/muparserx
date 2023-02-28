@@ -39,6 +39,13 @@
 #include "mpValue.h"
 #include "mpError.h"
 
+#ifdef _MSC_VER
+#  define SSCANF sscanf_s
+#  define SWSCANF swscan_s
+#else
+#  define SSCANF sscanf
+#  define SWSCANF swscanf
+#endif
 
 MUP_NAMESPACE_START
 
@@ -158,9 +165,9 @@ MUP_NAMESPACE_START
     in = a_pArg[0]->GetString();
     
 #ifndef MUP_USE_WIDE_STRING    
-    sscanf_s(in.c_str(), "%lf", &out);
+    SSCANF(in.c_str(), "%lf", &out);
 #else
-    swscanf_s(in.c_str(), _T("%lf"), &out);
+    SWSCANF(in.c_str(), _T("%lf"), &out);
 #endif
 
     *ret = (float_type)out;
