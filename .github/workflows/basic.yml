@@ -2,9 +2,11 @@ name: build
 
 on:
   push:
-    branches: [ "master" ]
+    paths-ignore:
+      - '**/*.md'
   pull_request:
-    branches: [ "master" ]
+    paths-ignore:
+      - '**/*.md'
 
 env:
   CMAKE_BUILD_TYPE: Debug
@@ -29,3 +31,18 @@ jobs:
         cd  $CMAKE_BUILD_DIR
         cmake -DCMAKE_BUILD_TYPE=$CMAKE_BUILD_TYPE ..
         cmake --build .
+
+    - name: Test Examples
+      shell: bash
+      working-directory: ${{ env.CMAKE_BUILD_DIR }}
+      run: |
+        if [[ ${{ matrix.os }} == windows* ]]; then
+          EXAMPLE="$CMAKE_BUILD_TYPE/example.exe"
+        else
+          EXAMPLE="./example"
+        fi
+        $EXAMPLE &> example.log << EOF
+        quit
+        EOF
+        cat example.log
+        grep -e "Test passed.*expressions" example.log || (grep -e "Test failed.*expressions" example.log; exit 1)

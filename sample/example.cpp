@@ -225,9 +225,15 @@ public:
 		time_t t = time(nullptr);
 		struct tm newtime;
 
+#ifdef _MSC_VER
 		errno_t err = localtime_s(&newtime, &t);
 		if (err != 0)
 			return;
+#else
+		auto* r = localtime_r(&t, &newtime);
+		if (!r)
+			return;
+#endif
 
 #ifdef _DEBUG
 		strftime(outstr, sizeof(outstr), "Result_%Y%m%d_%H%M%S_dbg.txt", &newtime);
@@ -289,9 +295,15 @@ public:
 		parser.DefineConst(_T("e"), (float_type)M_E);
 
 		FILE* pFile;
+#ifdef _MSC_VER
 		err = fopen_s(&pFile, outstr, "w");
 		if (err != 0)
 			return;
+#else
+		pFile = fopen(outstr, "w");
+		if (!pFile)
+			return;
+#endif
 
 		int iCount = 400000;
 
