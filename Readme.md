@@ -11,6 +11,7 @@ muparserx
 V4.0.12 (20221204)
 ------------------
 Bugfixes:
+  - Issue 116: Changed implementation of parsing double values to fix #116 on Mac.
   - Issue 115: String constants starting woth "or" confused with operator during parsing step
   - Issue 117: Equals operator behavior inconsistent when checking boolean values. (no type check) 
   
