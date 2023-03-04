@@ -5,7 +5,7 @@ includedir=${prefix}/include/muparserx
 
 Name: muparserx
 Description: A mathematical expression parser library.
-URL: http://articles.beltoforion.de/article.php?a=muparserx
+URL: https://beltoforion.de/en/muparserx
 Version: 4.0.12
 Requires:
 Requires.private:
