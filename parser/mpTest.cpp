@@ -8,7 +8,7 @@
 	|  Y Y  \  |  /    |     / __ \|  | \/\___ \\  ___/|  | \/     \
 	|__|_|  /____/|____|    (____  /__|  /____  >\___  >__| /___/\  \
 		  \/                     \/           \/     \/           \_/
-	Copyright (C) 2022 Ingo Berg
+	Copyright (C) 2023 Ingo Berg
 	All rights reserved.
 
 	Redistribution and use in source and binary forms, with or without
@@ -1307,8 +1307,11 @@ int ParserTester::TestEqn()
 	// test case copied from muparser: https://bugs.chromium.org/p/oss-fuzz/issues/detail?id=23330#c1
 	iNumErr += ThrowTest(_T("6, +, +, +, +, +, +, +, +, +, +, +, +, +, +, 1, +, +, +, +, +, +, +, +, +, +, +, +, +, +, +, +, +, +, +, +, +, +, +, +, +, +, +, +, +, +, +, +"), ecUNEXPECTED_COMMA);
 
-	iNumErr += ThrowTest(_T("1e1234"), ecUNASSIGNABLE_TOKEN);
-	iNumErr += ThrowTest(_T("-1e1234"), ecUNASSIGNABLE_TOKEN);
+//	iNumErr += ThrowTest(_T("1e1234"), ecUNASSIGNABLE_TOKEN);
+//	iNumErr += ThrowTest(_T("-1e1234"), ecUNASSIGNABLE_TOKEN);
+;
+	iNumErr += EqnTest(_T("1e1234"), std::numeric_limits<float_type>::infinity(), true);
+	iNumErr += EqnTest(_T("-1e1234"), -std::numeric_limits<float_type>::infinity(), true);
 
 	iNumErr += EqnTest(_T("-2--8"), (float_type)6.0, true);
 	iNumErr += EqnTest(_T("2*(a=9)*3"), 54., true);

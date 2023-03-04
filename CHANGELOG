@@ -7,7 +7,7 @@
 #  |__|_|  /____/|____|    (____  /__|  /____  >\___  >__| /___/\  \    #
 #        \/                     \/           \/     \/           \_/    #
 #                                                                       #
-#  Copyright (C) 2021 Ingo Berg, et al.                                 #
+#  Copyright (C) 2023 Ingo Berg, et al.                                 #
 #                                                                       #
 #  Web:     http://beltoforion.de/article.php?a=muparserx               #
 #  GitHub:  http://https://github.com/beltoforion/muparserx             #
@@ -29,6 +29,35 @@
 #  Version history                                                      #
 #                                                                       #
 #########################################################################
+
+V4.0.12 (20221204)
+-----------------
+
+Bugfixes:
+    Issue 116: Changed implementation of parsing double values to fix #116 on Mac.
+    Issue 115: String constants starting woth "or" confused with operator during parsing step
+    Issue 117: Equals operator behavior inconsistent when checking boolean values. (no type check)
+
+Changes:
+
+    C++17 is now the minimum required C++ version to compile the code
+    added a wide string option to cmake (USE_WIDE_STRING)
+    removed compatibility fixes for older compilers (mostly MSVC)
+    fixed compiler warnings
+
+V4.0.11 (20211123)
+-----------------
+Bugfixes:
+
+    Issue 112: Compilation issue due to an invalid header file name
+
+V4.0.10 (20211122)
+-----------------
+Bugfixes:
+
+    Issue 107: Complex multiplication-assignment did not work correctly
+    Issue 110: Short evaluation for binary operators added (thanks to user egyptyu)
+
 
 V4.0.9 (20200619)
 -----------------
