@@ -8,7 +8,7 @@
 muparserx
 ===========================
 
-V4.0.12 (20221204)
+V4.0.12 (20230304)
 ------------------
 Bugfixes:
   - Issue 116: Changed implementation of parsing double values to fix #116 on Mac.
