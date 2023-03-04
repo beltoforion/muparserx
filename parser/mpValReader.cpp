@@ -8,7 +8,7 @@
 	|  Y Y  \  |  /    |     / __ \|  | \/\___ \\  ___/|  | \/     \
 	|__|_|  /____/|____|    (____  /__|  /____  >\___  >__| /___/\  \
 		  \/                     \/           \/     \/           \_/
-	Copyright (C) 2022, Ingo Berg
+	Copyright (C) 2023, Ingo Berg
 	All rights reserved.
 
 	Redistribution and use in source and binary forms, with or without
@@ -34,7 +34,7 @@
 	*/
 #include "mpValReader.h"
 #include "mpError.h"
-
+#include "mpStringConversionHelper.h"
 
 MUP_NAMESPACE_START
 
@@ -55,28 +55,15 @@ DblValReader::~DblValReader()
 
 bool DblValReader::IsValue(const char_type* a_szExpr, int& a_iPos, Value& a_Val)
 {
-	stringstream_type stream(a_szExpr + a_iPos);
-	float_type fVal(0);
-	std::streamoff iEnd(0);
+	bool stat;
+	int parsedLen;
+	double val = StringConversionHelper<char_type>::ParseDouble(a_szExpr + a_iPos, parsedLen, stat);
+	float_type fVal = val;
 
-	stream >> fVal;
-
-	if (stream.fail())
+	if (!stat)
 		return false;
 
-	if (stream.eof())
-	{
-		// This part sucks but tellg will return -1 if eof is set,
-		// so i need a special treatment for the case that the number
-		// just read here is the last part of the string
-		for (; a_szExpr[a_iPos] != 0; ++a_iPos);
-	}
-	else
-	{
-		iEnd = stream.tellg();   // Position after reading
-		assert(iEnd > 0);
-		a_iPos += (int)iEnd;
-	}
+	a_iPos += parsedLen;
 
 	// Finally i have to check if the next sign is the "i" for a imaginary unit
 	// if so this is an imaginary value

@@ -1,0 +1,15 @@
+prefix=/usr/local
+exec_prefix=${prefix}
+libdir=${exec_prefix}/lib
+includedir=${prefix}/include/muparserx
+
+Name: muparserx
+Description: A mathematical expression parser library.
+URL: http://articles.beltoforion.de/article.php?a=muparserx
+Version: 4.0.12
+Requires:
+Requires.private:
+Conflicts:
+Cflags: -I${includedir}
+Libs: -L${libdir} -lmuparserx
+Libs.private:
