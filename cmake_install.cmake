@@ -98,6 +98,7 @@ if("x${CMAKE_INSTALL_COMPONENT}x" STREQUAL "xUnspecifiedx" OR NOT CMAKE_INSTALL_
     "/home/user/Dokumente/GitHub/muparserx/parser/mpRPN.h"
     "/home/user/Dokumente/GitHub/muparserx/parser/mpScriptTokens.h"
     "/home/user/Dokumente/GitHub/muparserx/parser/mpStack.h"
+    "/home/user/Dokumente/GitHub/muparserx/parser/mpStringConversionHelper.h"
     "/home/user/Dokumente/GitHub/muparserx/parser/mpTest.h"
     "/home/user/Dokumente/GitHub/muparserx/parser/mpTokenReader.h"
     "/home/user/Dokumente/GitHub/muparserx/parser/mpTypes.h"

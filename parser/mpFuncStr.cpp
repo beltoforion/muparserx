@@ -41,7 +41,7 @@
 
 #ifdef _MSC_VER
 #  define SSCANF sscanf_s
-#  define SWSCANF swscan_s
+#  define SWSCANF swscanf_s
 #else
 #  define SSCANF sscanf
 #  define SWSCANF swscanf
