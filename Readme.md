@@ -8,6 +8,12 @@
 muparserx
 ===========================
 
+
+V4.0.13 (20230307)
+------------------
+Bugfixes:
+  - untracked Issue: Wide string build on windows was broken due to a typo introduced in 4.0.12.
+  
 V4.0.12 (20230304)
 ------------------
 Bugfixes:
