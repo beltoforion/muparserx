@@ -8,7 +8,7 @@
   |  Y Y  \  |  /    |     / __ \|  | \/\___ \\  ___/|  | \/     \
   |__|_|  /____/|____|    (____  /__|  /____  >\___  >__| /___/\  \
 		\/                     \/           \/     \/           \_/
-  Copyright (C) 2022 Ingo Berg, et al.
+  Copyright (C) 2023 Ingo Berg, et al.
   All rights reserved.
 
   Redistribution and use in source and binary forms, with or without
@@ -565,7 +565,7 @@ void Splash()
 	console() << _T("  |__|_|  /____/|____|    (____  /__|  /____  >\\___  >__| /___/\\  \\\n");
 	console() << _T("        \\/                     \\/           \\/     \\/           \\_/\n");
 	console() << _T("  Version ") << ParserXBase::GetVersion() << _T("\n");
-	console() << _T("  Copyright (C) 2022 Ingo Berg");
+	console() << _T("  Copyright (C) 2023 Ingo Berg");
 	console() << _T("\n\n");
 	console() << _T("-------------------------------------------------------------------------\n\n");
 	console() << _T("Build configuration:\n\n");

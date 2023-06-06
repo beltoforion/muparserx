@@ -1138,8 +1138,11 @@ int ParserTester::TestBinOp()
 	iNumErr += EqnTest(_T("3--a"), 4.0, true);
 
 	// Problems with small bogus real/imag values introduced due to limited floating point accuracy
-	iNumErr += EqnTest(_T("(-2)^3"), -8.0, true);                   // may introduce incorrect imaginary value (When computed with the log/exp formula: -8 + 2.93e-15i)
+	iNumErr += EqnTest(_T("(-2)^3"), -8.0, true);                 // may introduce incorrect imaginary value (When computed with the log/exp formula: -8 + 2.93e-15i)
 	iNumErr += EqnTest(_T("imag((-2)^3)==0"), true, true);        // may introduce incorrect imaginary value (When computed with the log/exp formula: -8 + 2.93e-15i)
+
+	// issue #112 (https://github.com/beltoforion/muparserx/issues/122)
+	iNumErr += EqnTest(_T("123==\"abc\""), false, true);         // may introduce incorrect imaginary value (When computed with the log/exp formula: -8 + 2.93e-15i)
 
 	Assessment(iNumErr);
 	return iNumErr;
