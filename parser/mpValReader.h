@@ -130,7 +130,7 @@ MUP_NAMESPACE_START
       virtual IValueReader* Clone(TokenReader *pTokenReader) const override;
 
   private:
-      string_type Unescape(const char_type *szExpr, int &len);
+      string_type Unescape(const char_type *szExpr, int &len, char_type quoteChar);
   };
 
 MUP_NAMESPACE_END

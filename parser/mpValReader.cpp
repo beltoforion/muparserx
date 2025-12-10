@@ -261,7 +261,7 @@ StrValReader::~StrValReader()
 {}
 
 
-string_type StrValReader::Unescape(const char_type* szExpr, int& nPos)
+string_type StrValReader::Unescape(const char_type* szExpr, int& nPos, char_type quoteChar)
 {
 	string_type out;
 	bool bEscape = false;
@@ -278,15 +278,14 @@ string_type StrValReader::Unescape(const char_type* szExpr, int& nPos)
 			}
 			[[fallthrough]];
 
-		case '"':
-			if (!bEscape)
+		default:
+			if (c == quoteChar && !bEscape)
 			{
+				// Found the matching quote character - end of string
 				++nPos;
 				return out;
 			}
-			[[fallthrough]];
-
-		default:
+			
 			if (bEscape)
 			{
 				switch (c)
@@ -295,6 +294,7 @@ string_type StrValReader::Unescape(const char_type* szExpr, int& nPos)
 				case 'r':  out += '\r'; break;
 				case 't':  out += '\t'; break;
 				case '"':  out += '\"'; break;
+				case '\'': out += '\''; break;
 				case '\\': out += '\\'; break;
 				default:
 					throw ParserError(ErrorContext(ecUNKNOWN_ESCAPE_SEQUENCE, nPos));
@@ -306,6 +306,7 @@ string_type StrValReader::Unescape(const char_type* szExpr, int& nPos)
 			{
 				out += c;
 			}
+			break;
 		}
 	}
 
@@ -316,10 +317,14 @@ string_type StrValReader::Unescape(const char_type* szExpr, int& nPos)
 bool StrValReader::IsValue(const char_type* a_pszExpr, int& a_iPos, Value& a_Val)
 {
 	const char_type* szExpr = a_pszExpr + a_iPos;
-	if (szExpr[0] != '"')
+	char_type quoteChar = szExpr[0];
+	
+	// Accept both double quotes (") and single quotes (')
+	if (quoteChar != '"' && quoteChar != '\'')
 		return false;
 
-	a_Val = Unescape(a_pszExpr, ++a_iPos);
+	// Pass the quote character to Unescape so it knows which one to match
+	a_Val = Unescape(a_pszExpr, ++a_iPos, quoteChar);
 	return true;
 }
 
